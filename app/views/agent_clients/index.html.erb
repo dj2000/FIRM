@@ -1,0 +1,29 @@
+<h1>Listing agent_clients</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Client</th>
+      <th>Agentdate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @agent_clients.each do |agent_client| %>
+      <tr>
+        <td><%= agent_client.agent_id %></td>
+        <td><%= agent_client.client_id %></td>
+        <td><%= agent_client.agentDate %></td>
+        <td><%= link_to 'Show', agent_client %></td>
+        <td><%= link_to 'Edit', edit_agent_client_path(agent_client) %></td>
+        <td><%= link_to 'Destroy', agent_client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Agent client', new_agent_client_path %>

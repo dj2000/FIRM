@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 1
+  reference: MyString
+  scheduleDate: 2015-05-28
+  inspectBy: MyString
+  completeDate: 2015-05-28
+  result: MyString
+
+two:
+  project_id: 1
+  reference: MyString
+  scheduleDate: 2015-05-28
+  inspectBy: MyString
+  completeDate: 2015-05-28
+  result: MyString

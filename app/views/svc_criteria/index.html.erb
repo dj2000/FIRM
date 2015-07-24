@@ -1,0 +1,41 @@
+<h1>Listing svc_criteria</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propres</th>
+      <th>Propcomm</th>
+      <th>Previnsp</th>
+      <th>Hpoz</th>
+      <th>Cdo</th>
+      <th>Ownerocc</th>
+      <th>Foundation</th>
+      <th>Yearbuilt</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @svc_criteria.each do |svc_criterium| %>
+      <tr>
+        <td><%= svc_criterium.propRes %></td>
+        <td><%= svc_criterium.propComm %></td>
+        <td><%= svc_criterium.prevInsp %></td>
+        <td><%= svc_criterium.hpoz %></td>
+        <td><%= svc_criterium.cdo %></td>
+        <td><%= svc_criterium.ownerOcc %></td>
+        <td><%= svc_criterium.foundation %></td>
+        <td><%= svc_criterium.yearBuilt %></td>
+        <td><%= svc_criterium.notes %></td>
+        <td><%= link_to 'Show', svc_criterium %></td>
+        <td><%= link_to 'Edit', edit_svc_criterium_path(svc_criterium) %></td>
+        <td><%= link_to 'Destroy', svc_criterium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Svc criterium', new_svc_criterium_path %>

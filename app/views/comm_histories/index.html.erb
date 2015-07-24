@@ -1,0 +1,39 @@
+<h1>Listing comm_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Inspection</th>
+      <th>Caller</th>
+      <th>Caller</th>
+      <th>Recipient</th>
+      <th>Callsummary</th>
+      <th>Calloutcome</th>
+      <th>Callbackdate</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comm_histories.each do |comm_history| %>
+      <tr>
+        <td><%= comm_history.inspection_id %></td>
+        <td><%= comm_history.caller %></td>
+        <td><%= comm_history.caller %></td>
+        <td><%= comm_history.recipient %></td>
+        <td><%= comm_history.callSummary %></td>
+        <td><%= comm_history.callOutcome %></td>
+        <td><%= comm_history.callBackDate %></td>
+        <td><%= comm_history.notes %></td>
+        <td><%= link_to 'Show', comm_history %></td>
+        <td><%= link_to 'Edit', edit_comm_history_path(comm_history) %></td>
+        <td><%= link_to 'Destroy', comm_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comm history', new_comm_history_path %>

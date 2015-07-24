@@ -1,0 +1,41 @@
+<h1>Listing i_fee_schedules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feeactive</th>
+      <th>Effectivefrom</th>
+      <th>Owneroccrate</th>
+      <th>Sfrbaserate</th>
+      <th>Sfrincrate</th>
+      <th>Mfrbaserate</th>
+      <th>Mfrincrate</th>
+      <th>Insbaserate</th>
+      <th>Insincrate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @i_fee_schedules.each do |i_fee_schedule| %>
+      <tr>
+        <td><%= i_fee_schedule.feeActive %></td>
+        <td><%= i_fee_schedule.effectiveFrom %></td>
+        <td><%= i_fee_schedule.ownerOccRate %></td>
+        <td><%= i_fee_schedule.sfrBaseRate %></td>
+        <td><%= i_fee_schedule.sfrIncRate %></td>
+        <td><%= i_fee_schedule.mfrBaseRate %></td>
+        <td><%= i_fee_schedule.mfrIncRate %></td>
+        <td><%= i_fee_schedule.insBaseRate %></td>
+        <td><%= i_fee_schedule.insIncRate %></td>
+        <td><%= link_to 'Show', i_fee_schedule %></td>
+        <td><%= link_to 'Edit', edit_i_fee_schedule_path(i_fee_schedule) %></td>
+        <td><%= link_to 'Destroy', i_fee_schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New I fee schedule', new_i_fee_schedule_path %>

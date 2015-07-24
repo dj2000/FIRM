@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reference: MyString
+  project_id: 1
+  issueDate: 2015-05-28
+  issuedBy: MyString
+  status: MyString
+  valuation: 9.99
+
+two:
+  reference: MyString
+  project_id: 1
+  issueDate: 2015-05-28
+  issuedBy: MyString
+  status: MyString
+  valuation: 9.99

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  jobMinAmt: 1
+  jobMaxAmt: 1
+  pmt1Pcnt: 1
+  pmt2Pcnt: 1
+  pmt3Pcnt: 1
+  pmt4Pcnt: 1
+  pmt5Pcnt: 1
+  pmt1Desc: 1
+  pmt2Desc: 1
+  pmt3Desc: 1
+  pmt4Desc: 1
+  pmt5Desc: 1
+
+two:
+  jobMinAmt: 1
+  jobMaxAmt: 1
+  pmt1Pcnt: 1
+  pmt2Pcnt: 1
+  pmt3Pcnt: 1
+  pmt4Pcnt: 1
+  pmt5Pcnt: 1
+  pmt1Desc: 1
+  pmt2Desc: 1
+  pmt3Desc: 1
+  pmt4Desc: 1
+  pmt5Desc: 1

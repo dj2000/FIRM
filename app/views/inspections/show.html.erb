@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Application:</strong>
+  <%= @inspection.appointment_id %>
+</p>
+
+<p>
+  <strong>Fcondition:</strong>
+  <%= @inspection.fCondition %>
+</p>
+
+<p>
+  <strong>Businesscards:</strong>
+  <%= @inspection.businessCards %>
+</p>
+
+<p>
+  <strong>Nod:</strong>
+  <%= @inspection.nOD %>
+</p>
+
+<p>
+  <strong>Nog:</strong>
+  <%= @inspection.nOG %>
+</p>
+
+<p>
+  <strong>Paid?:</strong>
+  <%= @inspection.paid? %>
+</p>
+
+<p>
+  <strong>Reporturl:</strong>
+  <%= @inspection.reportURL %>
+</p>
+
+<p>
+  <strong>Footprinturl:</strong>
+  <%= @inspection.footprintURL %>
+</p>
+
+<p>
+  <strong>Repairs?:</strong>
+  <%= @inspection.repairs? %>
+</p>
+
+<p>
+  <strong>Permit?:</strong>
+  <%= @inspection.permit? %>
+</p>
+
+<p>
+  <strong>Interioraccess:</strong>
+  <%= @inspection.interiorAccess %>
+</p>
+
+<p>
+  <strong>Verifiedreport:</strong>
+  <%= @inspection.verifiedReport %>
+</p>
+
+<p>
+  <strong>Verifiedcomp:</strong>
+  <%= @inspection.verifiedComp %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @inspection.notes %>
+</p>
+
+<%= link_to 'Edit', edit_inspection_path(@inspection) %> |
+<%= link_to 'Back', inspections_path %>

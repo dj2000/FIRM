@@ -1,0 +1,39 @@
+<h1>Listing contracts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bid</th>
+      <th>Payplan</th>
+      <th>Date</th>
+      <th>Signedby</th>
+      <th>Acceptedby</th>
+      <th>Datesigned</th>
+      <th>Downpmtamt</th>
+      <th>Downpmtdate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contracts.each do |contract| %>
+      <tr>
+        <td><%= contract.bid_id %></td>
+        <td><%= contract.payPlan_id %></td>
+        <td><%= contract.date %></td>
+        <td><%= contract.signedBy %></td>
+        <td><%= contract.acceptedBy %></td>
+        <td><%= contract.dateSigned %></td>
+        <td><%= contract.downPmtAmt %></td>
+        <td><%= contract.downPmtDate %></td>
+        <td><%= link_to 'Show', contract %></td>
+        <td><%= link_to 'Edit', edit_contract_path(contract) %></td>
+        <td><%= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Contract', new_contract_path %>

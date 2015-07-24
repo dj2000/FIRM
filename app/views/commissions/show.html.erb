@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @commission.year %>
+</p>
+
+<p>
+  <strong>Weekno:</strong>
+  <%= @commission.weekNo %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @commission.rate %>
+</p>
+
+<%= link_to 'Edit', edit_commission_path(@commission) %> |
+<%= link_to 'Back', commissions_path %>

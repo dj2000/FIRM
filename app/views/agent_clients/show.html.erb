@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Agent:</strong>
+  <%= @agent_client.agent_id %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @agent_client.client_id %>
+</p>
+
+<p>
+  <strong>Agentdate:</strong>
+  <%= @agent_client.agentDate %>
+</p>
+
+<%= link_to 'Edit', edit_agent_client_path(@agent_client) %> |
+<%= link_to 'Back', agent_clients_path %>

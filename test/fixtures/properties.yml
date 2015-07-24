@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  street: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  crossStreet: MyString
+  mapPage: 1
+  yearBuilt: 1
+  size: 1
+  stories: 1
+  type: 
+  units: 1
+  gndUnits: 1
+  lotType: MyString
+  foundation: MyString
+  hpoz?: false
+  cdo?: false
+
+two:
+  number: 1
+  street: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  crossStreet: MyString
+  mapPage: 1
+  yearBuilt: 1
+  size: 1
+  stories: 1
+  type: 
+  units: 1
+  gndUnits: 1
+  lotType: MyString
+  foundation: MyString
+  hpoz?: false
+  cdo?: false

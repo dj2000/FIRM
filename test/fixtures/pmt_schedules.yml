@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contract_id: 1
+  pmtNumber: 1
+  pmtDate: 2015-05-28
+  pmtAmount: 9.99
+
+two:
+  contract_id: 1
+  pmtNumber: 1
+  pmtDate: 2015-05-28
+  pmtAmount: 9.99

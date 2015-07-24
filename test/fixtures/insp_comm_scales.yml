@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inspector_id: 1
+  scaleStart: 9.99
+  scaleEnd: 9.99
+  rate: 9.99
+
+two:
+  inspector_id: 1
+  scaleStart: 9.99
+  scaleEnd: 9.99
+  rate: 9.99

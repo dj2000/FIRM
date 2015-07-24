@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @svc_area.zip %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @svc_area.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @svc_area.state %>
+</p>
+
+<p>
+  <strong>Serviced:</strong>
+  <%= @svc_area.serviced %>
+</p>
+
+<%= link_to 'Edit', edit_svc_area_path(@svc_area) %> |
+<%= link_to 'Back', svc_areas_path %>

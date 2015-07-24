@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Inspection:</strong>
+  <%= @bid.inspection_id %>
+</p>
+
+<p>
+  <strong>Costrepair:</strong>
+  <%= @bid.costRepair %>
+</p>
+
+<p>
+  <strong>Feeseismicupg:</strong>
+  <%= @bid.feeSeismicUpg %>
+</p>
+
+<p>
+  <strong>Feeadmin:</strong>
+  <%= @bid.feeAdmin %>
+</p>
+
+<p>
+  <strong>Payplan:</strong>
+  <%= @bid.payPlan_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @bid.status %>
+</p>
+
+<%= link_to 'Edit', edit_bid_path(@bid) %> |
+<%= link_to 'Back', bids_path %>

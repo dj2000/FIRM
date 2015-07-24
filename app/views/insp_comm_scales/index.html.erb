@@ -1,0 +1,31 @@
+<h1>Listing insp_comm_scales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Inspector</th>
+      <th>Scalestart</th>
+      <th>Scaleend</th>
+      <th>Rate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @insp_comm_scales.each do |insp_comm_scale| %>
+      <tr>
+        <td><%= insp_comm_scale.inspector_id %></td>
+        <td><%= insp_comm_scale.scaleStart %></td>
+        <td><%= insp_comm_scale.scaleEnd %></td>
+        <td><%= insp_comm_scale.rate %></td>
+        <td><%= link_to 'Show', insp_comm_scale %></td>
+        <td><%= link_to 'Edit', edit_insp_comm_scale_path(insp_comm_scale) %></td>
+        <td><%= link_to 'Destroy', insp_comm_scale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Insp comm scale', new_insp_comm_scale_path %>

@@ -1,0 +1,72 @@
+<%= form_for(@inspection) do |f| %>
+  <% if @inspection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
+
+      <ul>
+      <% @inspection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :application_id %><br>
+    <%= f.number_field :application_id %>
+  </div><div class="field">
+    <%= f.label :fCondition %><br>
+    <%= f.text_field :fCondition %>
+  </div>
+  <div class="field">
+    <%= f.label :businessCards %><br>
+    <%= f.check_box :businessCards %>
+  </div>
+  <div class="field">
+    <%= f.label :nOD %><br>
+    <%= f.number_field :nOD %>
+  </div>
+  <div class="field">
+    <%= f.label :nOG %><br>
+    <%= f.number_field :nOG %>
+  </div>
+  <div class="field">
+    <%= f.label :paid? %><br>
+    <%= f.check_box :paid? %>
+  </div>
+  <div class="field">
+    <%= f.label :reportURL %><br>
+    <%= f.text_field :reportURL %>
+  </div>
+  <div class="field">
+    <%= f.label :footprintURL %><br>
+    <%= f.text_field :footprintURL %>
+  </div>
+  <div class="field">
+    <%= f.label :repairs? %><br>
+    <%= f.check_box :repairs? %>
+  </div>
+  <div class="field">
+    <%= f.label :permit? %><br>
+    <%= f.check_box :permit? %>
+  </div>
+  <div class="field">
+    <%= f.label :interiorAccess %><br>
+    <%= f.check_box :interiorAccess %>
+  </div>
+  <div class="field">
+    <%= f.label :verifiedReport %><br>
+    <%= f.check_box :verifiedReport %>
+  </div>
+  <div class="field">
+    <%= f.label :verifiedComp %><br>
+    <%= f.check_box :verifiedComp %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

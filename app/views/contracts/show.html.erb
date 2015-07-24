@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bid:</strong>
+  <%= @contract.bid_id %>
+</p>
+
+<p>
+  <strong>Payplan:</strong>
+  <%= @contract.payPlan_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @contract.date %>
+</p>
+
+<p>
+  <strong>Signedby:</strong>
+  <%= @contract.signedBy %>
+</p>
+
+<p>
+  <strong>Acceptedby:</strong>
+  <%= @contract.acceptedBy %>
+</p>
+
+<p>
+  <strong>Datesigned:</strong>
+  <%= @contract.dateSigned %>
+</p>
+
+<p>
+  <strong>Downpmtamt:</strong>
+  <%= @contract.downPmtAmt %>
+</p>
+
+<p>
+  <strong>Downpmtdate:</strong>
+  <%= @contract.downPmtDate %>
+</p>
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

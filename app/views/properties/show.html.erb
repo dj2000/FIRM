@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @property.number %>
+</p>
+
+<p>
+  <strong>Street:</strong>
+  <%= @property.street %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @property.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @property.state %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @property.zip %>
+</p>
+
+<p>
+  <strong>Crossstreet:</strong>
+  <%= @property.crossStreet %>
+</p>
+
+<p>
+  <strong>Mappage:</strong>
+  <%= @property.mapPage %>
+</p>
+
+<p>
+  <strong>Yearbuilt:</strong>
+  <%= @property.yearBuilt %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @property.size %>
+</p>
+
+<p>
+  <strong>Stories:</strong>
+  <%= @property.stories %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @property.type %>
+</p>
+
+<p>
+  <strong>Units:</strong>
+  <%= @property.units %>
+</p>
+
+<p>
+  <strong>Gndunits:</strong>
+  <%= @property.gndUnits %>
+</p>
+
+<p>
+  <strong>Lottype:</strong>
+  <%= @property.lotType %>
+</p>
+
+<p>
+  <strong>Foundation:</strong>
+  <%= @property.foundation %>
+</p>
+
+<p>
+  <strong>Hpoz?:</strong>
+  <%= @property.hpoz? %>
+</p>
+
+<p>
+  <strong>Cdo?:</strong>
+  <%= @property.cdo? %>
+</p>
+
+<%= link_to 'Edit', edit_property_path(@property) %> |
+<%= link_to 'Back', properties_path %>

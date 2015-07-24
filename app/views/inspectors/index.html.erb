@@ -1,0 +1,45 @@
+<h1>Listing inspectors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Middleinit</th>
+      <th>Senior</th>
+      <th>Phoneh</th>
+      <th>Phonec</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inspectors.each do |inspector| %>
+      <tr>
+        <td><%= inspector.firstName %></td>
+        <td><%= inspector.lastName %></td>
+        <td><%= inspector.middleInit %></td>
+        <td><%= inspector.senior %></td>
+        <td><%= inspector.phoneH %></td>
+        <td><%= inspector.phoneC %></td>
+        <td><%= inspector.address %></td>
+        <td><%= inspector.city %></td>
+        <td><%= inspector.state %></td>
+        <td><%= inspector.zip %></td>
+        <td><%= inspector.email %></td>
+        <td><%= link_to 'Show', inspector %></td>
+        <td><%= link_to 'Edit', edit_inspector_path(inspector) %></td>
+        <td><%= link_to 'Destroy', inspector, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inspector', new_inspector_path %>

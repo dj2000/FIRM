@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @proj_insp.project_id %>
+</p>
+
+<p>
+  <strong>Reference:</strong>
+  <%= @proj_insp.reference %>
+</p>
+
+<p>
+  <strong>Scheduledate:</strong>
+  <%= @proj_insp.scheduleDate %>
+</p>
+
+<p>
+  <strong>Inspectby:</strong>
+  <%= @proj_insp.inspectBy %>
+</p>
+
+<p>
+  <strong>Completedate:</strong>
+  <%= @proj_insp.completeDate %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @proj_insp.result %>
+</p>
+
+<%= link_to 'Edit', edit_proj_insp_path(@proj_insp) %> |
+<%= link_to 'Back', proj_insps_path %>

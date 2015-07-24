@@ -1,0 +1,51 @@
+<h1>Listing inspections</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>Fcondition</th>
+      <th>Businesscards</th>
+      <th>Nod</th>
+      <th>Nog</th>
+      <th>Paid?</th>
+      <th>Reporturl</th>
+      <th>Footprinturl</th>
+      <th>Repairs?</th>
+      <th>Permit?</th>
+      <th>Interioraccess</th>
+      <th>Verifiedreport</th>
+      <th>Verifiedcomp</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inspections.each do |inspection| %>
+      <tr>
+        <td><%= inspection.application_id %></td>
+        <td><%= inspection.fCondition %></td>
+        <td><%= inspection.businessCards %></td>
+        <td><%= inspection.nOD %></td>
+        <td><%= inspection.nOG %></td>
+        <td><%= inspection.paid? %></td>
+        <td><%= inspection.reportURL %></td>
+        <td><%= inspection.footprintURL %></td>
+        <td><%= inspection.repairs? %></td>
+        <td><%= inspection.permit? %></td>
+        <td><%= inspection.interiorAccess %></td>
+        <td><%= inspection.verifiedReport %></td>
+        <td><%= inspection.verifiedComp %></td>
+        <td><%= inspection.notes %></td>
+        <td><%= link_to 'Show', inspection %></td>
+        <td><%= link_to 'Edit', edit_inspection_path(inspection) %></td>
+        <td><%= link_to 'Destroy', inspection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inspection', new_inspection_path %>

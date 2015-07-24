@@ -1,0 +1,61 @@
+<%= form_for(@appointment) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% @appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :inspRequest_id %><br>
+    <%= f.number_field :inspRequest_id %>
+  </div>
+  <div class="field">
+    <%= f.label :schedStart %><br>
+    <%= f.datetime_select :schedStart %>
+  </div>
+  <div class="field">
+    <%= f.label :schedEnd %><br>
+    <%= f.datetime_select :schedEnd %>
+  </div>
+  <div class="field">
+    <%= f.label :allDay %><br>
+    <%= f.check_box :allDay %>
+  </div>
+  <div class="field">
+    <%= f.label :inspector_id %><br>
+    <%= f.number_field :inspector_id %>
+  </div>
+  <div class="field">
+    <%= f.label :contact %><br>
+    <%= f.text_field :contact %>
+  </div>
+  <div class="field">
+    <%= f.label :inspFee %><br>
+    <%= f.text_field :inspFee %>
+  </div>
+  <div class="field">
+    <%= f.label :prepaid %><br>
+    <%= f.check_box :prepaid %>
+  </div>
+  <div class="field">
+    <%= f.label :pmtMethod %><br>
+    <%= f.text_field :pmtMethod %>
+  </div>
+  <div class="field">
+    <%= f.label :pmtRef %><br>
+    <%= f.text_field :pmtRef %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

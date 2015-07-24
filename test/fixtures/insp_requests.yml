@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  callTime: 2015-05-28 19:22:03
+  callerType: MyString
+  referalSource: MyString
+  client_id: 1
+  agent_id: 1
+  property_id: 1
+  selectInsp: MyString
+
+two:
+  callTime: 2015-05-28 19:22:03
+  callerType: MyString
+  referalSource: MyString
+  client_id: 1
+  agent_id: 1
+  property_id: 1
+  selectInsp: MyString

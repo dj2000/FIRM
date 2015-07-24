@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inspection_id: MyString
+  costRepair: 9.99
+  feeSeismicUpg: 9.99
+  feeAdmin: 9.99
+  payPlan_id: 1
+  status: MyString
+
+two:
+  inspection_id: MyString
+  costRepair: 9.99
+  feeSeismicUpg: 9.99
+  feeAdmin: 9.99
+  payPlan_id: 1
+  status: MyString

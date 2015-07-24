@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vcdate:</strong>
+  <%= @project.vcDate %>
+</p>
+
+<p>
+  <strong>Contract:</strong>
+  <%= @project.contract_id %>
+</p>
+
+<p>
+  <strong>Jobcost:</strong>
+  <%= @project.jobCost %>
+</p>
+
+<p>
+  <strong>Scheduleby:</strong>
+  <%= @project.scheduleBy %>
+</p>
+
+<p>
+  <strong>Schedulepref:</strong>
+  <%= @project.schedulePref %>
+</p>
+
+<p>
+  <strong>Estduration:</strong>
+  <%= @project.estDuration %>
+</p>
+
+<p>
+  <strong>Schedulestart:</strong>
+  <%= @project.scheduleStart %>
+</p>
+
+<p>
+  <strong>Scheduleend:</strong>
+  <%= @project.scheduleEnd %>
+</p>
+
+<p>
+  <strong>Authorizedby:</strong>
+  <%= @project.authorizedBy %>
+</p>
+
+<p>
+  <strong>Authorizedon:</strong>
+  <%= @project.authorizedOn %>
+</p>
+
+<p>
+  <strong>Crew:</strong>
+  <%= @project.crew_id %>
+</p>
+
+<p>
+  <strong>Verifiedaccess:</strong>
+  <%= @project.verifiedAccess %>
+</p>
+
+<p>
+  <strong>Verifiedew:</strong>
+  <%= @project.verifiedEW %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @project.notes %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

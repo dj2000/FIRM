@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reference: MyString
+  date: 2015-05-28
+  invoice_id: 1
+  amount: 9.99
+  recBy: MyString
+
+two:
+  reference: MyString
+  date: 2015-05-28
+  invoice_id: 1
+  amount: 9.99
+  recBy: MyString

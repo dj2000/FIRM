@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  zip: 1
+  city: MyString
+  state: MyString
+  serviced: false
+
+two:
+  zip: 1
+  city: MyString
+  state: MyString
+  serviced: false

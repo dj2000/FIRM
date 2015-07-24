@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inspection_id: 1
+  caller: MyString
+  caller: MyString
+  recipient: MyString
+  callSummary: MyText
+  callOutcome: MyString
+  callBackDate: 2015-05-28 19:24:49
+  notes: MyText
+
+two:
+  inspection_id: 1
+  caller: MyString
+  caller: MyString
+  recipient: MyString
+  callSummary: MyText
+  callOutcome: MyString
+  callBackDate: 2015-05-28 19:24:49
+  notes: MyText

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Insprequest:</strong>
+  <%= @appointment.inspRequest_id %>
+</p>
+
+<p>
+  <strong>Schedstart:</strong>
+  <%= @appointment.schedStart %>
+</p>
+
+<p>
+  <strong>Schedend:</strong>
+  <%= @appointment.schedEnd %>
+</p>
+
+<p>
+  <strong>Allday:</strong>
+  <%= @appointment.allDay %>
+</p>
+
+<p>
+  <strong>Inspector:</strong>
+  <%= @appointment.inspector_id %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @appointment.contact %>
+</p>
+
+<p>
+  <strong>Inspfee:</strong>
+  <%= @appointment.inspFee %>
+</p>
+
+<p>
+  <strong>Prepaid:</strong>
+  <%= @appointment.prepaid %>
+</p>
+
+<p>
+  <strong>Pmtmethod:</strong>
+  <%= @appointment.pmtMethod %>
+</p>
+
+<p>
+  <strong>Pmtref:</strong>
+  <%= @appointment.pmtRef %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @appointment.notes %>
+</p>
+
+<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
+<%= link_to 'Back', appointments_path %>

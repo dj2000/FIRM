@@ -1,0 +1,2 @@
+module IFeeSchedulesHelper
+end

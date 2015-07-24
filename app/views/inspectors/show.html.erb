@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @inspector.firstName %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @inspector.lastName %>
+</p>
+
+<p>
+  <strong>Middleinit:</strong>
+  <%= @inspector.middleInit %>
+</p>
+
+<p>
+  <strong>Senior:</strong>
+  <%= @inspector.senior %>
+</p>
+
+<p>
+  <strong>Phoneh:</strong>
+  <%= @inspector.phoneH %>
+</p>
+
+<p>
+  <strong>Phonec:</strong>
+  <%= @inspector.phoneC %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @inspector.address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @inspector.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @inspector.state %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @inspector.zip %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @inspector.email %>
+</p>
+
+<%= link_to 'Edit', edit_inspector_path(@inspector) %> |
+<%= link_to 'Back', inspectors_path %>

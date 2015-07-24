@@ -1,0 +1,33 @@
+<%= form_for(@pmt_schedule) do |f| %>
+  <% if @pmt_schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pmt_schedule.errors.count, "error") %> prohibited this pmt_schedule from being saved:</h2>
+
+      <ul>
+      <% @pmt_schedule.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :contract_id %><br>
+    <%= f.number_field :contract_id %>
+  </div>
+  <div class="field">
+    <%= f.label :pmtNumber %><br>
+    <%= f.number_field :pmtNumber %>
+  </div>
+  <div class="field">
+    <%= f.label :pmtDate %><br>
+    <%= f.date_select :pmtDate %>
+  </div>
+  <div class="field">
+    <%= f.label :pmtAmount %><br>
+    <%= f.text_field :pmtAmount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

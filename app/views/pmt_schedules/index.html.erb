@@ -1,0 +1,31 @@
+<h1>Listing pmt_schedules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contract</th>
+      <th>Pmtnumber</th>
+      <th>Pmtdate</th>
+      <th>Pmtamount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pmt_schedules.each do |pmt_schedule| %>
+      <tr>
+        <td><%= pmt_schedule.contract_id %></td>
+        <td><%= pmt_schedule.pmtNumber %></td>
+        <td><%= pmt_schedule.pmtDate %></td>
+        <td><%= pmt_schedule.pmtAmount %></td>
+        <td><%= link_to 'Show', pmt_schedule %></td>
+        <td><%= link_to 'Edit', edit_pmt_schedule_path(pmt_schedule) %></td>
+        <td><%= link_to 'Destroy', pmt_schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pmt schedule', new_pmt_schedule_path %>

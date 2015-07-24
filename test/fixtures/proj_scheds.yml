@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 1
+  crew_id: 1
+  date: 2015-05-28
+  startTime: 2015-05-28 19:25:40
+  endTime: 2015-05-28 19:25:40
+  notes: MyText
+
+two:
+  project_id: 1
+  crew_id: 1
+  date: 2015-05-28
+  startTime: 2015-05-28 19:25:40
+  endTime: 2015-05-28 19:25:40
+  notes: MyText

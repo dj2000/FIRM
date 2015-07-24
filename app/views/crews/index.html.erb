@@ -1,0 +1,31 @@
+<h1>Listing crews</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Foreman</th>
+      <th>Size</th>
+      <th>Doublebook?</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @crews.each do |crew| %>
+      <tr>
+        <td><%= crew.foreman %></td>
+        <td><%= crew.size %></td>
+        <td><%= crew.doubleBook? %></td>
+        <td><%= crew.notes %></td>
+        <td><%= link_to 'Show', crew %></td>
+        <td><%= link_to 'Edit', edit_crew_path(crew) %></td>
+        <td><%= link_to 'Destroy', crew, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Crew', new_crew_path %>

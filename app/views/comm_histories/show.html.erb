@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Inspection:</strong>
+  <%= @comm_history.inspection_id %>
+</p>
+
+<p>
+  <strong>Caller:</strong>
+  <%= @comm_history.caller %>
+</p>
+
+<p>
+  <strong>Caller:</strong>
+  <%= @comm_history.caller %>
+</p>
+
+<p>
+  <strong>Recipient:</strong>
+  <%= @comm_history.recipient %>
+</p>
+
+<p>
+  <strong>Callsummary:</strong>
+  <%= @comm_history.callSummary %>
+</p>
+
+<p>
+  <strong>Calloutcome:</strong>
+  <%= @comm_history.callOutcome %>
+</p>
+
+<p>
+  <strong>Callbackdate:</strong>
+  <%= @comm_history.callBackDate %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @comm_history.notes %>
+</p>
+
+<%= link_to 'Edit', edit_comm_history_path(@comm_history) %> |
+<%= link_to 'Back', comm_histories_path %>

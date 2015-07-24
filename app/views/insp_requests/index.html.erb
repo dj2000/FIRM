@@ -1,0 +1,37 @@
+<h1>Listing insp_requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Calltime</th>
+      <th>Callertype</th>
+      <th>Referalsource</th>
+      <th>Client</th>
+      <th>Agent</th>
+      <th>Property</th>
+      <th>Selectinsp</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @insp_requests.each do |insp_request| %>
+      <tr>
+        <td><%= insp_request.callTime %></td>
+        <td><%= insp_request.callerType %></td>
+        <td><%= insp_request.referalSource %></td>
+        <td><%= insp_request.client_id %></td>
+        <td><%= insp_request.agent_id %></td>
+        <td><%= insp_request.property_id %></td>
+        <td><%= insp_request.selectInsp %></td>
+        <td><%= link_to 'Show', insp_request %></td>
+        <td><%= link_to 'Edit', edit_insp_request_path(insp_request) %></td>
+        <td><%= link_to 'Destroy', insp_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Insp request', new_insp_request_path %>

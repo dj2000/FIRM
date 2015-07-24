@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Inspector:</strong>
+  <%= @insp_comm_scale.inspector_id %>
+</p>
+
+<p>
+  <strong>Scalestart:</strong>
+  <%= @insp_comm_scale.scaleStart %>
+</p>
+
+<p>
+  <strong>Scaleend:</strong>
+  <%= @insp_comm_scale.scaleEnd %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @insp_comm_scale.rate %>
+</p>
+
+<%= link_to 'Edit', edit_insp_comm_scale_path(@insp_comm_scale) %> |
+<%= link_to 'Back', insp_comm_scales_path %>

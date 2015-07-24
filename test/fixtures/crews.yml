@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  foreman: MyString
+  size: 1
+  doubleBook?: false
+  notes: MyText
+
+two:
+  foreman: MyString
+  size: 1
+  doubleBook?: false
+  notes: MyText

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vcDate: 2015-05-28
+  contract_id: 1
+  jobCost: 9.99
+  scheduleBy: 2015-05-28
+  schedulePref: MyString
+  estDuration: 1
+  scheduleStart: 2015-05-28
+  scheduleEnd: 2015-05-28
+  authorizedBy: MyString
+  authorizedOn: 2015-05-28
+  crew_id: 1
+  verifiedAccess: false
+  verifiedEW: false
+  notes: MyText
+
+two:
+  vcDate: 2015-05-28
+  contract_id: 1
+  jobCost: 9.99
+  scheduleBy: 2015-05-28
+  schedulePref: MyString
+  estDuration: 1
+  scheduleStart: 2015-05-28
+  scheduleEnd: 2015-05-28
+  authorizedBy: MyString
+  authorizedOn: 2015-05-28
+  crew_id: 1
+  verifiedAccess: false
+  verifiedEW: false
+  notes: MyText

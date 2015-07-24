@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @client_property.client_id %>
+</p>
+
+<p>
+  <strong>Property:</strong>
+  <%= @client_property.property_id %>
+</p>
+
+<p>
+  <strong>Clienttype:</strong>
+  <%= @client_property.clientType %>
+</p>
+
+<p>
+  <strong>Typedate:</strong>
+  <%= @client_property.typeDate %>
+</p>
+
+<p>
+  <strong>Occupiedby:</strong>
+  <%= @client_property.occupiedBy %>
+</p>
+
+<p>
+  <strong>Escrow:</strong>
+  <%= @client_property.escrow %>
+</p>
+
+<p>
+  <strong>Escrowdate:</strong>
+  <%= @client_property.escrowDate %>
+</p>
+
+<%= link_to 'Edit', edit_client_property_path(@client_property) %> |
+<%= link_to 'Back', client_properties_path %>

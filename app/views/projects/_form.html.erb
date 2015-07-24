@@ -1,0 +1,73 @@
+<%= form_for(@project) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :vcDate %><br>
+    <%= f.date_select :vcDate %>
+  </div>
+  <div class="field">
+    <%= f.label :contract_id %><br>
+    <%= f.number_field :contract_id %>
+  </div>
+  <div class="field">
+    <%= f.label :jobCost %><br>
+    <%= f.text_field :jobCost %>
+  </div>
+  <div class="field">
+    <%= f.label :scheduleBy %><br>
+    <%= f.date_select :scheduleBy %>
+  </div>
+  <div class="field">
+    <%= f.label :schedulePref %><br>
+    <%= f.text_field :schedulePref %>
+  </div>
+  <div class="field">
+    <%= f.label :estDuration %><br>
+    <%= f.number_field :estDuration %>
+  </div>
+  <div class="field">
+    <%= f.label :scheduleStart %><br>
+    <%= f.date_select :scheduleStart %>
+  </div>
+  <div class="field">
+    <%= f.label :scheduleEnd %><br>
+    <%= f.date_select :scheduleEnd %>
+  </div>
+  <div class="field">
+    <%= f.label :authorizedBy %><br>
+    <%= f.text_field :authorizedBy %>
+  </div>
+  <div class="field">
+    <%= f.label :authorizedOn %><br>
+    <%= f.date_select :authorizedOn %>
+  </div>
+  <div class="field">
+    <%= f.label :crew_id %><br>
+    <%= f.number_field :crew_id %>
+  </div>
+  <div class="field">
+    <%= f.label :verifiedAccess %><br>
+    <%= f.check_box :verifiedAccess %>
+  </div>
+  <div class="field">
+    <%= f.label :verifiedEW %><br>
+    <%= f.check_box :verifiedEW %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

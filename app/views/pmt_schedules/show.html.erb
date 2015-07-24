@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contract:</strong>
+  <%= @pmt_schedule.contract_id %>
+</p>
+
+<p>
+  <strong>Pmtnumber:</strong>
+  <%= @pmt_schedule.pmtNumber %>
+</p>
+
+<p>
+  <strong>Pmtdate:</strong>
+  <%= @pmt_schedule.pmtDate %>
+</p>
+
+<p>
+  <strong>Pmtamount:</strong>
+  <%= @pmt_schedule.pmtAmount %>
+</p>
+
+<%= link_to 'Edit', edit_pmt_schedule_path(@pmt_schedule) %> |
+<%= link_to 'Back', pmt_schedules_path %>

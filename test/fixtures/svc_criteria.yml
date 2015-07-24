@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  propRes: false
+  propComm: false
+  prevInsp: MyString
+  hpoz: MyString
+  cdo: MyString
+  ownerOcc: false
+  foundation: MyString
+  yearBuilt: 1
+  notes: MyText
+
+two:
+  propRes: false
+  propComm: false
+  prevInsp: MyString
+  hpoz: MyString
+  cdo: MyString
+  ownerOcc: false
+  foundation: MyString
+  yearBuilt: 1
+  notes: MyText

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @proj_sched.project_id %>
+</p>
+
+<p>
+  <strong>Crew:</strong>
+  <%= @proj_sched.crew_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @proj_sched.date %>
+</p>
+
+<p>
+  <strong>Starttime:</strong>
+  <%= @proj_sched.startTime %>
+</p>
+
+<p>
+  <strong>Endtime:</strong>
+  <%= @proj_sched.endTime %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @proj_sched.notes %>
+</p>
+
+<%= link_to 'Edit', edit_proj_sched_path(@proj_sched) %> |
+<%= link_to 'Back', proj_scheds_path %>

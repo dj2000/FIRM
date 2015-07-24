@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inspRequest_id: 1
+  schedStart: 2015-05-28 19:22:16
+  schedEnd: 2015-05-28 19:22:16
+  allDay: false
+  inspector_id: 1
+  contact: MyString
+  inspFee: 9.99
+  prepaid: false
+  pmtMethod: MyString
+  pmtRef: MyString
+  notes: MyText
+
+two:
+  inspRequest_id: 1
+  schedStart: 2015-05-28 19:22:16
+  schedEnd: 2015-05-28 19:22:16
+  allDay: false
+  inspector_id: 1
+  contact: MyString
+  inspFee: 9.99
+  prepaid: false
+  pmtMethod: MyString
+  pmtRef: MyString
+  notes: MyText

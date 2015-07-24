@@ -1,0 +1,1 @@
+json.extract! @inspection, :id, :application_id, :fCondition, :businessCards, :nOD, :nOG, :paid?, :reportURL, :footprintURL, :repairs?, :permit?, :interiorAccess, :verifiedReport, :verifiedComp, :notes, :created_at, :updated_at

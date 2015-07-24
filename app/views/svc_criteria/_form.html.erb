@@ -1,0 +1,53 @@
+<%= form_for(@svc_criterium) do |f| %>
+  <% if @svc_criterium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@svc_criterium.errors.count, "error") %> prohibited this svc_criterium from being saved:</h2>
+
+      <ul>
+      <% @svc_criterium.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :propRes %><br>
+    <%= f.check_box :propRes %>
+  </div>
+  <div class="field">
+    <%= f.label :propComm %><br>
+    <%= f.check_box :propComm %>
+  </div>
+  <div class="field">
+    <%= f.label :prevInsp %><br>
+    <%= f.text_field :prevInsp %>
+  </div>
+  <div class="field">
+    <%= f.label :hpoz %><br>
+    <%= f.text_field :hpoz %>
+  </div>
+  <div class="field">
+    <%= f.label :cdo %><br>
+    <%= f.text_field :cdo %>
+  </div>
+  <div class="field">
+    <%= f.label :ownerOcc %><br>
+    <%= f.check_box :ownerOcc %>
+  </div>
+  <div class="field">
+    <%= f.label :foundation %><br>
+    <%= f.text_field :foundation %>
+  </div>
+  <div class="field">
+    <%= f.label :yearBuilt %><br>
+    <%= f.number_field :yearBuilt %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

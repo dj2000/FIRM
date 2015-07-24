@@ -1,0 +1,65 @@
+<%= form_for(@pay_plan) do |f| %>
+  <% if @pay_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pay_plan.errors.count, "error") %> prohibited this pay_plan from being saved:</h2>
+
+      <ul>
+      <% @pay_plan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :jobMinAmt %><br>
+    <%= f.number_field :jobMinAmt %>
+  </div>
+  <div class="field">
+    <%= f.label :jobMaxAmt %><br>
+    <%= f.number_field :jobMaxAmt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt1Pcnt %><br>
+    <%= f.number_field :pmt1Pcnt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt2Pcnt %><br>
+    <%= f.number_field :pmt2Pcnt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt3Pcnt %><br>
+    <%= f.number_field :pmt3Pcnt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt4Pcnt %><br>
+    <%= f.number_field :pmt4Pcnt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt5Pcnt %><br>
+    <%= f.number_field :pmt5Pcnt %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt1Desc %><br>
+    <%= f.number_field :pmt1Desc %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt2Desc %><br>
+    <%= f.number_field :pmt2Desc %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt3Desc %><br>
+    <%= f.number_field :pmt3Desc %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt4Desc %><br>
+    <%= f.number_field :pmt4Desc %>
+  </div>
+  <div class="field">
+    <%= f.label :pmt5Desc %><br>
+    <%= f.number_field :pmt5Desc %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

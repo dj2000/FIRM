@@ -1,0 +1,53 @@
+<%= form_for(@i_fee_schedule) do |f| %>
+  <% if @i_fee_schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@i_fee_schedule.errors.count, "error") %> prohibited this i_fee_schedule from being saved:</h2>
+
+      <ul>
+      <% @i_fee_schedule.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :feeActive %><br>
+    <%= f.check_box :feeActive %>
+  </div>
+  <div class="field">
+    <%= f.label :effectiveFrom %><br>
+    <%= f.date_select :effectiveFrom %>
+  </div>
+  <div class="field">
+    <%= f.label :ownerOccRate %><br>
+    <%= f.text_field :ownerOccRate %>
+  </div>
+  <div class="field">
+    <%= f.label :sfrBaseRate %><br>
+    <%= f.text_field :sfrBaseRate %>
+  </div>
+  <div class="field">
+    <%= f.label :sfrIncRate %><br>
+    <%= f.text_field :sfrIncRate %>
+  </div>
+  <div class="field">
+    <%= f.label :mfrBaseRate %><br>
+    <%= f.text_field :mfrBaseRate %>
+  </div>
+  <div class="field">
+    <%= f.label :mfrIncRate %><br>
+    <%= f.text_field :mfrIncRate %>
+  </div>
+  <div class="field">
+    <%= f.label :insBaseRate %><br>
+    <%= f.text_field :insBaseRate %>
+  </div>
+  <div class="field">
+    <%= f.label :insIncRate %><br>
+    <%= f.text_field :insIncRate %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

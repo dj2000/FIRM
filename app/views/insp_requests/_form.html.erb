@@ -1,44 +1,52 @@
 <%= simple_form_for(@insp_request) do |f| %>
-  <%= select_tag :property, options_from_collection_for_select(Property.all,:id, :zip), id: 'select-beast' %>
-  <div class="field">
-    <%= f.label :callTime %><br>
-    <%= f.datetime_select :callTime %>
+  <div class="form-group">
+    <div class="container">
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group">
+              <%= f.label 'Call Date & Time' %>
+              <div class='input-group date' id='datetimepicker1'>
+                  <%= f.text_field :callTime, class: 'form-control' %>
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <%= f.association :property, :collection => Property.all, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'select-search property_select' }, :prompt => "Select Property" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.association :client, :collection => Client.all, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'select-search customer_select', disabled: true }, :prompt => "Select Customer" %>
+      </div>
+      <div class="col-md-4">
+        <%= f.association :agent, :collection => Agent.all, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'select-search agent_select' }, :prompt => "Select Agent" %>
+      </div>
+    </div>
+      
+    <div class="actions">
+      <%= f.button :submit, class: 'btn btn-success' %>
+      <%= link_to 'Back', insp_requests_path, class: 'btn btn-info' %>
+    </div>
+  <% end %>
   </div>
-  <div class="field">
-    <%= f.label :callerType %><br>
-    <%= f.text_field :callerType %>
-  </div>
-  <div class="field">
-    <%= f.label :referalSource %><br>
-    <%= f.text_field :referalSource %>
-  </div>
-  <div class="field">
-    <%= f.label :client_id %><br>
-    <%= f.number_field :client_id %>
-  </div>
-  <div class="field">
-    <%= f.label :agent_id %><br>
-    <%= f.number_field :agent_id %>
-  </div>
-  <div class="field">
-    <%= f.label :property_id %><br>
-    <%= f.number_field :property_id %>
-  </div>
-  <div class="field">
-    <%= f.label :selectInsp %><br>
-    <%= f.text_field :selectInsp %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
+
 <script>
   $(document).ready(function(){
-    $('#select-beast').selectize({
-      create: true,
-      sortField: 'text'
+    // $('.select-search').selectize({
+    //   create: true,
+    //   sortField: 'text',
+    //   onChange: function(value) {
+    //     console.log('value is'+ value)
+    //   }
+    // }); 
+    $('#datetimepicker1').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss'
     });
-
   })
   
 </script>

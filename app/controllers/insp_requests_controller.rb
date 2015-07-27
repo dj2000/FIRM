@@ -25,10 +25,9 @@ class InspRequestsController < ApplicationController
   # POST /insp_requests.json
   def create
     @insp_request = InspRequest.new(insp_request_params)
-
     respond_to do |format|
       if @insp_request.save
-        format.html { redirect_to @insp_request, notice: 'Insp request was successfully created.' }
+        format.html { redirect_to insp_requests_path, notice: 'Insp request was successfully created.' }
         format.json { render :show, status: :created, location: @insp_request }
       else
         format.html { render :new }
@@ -61,6 +60,9 @@ class InspRequestsController < ApplicationController
     end
   end
 
+  def get_property_clients
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_insp_request
@@ -69,6 +71,6 @@ class InspRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def insp_request_params
-      params.require(:insp_request).permit(:callTime, :callerType, :referalSource, :client_id, :agent_id, :property_id, :selectInsp)
+      params.require(:insp_request).permit(:callTime, :callerType, :referalSource, :client_id, :agent_id, :property_id, :selectInsp, :occupied_by, :insp_type)
     end
 end

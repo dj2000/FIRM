@@ -47,7 +47,10 @@ Rails.application.routes.draw do
 
   resources :appointments
 
-  resources :insp_requests
+  resources :insp_requests do 
+    get :get_property_clients, on: :collection
+  end
+
 
   resources :agent_clients
 

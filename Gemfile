@@ -38,6 +38,9 @@ gem 'mysql2'
 gem 'pry'
 gem 'random_data'
 gem "selectize-rails"
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
+gem "font-awesome-rails"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

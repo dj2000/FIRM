@@ -1,6 +1,8 @@
-<h1>Listing insp_requests</h1>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection Request"), new_insp_request_path, :class => "btn btn-info" -%>
 
-<table>
+<h1>Inspection Requests</h1>
+
+<table class='tabel table-bordered table-striped'>
   <thead>
     <tr>
       <th>Calltime</th>
@@ -20,13 +22,13 @@
         <td><%= insp_request.callTime %></td>
         <td><%= insp_request.callerType %></td>
         <td><%= insp_request.referalSource %></td>
-        <td><%= insp_request.client_id %></td>
-        <td><%= insp_request.agent_id %></td>
-        <td><%= insp_request.property_id %></td>
+        <td><%= insp_request.client.firstName %></td>
+        <td><%= insp_request.agent.firstName %></td>
+        <td><%= insp_request.property.street %></td>
         <td><%= insp_request.selectInsp %></td>
-        <td><%= link_to 'Show', insp_request %></td>
-        <td><%= link_to 'Edit', edit_insp_request_path(insp_request) %></td>
-        <td><%= link_to 'Destroy', insp_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), insp_request, class: 'btn btn-primary' %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_insp_request_path(insp_request), class: 'btn btn-info' %></td>
+        <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), insp_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +36,3 @@
 
 <br>
 
-<%= link_to 'New Insp request', new_insp_request_path %>

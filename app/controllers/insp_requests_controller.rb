@@ -61,8 +61,13 @@ class InspRequestsController < ApplicationController
   end
 
   def get_property_clients
+    property = Property.find(params[:selector_id])
+    @clients = property.clients
   end
 
+  def get_client_agents
+
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_insp_request

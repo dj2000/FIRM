@@ -17,10 +17,10 @@
 
     <div class="row">
       <div class="col-md-4">
-        <%= f.association :property, :collection => Property.all, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'select-search property_select' }, :prompt => "Select Property" %>
+        <%= f.association :property, :collection => Property.all, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'select-search property_select', data: {filtertype: 'property_clients'} }, :prompt => "Select Property" %>
       </div>
-      <div class="col-md-4">
-        <%= f.association :client, :collection => Client.all, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'select-search customer_select', disabled: true }, :prompt => "Select Customer" %>
+      <div class="col-md-4 client_dropdown">
+        <%= f.association :client, :collection => Client.all, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'select-search client_select', data: {filtertype: 'client_agents'} }, :prompt => "Select Customer" %>
       </div>
       <div class="col-md-4">
         <%= f.association :agent, :collection => Agent.all, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'select-search agent_select' }, :prompt => "Select Agent" %>
@@ -37,13 +37,6 @@
 
 <script>
   $(document).ready(function(){
-    // $('.select-search').selectize({
-    //   create: true,
-    //   sortField: 'text',
-    //   onChange: function(value) {
-    //     console.log('value is'+ value)
-    //   }
-    // }); 
     $('#datetimepicker1').datetimepicker({
       format: 'YYYY-MM-DD hh:mm:ss'
     });

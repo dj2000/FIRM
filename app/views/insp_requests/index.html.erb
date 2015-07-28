@@ -12,7 +12,7 @@
       <th>Agent</th>
       <th>Property</th>
       <th>Selectinsp</th>
-      <th colspan="3"></th>
+      <th colspan="3">Actions</th>
     </tr>
   </thead>
 
@@ -22,8 +22,8 @@
         <td><%= insp_request.callTime %></td>
         <td><%= insp_request.callerType %></td>
         <td><%= insp_request.referalSource %></td>
-        <td><%= insp_request.client.firstName %></td>
-        <td><%= insp_request.agent.firstName %></td>
+        <td><%= insp_request.client %></td>
+        <td><%= insp_request.agent%></td>
         <td><%= insp_request.property.street %></td>
         <td><%= insp_request.selectInsp %></td>
         <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), insp_request, class: 'btn btn-primary' %></td>

@@ -1,2 +1,8 @@
-$('.client_select > .selectize-dropdown-content').remove()
-$('.client_select > .selectize-dropdown-content').html('<%= get_client_select_values(@clients) %>')
+$('.client_select').empty();
+$('.client_select').html("<option>Select Customer</option><%= escape_javascript(options_for_select(@clients)) %>");
+<% if @clients.present? %>
+	$(".client_select").attr('disabled', false)
+<% else %>
+	$(".client_select").attr('disabled', true)
+<% end %>
+$(".client_select").trigger("chosen:updated");

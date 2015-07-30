@@ -5,7 +5,6 @@ class Client < ActiveRecord::Base
   has_many :agents, through: :agent_clients
   has_many :insp_requests
 
-  def as_json
-    {firstName: self.firstName, id: self.id}
-  end
+  validates :firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, presence: true
+  validates :phoneH, :phoneW, :phoneC, uniqueness: true
 end

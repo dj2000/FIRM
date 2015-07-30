@@ -3,24 +3,26 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('.agent_select').chosen()
+  selector_list = [
+    'property_select'
+    'client_select'
+    'agent_select'
+  ]
+  for i of selector_list
+    $('.' + selector_list[i]).chosen()
 
-  $('.property_select').chosen().change (e) ->
+  $('.property_select').change (e) ->
     value = $(this).val()
+    if value != ''
+      $('.add-client').show()
     $.ajax
       url: '/insp_requests/get_property_clients'
       data:
         selector_id: value
-      dataType: 'script'
-      success: (data, textStatus, jqXHR) ->
-        console.log("success")
 
-  $('.client_select').chosen().change (e) ->
+  $('.client_select').change (e) ->
     value = $(this).val()
     $.ajax
       url: '/insp_requests/get_client_agents'
       data:
         selector_id: value
-      dataType: 'script'
-      success: (data, textStatus, jqXHR) ->
-        console.log("success")

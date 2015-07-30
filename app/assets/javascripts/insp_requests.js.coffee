@@ -3,34 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  add_search_dropdown = (selector) ->
-    $('.'+selector).selectize
-      create: false
-      sortField: 'text'
-      onChange: (value) ->
-        if selector == "property_select" or selector == 'client_select'
-          filter_type = $('.'+selector).data('filtertype')
-          $.ajax
-            url: '/insp_requests/get_'+filter_type
-            data:
-              selector_id: value
-            dataType: 'script'
-            success: (result) ->
-              console.log "success found"
-              
-              render: option: (item, escape) ->
-                console.log item
-                '<div data-value="#{item.text}">' + escape(item.text) + '</div>'
-        return
-      onType: (text) ->
-        return
-    return
+  $('.agent_select').chosen()
 
-  selector_list = [
-    'property_select'
-    'client_select'
-    'agent_select'
-  ]
+  $('.property_select').chosen().change (e) ->
+    value = $(this).val()
+    $.ajax
+      url: '/insp_requests/get_property_clients'
+      data:
+        selector_id: value
+      dataType: 'script'
+      success: (data, textStatus, jqXHR) ->
+        console.log("success")
 
-  for sel in selector_list
-    add_search_dropdown(sel)
+  $('.client_select').chosen().change (e) ->
+    value = $(this).val()
+    $.ajax
+      url: '/insp_requests/get_client_agents'
+      data:
+        selector_id: value
+      dataType: 'script'
+      success: (data, textStatus, jqXHR) ->
+        console.log("success")

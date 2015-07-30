@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616115320) do
+ActiveRecord::Schema.define(version: 20150730085721) do
 
   create_table "agent_clients", force: true do |t|
     t.integer  "agent_id"
@@ -317,15 +317,16 @@ ActiveRecord::Schema.define(version: 20150616115320) do
     t.integer  "yearBuilt"
     t.integer  "size"
     t.integer  "stories"
-    t.string   "type"
+    t.string   "prop_type"
     t.integer  "units"
     t.integer  "gndUnits"
     t.string   "lotType"
     t.string   "foundation"
-    t.boolean  "hpoz?"
-    t.boolean  "cdo?"
+    t.boolean  "hpoz"
+    t.boolean  "cdo"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "occupied_by"
   end
 
   create_table "receipts", force: true do |t|

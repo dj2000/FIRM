@@ -1,44 +1,26 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
 
-  # GET /properties
-  # GET /properties.json
   def index
     @properties = Property.all
   end
 
-  # GET /properties/1
-  # GET /properties/1.json
   def show
   end
 
-  # GET /properties/new
   def new
     @property = Property.new
+    @states = CS.states(:us).collect{|k, v| [v, k.to_s] }
   end
 
-  # GET /properties/1/edit
   def edit
   end
 
-  # POST /properties
-  # POST /properties.json
   def create
-    @property = Property.new(property_params)
-
-    respond_to do |format|
-      if @property.save
-        format.html { redirect_to @property, notice: 'Property was successfully created.' }
-        format.json { render :show, status: :created, location: @property }
-      else
-        format.html { render :new }
-        format.json { render json: @property.errors, status: :unprocessable_entity }
-      end
-    end
+    @property = Property.create(property_params)
+    @property.save
   end
 
-  # PATCH/PUT /properties/1
-  # PATCH/PUT /properties/1.json
   def update
     respond_to do |format|
       if @property.update(property_params)
@@ -51,14 +33,18 @@ class PropertiesController < ApplicationController
     end
   end
 
-  # DELETE /properties/1
-  # DELETE /properties/1.json
   def destroy
     @property.destroy
     respond_to do |format|
       format.html { redirect_to properties_url, notice: 'Property was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def cities
+    state = params[:state]
+    @cities = CS.cities(state.to_sym, :us)
+    render json: @cities
   end
 
   private
@@ -69,6 +55,6 @@ class PropertiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def property_params
-      params.require(:property).permit(:number, :street, :city, :state, :zip, :crossStreet, :mapPage, :yearBuilt, :size, :stories, :type, :units, :gndUnits, :lotType, :foundation, :hpoz?, :cdo?)
+      params.require(:property).permit(:number, :street, :city, :state, :zip, :crossStreet, :mapPage, :yearBuilt, :size, :stories, :type, :units, :gndUnits, :lotType, :foundation, :prop_type, :occupied_by, :cdo, :hpoz)
     end
 end

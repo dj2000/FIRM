@@ -57,7 +57,9 @@ Rails.application.routes.draw do
 
   resources :client_properties
 
-  resources :properties
+  resources :properties do 
+    get :cities, on: :collection
+  end
 
   resources :agents
 

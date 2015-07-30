@@ -1,87 +1,125 @@
-
-      <%= form_for(@property) do |f| %>
-        <% if @property.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
-
-            <ul>
-            <% @property.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-            </ul>
+<%= javascript_include_tag 'properties' %>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel">New Property</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for @property, html: { remote: true } do |f| %>
+        <%= f.error_notification %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :number %>
+            </div>
           </div>
-        <% end %>
-
-        <div class="field">
-          <%= f.label :number %><br>
-          <%= f.number_field :number %>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :street %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :street %><br>
-          <%= f.text_field :street %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :city, as: :select, collection: [], label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :city %><br>
-          <%= f.text_field :city %>
+        <div class="row">
+          <div class='col-sm-8'>
+            <div class="form-group">
+              <%= f.input :crossStreet %>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.input :zip %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :state %><br>
-          <%= f.text_field :state %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :mapPage %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, label: 'Select Year Built', prompt: 'Please Select' %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :zip %><br>
-          <%= f.number_field :zip %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :size, label: "Size in Square Footage" %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :stories, label: "Number of Floor Levels" %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :crossStreet %><br>
-          <%= f.text_field :crossStreet %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :prop_type, as: :select, collection: Property::PROPERTY_TYPE.map{|v| [v, v]}, label: "Building Type", prompt: 'Please Select' %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :units, label: "Number of Units" %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :mapPage %><br>
-          <%= f.number_field :mapPage %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :gndUnits, label: "Number of Ground Units" %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :lotType, as: :select, collection: Property::LOT_TYPE.map{|v| [v, v]}, selected: 'Flat', label: "Lot Type" %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :yearBuilt %><br>
-          <%= f.number_field :yearBuilt %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupation Type", prompt: 'Please Select' %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :size %><br>
-          <%= f.number_field :size %>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :cdo, label: "Community Design Overlay" %>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.input :hpoz, label: "Historical Property Overlay Zone" %>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <%= f.label :stories %><br>
-          <%= f.number_field :stories %>
-        </div>
-        <div class="field">
-          <%= f.label :type %><br>
-          <%= f.text_field :type %>
-        </div>
-        <div class="field">
-          <%= f.label :units %><br>
-          <%= f.number_field :units %>
-        </div>
-        <div class="field">
-          <%= f.label :gndUnits %><br>
-          <%= f.number_field :gndUnits %>
-        </div>
-        <div class="field">
-          <%= f.label :lotType %><br>
-          <%= f.text_field :lotType %>
-        </div>
-        <div class="field">
-          <%= f.label :foundation %><br>
-          <%= f.text_field :foundation %>
-        </div>
-        <div class="field">
-          <%= f.label :hpoz? %><br>
-          <%= f.check_box :hpoz? %>
-        </div>
-        <div class="field">
-          <%= f.label :cdo? %><br>
-          <%= f.check_box :cdo? %>
-        </div>
-        <div class="actions">
-          <%= f.submit %>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit 'Submit', class: 'btn btn-primary' %>
         </div>
       <% end %>
-    
+    </div>
+  </div>
+</div>

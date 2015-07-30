@@ -6,7 +6,7 @@
         <div class='col-sm-6'>
           <div class="form-group">
               <%= f.label 'Call Date & Time' %>
-              <div class='input-group date' id='datetimepicker1'>
+              <div class='input-group date datetimepicker'>
                   <%= f.text_field :callTime, class: 'form-control' %>
                   <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
@@ -27,19 +27,19 @@
         <%= f.association :property, :collection => @properties, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'property_select', data: {filtertype: 'property_clients'}}, :prompt => "Select Property" %>
       </div>
       <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_property_path, remote: true, class: 'static-popup-link' %>
+        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_property_path, remote: true, class: "add-property" %>
       </span>
       <div class="col-md-3">
         <%= f.association :client, :collection => @clients, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'client_select', data: {filtertype: 'client_agents'}, disabled: (f.object.new_record? ? true : false)}, :prompt => "Select Customer" %>
       </div>
       <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), "#"  %>
+        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_client_path, remote: true, class: "add-client" %>
       </span>
       <div class="col-md-3">
         <%= f.association :agent, :collection => @agents, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: (f.object.new_record? ? true : false) }, :prompt => "Select Agent" %>
       </div>
       <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), "#"  %>
+        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_agent_path, remote: true, class: "add-agent"  %>
       </span>
     </div>
       
@@ -50,24 +50,14 @@
   <% end %>
   </div>
 </div>
-<div class="modal" id="property-modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">New Property</h4>
-      </div>
-      <div class="modal-body" id="property_body">
-
-      </div>
-    </div>
-  </div>
-</div>
+<div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   $(document).ready(function(){
-    $('#datetimepicker1').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss'
+    $('.datetimepicker').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss',
+      defaultDate: new Date()
     });
   })
-
+$(".add-client").hide();
+$(".add-agent").hide();
 </script>

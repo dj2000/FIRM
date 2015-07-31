@@ -1,8 +1,6 @@
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection Request"), new_insp_request_path, :class => "btn btn-info" -%>
-
 <h1>Inspection Requests</h1>
 
-<table class='tabel table-bordered table-striped'>
+<table class='table table-bordered table-striped'>
   <thead>
     <tr>
       <th>Calltime</th>
@@ -12,6 +10,7 @@
       <th>Agent</th>
       <th>Property</th>
       <th>Selectinsp</th>
+      <th>Appointment</th>
       <th colspan="3">Actions</th>
     </tr>
   </thead>
@@ -19,20 +18,21 @@
   <tbody>
     <% @insp_requests.each do |insp_request| %>
       <tr>
-        <td><%= insp_request.callTime %></td>
+        <td><%= insp_request.call_time %></td>
         <td><%= insp_request.callerType %></td>
         <td><%= insp_request.referalSource %></td>
         <td><%= insp_request.client.try(:firstName) %></td>
         <td><%= insp_request.agent.try(:firstName) %></td>
         <td><%= insp_request.property.try(:street) %></td>
         <td><%= insp_request.selectInsp %></td>
-        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), insp_request, class: 'btn btn-primary' %></td>
+        <td><%= insp_request.has_appointment? %></td>
+        <td><%= link_to raw("<i class='fa fa-eye'></i> Appointment"), insp_request, class: 'btn btn-primary' %></td>
         <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_insp_request_path(insp_request), class: 'btn btn-info' %></td>
         <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), insp_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection Request"), new_insp_request_path, :class => "btn btn-info" -%>
 

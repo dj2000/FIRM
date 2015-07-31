@@ -5,7 +5,7 @@ class Client < ActiveRecord::Base
   has_many :agents, through: :agent_clients
   has_many :insp_requests
 
-  validates :firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, presence: true
+  validates :firstName, :lastName, :phoneH, :phoneW, :phoneC, presence: true
   validates :phoneH, :phoneW, :phoneC,
   						uniqueness: true,
   						numericality: true,

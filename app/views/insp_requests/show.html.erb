@@ -1,39 +1,60 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Calltime:</strong>
-  <%= @insp_request.callTime %>
-</p>
-
-<p>
-  <strong>Callertype:</strong>
-  <%= @insp_request.callerType %>
-</p>
-
-<p>
-  <strong>Referalsource:</strong>
-  <%= @insp_request.referalSource %>
-</p>
-
-<p>
-  <strong>Client:</strong>
-  <%= @insp_request.client_id %>
-</p>
-
-<p>
-  <strong>Agent:</strong>
-  <%= @insp_request.agent_id %>
-</p>
-
-<p>
-  <strong>Property:</strong>
-  <%= @insp_request.property_id %>
-</p>
-
-<p>
-  <strong>Selectinsp:</strong>
-  <%= @insp_request.selectInsp %>
-</p>
-
-<%= link_to 'Edit', edit_insp_request_path(@insp_request) %> |
-<%= link_to 'Back', insp_requests_path %>
+<div class="container">
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Call Time:</strong>
+        <%= @insp_request.call_time %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Caller type:</strong>
+        <%= @insp_request.callerType %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Referral Source:</strong>
+        <%= @insp_request.referalSource %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Client:</strong>
+        <%= @insp_request.client.try(:firstName) %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Agent:</strong>
+        <%= @insp_request.agent.try(:firstName) %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Property:</strong>
+        <%= @insp_request.property.try(:street) %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <strong>Select Insp:</strong>
+        <%= @insp_request.selectInsp %>
+      </div>
+    </div>
+  </div>
+</div>

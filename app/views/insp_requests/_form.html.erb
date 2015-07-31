@@ -5,51 +5,51 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-              <%= f.label 'Call Date & Time' %>
-              <div class='input-group date datetimepicker'>
-                  <%= f.text_field :callTime, class: 'form-control' %>
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
+            <%= f.label 'Call Date & Time' %>
+            <div class='input-group date datetimepicker'>
+              <%= f.text_field :callTime, class: 'form-control' %>
+              <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.association :property, :collection => @properties, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'property_select', data: {filtertype: 'property_clients'}}, :prompt => "Select Property" %>
+        </div>
+        <span class="col-md-1">
+          <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_property_path, remote: true, class: "add-property" %>
+        </span>
+        <div class="col-md-3">
+          <%= f.association :client, :collection => @clients, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'client_select', data: {filtertype: 'client_agents'}, disabled: (f.object.new_record? ? true : false)}, :prompt => "Select Customer" %>
+        </div>
+        <span class="col-md-1">
+          <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_client_path, remote: true, class: "add-client" %>
+        </span>
+        <div class="col-md-3">
+          <%= f.association :agent, :collection => @agents, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: (f.object.new_record? ? true : false) }, :prompt => "Select Agent" %>
+        </div>
+        <span class="col-md-1">
+          <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_agent_path, remote: true, class: "add-agent"  %>
+        </span>
+      </div>
+      <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
             <%= f.label 'Referral Source' %>
             <%= f.select :referalSource, InspRequest::REFERRAL_SOURCE.map{|v| [v, v]}, {:prompt => "Select Referral Source" }, {class: 'form-control'} %>
           </div>
+        </div>
+      </div>      
+      <div class="actions">
+        <%= f.button :submit, class: 'btn btn-success' %>
+        <%= link_to 'Back', insp_requests_path, class: 'btn btn-info' %>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <%= f.association :property, :collection => @properties, :label_method => :property_select_value, label: 'Select Property', input_html:{ class: 'property_select', data: {filtertype: 'property_clients'}}, :prompt => "Select Property" %>
-      </div>
-      <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_property_path, remote: true, class: "add-property" %>
-      </span>
-      <div class="col-md-3">
-        <%= f.association :client, :collection => @clients, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'client_select', data: {filtertype: 'client_agents'}, disabled: (f.object.new_record? ? true : false)}, :prompt => "Select Customer" %>
-      </div>
-      <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_client_path, remote: true, class: "add-client" %>
-      </span>
-      <div class="col-md-3">
-        <%= f.association :agent, :collection => @agents, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: (f.object.new_record? ? true : false) }, :prompt => "Select Agent" %>
-      </div>
-      <span class="col-md-1">
-        <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_agent_path, remote: true, class: "add-agent"  %>
-      </span>
-    </div>
-      
-    <div class="actions">
-      <%= f.button :submit, class: 'btn btn-success' %>
-      <%= link_to 'Back', insp_requests_path, class: 'btn btn-info' %>
-    </div>
-  <% end %>
   </div>
-</div>
+<% end %>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   $(document).ready(function(){

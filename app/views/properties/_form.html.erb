@@ -27,7 +27,7 @@
           </div>
           <div class='col-sm-6'>
             <div class="form-group">
-              <%= f.input :city, as: :select, collection: [], label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+              <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
           </div>
           <div class='col-sm-6'>
             <div class="form-group">
-              <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupation Type", prompt: 'Please Select' %>
+              <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupied By", prompt: 'Please Select' %>
             </div>
           </div>
         </div>

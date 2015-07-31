@@ -10,7 +10,7 @@ class PropertiesController < ApplicationController
 
   def new
     @property = Property.new
-    @states = CS.states(:us).collect{|k, v| [v, k.to_s] }
+    states_cities
   end
 
   def edit
@@ -18,7 +18,7 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.create(property_params)
-    @property.save
+    states_cities if @property.errors.present?
   end
 
   def update
@@ -51,6 +51,11 @@ class PropertiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_property
       @property = Property.find(params[:id])
+    end
+
+    def states_cities
+      @states = CS.states(:us).collect{|k, v| [v, k.to_s] }
+      @cities = @property.state ? CS.cities((@property.state).to_sym, :us) : []
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

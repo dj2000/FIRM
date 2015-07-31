@@ -13,10 +13,18 @@ class Property < ActiveRecord::Base
 
   YEAR_BUILT = (1965..Date.current.year)
 
-  validates :street, :city, :state, :zip, presence: true
+  validates :street, :city, :state, presence: true
+
+  validates :zip,
+              presence: true,
+              length:
+                { is: 5,
+                  allow_blank: true }
+
 
   def property_select_value
-  	"#{number} #{street}, #{city}, #{state} #{zip}"
+    state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
+    "#{number} #{street}, #{city}, #{state_name} #{zip}"
   end
   
 end

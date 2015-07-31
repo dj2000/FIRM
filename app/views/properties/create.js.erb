@@ -1,6 +1,7 @@
 <% if @property.errors.present? %>
 	$(".modal").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
+	$('.add-client').show()
 	$(".property_select").append("<option value='<%= @property.id %>' selected> <%= @property.property_select_value %></option>");
 	$(".property_select").trigger("chosen:updated");
 	$(".modal").modal('hide');

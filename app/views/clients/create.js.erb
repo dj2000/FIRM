@@ -1,6 +1,7 @@
 <% if @client.errors.present? %>
 	$(".modal").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
+	$('.add-agent').show()
 	$(".client_select").append("<option value='<%= @client.id %>' selected> <%= @client.firstName %></option>");
 	$(".client_select").attr('disabled', false)
 	$(".client_select").trigger("chosen:updated");

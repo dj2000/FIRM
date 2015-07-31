@@ -42,7 +42,14 @@
             <%= f.select :referalSource, InspRequest::REFERRAL_SOURCE.map{|v| [v, v]}, {:prompt => "Select Referral Source" }, {class: 'form-control'} %>
           </div>
         </div>
-      </div>      
+      </div>
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= f.input :selectInsp, as: :radio_buttons, collection: InspRequest::SELECTION_CRITERIA.map{|v| [v, v]}, label: "Inspector Selection Criteria", label_method: :last, value_method: :first %>            
+          </div>
+        </div>
+      </div>
       <div class="actions">
         <%= f.button :submit, class: 'btn btn-success' %>
         <%= link_to 'Back', insp_requests_path, class: 'btn btn-info' %>

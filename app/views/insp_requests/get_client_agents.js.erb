@@ -1,5 +1,6 @@
+$("#new_insp_request").removeClass('has-error');
 $('.agent_select').empty();
-$('.agent_select').html("<option>Select Customer</option><%= escape_javascript(options_for_select(@agents)) %>");
+$('.agent_select').html("<option>Select Agent</option><%= escape_javascript(options_for_select(@agents)) %>");
 <% if @agents.present? %>
 	$(".agent_select").attr('disabled', false)
 <% else %>

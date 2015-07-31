@@ -16,8 +16,11 @@ class ClientsController < ApplicationController
   end
 
   def create
+    @property = Property.find(params[:property_id])
     @client = Client.new(client_params)
-    @client.save
+    if @client.save
+      @property.clients << @client
+    end
   end
 
   def update

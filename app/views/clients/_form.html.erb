@@ -23,6 +23,7 @@
             </div>
           </div>
         </div>
+        <%= hidden_field_tag :property_id, "" %>
         <div class="row">
           <div class='col-sm-4'>
             <div class="form-group">
@@ -62,3 +63,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    var property_id = $(".property_select").val();
+    $("#property_id").val(property_id);
+  });
+</script>

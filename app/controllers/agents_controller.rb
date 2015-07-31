@@ -24,16 +24,10 @@ class AgentsController < ApplicationController
   # POST /agents
   # POST /agents.json
   def create
+    @client = Client.find(params[:client_id])
     @agent = Agent.new(agent_params)
-
-    respond_to do |format|
-      if @agent.save
-        format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
-        format.json { render :show, status: :created, location: @agent }
-      else
-        format.html { render :new }
-        format.json { render json: @agent.errors, status: :unprocessable_entity }
-      end
+    if @agent.save
+      @client.agents << @agent
     end
   end
 

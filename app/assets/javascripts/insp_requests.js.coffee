@@ -13,8 +13,7 @@ $ ->
 
   $('.property_select').change (e) ->
     value = $(this).val()
-    if value != ''
-      $('.add-client').show()
+    $('.add-client').show()
     $.ajax
       url: '/insp_requests/get_property_clients'
       data:
@@ -22,6 +21,7 @@ $ ->
 
   $('.client_select').change (e) ->
     value = $(this).val()
+    $('.add-agent').show()
     $.ajax
       url: '/insp_requests/get_client_agents'
       data:

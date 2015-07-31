@@ -13,7 +13,7 @@ $ ->
 	    	$("<option/>", text: "Please Select").appendTo selectTag
 	    	for val of result
 	    		$("<option/>",
-	    			value: result[val[1]]
+	    			value: result[val]
 	    			text: result[val]
 	  				).appendTo selectTag
 	  return

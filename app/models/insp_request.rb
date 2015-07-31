@@ -14,6 +14,6 @@ class InspRequest < ActiveRecord::Base
   end
 
   def call_time
-    self.callTime.strftime("%d %b %Y %H:%M:%S")
+    self.try(:callTime).try(:strftime, "%d %b %Y %H:%M:%S")
   end
 end

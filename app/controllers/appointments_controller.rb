@@ -25,9 +25,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    if @appointment.save
-      redirect_to insp_request_path(@appointment.insp_request)
-    end
+    @appointment.save
   end
 
   # PATCH/PUT /appointments/1
@@ -62,6 +60,6 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes)
+      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received)
     end
 end

@@ -4,9 +4,9 @@
     <h1 class="panel-title">Add Appointment</h1>
   </div>
   <div class="panel-body">
-    <%= simple_form_for @appointment do |f| %>
+    <%= simple_form_for @appointment, html: { remote: true } do |f| %>
       <%= f.error_notification %>
-      <%= f.hidden_field :inspRequest_id, value: @insp_request.id %>
+      <%= f.hidden_field :inspRequest_id, value: ( @insp_request.try(:id) || f.object.inspRequest_id ) %>
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">

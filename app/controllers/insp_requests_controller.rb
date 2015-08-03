@@ -6,6 +6,7 @@ class InspRequestsController < ApplicationController
   end
 
   def show
+    @appointment = @insp_request.build_appointment
   end
 
   def new

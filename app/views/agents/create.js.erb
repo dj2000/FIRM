@@ -1,6 +1,7 @@
 <% if @agent.errors.present? %>
 	$(".modal").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
+	$('.add-agent').hide()
 	$(".agent_select").append("<option value='<%= @agent.id %>' selected> <%= @agent.firstName %></option>");
 	$(".agent_select").attr('disabled', false)
 	$(".agent_select").trigger("chosen:updated");

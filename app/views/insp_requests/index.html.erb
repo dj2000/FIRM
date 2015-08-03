@@ -26,7 +26,7 @@
         <td><%= insp_request.property.try(:street) %></td>
         <td><%= insp_request.selectInsp %></td>
         <td><%= insp_request.has_appointment? %></td>
-        <td><%= link_to raw("<i></i> Appointment"), insp_request, class: 'btn btn-primary' %></td>
+        <td><%= link_to raw("<i></i> Appointment"), insp_request, class: 'btn btn-primary', disabled: (insp_request.appointment ? true : false) %></td>
         <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_insp_request_path(insp_request), class: 'btn btn-info' %></td>
         <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), insp_request, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>

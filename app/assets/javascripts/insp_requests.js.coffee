@@ -4,16 +4,15 @@
 
 $ ->
   selector_list = [
-    'property_select'
-    'client_select'
-    'agent_select'
+    'property'
+    'client'
+    'agent'
   ]
   for i of selector_list
-    $('.' + selector_list[i]).chosen()
+    $('.' + selector_list[i] + '_select').chosen()
 
   $('.property_select').change (e) ->
     value = $(this).val()
-    $('.add-client').show()
     $.ajax
       url: '/insp_requests/get_property_clients'
       data:
@@ -21,8 +20,24 @@ $ ->
 
   $('.client_select').change (e) ->
     value = $(this).val()
-    $('.add-agent').show()
     $.ajax
       url: '/insp_requests/get_client_agents'
       data:
         selector_id: value
+
+  addLink = (entity) ->
+    $('.' + entity + '_select').data('chosen').container.on 'keyup', (event) ->
+      matchResult(entity, $(this))
+
+    $('.' + entity + '_select').data('chosen').container.on 'keydown', (event) ->
+      matchResult(entity, $(this))
+
+  matchResult = (selector, container) ->
+    $('.add-' + selector).hide()
+    text = container.find('.no-results').text()
+    if text.match(/No results match/)
+      $('.add-' + selector).show()
+    return
+
+  for i of selector_list
+    addLink(selector_list[i])

@@ -23,13 +23,13 @@
           <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_property_path, remote: true, class: "add-property" %>
         </span>
         <div class="col-md-3">
-          <%= f.association :client, :collection => @clients, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'client_select', data: {filtertype: 'client_agents'}, disabled: (f.object.new_record? ? true : false)}, :prompt => "Select Customer" %>
+          <%= f.association :client, :collection => @clients, :label_method => :firstName, label: 'Select Customer', input_html: { class: 'client_select', data: {filtertype: 'client_agents'}, disabled: f.object.disable_client? }, :prompt => "Select Customer" %>
         </div>
         <span class="col-md-1">
           <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_client_path, remote: true, class: "add-client" %>
         </span>
         <div class="col-md-3">
-          <%= f.association :agent, :collection => @agents, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: (f.object.new_record? ? true : false) }, :prompt => "Select Agent" %>
+          <%= f.association :agent, :collection => @agents, :label_method => :firstName, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: f.object.disable_agent? }, :prompt => "Select Agent" %>
         </div>
         <span class="col-md-1">
           <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_agent_path, remote: true, class: "add-agent"  %>
@@ -67,4 +67,5 @@
   })
 $(".add-client").hide();
 $(".add-agent").hide();
+$(".add-property").hide();
 </script>

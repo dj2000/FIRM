@@ -4,6 +4,7 @@ $('.agent_select').html("<option>Select Agent</option><%= escape_javascript(opti
 <% if @agents.present? %>
 	$(".agent_select").attr('disabled', false)
 <% else %>
+	$(".add-agent").show();
 	$(".agent_select").attr('disabled', true)
 <% end %>
 $(".agent_select").trigger("chosen:updated");

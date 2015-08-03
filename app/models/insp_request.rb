@@ -18,4 +18,12 @@ class InspRequest < ActiveRecord::Base
   def call_time
     self.try(:callTime).try(:strftime, "%d %b %Y %H:%M:%S")
   end
+
+  def disable_client?
+    self.try(:client) ? false : true
+  end
+
+  def disable_agent?
+    self.try(:agent) ? false : true
+  end
 end

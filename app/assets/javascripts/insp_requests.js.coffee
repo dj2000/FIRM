@@ -26,11 +26,13 @@ $ ->
         selector_id: value
 
   addLink = (entity) ->
-    $('.' + entity + '_select').data('chosen').container.on 'keyup', (event) ->
-      matchResult(entity, $(this))
+    selector_class = $('.' + entity + '_select')
+    if selector_class.length
+      selector_class.data('chosen').container.on 'keyup', (event) ->
+        matchResult(entity, $(this))
 
-    $('.' + entity + '_select').data('chosen').container.on 'keydown', (event) ->
-      matchResult(entity, $(this))
+      selector_class.data('chosen').container.on 'keydown', (event) ->
+        matchResult(entity, $(this))
 
   matchResult = (selector, container) ->
     $('.add-' + selector).hide()

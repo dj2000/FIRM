@@ -1,0 +1,91 @@
+<div>
+	<div class="mini-calendar"></div>
+	<div class="full-calendar"></div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title" id="exampleModalLabel">Inspector's Calendar</h4>
+	    </div>
+	    <div class="modal-body">
+	    	<%= simple_form_for @appointment do |f| %>
+	    		<div class="row">
+	          <div class='col-sm-6'>
+	            <div class="form-group">
+		            <%= f.label 'Start' %>
+		            <div class='input-group datetimepicker'>
+		              <%= f.text_field :schedStart, class: 'form-control' %>
+		              <span class="input-group-addon">
+		                  <span class="glyphicon glyphicon-calendar"></span>
+		              </span>
+            		</div>
+          		</div>
+	          </div>
+	          <div class='col-sm-2'>
+	            <div class="form-group">
+	              <%= f.input :allDay %>
+	            </div>
+	          </div>
+          </div>
+          <div class="row">
+	          <div class='col-sm-6'>
+	            <div class="form-group">
+		            <%= f.label 'End' %>
+		            <div class='input-group datetimepicker'>
+		              <%= f.text_field :schedEnd, class: 'form-control' %>
+		              <span class="input-group-addon">
+		                  <span class="glyphicon glyphicon-calendar"></span>
+		              </span>
+            		</div>
+          		</div>
+	          </div>
+          </div>
+          <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection' %>
+	        </div>
+	    	<% end %>
+	    </div>
+	  </div>
+	  </div>
+</div>
+<script>
+  $(document).ready(function(){
+  	$('.mini-calendar').datepicker('setDate', new Date());
+  	$('.mini-calendar').on('changeDate', function (dateText) {
+		  $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
+		  var defaultView = $('.full-calendar').fullCalendar('getView').name;
+      $('.full-calendar').fullCalendar("changeView", defaultView);
+		});
+		$('.mini-calendar').datepicker('update');
+    $('.datetimepicker').datetimepicker({
+      format: 'YYYY-MM-DD hh:mm:ss',
+      defaultDate: new Date()
+    });
+  })
+		
+	$('.full-calendar').fullCalendar({
+	  header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			defaultView: 'month',
+			editable: true,
+			weekends: false,
+			selectable: true,
+			selectHelper: true,
+	  select: function(start, end) {
+    	$('.modal').modal('show');
+    	$(".schedule_inspection").click(function(){
+    		var data = $(".edit_appointment").serialize();
+        $.ajax({
+          type: "PUT",
+          url: "/appointments/<%= @appointment.id %>",
+          data: data
+        });
+      })  
+    }
+	});
+</script>

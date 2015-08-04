@@ -49,12 +49,19 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= link_to "Schedule Inspection", schedule_inspection_appointment_path %>
+          </div>
+        </div>
+      </div>
       <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% end %>
   </div>
   <br/>
 </div>
-
+<div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
 $(".payment_method").hide();
 </script>

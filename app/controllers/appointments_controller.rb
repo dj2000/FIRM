@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :schedule_inspection]
 
   # GET /appointments
   # GET /appointments.json
@@ -50,6 +50,9 @@ class AppointmentsController < ApplicationController
       format.html { redirect_to appointments_url, notice: 'Appointment was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def schedule_inspection
   end
 
   private

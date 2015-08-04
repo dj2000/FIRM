@@ -45,7 +45,9 @@ Rails.application.routes.draw do
 
   resources :svc_criteria
 
-  resources :appointments
+  resources :appointments do
+    get :schedule_inspection, on: :member
+  end
 
   resources :insp_requests do 
     get :get_property_clients, on: :collection

@@ -4,7 +4,7 @@
     <h1 class="panel-title">Add Appointment</h1>
   </div>
   <div class="panel-body">
-    <%= simple_form_for @appointment, html: { remote: true } do |f| %>
+    <%= simple_form_for @appointment do |f| %>
       <%= f.error_notification %>
       <%= f.hidden_field :inspRequest_id, value: ( @insp_request.try(:id) || f.object.inspRequest_id ) %>
       <div class="row">
@@ -38,7 +38,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :amount_received, as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :amount_received %>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= link_to "Schedule Inspection", schedule_inspection_appointment_path %>
+            <%= link_to "Schedule Inspection", schedule_inspection_appointment_path(@insp_request), class: "btn btn-primary" %>
           </div>
         </div>
       </div>

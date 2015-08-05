@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :schedule_inspection]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
 
   # GET /appointments
   # GET /appointments.json
@@ -25,7 +25,11 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    @appointment.save
+    if @appointment.save
+      redirect_to insp_request_path(@appointment.insp_request)
+    else
+      render action: :new
+    end
   end
 
   # PATCH/PUT /appointments/1
@@ -53,6 +57,9 @@ class AppointmentsController < ApplicationController
   end
 
   def schedule_inspection
+    @appointment = Appointment.new(inspRequest_id: params[:id] )
+    @appointment.save(validate: false)
+    @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
   end
 
   private

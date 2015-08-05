@@ -7,5 +7,16 @@ class Appointment < ActiveRecord::Base
 
   PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Mailing", "Inspector"]
 
-  validates :inspFee, presence: true
+  validates :inspFee, 
+  						presence: true,
+  						numericality: {
+  							greater_than_or_equal_to: 0,
+  							less_than_or_equal_to: 100
+  							}
+
+  validates :amount_received,
+  						numericality: {
+  							greater_than_or_equal_to: 0,
+  							less_than_or_equal_to: 100
+  							}
 end

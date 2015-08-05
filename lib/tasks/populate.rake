@@ -12,6 +12,7 @@ namespace :app do
    streets = ["Street1", "Street2"]
    client_first_name = ["ClientA", "ClientB"]
    agent_first_name = ['AgentA', 'AgentB']
+   inspector_name = ['Inspector']
    Property.delete_all
    
    streets.each_with_index do |street_name|
@@ -34,6 +35,22 @@ namespace :app do
 		agent_first_name.each_with_index do |agent_name|
 			Agent.populate(5) do |agent|     
 		 	 	agent.firstName = agent_name
+		 	end
+		end
+
+		puts "Started with task to populate demo data for Agent"
+   	Agent.delete_all
+		agent_first_name.each_with_index do |agent_name|
+			Agent.populate(5) do |agent|     
+		 	 	agent.firstName = agent_name
+		 	end
+		end
+
+		puts "Started with task to populate demo data for Inspector"
+   	Inspector.delete_all
+		inspector_name.each_with_index do |insp_name, i|
+			Inspector.populate(10) do |inspector|     
+		 	 	inspector.firstName = "#{insp_name} #{i}"
 		 	end
 		end
  	end

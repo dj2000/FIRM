@@ -58,14 +58,4 @@
     </div>
   </div>
 </div>
-<button type="button" class="btn btn-primary add-appointment-button">Add Appointment</button>
-<div class="add-appointment-form">
-  <%= render partial: '/appointments/form' %>
-</div>
-<script>
-$(".add-appointment-form").hide();
-$(".add-appointment-button").on('click', function(){
-  $(this).hide();
-  $(".add-appointment-form").show();
-});
-</script>
+<%= render partial: '/appointments/form' %>

@@ -9,57 +9,14 @@
 	      <h4 class="modal-title" id="exampleModalLabel">Inspector's Calendar</h4>
 	    </div>
 	    <div class="modal-body">
-	    	<%= simple_form_for @appointment do |f| %>
-	    		<div class="row">
-	          <div class='col-sm-6'>
-	            <div class="form-group">
-		            <%= f.label 'Start' %>
-		            <div class='input-group'>
-		              <%= f.text_field :schedStart, class: 'form-control datepicker' %>
-		              <span class="input-group-addon">
-		                  <span class="glyphicon glyphicon-calendar"></span>
-		              </span>
-            		</div>
-          		</div>
-	          </div>
-	          <div class='col-sm-2'>
-	            <div class="form-group">
-	              <%= f.input :allDay %>
-	            </div>
-	          </div>
-          </div>
-          <div class="row">
-	          <div class='col-sm-6'>
-	            <div class="form-group">
-		            <%= f.label 'End' %>
-		            <div class='input-group'>
-		              <%= f.text_field :schedEnd, class: 'form-control datepicker' %>
-		              <span class="input-group-addon">
-		                  <span class="glyphicon glyphicon-calendar"></span>
-		              </span>
-            		</div>
-          		</div>
-	          </div>
-          </div>
-          <div class="row">
-	          <div class='col-sm-6'>
-	            <div class="form-group">
-	              <%= f.input :inspector_id, as: :select, collection: @inspectors %>
-	            </div>
-	          </div>
-          </div>
-          <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	          <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
-	        </div>
-	    	<% end %>
+	    	<%= render 'schedule_inspection' %>
 	    </div>
 	  </div>
 	  </div>
 </div>
 <script>
   $(document).ready(function(){
-  	$('.datepicker').datepicker();
+  	$('input.datepicker').datepicker();
   	$('.datepicker').on('changeDate', function (dateText) {
 		  $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
 		  var defaultView = $('.full-calendar').fullCalendar('getView').name;
@@ -80,14 +37,15 @@
 			selectHelper: true,
 	  select: function(start, end) {
     	$('.modal').modal('show');
-    	$(".schedule_inspection").click(function(){
-    		var data = $(".edit_appointment").serialize();
-        $.ajax({
-          type: "PUT",
-          url: "/appointments/<%= @appointment.id %>",
-          data: data
-        });
-      })  
+    	// $(".schedule_inspection").click(function(){
+    	// 	var data = $(".edit_appointment").serialize();
+     //    $.ajax({
+     //      type: "PUT",
+     //      url: "/appointments/<%= @appointment.id %>",
+     //      data: data,
+     //      dataType: 'JSON'
+     //    });
+     //  })  
     }
 	});
 </script>

@@ -22,7 +22,7 @@ class Appointment < ActiveRecord::Base
   							less_than_or_equal_to: 100
   							}
 
-  validates :schedStart, :schedEnd, presence: { message: "Please schedule inspection request." }, if: "scheduled_inspection.present?"
+  validates :schedStart, :schedEnd, presence: true, if: "scheduled_inspection.present?"
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 

@@ -1,6 +1,11 @@
+<% referrer = request.referrer.include?("schedule_inspection") %>
 <% if @appointment.errors.present? %>
-	$(".add-appointment-form").html("<%= escape_javascript(render partial: 'form') %>")
-	$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
+	<% if referrer %>
+		$(".modal-body").html("<%= escape_javascript(render partial: 'schedule_inspection') %>")
+	<% else %>
+		$(".add-appointment-form").html("<%= escape_javascript(render partial: 'form') %>")
+		$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
+	<% end %>
 <% else %>
 	$(window.location.replace('/insp_requests'))
 <% end %>

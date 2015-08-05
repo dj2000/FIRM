@@ -1,6 +1,5 @@
 <%= simple_form_for @appointment, html: { remote: true } do |f| %>
   <%= f.error_notification %>
-
 	<div class="row">
     <div class='col-sm-4'>
       <div class="form-group">
@@ -18,7 +17,7 @@
       <div class="form-group">
         <%= f.label 'Start Time' %>
         <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%H:%M") %>
+          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p") %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
       </div>
@@ -45,7 +44,7 @@
       <div class="form-group">
         <%= f.label 'End Time' %>
         <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%H:%M") %>
+          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p") %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
       </div>

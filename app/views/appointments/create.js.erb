@@ -1,11 +1,5 @@
 <% if @appointment.errors.present? %>
 	$(".add-appointment-form").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
-	$("#notice").html("Appointment created successfully.")
-	$(".add-appointment-form").hide();
-	$('#new_appointment')[0].reset();
-	$("#new_appointment").find('.form-group').removeClass('has-error');
-	$("#new_appointment").find('span.help-block').remove();
-	$("#new_appointment").find('.alert-danger').remove();
-	$(".add-appointment-button").show();
+	$(window.location.replace('/insp_requests'))
 <% end %>

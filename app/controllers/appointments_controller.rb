@@ -25,11 +25,8 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    if @appointment.save
-      redirect_to insp_request_path(@appointment.insp_request)
-    else
-      render action: :new
-    end
+    @insp_request = @appointment.insp_request
+    @appointment.save
   end
 
   # PATCH/PUT /appointments/1

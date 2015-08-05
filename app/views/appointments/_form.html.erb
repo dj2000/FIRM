@@ -63,5 +63,11 @@
 </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
-$(".payment_method").hide();
+  $(document).ready(function(){
+    <% if @appointment.prepaid %>
+      $(".payment_method").show();
+    <% else %>
+      $(".payment_method").hide();
+    <% end %>
+  })
 </script>

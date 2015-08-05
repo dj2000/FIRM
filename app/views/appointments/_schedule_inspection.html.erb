@@ -5,7 +5,7 @@
       <div class="form-group">
         <%= f.label 'Start Date' %>
         <div class='input-group date'>
-          <%= f.text_field :schedStart, class: "form-control", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d") %>
+          <%= f.text_field :schedStart, class: "form-control", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d"), name: "schedStart[]" %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -17,7 +17,7 @@
       <div class="form-group">
         <%= f.label 'Start Time' %>
         <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p") %>
+          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p"), name: "schedStart[]" %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="form-group">
         <%= f.label 'End Date' %>
         <div class='input-group date'>
-          <%= f.text_field :schedEnd, class: "form-control", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d") %>
+          <%= f.text_field :schedEnd, class: "form-control", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d"), name: "schedEnd[]" %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -44,7 +44,7 @@
       <div class="form-group">
         <%= f.label 'End Time' %>
         <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p") %>
+          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p"), name: "schedEnd[]" %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
         </div>
       </div>

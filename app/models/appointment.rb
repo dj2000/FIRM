@@ -28,6 +28,15 @@ class Appointment < ActiveRecord::Base
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 
+  def as_json
+    {
+      start: self.schedStart,
+      end: self.schedEnd,
+      title: self.try(:inspector).try(:firstName),
+      color: 'tomato'
+    }
+  end
+
   private
 
   def is_scheduled

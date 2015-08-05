@@ -1,5 +1,5 @@
 <div>
-	<div class="mini-calendar"></div>
+	<div class="datepicker"></div>
 	<div class="full-calendar"></div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false">
@@ -14,8 +14,8 @@
 	          <div class='col-sm-6'>
 	            <div class="form-group">
 		            <%= f.label 'Start' %>
-		            <div class='input-group datetimepicker'>
-		              <%= f.text_field :schedStart, class: 'form-control' %>
+		            <div class='input-group'>
+		              <%= f.text_field :schedStart, class: 'form-control datepicker' %>
 		              <span class="input-group-addon">
 		                  <span class="glyphicon glyphicon-calendar"></span>
 		              </span>
@@ -32,8 +32,8 @@
 	          <div class='col-sm-6'>
 	            <div class="form-group">
 		            <%= f.label 'End' %>
-		            <div class='input-group datetimepicker'>
-		              <%= f.text_field :schedEnd, class: 'form-control' %>
+		            <div class='input-group'>
+		              <%= f.text_field :schedEnd, class: 'form-control datepicker' %>
 		              <span class="input-group-addon">
 		                  <span class="glyphicon glyphicon-calendar"></span>
 		              </span>
@@ -50,7 +50,7 @@
           </div>
           <div class="modal-footer">
 	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	          <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection' %>
+	          <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
 	        </div>
 	    	<% end %>
 	    </div>
@@ -59,17 +59,12 @@
 </div>
 <script>
   $(document).ready(function(){
-  	$('.mini-calendar').datepicker('setDate', new Date());
-  	$('.mini-calendar').on('changeDate', function (dateText) {
+  	$('.datepicker').datepicker();
+  	$('.datepicker').on('changeDate', function (dateText) {
 		  $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
 		  var defaultView = $('.full-calendar').fullCalendar('getView').name;
       $('.full-calendar').fullCalendar("changeView", defaultView);
 		});
-		$('.mini-calendar').datepicker('update');
-    $('.datetimepicker').datetimepicker({
-      format: 'YYYY-MM-DD hh:mm:ss',
-      defaultDate: new Date()
-    });
   })
 		
 	$('.full-calendar').fullCalendar({

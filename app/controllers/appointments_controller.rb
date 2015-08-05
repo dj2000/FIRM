@@ -32,15 +32,8 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    respond_to do |format|
-      if @appointment.update(appointment_params)
-        format.html { redirect_to @appointment, notice: 'Appointment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @appointment }
-      else
-        format.html { render :edit }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
-      end
-    end
+    @insp_request = @appointment.insp_request
+    @appointment.update(appointment_params)
   end
 
   # DELETE /appointments/1
@@ -54,7 +47,8 @@ class AppointmentsController < ApplicationController
   end
 
   def schedule_inspection
-    @appointment = Appointment.new(inspRequest_id: params[:id] )
+    @insp_request = InspRequest.find(params[:id])
+    @appointment = @insp_request.appointment || @insp_request.build_appointment
     @appointment.save(validate: false)
     @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
   end
@@ -67,6 +61,6 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received)
+      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :appointment_form)
     end
 end

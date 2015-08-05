@@ -6,9 +6,13 @@
       <div class="form-group">
         <%= f.label 'Start' %>
         <div class='input-group'>
-          <%= f.input :schedStart, as: :string , input_html: { class: "datepicker" } %>
-    		</div>
-  		</div>
+          <%= f.text_field :schedStart, class: "datepicker form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="schedStart"></span>
+      </div>
     </div>
     <div class='col-sm-2'>
       <div class="form-group">
@@ -21,9 +25,13 @@
       <div class="form-group">
         <%= f.label 'End' %>
         <div class='input-group'>
-          <%= f.input :schedEnd, as: :string, input_html: { class: "datepicker" } %>
-    		</div>
-  		</div>
+          <%= f.text_field :schedEnd, class: "datepicker form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="schedStart"></span>
+      </div>
     </div>
   </div>
   <div class="row">

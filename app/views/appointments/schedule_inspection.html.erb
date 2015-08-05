@@ -16,7 +16,7 @@
 </div>
 <script>
   $(document).ready(function(){
-  	$('input.datepicker').datepicker();
+	  $('input.datepicker').datepicker({ format: 'dd/mm/yyyy' });
   	$('.datepicker').on('changeDate', function (dateText) {
 		  $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
 		  var defaultView = $('.full-calendar').fullCalendar('getView').name;

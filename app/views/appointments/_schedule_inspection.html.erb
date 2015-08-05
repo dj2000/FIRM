@@ -2,16 +2,25 @@
   <%= f.error_notification %>
 
 	<div class="row">
-    <div class='col-sm-6'>
+    <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.label 'Start' %>
-        <div class='input-group'>
-          <%= f.text_field :schedStart, class: "datepicker form-control" %>
+        <%= f.label 'Start Date' %>
+        <div class='input-group date'>
+          <%= f.text_field :schedStart, class: "form-control", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
         <span class="schedStart"></span>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.label 'Start Time' %>
+        <div class="input-group bootstrap-timepicker timepicker">
+          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%H:%M") %>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        </div>
       </div>
     </div>
     <div class='col-sm-2'>
@@ -21,23 +30,31 @@
     </div>
   </div>
   <div class="row">
-    <div class='col-sm-6'>
+    <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.label 'End' %>
-        <div class='input-group'>
-          <%= f.text_field :schedEnd, class: "datepicker form-control" %>
+        <%= f.label 'End Date' %>
+        <div class='input-group date'>
+          <%= f.text_field :schedEnd, class: "form-control", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
-        <span class="schedStart"></span>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.label 'End Time' %>
+        <div class="input-group bootstrap-timepicker timepicker">
+          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%H:%M") %>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :inspector_id, as: :select, collection: @inspectors %>
+        <%= f.association :inspector, collection: @inspectors, prompt: 'Please select' %>
       </div>
     </div>
   </div>
@@ -46,3 +63,9 @@
     <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
   </div>
 <% end %>
+<script>
+  $(document).ready(function(){
+    $('.input-group.date').datepicker({ format: 'yyyy-mm-dd' });
+    $('.timepicker').timepicker();
+  })
+</script>

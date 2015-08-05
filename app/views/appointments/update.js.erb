@@ -7,5 +7,9 @@
 		$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
 	<% end %>
 <% else %>
-	$(window.location.replace('/insp_requests'))
+	<% if referrer %>
+		$(window.location.replace('/insp_requests/<%= @appointment.insp_request.id %>'))
+	<% else %>
+		$(window.location.replace('/insp_requests'))
+	<% end %>
 <% end %>

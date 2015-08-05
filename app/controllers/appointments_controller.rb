@@ -24,6 +24,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
+    inspectors
     @appointment = Appointment.new(appointment_params)
     @insp_request = @appointment.insp_request
     @appointment.save
@@ -32,6 +33,7 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
+    inspectors
     @insp_request = @appointment.insp_request
     @appointment.update(appointment_params)
   end
@@ -50,13 +52,17 @@ class AppointmentsController < ApplicationController
     @insp_request = InspRequest.find(params[:id])
     @appointment = @insp_request.appointment || @insp_request.build_appointment
     @appointment.save(validate: false)
-    @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
+    inspectors
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
       @appointment = Appointment.find(params[:id])
+    end
+
+    def inspectors
+      @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

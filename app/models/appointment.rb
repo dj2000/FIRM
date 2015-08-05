@@ -14,15 +14,17 @@ class Appointment < ActiveRecord::Base
   						numericality: {
   							greater_than_or_equal_to: 0,
   							less_than_or_equal_to: 100
-  							}
+  							},
+              if: "scheduled_inspection.blank?"
 
   validates :amount_received,
   						numericality: {
   							greater_than_or_equal_to: 0,
   							less_than_or_equal_to: 100
-  							}
+  							},
+              if: "scheduled_inspection.blank?"
 
-  validates :schedStart, :schedEnd, presence: true, if: "scheduled_inspection.present?"
+  validates :schedStart, :schedEnd, :inspector_id, presence: true, if: "scheduled_inspection.present?"
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 

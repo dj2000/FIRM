@@ -5,6 +5,9 @@ class AppointmentsController < ApplicationController
   # GET /appointments.json
   def index
     @appointments = Appointment.all
+    respond_to do |format|
+      format.json{ render json: @appointments.as_json }
+    end
   end
 
   # GET /appointments/1
@@ -51,15 +54,26 @@ class AppointmentsController < ApplicationController
   end
 
   def schedule_inspection
+    inspectors
     @insp_request = InspRequest.find(params[:id])
     @appointment = @insp_request.appointment || @insp_request.build_appointment
     @appointment.save(validate: false)
-    scheduled_appointment(Date.today, 'month')
-    inspectors
   end
 
   def get_scheduled_appointments
-    scheduled_appointment(params[:date], params[:view_type])
+    date = date.to_date
+    case view_type
+    when "month"
+      @start_day = date.beginning_of_month
+      @end_day = date.end_of_month
+    when "agendaWeek"
+      @start_day = date.beginning_of_week(start_day = :monday)
+      @end_day = date.end_of_week(end_day = :saturday)
+    else
+      @start_day = date
+      @end_day = date
+    end    
+    @appointments =  Appointment.where("(DATE(schedStart) BETWEEN ? AND ?) OR (DATE(schedEnd) BETWEEN ? AND ?)", @start_day, @end_day, @start_day, @end_day)
     render json: @appointments.as_json
   end
 
@@ -67,23 +81,6 @@ class AppointmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
       @appointment = Appointment.find(params[:id])
-    end
-
-    def scheduled_appointment(date, view_type)
-      date = date.to_date
-      case view_type
-      when "month"
-        @start_day = date.beginning_of_month
-        @end_day = date.end_of_month
-      when "agendaWeek"
-        @start_day = date.beginning_of_week(start_day = :monday)
-        @end_day = date.end_of_week(end_day = :saturday)
-      else
-        @start_day = date
-        @end_day = date
-      end    
-      @appointments =  Appointment.where("(DATE(schedStart) BETWEEN ? AND ?) OR (DATE(schedEnd) BETWEEN ? AND ?)", @start_day, @end_day, @start_day, @end_day)
-      return @appointments
     end
 
     def inspectors

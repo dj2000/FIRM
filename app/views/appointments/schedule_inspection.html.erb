@@ -48,6 +48,10 @@
 		weekends: false,
 		selectable: true,
 		selectHelper: true,
+		allDaySlot: false,
+		eventSources: [{
+			url: "/appointments",
+	  }],
 	  select: function(start, end) {
     	$('.modal').modal('show');
     }

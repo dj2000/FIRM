@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     respond_to do |format|
       format.json{ render json: @appointments.as_json }
     end

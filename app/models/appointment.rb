@@ -36,7 +36,7 @@ class Appointment < ActiveRecord::Base
       title: self.try(:inspector).try(:firstName),
       color: 'tomato',
       inspector_id: self.inspector_id,
-      allDay: self.allDay
+      allDay: self.allDay || false
     }
   end
 

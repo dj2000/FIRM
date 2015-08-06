@@ -1,3 +1,18 @@
 // Place all the styles related to the appointments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.left{
+  float: left;
+  padding: 5% 1% 0px 0px;
+  border: 1px solid #000;
+}
+.datepicker-left{
+	float: left;
+	border: 1px solid #000;
+  padding-top: 10%;
+}
+.border{
+	float: right;
+	width: 75%;
+}

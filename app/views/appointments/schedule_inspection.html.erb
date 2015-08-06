@@ -1,6 +1,6 @@
-<div>
-	<div class="datepicker"></div>
-	<div class="full-calendar"></div>
+<div class="left">
+	<div class="datepicker datepicker-left"></div>
+	<div class="full-calendar border"></div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
@@ -30,18 +30,14 @@
 	  header: {
 				left: '',
 				center: 'title',
-				right: 'month, agendaWeek, agendaDay'
-			},
+				right: 'month,agendaWeek,agendaDay'
+    },
 		defaultView: 'month',
 		editable: true,
 		weekends: false,
 		selectable: true,
 		selectHelper: true,
 		allDaySlot: false,
-		minTime: '9:00',
-    maxTime: '18:00',
-    fixedWeekCount: false,
-    height: 'auto',
     firstDay:1,
     eventSources: [{
 			url: "/appointments",

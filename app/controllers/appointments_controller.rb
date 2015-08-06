@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-  before_action :inspectors, only: [:create, :update, :schedule_inspection ]
+  before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit ]
   # GET /appointments
   # GET /appointments.json
   def index
@@ -72,7 +72,7 @@ class AppointmentsController < ApplicationController
     else
       @start_day = date
       @end_day = date
-    end    
+    end
     @appointments =  Appointment.where("(DATE(schedStart) BETWEEN ? AND ?) OR (DATE(schedEnd) BETWEEN ? AND ?)", @start_day, @end_day, @start_day, @end_day)
     render json: @appointments.as_json
   end

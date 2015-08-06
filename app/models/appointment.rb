@@ -32,8 +32,11 @@ class Appointment < ActiveRecord::Base
     {
       start: self.schedStart,
       end: self.schedEnd,
+      id: self.id,
       title: self.try(:inspector).try(:firstName),
-      color: 'tomato'
+      color: 'tomato',
+      inspector_id: self.inspector_id,
+      allDay: self.allDay
     }
   end
 

@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-
+  before_action :inspectors, only: [:create, :update, :schedule_inspection ]
   # GET /appointments
   # GET /appointments.json
   def index
@@ -22,12 +22,14 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1/edit
   def edit
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /appointments
   # POST /appointments.json
   def create
-    inspectors
     @appointment = Appointment.new(appointment_params)
     @insp_request = @appointment.insp_request
     @appointment.save
@@ -36,7 +38,6 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   # PATCH/PUT /appointments/1.json
   def update
-    inspectors
     @insp_request = @appointment.insp_request
     params[:appointment][:schedStart] = params[:schedStart].join(" ").to_datetime
     params[:appointment][:schedEnd] = params[:schedEnd].join(" ").to_datetime
@@ -54,15 +55,14 @@ class AppointmentsController < ApplicationController
   end
 
   def schedule_inspection
-    inspectors
     @insp_request = InspRequest.find(params[:id])
     @appointment = @insp_request.appointment || @insp_request.build_appointment
     @appointment.save(validate: false)
   end
 
   def get_scheduled_appointments
-    date = date.to_date
-    case view_type
+    date = params[:date].to_date
+    case params[:view_type]
     when "month"
       @start_day = date.beginning_of_month
       @end_day = date.end_of_month

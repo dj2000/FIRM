@@ -1,67 +1,76 @@
-<%= simple_form_for @appointment, html: { remote: true } do |f| %>
-  <%= f.error_notification %>
-	<div class="row">
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.label 'Start Date' %>
-        <div class='input-group date'>
-          <%= f.text_field :schedStart, class: "form-control", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d"), name: "schedStart[]" %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="schedStart"></span>
-      </div>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel">Inspector's Calendar</h4>
     </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.label 'Start Time' %>
-        <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedStart, class: "form-control timepicker", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p"), name: "schedStart[]" %>
-          <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+    <div class="modal-body">
+      <%= simple_form_for @appointment, html: { remote: true } do |f| %>
+        <%= f.error_notification %>
+        <div class="row">
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'Start Date' %>
+              <div class='input-group date'>
+                <%= f.text_field :schedStart, class: "form-control start_date", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d"), name: "schedStart[]" %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+              <span class="schedStart"></span>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'Start Time' %>
+              <div class="input-group bootstrap-timepicker timepicker">
+                <%= f.text_field :schedStart, class: "form-control timepicker start_time", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p"), name: "schedStart[]" %>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-2'>
+            <div class="form-group">
+              <%= f.input :allDay %>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class='col-sm-2'>
-      <div class="form-group">
-        <%= f.input :allDay %>
-      </div>
+        <div class="row">
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'End Date' %>
+              <div class='input-group date'>
+                <%= f.text_field :schedEnd, class: "form-control end_date", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d"), name: "schedEnd[]" %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'End Time' %>
+              <div class="input-group bootstrap-timepicker timepicker">
+                <%= f.text_field :schedEnd, class: "form-control timepicker end_time", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p"), name: "schedEnd[]" %>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.association :inspector, collection: @inspectors, prompt: 'Please select' %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
+        </div>
+      <% end %>
     </div>
   </div>
-  <div class="row">
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.label 'End Date' %>
-        <div class='input-group date'>
-          <%= f.text_field :schedEnd, class: "form-control", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d"), name: "schedEnd[]" %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.label 'End Time' %>
-        <div class="input-group bootstrap-timepicker timepicker">
-          <%= f.text_field :schedEnd, class: "form-control timepicker", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p"), name: "schedEnd[]" %>
-          <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-6'>
-      <div class="form-group">
-        <%= f.association :inspector, collection: @inspectors, prompt: 'Please select' %>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
-  </div>
-<% end %>
+</div>
 <script>
   $(document).ready(function(){
     $('.input-group.date').datepicker({ format: 'yyyy-mm-dd' });

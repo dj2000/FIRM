@@ -1,4 +1,4 @@
-<% referrer = request.referrer.include?("schedule_inspection") %>
+<% referrer = request.referrer.include?("appointments") %>
 <% if @appointment.errors.present? %>
 	<% if referrer %>
 		$(".modal-body").html("<%= escape_javascript(render partial: 'schedule_inspection') %>")

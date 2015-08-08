@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804133121) do
+ActiveRecord::Schema.define(version: 20150808063746) do
 
   create_table "agent_clients", force: true do |t|
     t.integer  "agent_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20150804133121) do
     t.boolean  "allDay"
     t.integer  "inspector_id"
     t.string   "contact"
-    t.decimal  "inspFee",         precision: 5, scale: 3
+    t.float    "inspFee",         limit: 24
     t.boolean  "prepaid"
     t.string   "pmtMethod"
     t.string   "pmtRef"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150804133121) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "svcArea_id"
-    t.decimal  "amount_received", precision: 5, scale: 3
+    t.float    "amount_received", limit: 24
   end
 
   create_table "bids", force: true do |t|

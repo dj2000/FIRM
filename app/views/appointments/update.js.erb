@@ -1,11 +1,11 @@
 <% referrer = request.referrer.include?("appointments") %>
 <% if @appointment.errors.present? %>
 	<% if referrer %>
-		$(".modal-body").html("<%= escape_javascript(render partial: 'schedule_inspection') %>")
+		$(".modal").html("<%= escape_javascript(render partial: 'schedule_inspection') %>")
 	<% else %>
 		$(".add-appointment-form").html("<%= escape_javascript(render partial: 'form') %>")
-		$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
 	<% end %>
+	$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
 <% else %>
 	<% if referrer %>
 		$(".full-calendar").fullCalendar('refetchEvents');

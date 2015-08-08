@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808063746) do
+ActiveRecord::Schema.define(version: 20150808064948) do
 
   create_table "agent_clients", force: true do |t|
     t.integer  "agent_id"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150808063746) do
     t.string   "clientType"
     t.date     "typeDate"
     t.string   "occupiedBy"
-    t.boolean  "escrow"
+    t.boolean  "escrow",      default: false
     t.date     "escrowDate"
     t.datetime "created_at"
     t.datetime "updated_at"

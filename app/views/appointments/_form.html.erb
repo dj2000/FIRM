@@ -34,7 +34,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :inspFee, label: "Inspection Fee" %>
+            <%= f.input :inspFee, label: "Inspection Fee", value: number_with_precision(f.object.try(:inspFee), precision: 2) %>
           </div>
         </div>
         <div class='col-sm-6'>
@@ -51,7 +51,7 @@
         </div>
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= check_box_tag 'client_property[escrow]', true, checked: @client_property.try(:escrow) %>
+            <%= check_box_tag 'client_property[escrow]', "", @client_property.try(:escrow) %>
             <label class="boolean optional">Escrow</label>
             <%= hidden_field_tag 'client_property[property_id]', @insp_request.property_id %>
             <%= hidden_field_tag 'client_property[client_id]', @insp_request.client_id %>
@@ -61,7 +61,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :amount_received %>
+            <%= f.input :amount_received, value: number_with_precision(f.object.try(:amount_received), precision: 2) %>
           </div>
         </div>
         <div class='col-sm-6 escrow_date'>

@@ -1,59 +1,63 @@
 <p id="notice"><%= notice %></p>
-
-<div class="container">
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Call Time:</strong>
-        <%= @insp_request.call_time %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Inspection Request</h1>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Call Time:</strong>
+          <%= @insp_request.call_time %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Caller type:</strong>
-        <%= @insp_request.callerType %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Caller type:</strong>
+          <%= @insp_request.callerType %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Referral Source:</strong>
-        <%= @insp_request.referalSource %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Referral Source:</strong>
+          <%= @insp_request.referalSource %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Client:</strong>
-        <%= @insp_request.client.try(:firstName) %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Client:</strong>
+          <%= @insp_request.client.try(:firstName) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Agent:</strong>
-        <%= @insp_request.agent.try(:firstName) %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Agent:</strong>
+          <%= @insp_request.agent.try(:firstName) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Property:</strong>
-        <%= @insp_request.property.try(:street) %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Property:</strong>
+          <%= @insp_request.property.try(:street) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class='col-sm-12'>
-      <div class="form-group">
-        <strong>Select Insp:</strong>
-        <%= @insp_request.selectInsp %>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Select Insp:</strong>
+          <%= @insp_request.selectInsp %>
+        </div>
       </div>
     </div>
   </div>

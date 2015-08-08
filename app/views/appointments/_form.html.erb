@@ -1,5 +1,5 @@
 <%= javascript_include_tag "appointments" %>
-<div class="panel panel-primary">
+<div class="panel panel-info">
   <div class="panel-heading">
     <h1 class="panel-title">Add Appointment</h1>
   </div>
@@ -13,11 +13,21 @@
             <%= f.input :contact, label: "Contact Person to meet at Inspection Site" %>
           </div>
         </div>
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= f.association :inspector, as: :select, label: "Inspector Selected", collection: @inspectors, disabled: true %>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
             <%= f.input :notes %>
+          </div>
+        </div>
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= f.input :schedStart, as: :string, value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d %H:%M:%S") , disabled: true, label: "Scheduled Start Time" %>
           </div>
         </div>
       </div>
@@ -27,6 +37,11 @@
             <%= f.input :inspFee, label: "Inspection Fee" %>
           </div>
         </div>
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= f.input :schedEnd, as: :string, value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d %H:%M:%S") , disabled: true, label: "Scheduled End Time" %>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class='col-sm-6'>
@@ -34,11 +49,25 @@
             <%= f.input :prepaid, as: :boolean, checked_value: true, unchecked_value: false %>
           </div>
         </div>
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= check_box_tag 'client_property[escrow]', true, checked: @client_property.try(:escrow) %>
+            <label class="boolean optional">Escrow</label>
+            <%= hidden_field_tag 'client_property[property_id]', @insp_request.property_id %>
+            <%= hidden_field_tag 'client_property[client_id]', @insp_request.client_id %>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
             <%= f.input :amount_received %>
+          </div>
+        </div>
+        <div class='col-sm-6 escrow_date'>
+          <div class="form-group">
+            <label class="control-label">Escrow Date</label>
+            <%= text_field_tag :escrowDate, nil, class: 'form-control datepicker', name: 'client_property[escrowDate]', value: @client_property.try(:escrowDate).try(:strftime, "%Y-%m-%d") %>
           </div>
         </div>
       </div>
@@ -52,7 +81,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= link_to "Schedule Inspection", schedule_inspection_appointment_path(@insp_request), class: "btn btn-primary" %>
+            <%= link_to "Schedule Inspection", appointments_path(id: @insp_request), class: "btn btn-primary" %>
           </div>
         </div>
       </div>
@@ -64,10 +93,18 @@
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   $(document).ready(function(){
+    $('.datepicker').datepicker({ 
+      format: 'yyyy-mm-dd'
+    });
     <% if @appointment.prepaid %>
       $(".payment_method").show();
     <% else %>
       $(".payment_method").hide();
     <% end %>
-  })
+    <% if @client_property.try(:escrow) %>
+      $(".escrow_date").show();
+    <% else %>
+      $(".escrow_date").hide();
+    <% end %>
+  });
 </script>

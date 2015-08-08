@@ -4,8 +4,16 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
+    @editable = false
+    if params[:id]
+      @insp_request = InspRequest.find(params[:id])
+      @appointment = @insp_request.appointment || @insp_request.build_appointment
+      @appointment.save(validate: false)
+      @editable = true
+    end
     @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     respond_to do |format|
+      format.html
       format.json{ render json: @appointments.as_json }
     end
   end
@@ -39,8 +47,12 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1.json
   def update
     @insp_request = @appointment.insp_request
-    params[:appointment][:schedStart] = params[:schedStart].join(" ").to_datetime
-    params[:appointment][:schedEnd] = params[:schedEnd].join(" ").to_datetime
+    if params[:schedStart] and params[:schedEnd]
+      params[:appointment][:schedStart] = params[:schedStart].join(" ").to_datetime
+      params[:appointment][:schedEnd] = params[:schedEnd].join(" ").to_datetime
+    end
+    @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first
+    @client_property.update(client_property_params) if params[:client_property]
     @appointment.update(appointment_params)
   end
 
@@ -55,9 +67,7 @@ class AppointmentsController < ApplicationController
   end
 
   def schedule_inspection
-    @insp_request = InspRequest.find(params[:id])
-    @appointment = @insp_request.appointment || @insp_request.build_appointment
-    @appointment.save(validate: false)
+    
   end
 
   def get_scheduled_appointments
@@ -90,5 +100,9 @@ class AppointmentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
       params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection)
+    end
+
+    def client_property_params
+      params.require(:client_property).permit(:property_id, :client_id, :escrow, :escrowDate)
     end
 end

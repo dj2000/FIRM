@@ -8,7 +8,8 @@
 	<% end %>
 <% else %>
 	<% if referrer %>
-		$(window.location.replace('/insp_requests/<%= @appointment.insp_request.id %>'))
+		$(".full-calendar").fullCalendar('refetchEvents');
+		$(".modal").modal('hide');
 	<% else %>
 		$(window.location.replace('/insp_requests'))
 	<% end %>

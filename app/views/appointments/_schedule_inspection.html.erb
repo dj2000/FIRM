@@ -73,7 +73,10 @@
 </div>
 <script>
   $(document).ready(function(){
-    $('.input-group.date').datepicker({ format: 'yyyy-mm-dd' });
+    $('.input-group.date').datepicker({ 
+      format: 'yyyy-mm-dd',
+      daysOfWeekDisabled: [0,6]
+    });
     $('.timepicker').timepicker();
   })
 </script>

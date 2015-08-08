@@ -4,15 +4,20 @@
 
 .left{
   float: left;
-  padding: 5% 1% 0px 0px;
+  padding: 5% 1% 0px 1%;
   border: 1px solid #000;
 }
 .datepicker-left{
-	float: left;
-	border: 1px solid #000;
+  float: left;
+  border: 1px solid #000;
   padding-top: 10%;
+  margin-top: 4.7%;
 }
 .border{
+  float: right;
+  width: 75%;
+}
+.right{
 	float: right;
-	width: 75%;
+	color:#fff !important;
 }

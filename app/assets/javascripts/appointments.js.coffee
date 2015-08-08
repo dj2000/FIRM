@@ -10,3 +10,11 @@ $ ->
 	  else
 	    $('.payment_method').hide()
 	  return
+
+	$('#client_property_escrow').change ->
+	  value = $('#client_property_escrow').is(':checked')
+	  if value == true
+	    $('.escrow_date').show()
+	  else
+	    $('.escrow_date').hide()
+	  return

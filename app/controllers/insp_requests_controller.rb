@@ -7,6 +7,8 @@ class InspRequestsController < ApplicationController
 
   def show
     @appointment = @insp_request.appointment || @insp_request.build_appointment
+    @inspectors = Inspector.all.map{|i| [ i.firstName, i.id ]}
+    @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first
   end
 
   def new

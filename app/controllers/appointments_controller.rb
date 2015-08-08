@@ -66,10 +66,6 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  def schedule_inspection
-    
-  end
-
   def get_scheduled_appointments
     date = params[:date].to_date
     case params[:view_type]

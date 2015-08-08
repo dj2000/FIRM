@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   resources :svc_criteria
 
   resources :appointments do
-    get :schedule_inspection, on: :member
     get :get_scheduled_appointments, on: :collection
   end
 

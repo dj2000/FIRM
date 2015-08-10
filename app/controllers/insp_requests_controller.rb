@@ -74,7 +74,7 @@ class InspRequestsController < ApplicationController
 
     def properties_clients_agents
       @properties = Property.all
-      @clients = @insp_request.new_record? ? Client.all : @insp_request.try(:property).try(:clients)
+      @clients = @insp_request.new_record? ? Client.all : (@insp_request.try(:property).try(:clients) || [] )
       @agents = @insp_request.new_record? ? Agent.all : (@insp_request.try(:client).try(:agents) || [] )
     end
 

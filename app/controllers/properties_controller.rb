@@ -6,6 +6,10 @@ class PropertiesController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def new
@@ -24,7 +28,7 @@ class PropertiesController < ApplicationController
     states_cities
     respond_to do |format|
       if @property.update(property_params)
-        format.html { redirect_to @property, notice: 'Property was successfully updated.' }
+        format.html { redirect_to @property, notice: 'Property was successfully created.' }
         format.js
       else
         format.html { render :new }

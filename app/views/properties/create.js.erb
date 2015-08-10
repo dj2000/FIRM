@@ -1,4 +1,5 @@
 <% if @property.errors.present? %>
+	$(".modal-title").html("New Property");
 	$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
 	$('.add-client').show()

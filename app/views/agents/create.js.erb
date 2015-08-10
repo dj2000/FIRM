@@ -1,5 +1,6 @@
 <% if @agent.errors.present? %>
-	$(".modal").html("<%= escape_javascript(render partial: 'form') %>")
+	$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
+	$(".modal-title").html("New Agent");
 <% else %>
 	$('.add-agent').hide()
 	$(".agent_select").append("<option value='<%= @agent.id %>' selected> <%= @agent.firstName %></option>");

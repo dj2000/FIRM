@@ -1,76 +1,66 @@
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="exampleModalLabel">New Agent</h4>
+<%= simple_form_for @agent, html: { remote: @remote } do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :firstName %>
+      </div>
     </div>
-    <div class="modal-body">
-      <%= simple_form_for @agent, html: { remote: true } do |f| %>
-        <%= f.error_notification %>
-        <div class="row">
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :firstName %>
-            </div>
-          </div>
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :lastName %>
-            </div>
-          </div>
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :middleInit %>
-            </div>
-          </div>
-        </div>
-        <%= hidden_field_tag :client_id, "" %>
-        <div class="row">
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :phoneH, label: "Home Number" %>
-            </div>
-          </div>
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :phoneC, label: "Telephone Number" %>
-            </div>
-          </div>
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :phoneW, label: "Office Number" %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-12'>
-            <div class="form-group">
-              <%= f.input :company %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-12'>
-            <div class="form-group">
-              <%= f.input :email %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-12'>
-            <div class="form-group">
-              <%= f.input :mailAddress, label: "Mailing Address" %>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <%= f.submit 'Submit', class: 'btn btn-primary' %>
-        </div>
-      <% end %>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :lastName %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :middleInit %>
+      </div>
     </div>
   </div>
-</div>
-
+  <%= hidden_field_tag :client_id, "" %>
+  <div class="row">
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneH, label: "Home Number" %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneC, label: "Telephone Number" %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneW, label: "Office Number" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <%= f.input :company %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <%= f.input :email %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-12'>
+      <div class="form-group">
+        <%= f.input :mailAddress, label: "Mailing Address" %>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>
 <script>
   $(document).ready(function(){
     var client_id = $(".client_select").val();

@@ -1,18 +1,18 @@
 <h1>Listing agents</h1>
 
-<table>
+<table class="table table-bordered table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Middleinit</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Middle Initial</th>
       <th>Company</th>
-      <th>Phoneh</th>
-      <th>Phonew</th>
-      <th>Phonec</th>
+      <th>Home Number</th>
+      <th>Work Number</th>
+      <th>Cell Number</th>
       <th>Email</th>
-      <th>Mailaddress</th>
-      <th colspan="3"></th>
+      <th>Mail Address</th>
+      <th colspan="3"> Actions</th>
     </tr>
   </thead>
 
@@ -28,9 +28,9 @@
         <td><%= agent.phoneC %></td>
         <td><%= agent.email %></td>
         <td><%= agent.mailAddress %></td>
-        <td><%= link_to 'Show', agent %></td>
-        <td><%= link_to 'Edit', edit_agent_path(agent) %></td>
-        <td><%= link_to 'Destroy', agent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), agent, class: 'btn btn-primary' %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_agent_path(agent), class: 'btn btn-info' %></td>
+        <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), agent, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +38,4 @@
 
 <br>
 
-<%= link_to 'New Agent', new_agent_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Agent"), new_agent_path, class: 'btn btn-info' %>

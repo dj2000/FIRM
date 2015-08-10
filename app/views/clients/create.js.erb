@@ -1,5 +1,6 @@
 <% if @client.errors.present? %>
-	$(".modal").html("<%= escape_javascript(render partial: 'form') %>")
+	$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
+	$(".modal-title").html("New Client");
 <% else %>
 	$('.add-agent').show()
 	$('.add-client').hide()

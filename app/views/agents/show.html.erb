@@ -1,49 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Agent</h1>
+  </div>
+  <div class="panel-body">
+    <%= render 'agent' %>
+  </div>
+</div>
 
-<p>
-  <strong>Firstname:</strong>
-  <%= @agent.firstName %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @agent.lastName %>
-</p>
-
-<p>
-  <strong>Middleinit:</strong>
-  <%= @agent.middleInit %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @agent.company %>
-</p>
-
-<p>
-  <strong>Phoneh:</strong>
-  <%= @agent.phoneH %>
-</p>
-
-<p>
-  <strong>Phonew:</strong>
-  <%= @agent.phoneW %>
-</p>
-
-<p>
-  <strong>Phonec:</strong>
-  <%= @agent.phoneC %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @agent.email %>
-</p>
-
-<p>
-  <strong>Mailaddress:</strong>
-  <%= @agent.mailAddress %>
-</p>
-
-<%= link_to 'Edit', edit_agent_path(@agent) %> |
-<%= link_to 'Back', agents_path %>
+<%= link_to 'Edit', edit_agent_path(@agent), class: 'btn btn-info' %>
+<%= link_to 'Back', agents_path, class: 'btn btn-info' %>

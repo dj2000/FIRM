@@ -1,44 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Client</h1>
+  </div>
+  <div class="panel-body">
+    <%= render 'client' %>
+  </div>
+</div>
 
-<p>
-  <strong>Firstname:</strong>
-  <%= @client.firstName %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @client.lastName %>
-</p>
-
-<p>
-  <strong>Middleinit:</strong>
-  <%= @client.middleInit %>
-</p>
-
-<p>
-  <strong>Phoneh:</strong>
-  <%= @client.phoneH %>
-</p>
-
-<p>
-  <strong>Phonew:</strong>
-  <%= @client.phoneW %>
-</p>
-
-<p>
-  <strong>Phonec:</strong>
-  <%= @client.phoneC %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @client.email %>
-</p>
-
-<p>
-  <strong>Mailaddress:</strong>
-  <%= @client.mailAddress %>
-</p>
-
-<%= link_to 'Edit', edit_client_path(@client) %> |
-<%= link_to 'Back', clients_path %>
+<%= link_to 'Edit', edit_client_path(@client), class: 'btn btn-info' %>
+<%= link_to 'Back', clients_path, class: 'btn btn-info' %>

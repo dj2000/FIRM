@@ -6,20 +6,33 @@ class ClientsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def new
     @client = Client.new
+    @remote = request.format.symbol == :html ? false : true
   end
 
   def edit
+    @remote = false
   end
 
   def create
     @property = Property.find(params[:property_id])
     @client = Client.new(client_params)
-    if @client.save
-      @property.clients << @client
+    respond_to do |format|
+      if @client.save
+        @property.clients << @client
+        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.js
+      else
+        format.html { render :new }
+        format.js
+      end
     end
   end
 

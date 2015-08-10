@@ -10,15 +10,21 @@ class AgentsController < ApplicationController
   # GET /agents/1
   # GET /agents/1.json
   def show
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /agents/new
   def new
     @agent = Agent.new
+    @remote = request.format.symbol == :html ? false : true
   end
 
   # GET /agents/1/edit
   def edit
+    @remote = false
   end
 
   # POST /agents
@@ -26,8 +32,15 @@ class AgentsController < ApplicationController
   def create
     @client = Client.find(params[:client_id])
     @agent = Agent.new(agent_params)
-    if @agent.save
-      @client.agents << @agent
+    respond_to do |format|
+      if @agent.save
+        @client.agents << @agent
+        format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
+        format.js
+      else
+        format.html { render :new }
+        format.js
+      end
     end
   end
 

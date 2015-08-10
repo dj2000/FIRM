@@ -1,6 +1,6 @@
-<h1>Listing properties</h1>
+<h1>Listing Properties</h1>
 
-<table>
+<table class="table table-bordered table-striped table-hover table-responsive">
   <thead>
     <tr>
       <th>Number</th>
@@ -8,19 +8,20 @@
       <th>City</th>
       <th>State</th>
       <th>Zip</th>
-      <th>Crossstreet</th>
-      <th>Mappage</th>
-      <th>Yearbuilt</th>
-      <th>Size</th>
-      <th>Stories</th>
-      <th>Type</th>
-      <th>Units</th>
-      <th>Gndunits</th>
-      <th>Lottype</th>
-      <th>Foundation</th>
-      <th>Hpoz?</th>
-      <th>Cdo?</th>
-      <th colspan="3"></th>
+      <th>Cross Street</th>
+      <th>Map Page</th>
+      <th>Year Built</th>
+      <th>Size in Square Footage</th>
+      <th>Number of floor levels</th>
+      <th>Building Type</th>
+      <th>Number of Units</th>
+      <th>Number of Ground Units</th>
+      <th>Lot Type</th>
+      <th>Foundation Type</th>
+      <th>Historical Property Overlay Zone(HPO)</th>
+      <th>Community Design Overlay(CDO)</th>
+      <th>Occupied By</th>
+      <th colspan="3" style="text-align:center">Actions</th>
     </tr>
   </thead>
 
@@ -37,16 +38,17 @@
         <td><%= property.yearBuilt %></td>
         <td><%= property.size %></td>
         <td><%= property.stories %></td>
-        <td><%= property.type %></td>
+        <td><%= property.prop_type %></td>
         <td><%= property.units %></td>
         <td><%= property.gndUnits %></td>
         <td><%= property.lotType %></td>
         <td><%= property.foundation %></td>
-        <td><%= property.hpoz? %></td>
-        <td><%= property.cdo? %></td>
-        <td><%= link_to 'Show', property %></td>
-        <td><%= link_to 'Edit', edit_property_path(property) %></td>
-        <td><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= property.hpoz %></td>
+        <td><%= property.cdo %></td>
+        <td><%= property.occupied_by %></td>
+        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), property, class: 'btn btn-primary' %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_property_path(property), class: 'btn btn-info' %></td>
+        <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -54,4 +56,4 @@
 
 <br>
 
-<%= link_to 'New Property', new_property_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Property"), new_property_path, class: "btn btn-info" %>

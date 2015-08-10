@@ -1,61 +1,71 @@
-<%= form_for(@inspector) do |f| %>
-  <% if @inspector.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@inspector.errors.count, "error") %> prohibited this inspector from being saved:</h2>
-
-      <ul>
-      <% @inspector.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@inspector) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :firstName, label: "First Name" %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :firstName %><br>
-    <%= f.text_field :firstName %>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :lastName, label: "Last Name" %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :lastName %><br>
-    <%= f.text_field :lastName %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :middleInit, label: "Middle Initial" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :senior, as: :boolean, checked_value: true, unchecked_value: false %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :middleInit %><br>
-    <%= f.text_field :middleInit %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :phoneH, label: "Home Number" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :phoneC, label: "Cell Number" %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :senior %><br>
-    <%= f.check_box :senior %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :phoneH %><br>
-    <%= f.text_field :phoneH %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :address %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :zip %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :phoneC %><br>
-    <%= f.text_field :phoneC %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :email %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :address %><br>
-    <%= f.text_field :address %>
-  </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :zip %><br>
-    <%= f.number_field :zip %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.submit 'Submit', class: 'btn btn-primary' %>
 <% end %>

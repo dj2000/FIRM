@@ -15,17 +15,19 @@ class InspectorsController < ApplicationController
   # GET /inspectors/new
   def new
     @inspector = Inspector.new
+    states_cities
   end
 
   # GET /inspectors/1/edit
   def edit
+    states_cities
   end
 
   # POST /inspectors
   # POST /inspectors.json
   def create
     @inspector = Inspector.new(inspector_params)
-
+    states_cities
     respond_to do |format|
       if @inspector.save
         format.html { redirect_to @inspector, notice: 'Inspector was successfully created.' }
@@ -40,6 +42,7 @@ class InspectorsController < ApplicationController
   # PATCH/PUT /inspectors/1
   # PATCH/PUT /inspectors/1.json
   def update
+    states_cities
     respond_to do |format|
       if @inspector.update(inspector_params)
         format.html { redirect_to @inspector, notice: 'Inspector was successfully updated.' }
@@ -65,6 +68,11 @@ class InspectorsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_inspector
       @inspector = Inspector.find(params[:id])
+    end
+
+    def states_cities
+      @states = CS.states(:us).collect{|k, v| [v, k.to_s] }
+      @cities = @inspector.state ? CS.cities((@inspector.state).to_sym, :us) : []
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

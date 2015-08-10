@@ -7,6 +7,9 @@
   display: inline-block;
 }
 .link{
-	text-decoration: underline;
 	color: #31708f;
+}
+
+.link:visited {
+	color: #31708f !important;
 }

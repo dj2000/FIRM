@@ -33,10 +33,10 @@
           <strong>Client:</strong>
           <%= @insp_request.client.try(:firstName) %>
           <% if @insp_request.client %>
-            <span class="link">
-              <%= link_to "Details", client_path(@insp_request.client), remote: true %>
-            </span>
+            <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
+              <i class='fa fa-eye'></i> Details
             <% end %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -46,9 +46,9 @@
           <strong>Agent:</strong>
           <%= @insp_request.agent.try(:firstName) %>
           <% if @insp_request.agent %>
-            <span class="link">
-              <%= link_to "Details", agent_path(@insp_request.agent), remote: true %>
-            </span>
+            <%= link_to agent_path(@insp_request.agent), remote: true, class: 'link' do %>
+              <i class='fa fa-eye'></i> Details
+            <% end %>
           <% end %>
         </div>
       </div>
@@ -59,9 +59,9 @@
           <strong>Property:</strong>
           <%= @insp_request.property.try(:street) %>
           <% if @insp_request.property %>
-            <span class="link">
-              <%= link_to "Details", property_path(@insp_request.property), remote: true %>
-            </span>
+            <%= link_to property_path(@insp_request.property), remote: true, class: 'link' do %>
+              <i class='fa fa-eye'></i> Details
+            <% end %>
           <% end %>
         </div>
       </div>

@@ -1,125 +1,116 @@
-<%= javascript_include_tag 'properties' %>
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="exampleModalLabel">New Property</h4>
+<%= javascript_include_tag 'common' %>
+<%= simple_form_for @property, html: { remote: @remote } do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :number %>
+      </div>
     </div>
-    <div class="modal-body">
-      <%= simple_form_for @property, html: { remote: true } do |f| %>
-        <%= f.error_notification %>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :number %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :street %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-8'>
-            <div class="form-group">
-              <%= f.input :crossStreet %>
-            </div>
-          </div>
-          <div class='col-sm-4'>
-            <div class="form-group">
-              <%= f.input :zip %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :mapPage %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, label: 'Select Year Built', prompt: 'Please Select' %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :size, label: "Size in Square Footage" %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :stories, label: "Number of Floor Levels" %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :prop_type, as: :select, collection: Property::PROPERTY_TYPE.map{|v| [v, v]}, label: "Building Type", prompt: 'Please Select' %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :units, label: "Number of Units" %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :gndUnits, label: "Number of Ground Units" %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :lotType, as: :select, collection: Property::LOT_TYPE.map{|v| [v, v]}, selected: 'Flat', label: "Lot Type" %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupied By", prompt: 'Please Select' %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :cdo, label: "Community Design Overlay" %>
-            </div>
-          </div>
-          <div class='col-sm-6'>
-            <div class="form-group">
-              <%= f.input :hpoz, label: "Historical Property Overlay Zone" %>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <%= f.submit 'Submit', class: 'btn btn-primary' %>
-        </div>
-      <% end %>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :street %>
+      </div>
     </div>
   </div>
-</div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-8'>
+      <div class="form-group">
+        <%= f.input :crossStreet %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :zip %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :mapPage %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, label: 'Select Year Built', prompt: 'Please Select' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :size, label: "Size in Square Footage" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :stories, label: "Number of Floor Levels" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :prop_type, as: :select, collection: Property::PROPERTY_TYPE.map{|v| [v, v]}, label: "Building Type", prompt: 'Please Select' %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :units, label: "Number of Units" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :gndUnits, label: "Number of Ground Units" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :lotType, as: :select, collection: Property::LOT_TYPE.map{|v| [v, v]}, selected: 'Flat', label: "Lot Type" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupied By", prompt: 'Please Select' %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :cdo, label: "Community Design Overlay" %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :hpoz, label: "Historical Property Overlay Zone" %>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+  </div>
+<% end %>

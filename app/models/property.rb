@@ -27,4 +27,7 @@ class Property < ActiveRecord::Base
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
   end
   
+  def state_name
+    state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
+  end
 end

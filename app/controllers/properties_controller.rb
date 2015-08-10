@@ -10,22 +10,34 @@ class PropertiesController < ApplicationController
 
   def new
     @property = Property.new
+    @remote = request.format.symbol == :html ? false : true
     states_cities
   end
 
   def edit
+    @remote = false
+    states_cities
   end
 
   def create
     @property = Property.create(property_params)
-    states_cities if @property.errors.present?
+    states_cities
+    respond_to do |format|
+      if @property.update(property_params)
+        format.html { redirect_to @property, notice: 'Property was successfully updated.' }
+        format.js
+      else
+        format.html { render :new }
+        format.js
+      end
+    end
   end
 
   def update
     respond_to do |format|
       if @property.update(property_params)
         format.html { redirect_to @property, notice: 'Property was successfully updated.' }
-        format.json { render :show, status: :ok, location: @property }
+        format.json { render json: @property }
       else
         format.html { render :edit }
         format.json { render json: @property.errors, status: :unprocessable_entity }

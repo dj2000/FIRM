@@ -44,7 +44,7 @@
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+        <%= f.input :city, as: :select, collection: @cities, selected: f.object.city, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
       </div>
     </div>
   </div>

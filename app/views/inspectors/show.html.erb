@@ -1,59 +1,98 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Inspector</h1>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>First Name:</strong>
+          <%= @inspector.firstName %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Last Name:</strong>
+          <%= @inspector.lastName %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Middle Initial:</strong>
+          <%= @inspector.middleInit %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Senior:</strong>
+          <%= @inspector.senior %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Cell Number:</strong>
+          <%= @inspector.phoneC %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Home Number:</strong>
+          <%= @inspector.phoneH %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Address:</strong>
+          <%= @inspector.address %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>State:</strong>
+          <%= @inspector.state_name %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>City:</strong>
+          <%= @inspector.city %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Zip:</strong>
+          <%= @inspector.zip %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        <div class="form-group">
+          <strong>Email:</strong>
+          <%= @inspector.email %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Firstname:</strong>
-  <%= @inspector.firstName %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @inspector.lastName %>
-</p>
-
-<p>
-  <strong>Middleinit:</strong>
-  <%= @inspector.middleInit %>
-</p>
-
-<p>
-  <strong>Senior:</strong>
-  <%= @inspector.senior %>
-</p>
-
-<p>
-  <strong>Phoneh:</strong>
-  <%= @inspector.phoneH %>
-</p>
-
-<p>
-  <strong>Phonec:</strong>
-  <%= @inspector.phoneC %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @inspector.address %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @inspector.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @inspector.state %>
-</p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @inspector.zip %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @inspector.email %>
-</p>
-
-<%= link_to 'Edit', edit_inspector_path(@inspector) %> |
-<%= link_to 'Back', inspectors_path %>
+<%= link_to 'Edit', edit_inspector_path(@inspector), class: 'btn btn-info' %>
+<%= link_to 'Back', inspectors_path, class: 'btn btn-info' %>

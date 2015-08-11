@@ -2,24 +2,26 @@
 <html>
 <head>
   <title>Firm</title>
-  
-  <%= stylesheet_link_tag    'application', "chosen-bootstrap", media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+  <%= stylesheet_link_tag    'application', "chosen-bootstrap", media: 'all', 'data-turbolinks-track' => false %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-    <%= render 'layouts/header' %>
-<!-- Devise start-->
-    <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-<!--Devise end    -->
-<div class="container">
-  <%= yield %>
-</div>
-
+<body class="<%= 'background' if controller_name == 'sessions' %>" style="height:100%;">
+  <%= render 'layouts/header' %>
+  <!-- Devise start-->
+  <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+  <!--Devise end    -->
+  <div class="container <%= 'height' if controller_name == 'sessions' %>">
+    <%= yield %>
+  </div>
+  <footer class="clearfix">
+    <p>Copyright © 2015 All Rights Reserved</p>
+  </footer>
 </body>
 </html>

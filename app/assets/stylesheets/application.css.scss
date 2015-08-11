@@ -70,7 +70,7 @@ user agent stylesheetdiv {
 footer {
   background: none repeat scroll 0 0 #111111;
   height: 55px;
-  position: fixed;
+  position: relative;
   text-align: center;
   padding: 20px 0;
   bottom: 0;
@@ -82,4 +82,7 @@ footer {
 }
 #login-wraper .formSubmit {
   margin-bottom: 25px;
+}
+.content-height{
+  min-height: 768px;
 }

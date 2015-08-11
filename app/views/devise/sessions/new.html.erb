@@ -1,0 +1,47 @@
+<div id="login-wraper">
+	<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'login-form form-horizontal' }) do |f| %>
+		<div class="body">
+		  <h1>
+		  	<i class="fa fa-lock"></i>
+		  	Sign in
+		  </h1>
+		  <div class="form-group">
+		  	<div class="col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i>
+						</span>
+						<%= f.text_field :email, class: 'form-control input-lg', placeholder: 'Email' %>
+					</div>
+				</div>
+		  </div>
+		  <div class="form-group">
+		  	<div class="col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-key fa-fw"></i>
+						</span>
+						<%= f.password_field :password, class: 'form-control input-lg', placeholder: 'Password' %>
+					</div>
+				</div>
+		  </div>
+		  <% if devise_mapping.rememberable? -%>
+		    <div class="field pull-left">
+		      <%= f.check_box :remember_me %>
+		      <%= f.label :remember_me %>
+		    </div>
+		  <% end %>
+
+		  <div class="form-group formSubmit">
+	    	<div class="col-xs-7">
+	    	</div>
+				<div class="col-xs-5 submitWrap">
+					<%= f.submit "Log in", class: "btn btn-primary btn-md" %>
+				</div>
+			</div>
+	    <div class="form-group formNotice">
+				<div class="col-xs-12">
+					<%= render "devise/shared/links" %>
+				</div>
+			</div>
+    </div>
+	<% end %>
+</div>

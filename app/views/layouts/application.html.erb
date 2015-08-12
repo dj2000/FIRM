@@ -17,7 +17,7 @@
   <p class="alert alert-danger"><%= alert %></p>
   <% end %>
   <!--Devise end    -->
-  <div class="container <%= 'height' if controller_name == 'sessions' %>">
+  <div class="container content-height <%= 'height' if controller_name == 'sessions' %>">
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>

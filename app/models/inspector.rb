@@ -17,4 +17,12 @@ class Inspector < ActiveRecord::Base
   def state_name
     state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
   end
+
+  def name
+    "#{self.try(:firstName)} #{self.try(:lastName)}"
+  end
+
+  def senior_inspector
+    self.try(:senior) ? "Yes" : "No"
+  end
 end

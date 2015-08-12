@@ -27,7 +27,7 @@
         </div>
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :schedStart, as: :string, value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d %H:%M:%S") , disabled: true, label: "Scheduled Start Time" %>
+            <%= f.input :schedStart, as: :string, input_html: { value: f.object.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S")} , disabled: true, label: "Start Date" %>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         </div>
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :schedEnd, as: :string, value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d %H:%M:%S") , disabled: true, label: "Scheduled End Time" %>
+            <%= f.input :schedEnd, as: :string, input_html: { value: f.object.try(:schedEnd).try(:strftime, "%d %b %Y %H:%M:%S")} , disabled: true, label: "End Date" %>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         </div>
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= check_box_tag 'client_property[escrow]', "", @client_property.try(:escrow) %>
+            <%= check_box_tag 'client_property[escrow]', true ,@client_property.try(:escrow) %>
             <label class="boolean optional">Escrow</label>
             <%= hidden_field_tag 'client_property[property_id]', @insp_request.property_id %>
             <%= hidden_field_tag 'client_property[client_id]', @insp_request.client_id %>
@@ -85,7 +85,11 @@
           </div>
         </div>
       </div>
-      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
+      <% unless @appointment.empty? %>
+        <%= link_to "Print", print_appointment_path(@appointment), remote: true, class: 'btn btn-warning' %>
+        <%= link_to "Email", "#", class: 'btn btn-info' %>
+      <% end %>
     <% end %>
   </div>
   <br/>

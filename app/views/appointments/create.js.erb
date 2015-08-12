@@ -2,5 +2,5 @@
 	$(".add-appointment-form").html("<%= escape_javascript(render partial: 'form') %>")
 	$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
 <% else %>
-	$(window.location.replace('/insp_requests'))
+	$(window.location.replace('/insp_requests/<%= @appointment.inspRequest_id %>'))
 <% end %>

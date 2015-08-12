@@ -40,6 +40,14 @@ class Appointment < ActiveRecord::Base
     }
   end
 
+  def is_prepaid
+    self.try(:prepaid) ? "Yes" : "No"
+  end
+
+  def empty?
+    self.new_record? || self.attributes.values.blank?
+  end
+
   private
 
   def check_end_datetime

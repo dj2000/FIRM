@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   resources :appointments do
     get :get_scheduled_appointments, on: :collection
+    get :print, on: :member
   end
 
   resources :insp_requests do 

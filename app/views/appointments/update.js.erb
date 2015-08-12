@@ -11,6 +11,6 @@
 		$(".full-calendar").fullCalendar('refetchEvents');
 		$(".modal").modal('hide');
 	<% else %>
-		$(window.location.replace('/insp_requests'))
+		$(window.location.replace('/insp_requests/<%= @appointment.inspRequest_id %>'))
 	<% end %>
 <% end %>

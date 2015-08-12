@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print]
   before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit, :index ]
   # GET /appointments
   # GET /appointments.json
@@ -51,8 +51,11 @@ class AppointmentsController < ApplicationController
       params[:appointment][:schedStart] = params[:schedStart].join(" ").to_datetime
       params[:appointment][:schedEnd] = params[:schedEnd].join(" ").to_datetime
     end
-    @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first
-    @client_property.update(client_property_params) if params[:client_property]
+    if params[:client_property]
+      params[:client_property][:escrow] = false unless params[:client_property][:escrow]
+      @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first_or_create
+      @client_property.update(client_property_params)
+    end
     @appointment.update(appointment_params)
   end
 
@@ -81,6 +84,14 @@ class AppointmentsController < ApplicationController
     end
     @appointments =  Appointment.where("(DATE(schedStart) BETWEEN ? AND ?) OR (DATE(schedEnd) BETWEEN ? AND ?)", @start_day, @end_day, @start_day, @end_day)
     render json: @appointments.as_json
+  end
+
+  def print
+    @client_property = ClientProperty.where(property_id: @appointment.try(:insp_request).property_id, client_id: @appointment.try(:insp_request).client_id).first
+    @agent_client = AgentClient.where(agent_id: @appointment.try(:insp_request).agent_id, client_id: @appointment.try(:insp_request).client_id).first
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

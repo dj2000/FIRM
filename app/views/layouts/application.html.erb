@@ -17,11 +17,9 @@
   <p class="alert alert-danger"><%= alert %></p>
   <% end %>
   <!--Devise end    -->
-  <div class="container content-height <%= 'height' if controller_name == 'sessions' %>">
+  <div class="container <%= 'height' if controller_name == 'sessions' %>">
     <%= yield %>
   </div>
-  <footer class="clearfix">
-    <p>Copyright © 2015 All Rights Reserved</p>
-  </footer>
+  <%= render 'layouts/footer' %>
 </body>
 </html>

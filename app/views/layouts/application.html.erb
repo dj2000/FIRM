@@ -6,9 +6,21 @@
   <%= stylesheet_link_tag    'application', "chosen-bootstrap", media: 'all', 'data-turbolinks-track' => false %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
   <%= csrf_meta_tags %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".alert").fadeOut(5000);
+    });
+  </script>
 </head>
-<body class="<%= 'background' if controller_name == 'sessions' %>" style="height:100%;">
+<body style="height:100%;">
   <%= render 'layouts/header' %>
+
+  <% if devise_controller? %>
+    <div class="login">
+      <%= image_tag('building.png', alt: "Home Page Banner", style: "width: 100%; height: 100%;")%>
+    </div>
+  <% end %>
   <!-- Devise start-->
   <% if notice %>
   <p class="alert alert-success"><%= notice %></p>

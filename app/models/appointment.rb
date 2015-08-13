@@ -18,7 +18,8 @@ class Appointment < ActiveRecord::Base
 
   validates :amount_received,
   						numericality: {
-  							greater_than_or_equal_to: 0.0
+                greater_than_or_equal_to: 0.0,
+                allow_blank: true
   							},
               if: "scheduled_inspection.blank?"
 

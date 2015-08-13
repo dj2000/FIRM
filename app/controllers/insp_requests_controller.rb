@@ -58,12 +58,12 @@ class InspRequestsController < ApplicationController
 
   def get_property_clients
     property = Property.find(params[:selector_id])
-    @clients = property.clients.map{|c| [c.firstName, c.id]}
+    @clients = property.clients.map{|c| [c.name, c.id]}
   end
 
   def get_client_agents
     client = Client.find(params[:selector_id])
-    @agents = client.agents.map{|c| [c.firstName, c.id]}
+    @agents = client.agents.map{|a| [a.name, a.id]}
   end
 
   private

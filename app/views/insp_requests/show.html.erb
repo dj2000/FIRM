@@ -31,7 +31,7 @@
       <div class='col-sm-12'>
         <div class="form-group">
           <strong>Client:</strong>
-          <%= @insp_request.client.try(:firstName) %>
+          <%= @insp_request.client.try(:name) %>
           <% if @insp_request.client %>
             <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
               <i class='fa fa-eye'></i> Details
@@ -44,7 +44,7 @@
       <div class='col-sm-12'>
         <div class="form-group">
           <strong>Agent:</strong>
-          <%= @insp_request.agent.try(:firstName) %>
+          <%= @insp_request.agent.try(:name) %>
           <% if @insp_request.agent %>
             <%= link_to agent_path(@insp_request.agent), remote: true, class: 'link' do %>
               <i class='fa fa-eye'></i> Details

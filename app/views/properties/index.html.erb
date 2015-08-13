@@ -8,18 +8,13 @@
       <th>City</th>
       <th>State</th>
       <th>Zip</th>
-      <th>Cross Street</th>
-      <th>Map Page</th>
       <th>Year Built</th>
       <th>Size in Square Footage</th>
       <th>Number of floor levels</th>
       <th>Building Type</th>
       <th>Number of Units</th>
-      <th>Number of Ground Units</th>
       <th>Lot Type</th>
       <th>Foundation Type</th>
-      <th>Historical Property Overlay Zone(HPO)</th>
-      <th>Community Design Overlay(CDO)</th>
       <th>Occupied By</th>
       <th colspan="3" style="text-align:center">Actions</th>
     </tr>
@@ -33,18 +28,13 @@
         <td><%= property.city %></td>
         <td><%= property.state_name %></td>
         <td><%= property.zip %></td>
-        <td><%= property.crossStreet %></td>
-        <td><%= property.mapPage %></td>
         <td><%= property.yearBuilt %></td>
         <td><%= property.size %></td>
         <td><%= property.stories %></td>
         <td><%= property.prop_type %></td>
         <td><%= property.units %></td>
-        <td><%= property.gndUnits %></td>
         <td><%= property.lotType %></td>
         <td><%= property.foundation %></td>
-        <td><%= property.hpoz %></td>
-        <td><%= property.cdo %></td>
         <td><%= property.occupied_by %></td>
         <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), property, class: 'btn btn-primary' %></td>
         <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_property_path(property), class: 'btn btn-info' %></td>

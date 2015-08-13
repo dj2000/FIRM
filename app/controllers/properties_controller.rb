@@ -25,6 +25,7 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.create(property_params)
+    @remote = request.format.symbol == :html ? false : true
     states_cities
     respond_to do |format|
       if @property.update(property_params)

@@ -3,7 +3,7 @@
 	$(".modal-title").html("New Agent");
 <% else %>
 	$('.add-agent').hide()
-	$(".agent_select").append("<option value='<%= @agent.id %>' selected> <%= @agent.firstName %></option>");
+	$(".agent_select").append("<option value='<%= @agent.id %>' selected> <%= @agent.name %></option>");
 	$(".agent_select").attr('disabled', false)
 	$(".agent_select").trigger("chosen:updated");
 	$(".modal").modal('hide');

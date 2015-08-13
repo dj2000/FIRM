@@ -31,6 +31,7 @@ class AgentsController < ApplicationController
   # POST /agents.json
   def create
     @client = Client.find(params[:client_id])
+    @remote = request.format.symbol == :html ? false : true
     @agent = Agent.new(agent_params)
     respond_to do |format|
       if @agent.save

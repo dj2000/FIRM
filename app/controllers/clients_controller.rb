@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :properties
 
   def index
     @clients = Client.all
@@ -22,12 +23,12 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @property = Property.find(params[:property_id])
+    @property = Property.find(params[:property_id]) if params[:property_id]
     @remote = request.format.symbol == :html ? false : true
     @client = Client.new(client_params)
     respond_to do |format|
       if @client.save
-        @property.clients << @client
+        @property.clients << @client if params[:property_id]
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
         format.js
       else
@@ -61,6 +62,10 @@ class ClientsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_client
       @client = Client.find(params[:id])
+    end
+
+    def properties
+      @properties = Property.all.map{|p| [p.street, p.id]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

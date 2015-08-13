@@ -83,15 +83,21 @@
         <%= f.submit 'Save', class: 'btn btn-primary' %>
         <% unless @appointment.empty? %>
           <%= link_to "Print", print_appointment_path(@appointment), remote: true, class: 'btn btn-warning' %>
-          <%= link_to "Email", send_email_appointment_path(@appointment), remote: true, class: 'btn btn-info send_email', onclick: "$(this).attr('disabled', true)" %>
+          <%= link_to "Email", send_email_appointment_path(@appointment), remote: true, class: 'btn btn-info send_email', onclick: "loadingHide()" %>
         <% end %>
       </div>
     <% end %>
   </div>
   <br/>
 </div>
+<div class="loading text-center hide">
+  <%= image_tag('loading.jpg') %>
+</div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
+  function loadingHide(){
+    $('.loading').removeClass('hide');
+  }
   $(document).ready(function(){
     $('.datepicker').datepicker({ 
       format: 'yyyy-mm-dd'

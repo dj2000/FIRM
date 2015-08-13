@@ -6,13 +6,13 @@
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Inspector:</strong>
           <%= @appointment.inspector.name %>
         </div>
       </div>
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Senior Inspector:</strong>
           <%= @appointment.inspector.senior_inspector %>
@@ -20,19 +20,19 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-6'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Fee:</strong>
           <%= @appointment.inspFee %>
         </div>
       </div>
-      <div class='col-sm-2'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Prepaid:</strong>
           <%= @appointment.is_prepaid %>
         </div>
       </div>
-      <div class='col-sm-4'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Payment Method:</strong>
           <%= @appointment.pmtMethod %>
@@ -40,13 +40,13 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Start Date:</strong>
           <%= @appointment.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") %>
         </div>
       </div>
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>End Date:</strong>
           <%= @appointment.try(:schedEnd).try(:strftime, "%d %b %Y %H:%M:%S") %>
@@ -89,19 +89,19 @@
       </tbody>
     </table>
     <div class="row">
-      <div class='col-sm-6'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Client Type:</strong>
           <%= @client_property.clientType %>
         </div>
       </div>
-      <div class='col-sm-2'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>In Escrow:</strong>
           <%= @client_property.try(:is_escrow) %>
         </div>
       </div>
-      <div class='col-sm-4'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Agent Type:</strong>
           <%= @agent_client.try(:agentType) %>
@@ -122,25 +122,25 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-4'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Year Built:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:yearBuilt) %>
         </div>
       </div>
-      <div class='col-sm-3'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Sq. Ft:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:size) %>
         </div>
       </div>
-      <div class='col-sm-3'>
+      <div class='col-xs-2'>
         <div class="form-group">
           <strong>Stories:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:stories) %>
         </div>
       </div>
-      <div class='col-sm-3'>
+      <div class='col-xs-4'>
         <div class="form-group">
           <strong>Building Type:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:prop_type) %>
@@ -148,19 +148,19 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-4'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Lot Type:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:lotType) %>
         </div>
       </div>
-      <div class='col-sm-4'>
+      <div class='col-xs-3'>
         <div class="form-group">
           <strong>Foundation:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:foundation) %>
         </div>
       </div>
-      <div class='col-sm-4'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Number of Units:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:units) %>
@@ -168,13 +168,13 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Occupied By:</strong>
           <%= @appointment.try(:insp_request).try(:property).try(:occupied_by) %>
         </div>
       </div>
-      <div class='col-sm-6'>
+      <div class='col-xs-6'>
         <div class="form-group">
           <strong>Escrow Close Date:</strong>
           <%= @client_property.try(:escrowDate).try(:strftime, "%d %b %Y") %>
@@ -182,7 +182,7 @@
       </div>
     </div>
     <div class="row">
-      <div class='col-sm-12'>
+      <div class='col-xs-12'>
         <div class="form-group">
           <strong>Notes:</strong>
           <%= @appointment.notes %>

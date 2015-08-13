@@ -78,6 +78,9 @@
           </div>
         </div>
       </div>
+      <div class="pull-left">
+        <%= link_to "Back", insp_requests_path, class: 'btn btn-primary' %>
+      </div>
       <div class="pull-right">
         <%= link_to "Schedule Inspection", appointments_path(id: @insp_request), class: "btn btn-primary" %>
         <%= f.submit 'Save', class: 'btn btn-primary' %>

@@ -58,5 +58,7 @@
   $(document).ready(function(){
     var property_id = $(".property_select").val();
     $(".property_id").val(property_id);
+    var property_text = $(".property_select option:selected").text();
+    $("#client_mailAddress").val(property_text);
   });
 </script>

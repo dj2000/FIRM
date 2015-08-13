@@ -26,7 +26,7 @@
   <div class='col-sm-12'>
     <div class="form-group">
       <strong>Home Number:</strong>
-      <%= @client.phoneH %>
+      <%= number_to_phone(@client.phoneH, area_code: true) %>
     </div>
   </div>
 </div>
@@ -34,7 +34,7 @@
   <div class='col-sm-12'>
     <div class="form-group">
       <strong>Office Number:</strong>
-      <%= @client.phoneW %>
+      <%= number_to_phone(@client.phoneW, area_code: true) %>
     </div>
   </div>
 </div>
@@ -42,7 +42,7 @@
   <div class='col-sm-12'>
     <div class="form-group">
       <strong>Cell Number:</strong>
-      <%= @client.phoneC %>
+      <%= number_to_phone(@client.phoneC, area_code: true) %>
     </div>
   </div>
 </div>

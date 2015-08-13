@@ -6,7 +6,8 @@ class Inspector < ActiveRecord::Base
   validates :phoneH, :phoneC,
 							numericality: true,
 							length: { :minimum => 10, :maximum => 15 },
-							allow_blank: true
+							allow_blank: true,
+              format: { with: /\A[0-9\-]+*\z/ }
   validates :email, presence: true, email_format: { message: "Invalid Email Address" }
   validates :zip,
               length:

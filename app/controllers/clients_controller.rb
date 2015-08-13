@@ -15,6 +15,7 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
+    @client_property = ClientProperty.new
     @remote = request.format.symbol == :html ? false : true
   end
 
@@ -23,12 +24,13 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @property = Property.find(params[:property_id]) if params[:property_id]
+    @property = Property.find(params[:property_id]) if params[:property_id].present?
     @remote = request.format.symbol == :html ? false : true
     @client = Client.new(client_params)
+    @client_property = ClientProperty.new
     respond_to do |format|
       if @client.save
-        @property.clients << @client if params[:property_id]
+        @property.clients << @client if params[:property_id].present?
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
         format.js
       else

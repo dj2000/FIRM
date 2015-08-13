@@ -24,15 +24,19 @@ class ClientPropertiesController < ApplicationController
   # POST /client_properties
   # POST /client_properties.json
   def create
+    params[:client_property][:property_id] = params[:property_id]
     @client_property = ClientProperty.new(client_property_params)
-
+    @client = Client.where(id: params[:client_property][:client_id]).first_or_initialize
+    @remote = request.format.symbol == :html ? false : true
     respond_to do |format|
       if @client_property.save
         format.html { redirect_to @client_property, notice: 'Client property was successfully created.' }
         format.json { render :show, status: :created, location: @client_property }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @client_property.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

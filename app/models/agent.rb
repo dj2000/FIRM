@@ -7,7 +7,8 @@ class Agent < ActiveRecord::Base
   validates :phoneH, :phoneW, :phoneC,
   						uniqueness: true,
   						numericality: true,
-  						length: { :minimum => 10, :maximum => 15 }
+							length: { :minimum => 10, :maximum => 15 },
+              format: { with: /\A[0-9\-]+*\z/ }
 
   validates :email, email_format: { message: "Invalid Email Address" }
   def name

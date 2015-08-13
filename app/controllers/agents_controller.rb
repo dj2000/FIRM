@@ -30,12 +30,12 @@ class AgentsController < ApplicationController
   # POST /agents
   # POST /agents.json
   def create
-    @client = Client.find(params[:client_id]) if params[:client_id]
+    @client = Client.find(params[:client_id]) if params[:client_id].present?
     @remote = request.format.symbol == :html ? false : true
     @agent = Agent.new(agent_params)
     respond_to do |format|
       if @agent.save
-        @client.agents << @agent if params[:client_id]
+        @client.agents << @agent if params[:client_id].present?
         format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
         format.js
       else

@@ -1,45 +1,19 @@
-<%= form_for(@client_property) do |f| %>
-  <% if @client_property.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@client_property.errors.count, "error") %> prohibited this client_property from being saved:</h2>
-
-      <ul>
-      <% @client_property.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for @client_property, html: { remote: true } do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.association :client, collection: Client.all, label_method: :name %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :client_id %><br>
-    <%= f.number_field :client_id %>
-  </div>
-  <div class="field">
-    <%= f.label :property_id %><br>
-    <%= f.number_field :property_id %>
-  </div>
-  <div class="field">
-    <%= f.label :clientType %><br>
-    <%= f.text_field :clientType %>
-  </div>
-  <div class="field">
-    <%= f.label :typeDate %><br>
-    <%= f.date_select :typeDate %>
-  </div>
-  <div class="field">
-    <%= f.label :occupiedBy %><br>
-    <%= f.text_field :occupiedBy %>
-  </div>
-  <div class="field">
-    <%= f.label :escrow %><br>
-    <%= f.check_box :escrow %>
-  </div>
-  <div class="field">
-    <%= f.label :escrowDate %><br>
-    <%= f.date_select :escrowDate %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.submit 'Update', class: 'btn btn-info' %>
+        <%= hidden_field_tag :property_id, "", class: 'property_id' %>
+      </div>
+    </div>
   </div>
 <% end %>
+<fieldset>
+    <legend>New Client</legend>
+</fieldset>

@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <%= hidden_field_tag :property_id, "" %>
+  <%= hidden_field_tag :property_id, "", class: 'property_id' %>
   <div class="row">
     <div class='col-sm-4'>
       <div class="form-group">
@@ -54,11 +54,9 @@
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
-
-
 <script>
   $(document).ready(function(){
     var property_id = $(".property_select").val();
-    $("#property_id").val(property_id);
+    $(".property_id").val(property_id);
   });
 </script>

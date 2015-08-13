@@ -1,3 +1,4 @@
-$(".modal-title").html("New Client");
-$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
+$(".modal-title").html("Update Client");
+$(".modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
+$(".modal-body").append("<%= escape_javascript(render partial: 'form') %>");
 $(".modal").modal('show');

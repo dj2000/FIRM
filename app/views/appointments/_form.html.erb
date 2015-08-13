@@ -78,18 +78,14 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class='col-sm-6'>
-          <div class="form-group">
-            <%= link_to "Schedule Inspection", appointments_path(id: @insp_request), class: "btn btn-primary" %>
-          </div>
-        </div>
+      <div class="pull-right">
+        <%= link_to "Schedule Inspection", appointments_path(id: @insp_request), class: "btn btn-primary" %>
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+        <% unless @appointment.empty? %>
+          <%= link_to "Print", print_appointment_path(@appointment), remote: true, class: 'btn btn-warning' %>
+          <%= link_to "Email", send_email_appointment_path(@appointment), remote: true, class: 'btn btn-info send_email', onclick: "$(this).attr('disabled', true)" %>
+        <% end %>
       </div>
-      <%= f.submit 'Save', class: 'btn btn-primary' %>
-      <% unless @appointment.empty? %>
-        <%= link_to "Print", print_appointment_path(@appointment), remote: true, class: 'btn btn-warning' %>
-        <%= link_to "Email", "#", class: 'btn btn-info' %>
-      <% end %>
     <% end %>
   </div>
   <br/>

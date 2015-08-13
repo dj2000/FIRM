@@ -1,9 +1,5 @@
+<%= wicked_pdf_stylesheet_link_tag "application", media: :all %>
 <%= stylesheet_link_tag 'print', media: 'print' %>
-<style type="text/css">
-  .panel .panel-info {
-    background-color: #bce8f1;
-  }
-</style>
 <div class="panel panel-info">
   <div class="panel-heading">
     <h2 class="panel-title">Appointment Sheet</h2>
@@ -96,7 +92,7 @@
       <div class='col-sm-6'>
         <div class="form-group">
           <strong>Client Type:</strong>
-          <%= @client_property.clientType%>
+          <%= @client_property.clientType %>
         </div>
       </div>
       <div class='col-sm-2'>

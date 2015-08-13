@@ -7,8 +7,7 @@ class Inspector < ActiveRecord::Base
 							numericality: true,
 							length: { :minimum => 10, :maximum => 15 },
 							allow_blank: true
-
-  validates :email, email_format: { message: "Invalid Email Address" }, allow_blank: true
+  validates :email, presence: true, email_format: { message: "Invalid Email Address" }
   validates :zip,
               length:
                 { is: 5,

@@ -44,6 +44,8 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-timepicker-rails'
 gem "font-awesome-rails"
 gem 'fullcalendar-rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

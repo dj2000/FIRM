@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print, :send_email]
   before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit, :index ]
   # GET /appointments
   # GET /appointments.json
@@ -89,6 +89,15 @@ class AppointmentsController < ApplicationController
   def print
     @client_property = ClientProperty.where(property_id: @appointment.try(:insp_request).property_id, client_id: @appointment.try(:insp_request).client_id).first
     @agent_client = AgentClient.where(agent_id: @appointment.try(:insp_request).agent_id, client_id: @appointment.try(:insp_request).client_id).first
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def send_email
+    @client_property = ClientProperty.where(property_id: @appointment.try(:insp_request).property_id, client_id: @appointment.try(:insp_request).client_id).first
+    @agent_client = AgentClient.where(agent_id: @appointment.try(:insp_request).agent_id, client_id: @appointment.try(:insp_request).client_id).first
+    UserMailer.send_appointment(@appointment, @client_property, @agent_client).deliver
     respond_to do |format|
       format.js
     end

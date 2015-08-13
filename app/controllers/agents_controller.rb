@@ -19,6 +19,7 @@ class AgentsController < ApplicationController
   # GET /agents/new
   def new
     @agent = Agent.new
+    @agent_client = AgentClient.new
     @remote = request.format.symbol == :html ? false : true
   end
 
@@ -33,6 +34,7 @@ class AgentsController < ApplicationController
     @client = Client.find(params[:client_id]) if params[:client_id].present?
     @remote = request.format.symbol == :html ? false : true
     @agent = Agent.new(agent_params)
+    @agent_client = AgentClient.new
     respond_to do |format|
       if @agent.save
         @client.agents << @agent if params[:client_id].present?

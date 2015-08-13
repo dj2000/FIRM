@@ -4,7 +4,6 @@ class Inspector < ActiveRecord::Base
   has_many :insp_comm_scales
   validates :firstName, :lastName, :senior, presence: true
   validates :phoneH, :phoneC,
-							numericality: true,
 							length: { :minimum => 10, :maximum => 15 },
 							allow_blank: true,
               format: { with: /\A[0-9\-]+*\z/ }

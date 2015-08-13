@@ -8,7 +8,6 @@ class Client < ActiveRecord::Base
   validates :firstName, :lastName, :phoneH, :phoneW, :phoneC, presence: true
   validates :phoneH, :phoneW, :phoneC,
   						uniqueness: true,
-  						numericality: true,
               length: { :minimum => 10, :maximum => 15 },
               format: { with: /\A[0-9\-]*\z/ }
 

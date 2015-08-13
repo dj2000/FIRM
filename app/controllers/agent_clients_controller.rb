@@ -24,15 +24,17 @@ class AgentClientsController < ApplicationController
   # POST /agent_clients
   # POST /agent_clients.json
   def create
+    params[:agent_client][:client_id] = params[:client_id]
     @agent_client = AgentClient.new(agent_client_params)
-
+    @agent = Agent.where(id: params[:agent_client][:agent_id]).first_or_initialize
+    @remote = request.format.symbol == :html ? false : true
     respond_to do |format|
       if @agent_client.save
         format.html { redirect_to @agent_client, notice: 'Agent client was successfully created.' }
-        format.json { render :show, status: :created, location: @agent_client }
+        format.js
       else
         format.html { render :new }
-        format.json { render json: @agent_client.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

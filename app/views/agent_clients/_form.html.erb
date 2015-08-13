@@ -1,29 +1,19 @@
-<%= form_for(@agent_client) do |f| %>
-  <% if @agent_client.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@agent_client.errors.count, "error") %> prohibited this agent_client from being saved:</h2>
-
-      <ul>
-      <% @agent_client.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@agent_client, html: { remote: true }) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.association :agent, collection: Agent.all, label_method: :name %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :agent_id %><br>
-    <%= f.number_field :agent_id %>
-  </div>
-  <div class="field">
-    <%= f.label :client_id %><br>
-    <%= f.number_field :client_id %>
-  </div>
-  <div class="field">
-    <%= f.label :agentDate %><br>
-    <%= f.date_select :agentDate %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.submit 'Update', class: 'btn btn-info' %>
+        <%= hidden_field_tag :client_id, "", class: 'client_id' %>
+      </div>
+    </div>
   </div>
 <% end %>
+<fieldset>
+    <legend>New Agent</legend>
+</fieldset>

@@ -3,77 +3,65 @@
     <h1 class="panel-title">Inspection Request</h1>
   </div>
   <div class="panel-body">
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Call Time:</strong>
-          <%= @insp_request.call_time %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Caller type:</strong>
-          <%= @insp_request.callerType %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Referral Source:</strong>
-          <%= @insp_request.referalSource %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Client:</strong>
-          <%= @insp_request.client.try(:name) %>
-          <% if @insp_request.client %>
-            <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
-              <i class='fa fa-eye'></i> Details
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Inspector Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Call Time</td>
+          <td><%= @insp_request.call_time %></td>
+        </tr>
+        <tr>
+          <td>Caller type</td>
+          <td><%= @insp_request.callerType %></td>
+        </tr>
+        <tr>
+          <td>Referral Source</td>
+          <td><%= @insp_request.referalSource %></td>
+        </tr>
+        <tr>
+          <td>Client</td>
+          <td>
+            <%= @insp_request.client.try(:name) %>
+            <% if @insp_request.client %>
+              <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
+                <i class='fa fa-eye'></i> Details
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Agent:</strong>
-          <%= @insp_request.agent.try(:name) %>
-          <% if @insp_request.agent %>
-            <%= link_to agent_path(@insp_request.agent), remote: true, class: 'link' do %>
-              <i class='fa fa-eye'></i> Details
+          </td>
+        </tr>
+        <tr>
+          <td>Agent</td>
+          <td>
+            <%= @insp_request.agent.try(:name) %>
+            <% if @insp_request.agent %>
+              <%= link_to agent_path(@insp_request.agent), remote: true, class: 'link' do %>
+                <i class='fa fa-eye'></i> Details
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Property:</strong>
-          <%= @insp_request.property.try(:street) %>
-          <% if @insp_request.property %>
-            <%= link_to property_path(@insp_request.property), remote: true, class: 'link' do %>
-              <i class='fa fa-eye'></i> Details
+          </td>
+        </tr>
+        <tr>
+          <td>Property</td>
+          <td>
+            <%= @insp_request.property.try(:street) %>
+            <% if @insp_request.property %>
+              <%= link_to property_path(@insp_request.property), remote: true, class: 'link' do %>
+                <i class='fa fa-eye'></i> Details
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-sm-12'>
-        <div class="form-group">
-          <strong>Select Insp:</strong>
-          <%= @insp_request.selectInsp %>
-        </div>
-      </div>
-    </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Select Insp</td>
+          <td><%= @insp_request.selectInsp %></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <div class="add-appointment-form">

@@ -7,14 +7,8 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body style="height:100%;">
+<body class="<%= controller_name == 'sessions' ? 'background' : '' %>">
   <%= render 'layouts/header' %>
-
-  <% if devise_controller? %>
-    <div class="login">
-      <%= image_tag('building.png', alt: "Home Page Banner", style: "width: 100%; height: 100%;")%>
-    </div>
-  <% end %>
   <!-- Devise start-->
   <% if notice %>
   <p class="alert alert-success">
@@ -29,7 +23,7 @@
   </p>
   <% end %>
   <!--Devise end    -->
-  <div class="container content-height <%= 'height' if controller_name == 'sessions' %>">
+  <div class="container">
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>

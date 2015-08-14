@@ -46,7 +46,7 @@ class Appointment < ActiveRecord::Base
   end
 
   def empty?
-    self.new_record? || self.attributes.values.blank?
+    self.new_record? || (inspFee.blank? and schedStart.blank? and inspector_id.blank? and schedEnd.blank? )
   end
 
   private

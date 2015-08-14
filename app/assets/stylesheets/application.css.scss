@@ -31,7 +31,7 @@
   -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   display: block;
@@ -63,24 +63,11 @@ user agent stylesheetdiv {
   margin-left: -15px;
   margin-right: -15px;
 }
-footer {
-  background: none repeat scroll 0 0 #111111;
-  height: 55px;
-  position: relative;
-  text-align: center;
-  padding: 20px 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
 .height{
 	height: 500px;
 }
 #login-wraper .formSubmit {
   margin-bottom: 25px;
-}
-.content-height{
-  min-height: 610px;
 }
 .alert{
   position: relative;
@@ -90,10 +77,31 @@ footer {
 }
 .login{
   position: absolute;
-  min-height: 660px;
   width: 100%;
-  height: 660px;
+  height: 80%;
 }
 .font-white{
   color: #fff;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #000;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.background{
+  background: url('building.png');
+  background-size: cover;
+}
+.footer p{
+  margin-top: 15px;
 }

@@ -1,64 +1,42 @@
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>First Name:</strong>
-      <%= @client.firstName %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Last Name:</strong>
-      <%= @client.lastName %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Middle Initial:</strong>
-      <%= @client.middleInit %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Home Number:</strong>
-      <%= number_to_phone(@client.phoneH) %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Office Number:</strong>
-      <%= number_to_phone(@client.phoneW) %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Cell Number:</strong>
-      <%= number_to_phone(@client.phoneC) %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Email:</strong>
-      <%= @client.email %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Mail Address:</strong>
-      <%= @client.mailAddress %>
-    </div>
-  </div>
-</div>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Client Attributes</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Name</td>
+      <td><%= @client.firstName %></td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td><%= @client.lastName %></td>
+    </tr>
+    <tr>
+      <td>Middle Initial</td>
+      <td><%= @client.middleInit %></td>
+    </tr>
+    <tr>
+      <td>Home Number</td>
+      <td><%= number_to_phone(@client.phoneH) %></td>
+    </tr>
+    <tr>
+      <td>Office Number</td>
+      <td><%= number_to_phone(@client.phoneW) %></td>
+    </tr>
+    <tr>
+      <td>Cell Number</td>
+      <td><%= number_to_phone(@client.phoneC) %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= @client.email %></td>
+    </tr>
+    <tr>
+      <td>Mail Address</td>
+      <td><%= @client.mailAddress %></td>
+    </tr>
+  </tbody>
+</table>

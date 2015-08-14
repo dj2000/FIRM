@@ -1,72 +1,46 @@
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>First Name:</strong>
-      <%= @agent.firstName %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Last Name:</strong>
-      <%= @agent.lastName %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Middle Initial:</strong>
-      <%= @agent.middleInit %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Company:</strong>
-      <%= @agent.company %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Home Number:</strong>
-      <%= @agent.phoneH %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Office Number:</strong>
-      <%= @agent.phoneW %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Cell Number:</strong>
-      <%= @agent.phoneC %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Email:</strong>
-      <%= @agent.email %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Mail Address:</strong>
-      <%= @agent.mailAddress %>
-    </div>
-  </div>
-</div>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Agent Attributes</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First Name</td>
+      <td><%= @agent.firstName %></td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td><%= @agent.lastName %></td>
+    </tr>
+    <tr>
+      <td>Middle Initial</td>
+      <td><%= @agent.middleInit %></td>
+    </tr>
+    <tr>
+      <td>Company</td>
+      <td><%= @agent.company %></td>
+    </tr>
+    <tr>
+      <td>Home Number</td>
+      <td><%= number_to_phone(@agent.phoneH) %></td>
+    </tr>
+    <tr>
+      <td>Office Number</td>
+      <td><%= number_to_phone(@agent.phoneW) %></td>
+    </tr>
+    <tr>
+      <td>Cell Number</td>
+      <td><%= number_to_phone(@agent.phoneC) %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= @agent.email %></td>
+    </tr>
+    <tr>
+      <td>Mail Address</td>
+      <td><%= @agent.mailAddress %></td>
+    </tr>
+  </tbody>
+</table>

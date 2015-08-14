@@ -1,144 +1,82 @@
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Number:</strong>
-      <%= @property.number %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Street:</strong>
-      <%= @property.street %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>State:</strong>
-      <%= @property.state_name %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>City:</strong>
-      <%= @property.city %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Zip:</strong>
-      <%= @property.zip %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Cross Street:</strong>
-      <%= @property.crossStreet %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Map Page:</strong>
-      <%= @property.mapPage %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Year Built:</strong>
-      <%= @property.yearBuilt %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Size in Square Footage:</strong>
-      <%= @property.size %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Number of floor levels:</strong>
-      <%= @property.stories %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Building Type:</strong>
-      <%= @property.prop_type %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Number of Units:</strong>
-      <%= @property.units %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Number of Ground Units:</strong>
-      <%= @property.gndUnits %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Lot Type:</strong>
-      <%= @property.lotType %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Foundation Type:</strong>
-      <%= @property.foundation %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Historical Property Overlay Zone(HPO):</strong>
-      <%= @property.hpoz %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Community Design Overlay(CDO):</strong>
-      <%= @property.cdo %>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class='col-sm-12'>
-    <div class="form-group">
-      <strong>Occupied By:</strong>
-      <%= @property.occupied_by %>
-    </div>
-  </div>
-</div>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Property Attributes</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Number</td>
+      <td><%= @property.number %></td>
+    </tr>
+    <tr>
+      <td>Street</td>
+      <td><%= @property.street %></td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td><%= @property.state_name %></td>
+    </tr>
+    <tr>
+      <td>City</td>
+      <td><%= @property.city %></td>
+    </tr>
+    <tr>
+      <td>Zip</td>
+      <td><%= @property.zip %></td>
+    </tr>
+    <tr>
+      <td>Cross Street</td>
+      <td><%= @property.crossStreet %></td>
+    </tr>
+    <tr>
+      <td>Map Page</td>
+      <td><%= @property.mapPage %></td>
+    </tr>
+    <tr>
+      <td>Year Built</td>
+      <td><%= @property.yearBuilt %></td>
+    </tr>
+    <tr>
+      <td>Size in Square Footage</td>
+      <td><%= @property.size %></td>
+    </tr>
+    <tr>
+      <td>Number of floor levels</td>
+      <td><%= @property.stories %></td>
+    </tr>
+    <tr>
+      <td>Building Type</td>
+      <td><%= @property.prop_type %></td>
+    </tr>
+    <tr>
+      <td>Number of Units</td>
+      <td><%= @property.units %></td>
+    </tr>
+    <tr>
+      <td>Number of Ground Units</td>
+      <td><%= @property.gndUnits %></td>
+    </tr>
+    <tr>
+      <td>Lot Type</td>
+      <td><%= @property.lotType %></td>
+    </tr>
+    <tr>
+      <td>Foundation Type</td>
+      <td><%= @property.foundation %></td>
+    </tr>
+    <tr>
+      <td>Historical Property Overlay Zone(HPO)</td>
+      <td><%= @property.humanize("hpoz") %></td>
+    </tr>
+    <tr>
+      <td>Community Design Overlay(CDO)</td>
+      <td><%= @property.humanize("cdo") %></td>
+    </tr>
+    <tr>
+      <td>Occupied By</td>
+      <td><%= @property.occupied_by %></td>
+    </tr>
+  </tbody>
+</table>

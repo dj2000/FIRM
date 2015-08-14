@@ -1,3 +1,6 @@
+<fieldset>
+    <legend>Select Client</legend>
+</fieldset>
 <%= simple_form_for @client_property, html: { remote: true } do |f| %>
   <%= f.error_notification %>
   <div class="row">
@@ -14,6 +17,3 @@
     </div>
   </div>
 <% end %>
-<fieldset>
-    <legend>New Client</legend>
-</fieldset>

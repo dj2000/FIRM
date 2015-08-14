@@ -1,7 +1,6 @@
 <% if @client.errors.present? %>
 	$(".modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
 	$(".modal-body").append("<%= escape_javascript(render partial: 'form') %>");
-	$(".modal-title").html("Client");
 <% else %>
 	$('.add-agent').show()
 	$('.add-client').hide()

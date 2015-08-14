@@ -1,3 +1,6 @@
+<fieldset>
+  <legend>Select Agent</legend>
+</fieldset>
 <%= simple_form_for(@agent_client, html: { remote: true }) do |f| %>
   <%= f.error_notification %>
   <div class="row">
@@ -14,6 +17,3 @@
     </div>
   </div>
 <% end %>
-<fieldset>
-    <legend>New Agent</legend>
-</fieldset>

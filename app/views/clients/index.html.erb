@@ -21,9 +21,9 @@
         <td><%= client.firstName %></td>
         <td><%= client.lastName %></td>
         <td><%= client.middleInit %></td>
-        <td><%= client.phoneH %></td>
-        <td><%= client.phoneW %></td>
-        <td><%= client.phoneC %></td>
+        <td><%= number_to_phone(client.phoneH) %></td>
+        <td><%= number_to_phone(client.phoneW) %></td>
+        <td><%= number_to_phone(client.phoneC) %></td>
         <td><%= client.email %></td>
         <td><%= client.mailAddress %></td>
         <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), client, class: 'btn btn-primary' %></td>

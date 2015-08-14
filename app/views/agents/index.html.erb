@@ -23,9 +23,9 @@
         <td><%= agent.lastName %></td>
         <td><%= agent.middleInit %></td>
         <td><%= agent.company %></td>
-        <td><%= agent.phoneH %></td>
-        <td><%= agent.phoneW %></td>
-        <td><%= agent.phoneC %></td>
+        <td><%= number_to_phone(agent.phoneH) %></td>
+        <td><%= number_to_phone(agent.phoneW) %></td>
+        <td><%= number_to_phone(agent.phoneC) %></td>
         <td><%= agent.email %></td>
         <td><%= agent.mailAddress %></td>
         <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), agent, class: 'btn btn-primary' %></td>

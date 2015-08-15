@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.boolean  "allDay"
     t.integer  "inspector_id"
     t.string   "contact"
-    t.float    "inspFee",         limit: 24
+    t.float    "inspFee",         limit: 5
     t.boolean  "prepaid"
     t.string   "pmtMethod"
     t.string   "pmtRef"
@@ -51,14 +51,14 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "svcArea_id"
-    t.float    "amount_received", limit: 24
+    t.float    "amount_received", limit: 5
   end
 
   create_table "bids", force: true do |t|
     t.string   "inspection_id"
-    t.decimal  "costRepair",    precision: 10, scale: 0
-    t.decimal  "feeSeismicUpg", precision: 10, scale: 0
-    t.decimal  "feeAdmin",      precision: 10, scale: 0
+    t.decimal  "costRepair"
+    t.decimal  "feeSeismicUpg"
+    t.decimal  "feeAdmin"
     t.integer  "payPlan_id"
     t.string   "status"
     t.datetime "created_at"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
   create_table "commissions", force: true do |t|
     t.integer  "year"
     t.integer  "weekNo"
-    t.decimal  "rate",       precision: 10, scale: 0
+    t.decimal  "rate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.string   "signedBy"
     t.string   "acceptedBy"
     t.date     "dateSigned"
-    t.decimal  "downPmtAmt",  precision: 10, scale: 0
+    t.decimal  "downPmtAmt"
     t.date     "downPmtDate"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -143,22 +143,22 @@ ActiveRecord::Schema.define(version: 20150808064948) do
   create_table "i_fee_schedules", force: true do |t|
     t.boolean  "feeActive"
     t.date     "effectiveFrom"
-    t.decimal  "ownerOccRate",  precision: 10, scale: 0
-    t.decimal  "sfrBaseRate",   precision: 10, scale: 0
-    t.decimal  "sfrIncRate",    precision: 10, scale: 0
-    t.decimal  "mfrBaseRate",   precision: 10, scale: 0
-    t.decimal  "mfrIncRate",    precision: 10, scale: 0
-    t.decimal  "insBaseRate",   precision: 10, scale: 0
-    t.decimal  "insIncRate",    precision: 10, scale: 0
+    t.decimal  "ownerOccRate"
+    t.decimal  "sfrBaseRate"
+    t.decimal  "sfrIncRate"
+    t.decimal  "mfrBaseRate"
+    t.decimal  "mfrIncRate"
+    t.decimal  "insBaseRate"
+    t.decimal  "insIncRate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "insp_comm_scales", force: true do |t|
     t.integer  "inspector_id"
-    t.decimal  "scaleStart",   precision: 10, scale: 0
-    t.decimal  "scaleEnd",     precision: 10, scale: 0
-    t.decimal  "rate",         precision: 10, scale: 0
+    t.decimal  "scaleStart"
+    t.decimal  "scaleEnd"
+    t.decimal  "rate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -224,7 +224,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.string   "project_id"
     t.string   "description"
     t.date     "invoiceDate"
-    t.decimal  "amount",        precision: 10, scale: 0
+    t.decimal  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.date     "issueDate"
     t.string   "issuedBy"
     t.string   "status"
-    t.decimal  "valuation",  precision: 10, scale: 0
+    t.decimal  "valuation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.integer  "contract_id"
     t.integer  "pmtNumber"
     t.date     "pmtDate"
-    t.decimal  "pmtAmount",   precision: 10, scale: 0
+    t.decimal  "pmtAmount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -291,7 +291,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
   create_table "projects", force: true do |t|
     t.date     "vcDate"
     t.integer  "contract_id"
-    t.decimal  "jobCost",        precision: 10, scale: 0
+    t.decimal  "jobCost"
     t.date     "scheduleBy"
     t.string   "schedulePref"
     t.integer  "estDuration"
@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.string   "reference"
     t.date     "date"
     t.integer  "invoice_id"
-    t.decimal  "amount",     precision: 10, scale: 0
+    t.decimal  "amount"
     t.string   "recBy"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -384,7 +384,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

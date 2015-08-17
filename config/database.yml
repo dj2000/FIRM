@@ -1,0 +1,16 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: firm_dev
+  pool: 5
+  username: root
+  password: 
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: firm_prod
+  pool: 5
+  username: root
+  password: 

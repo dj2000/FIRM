@@ -34,7 +34,8 @@ gem 'simple_form'
 gem 'will_paginate'
 gem "populator"
 gem "faker"
-gem 'mysql2'
+#gem 'mysql2'
+gem 'pg'
 gem 'pry'
 gem 'random_data'
 gem "selectize-rails"
@@ -63,3 +64,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
+gem 'rails_12factor', group: :production

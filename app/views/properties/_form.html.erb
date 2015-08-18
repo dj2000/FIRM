@@ -45,7 +45,7 @@
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, label: 'Select Year Built', prompt: 'Please Select' %>
+        <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, selected: f.object.new_record? ? 1965 : f.object.yearBuilt , label: 'Select Year Built' %>
       </div>
     </div>
   </div>

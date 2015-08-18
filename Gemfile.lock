@@ -88,6 +88,7 @@ GEM
     mysql2 (0.3.18)
     mysql2 (0.3.18-x86-mingw32)
     orm_adapter (0.5.0)
+    pg (0.18.2)
     populator (1.0.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -192,6 +193,7 @@ DEPENDENCIES
   jquery-rails
   momentjs-rails (>= 2.9.0)
   mysql2
+  pg
   populator
   pry
   rails (= 4.1.8)
@@ -208,3 +210,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6

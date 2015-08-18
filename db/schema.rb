@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808064948) do
+ActiveRecord::Schema.define(version: 20150817080412) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "agent_clients", force: true do |t|
     t.integer  "agent_id"
@@ -43,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.boolean  "allDay"
     t.integer  "inspector_id"
     t.string   "contact"
-    t.float    "inspFee",         limit: 5
+    t.decimal  "inspFee",         precision: 5, scale: 3
     t.boolean  "prepaid"
     t.string   "pmtMethod"
     t.string   "pmtRef"
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "svcArea_id"
-    t.float    "amount_received", limit: 5
+    t.decimal  "amount_received", precision: 5, scale: 3
   end
 
   create_table "bids", force: true do |t|
@@ -358,15 +361,15 @@ ActiveRecord::Schema.define(version: 20150808064948) do
   create_table "svc_criteria", force: true do |t|
     t.boolean  "propRes"
     t.boolean  "propComm"
-    t.string   "prevInsp"
-    t.string   "hpoz"
-    t.string   "cdo"
-    t.boolean  "ownerOcc"
     t.string   "foundation"
     t.integer  "yearBuilt"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "prevInsp"
+    t.integer  "hpoz"
+    t.integer  "cdo"
+    t.integer  "ownerOcc"
   end
 
   create_table "users", force: true do |t|
@@ -384,7 +387,7 @@ ActiveRecord::Schema.define(version: 20150808064948) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

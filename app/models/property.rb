@@ -11,7 +11,7 @@ class Property < ActiveRecord::Base
 
   PROPERTY_TYPE = %w(SFR MFR)
 
-  YEAR_BUILT = (1901..1965)
+  YEAR_BUILT = (1901..Date.today.year)
 
   validates :street, :city, :state, presence: true
 

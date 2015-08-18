@@ -159,7 +159,7 @@ GEM
     wicked_pdf (0.11.0)
       rails
     will_paginate (3.0.7)
-    wkhtmltopdf-binary (0.9.9.3)
+    wkhtmltopdf-binary-edge (0.12.2.1)
 
 PLATFORMS
   ruby
@@ -196,7 +196,7 @@ DEPENDENCIES
   validates_email_format_of
   wicked_pdf
   will_paginate
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary-edge
 
 BUNDLED WITH
    1.10.6

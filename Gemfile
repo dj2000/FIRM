@@ -64,4 +64,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
-gem 'rails_12factor', group: :production
+group :production do
+  gem 'rails_12factor'
+  gem 'wkhtmltopdf-heroku', '~> 2.12.2.1'
+end

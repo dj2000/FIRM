@@ -7,6 +7,8 @@ class SvcCriterium < ActiveRecord::Base
 
   validates :foundation, uniqueness: true, presence: true
 
+  validates :propRes, uniqueness: { scope: :propComm }
+
   def property_type
     self.propRes? ? "Residential" : "Commercial"
   end

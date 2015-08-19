@@ -23,7 +23,7 @@
       <%= f.input :ownerOcc, label: "Owner Occupied:", as: :radio_buttons, collection: SvcCriterium::DEFAULTS.to_a %>
     </div>
     <div class="col-md-4">
-      <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
+      <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, label: "Foundation Type" %>
     </div>
   </div>
   <div class="row">

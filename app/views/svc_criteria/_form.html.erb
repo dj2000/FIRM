@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-md-6">
       <%= label_tag 'Property Type:' %>
-      <%= f.input :propRes, label: "Residential", as: :boolean, readonly: true, input_html: { checked: true } %>
-      <%= f.input :propComm, label: "Commercial", as: :boolean, readonly: true, input_html: { checked: false } %>
+      <%= f.input :propRes, label: "Residential", as: :boolean, input_html: { checked: true, onclick: "return false;" } %>
+      <%= f.input :propComm, label: "Commercial", as: :boolean, input_html: { checked: false, onclick: "return false;" } %>
     </div> 
     <div class="col-md-6">
       <%= f.input :prevInsp, label: "Previously Inspected:", as: :radio_buttons, wrapper: :vertical_radio_and_checkboxes, collection: SvcCriterium::DEFAULTS.to_a %>

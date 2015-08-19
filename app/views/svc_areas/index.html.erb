@@ -1,26 +1,38 @@
-<h1>Listing svc_areas</h1>
+<h1>Listing Service Areas</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Zip</th>
-      <th>City</th>
       <th>State</th>
+      <th>City</th>
+      <th>Zip</th>
       <th>Serviced</th>
-      <th colspan="3"></th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @svc_areas.each do |svc_area| %>
       <tr>
-        <td><%= svc_area.zip %></td>
+        <td><%= svc_area.state_name %></td>
         <td><%= svc_area.city %></td>
-        <td><%= svc_area.state %></td>
-        <td><%= svc_area.serviced %></td>
-        <td><%= link_to 'Show', svc_area %></td>
-        <td><%= link_to 'Edit', edit_svc_area_path(svc_area) %></td>
-        <td><%= link_to 'Destroy', svc_area, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= svc_area.zip %></td>
+        <td><%= svc_area.is_serviced %></td>
+        <td>
+          <%= link_to svc_area, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_svc_area_path(svc_area), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to svc_area, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +40,4 @@
 
 <br>
 
-<%= link_to 'New Svc area', new_svc_area_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Service Area"), new_svc_area_path, :class => "btn btn-info" %>

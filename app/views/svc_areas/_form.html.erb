@@ -1,33 +1,30 @@
-<%= form_for(@svc_area) do |f| %>
-  <% if @svc_area.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@svc_area.errors.count, "error") %> prohibited this svc_area from being saved:</h2>
-
-      <ul>
-      <% @svc_area.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@svc_area) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :zip %><br>
-    <%= f.number_field :zip %>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :city %><br>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :serviced %><br>
-    <%= f.check_box :serviced %>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :zip %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :serviced %>
+      </div>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>

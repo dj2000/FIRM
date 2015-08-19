@@ -28,7 +28,7 @@ class IFeeSchedulesController < ApplicationController
 
     respond_to do |format|
       if @i_fee_schedule.save
-        format.html { redirect_to @i_fee_schedule, notice: 'I fee schedule was successfully created.' }
+        format.html { redirect_to @i_fee_schedule, notice: 'Fee Schedule was successfully created.' }
         format.json { render :show, status: :created, location: @i_fee_schedule }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class IFeeSchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @i_fee_schedule.update(i_fee_schedule_params)
-        format.html { redirect_to @i_fee_schedule, notice: 'I fee schedule was successfully updated.' }
+        format.html { redirect_to @i_fee_schedule, notice: 'Fee Schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @i_fee_schedule }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class IFeeSchedulesController < ApplicationController
   def destroy
     @i_fee_schedule.destroy
     respond_to do |format|
-      format.html { redirect_to i_fee_schedules_url, notice: 'I fee schedule was successfully destroyed.' }
+      format.html { redirect_to i_fee_schedules_url, notice: 'Fee Schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

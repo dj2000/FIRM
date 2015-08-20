@@ -1,36 +1,46 @@
-<h1>Listing svc_criteria</h1>
+<h1>Listing Service Criteria</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Propres</th>
-      <th>Propcomm</th>
-      <th>Previnsp</th>
-      <th>Hpoz</th>
-      <th>Cdo</th>
-      <th>Ownerocc</th>
-      <th>Foundation</th>
-      <th>Yearbuilt</th>
+      <th>Property Type</th>
+      <th>Previously Inspected</th>
+      <th>Historical Property Overlay Zone(HPOZ)</th>
+      <th>Community Design Overlay(CDO)</th>
+      <th>Owner Occupied</th>
+      <th>Foundation Type</th>
+      <th>Construction Year</th>
       <th>Notes</th>
-      <th colspan="3"></th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @svc_criteria.each do |svc_criterium| %>
       <tr>
-        <td><%= svc_criterium.propRes %></td>
-        <td><%= svc_criterium.propComm %></td>
-        <td><%= svc_criterium.prevInsp %></td>
-        <td><%= svc_criterium.hpoz %></td>
-        <td><%= svc_criterium.cdo %></td>
-        <td><%= svc_criterium.ownerOcc %></td>
+        <td><%= svc_criterium.property_type %></td>
+        <td><%= svc_criterium.humanize("prevInsp") %></td>
+        <td><%= svc_criterium.humanize("hpoz") %></td>
+        <td><%= svc_criterium.humanize("cdo") %></td>
+        <td><%= svc_criterium.humanize("ownerOcc") %></td>
         <td><%= svc_criterium.foundation %></td>
         <td><%= svc_criterium.yearBuilt %></td>
         <td><%= svc_criterium.notes %></td>
-        <td><%= link_to 'Show', svc_criterium %></td>
-        <td><%= link_to 'Edit', edit_svc_criterium_path(svc_criterium) %></td>
-        <td><%= link_to 'Destroy', svc_criterium, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to svc_criterium, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_svc_criterium_path(svc_criterium), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to svc_criterium, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +48,4 @@
 
 <br>
 
-<%= link_to 'New Svc criterium', new_svc_criterium_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Service Criteria"), new_svc_criterium_path, :class => "btn btn-info" %>

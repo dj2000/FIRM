@@ -1,24 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @svc_area.zip %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @svc_area.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @svc_area.state %>
-</p>
-
-<p>
-  <strong>Serviced:</strong>
-  <%= @svc_area.serviced %>
-</p>
-
-<%= link_to 'Edit', edit_svc_area_path(@svc_area) %> |
-<%= link_to 'Back', svc_areas_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Service Area</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Service Area Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>State</td>
+          <td><%= @svc_area.state_name %></td>
+        </tr>
+        <tr>
+          <td>City</td>
+          <td><%= @svc_area.city %></td>
+        </tr>
+        <tr>
+          <td>Zip</td>
+          <td><%= @svc_area.zip %></td>
+        </tr>
+        <tr>
+          <td>Serviced</td>
+          <td><%= @svc_area.is_serviced %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to 'Edit', edit_svc_area_path(@svc_area), class: 'btn btn-info' %>
+<%= link_to 'Back', svc_areas_path, class: 'btn btn-info' %>

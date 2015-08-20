@@ -1,49 +1,54 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Feeactive:</strong>
-  <%= @i_fee_schedule.feeActive %>
-</p>
-
-<p>
-  <strong>Effectivefrom:</strong>
-  <%= @i_fee_schedule.effectiveFrom %>
-</p>
-
-<p>
-  <strong>Owneroccrate:</strong>
-  <%= @i_fee_schedule.ownerOccRate %>
-</p>
-
-<p>
-  <strong>Sfrbaserate:</strong>
-  <%= @i_fee_schedule.sfrBaseRate %>
-</p>
-
-<p>
-  <strong>Sfrincrate:</strong>
-  <%= @i_fee_schedule.sfrIncRate %>
-</p>
-
-<p>
-  <strong>Mfrbaserate:</strong>
-  <%= @i_fee_schedule.mfrBaseRate %>
-</p>
-
-<p>
-  <strong>Mfrincrate:</strong>
-  <%= @i_fee_schedule.mfrIncRate %>
-</p>
-
-<p>
-  <strong>Insbaserate:</strong>
-  <%= @i_fee_schedule.insBaseRate %>
-</p>
-
-<p>
-  <strong>Insincrate:</strong>
-  <%= @i_fee_schedule.insIncRate %>
-</p>
-
-<%= link_to 'Edit', edit_i_fee_schedule_path(@i_fee_schedule) %> |
-<%= link_to 'Back', i_fee_schedules_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Fee Schedule</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Fee Schedule Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Effective From</td>
+          <td><%= @i_fee_schedule.effective_from %></td>
+        </tr>
+        <tr>
+          <td>Current Fee Schedule</td>
+          <td><%= @i_fee_schedule.status %></td>
+        </tr>
+        <tr>
+          <td>Owner Occupied Rate</td>
+          <td><%= @i_fee_schedule.ownerOccRate %></td>
+        </tr>
+        <tr>
+          <td>SFR Base Rate</td>
+          <td><%= @i_fee_schedule.sfrBaseRate %></td>
+        </tr>
+        <tr>
+          <td>SFR Increment Rate</td>
+          <td><%= @i_fee_schedule.sfrIncRate %></td>
+        </tr>
+        <tr>
+          <td>MFR Base Rate</td>
+          <td><%= @i_fee_schedule.mfrBaseRate %></td>
+        </tr>
+        <tr>
+          <td>MFR Increment Rate</td>
+          <td><%= @i_fee_schedule.mfrIncRate %></td>
+        </tr>
+        <tr>
+          <td>INS Base Rate</td>
+          <td><%= @i_fee_schedule.insBaseRate %></td>
+        </tr>
+        <tr>
+          <td>INS Increment Rate</td>
+          <td><%= @i_fee_schedule.insIncRate %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to 'Back', i_fee_schedules_path, class: 'btn btn-info' %>

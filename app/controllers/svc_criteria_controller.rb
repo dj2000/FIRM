@@ -25,10 +25,9 @@ class SvcCriteriaController < ApplicationController
   # POST /svc_criteria.json
   def create
     @svc_criterium = SvcCriterium.new(svc_criterium_params)
-
     respond_to do |format|
       if @svc_criterium.save
-        format.html { redirect_to @svc_criterium, notice: 'Svc criterium was successfully created.' }
+        format.html { redirect_to @svc_criterium, notice: 'Service criterium was successfully created.' }
         format.json { render :show, status: :created, location: @svc_criterium }
       else
         format.html { render :new }
@@ -42,7 +41,7 @@ class SvcCriteriaController < ApplicationController
   def update
     respond_to do |format|
       if @svc_criterium.update(svc_criterium_params)
-        format.html { redirect_to @svc_criterium, notice: 'Svc criterium was successfully updated.' }
+        format.html { redirect_to @svc_criterium, notice: 'Service criterium was successfully updated.' }
         format.json { render :show, status: :ok, location: @svc_criterium }
       else
         format.html { render :edit }

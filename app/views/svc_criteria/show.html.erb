@@ -1,49 +1,50 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Propres:</strong>
-  <%= @svc_criterium.propRes %>
-</p>
-
-<p>
-  <strong>Propcomm:</strong>
-  <%= @svc_criterium.propComm %>
-</p>
-
-<p>
-  <strong>Previnsp:</strong>
-  <%= @svc_criterium.prevInsp %>
-</p>
-
-<p>
-  <strong>Hpoz:</strong>
-  <%= @svc_criterium.hpoz %>
-</p>
-
-<p>
-  <strong>Cdo:</strong>
-  <%= @svc_criterium.cdo %>
-</p>
-
-<p>
-  <strong>Ownerocc:</strong>
-  <%= @svc_criterium.ownerOcc %>
-</p>
-
-<p>
-  <strong>Foundation:</strong>
-  <%= @svc_criterium.foundation %>
-</p>
-
-<p>
-  <strong>Yearbuilt:</strong>
-  <%= @svc_criterium.yearBuilt %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @svc_criterium.notes %>
-</p>
-
-<%= link_to 'Edit', edit_svc_criterium_path(@svc_criterium) %> |
-<%= link_to 'Back', svc_criteria_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Service Criteria</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Service Criteria Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Property Type</td>
+          <td><%= @svc_criterium.property_type %></td>
+        </tr>
+        <tr>
+          <td>Previously Inspected</td>
+          <td><%= @svc_criterium.humanize("prevInsp") %></td>
+        </tr>
+        <tr>
+          <td>Historical Property Overlay Zone(HPOZ)</td>
+          <td><%= @svc_criterium.humanize("hpoz") %></td>
+        </tr>
+        <tr>
+          <td>Community Design Overlay(CDO)</td>
+          <td><%= @svc_criterium.humanize("cdo") %></td>
+        </tr>
+        <tr>
+          <td>Owner Occupied</td>
+          <td><%= @svc_criterium.humanize("ownerOcc") %></td>
+        </tr>
+        <tr>
+          <td>Construction Year</td>
+          <td><%= @svc_criterium.yearBuilt %></td>
+        </tr>
+        <tr>
+          <td>Foundation Type</td>
+          <td><%= @svc_criterium.foundation %></td>
+        </tr>
+        <tr>
+          <td>Notes</td>
+          <td><%= @svc_criterium.notes %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to "Back", svc_criteria_path, class: "btn btn-info" %>

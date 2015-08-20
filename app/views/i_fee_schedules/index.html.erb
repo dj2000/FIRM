@@ -1,41 +1,47 @@
-<h1>Listing i_fee_schedules</h1>
+<h1>Listing Fee Schedules</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Feeactive</th>
-      <th>Effectivefrom</th>
-      <th>Owneroccrate</th>
-      <th>Sfrbaserate</th>
-      <th>Sfrincrate</th>
-      <th>Mfrbaserate</th>
-      <th>Mfrincrate</th>
-      <th>Insbaserate</th>
-      <th>Insincrate</th>
-      <th colspan="3"></th>
+      <th>Effective From</th>
+      <th>Status</th>
+      <th>Owner Occupied Rate</th>
+      <th>SFR Base Rate</th>
+      <th>SFR Increment Rate</th>
+      <th>MFR Base Rate</th>
+      <th>MFR Increment Rate</th>
+      <th>INS Base Rate</th>
+      <th>INS Increment Rate</th>
+      <th colspan="2" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @i_fee_schedules.each do |i_fee_schedule| %>
+    <% @i_fee_schedules.each do |fee_schedule| %>
       <tr>
-        <td><%= i_fee_schedule.feeActive %></td>
-        <td><%= i_fee_schedule.effectiveFrom %></td>
-        <td><%= i_fee_schedule.ownerOccRate %></td>
-        <td><%= i_fee_schedule.sfrBaseRate %></td>
-        <td><%= i_fee_schedule.sfrIncRate %></td>
-        <td><%= i_fee_schedule.mfrBaseRate %></td>
-        <td><%= i_fee_schedule.mfrIncRate %></td>
-        <td><%= i_fee_schedule.insBaseRate %></td>
-        <td><%= i_fee_schedule.insIncRate %></td>
-        <td><%= link_to 'Show', i_fee_schedule %></td>
-        <td><%= link_to 'Edit', edit_i_fee_schedule_path(i_fee_schedule) %></td>
-        <td><%= link_to 'Destroy', i_fee_schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= fee_schedule.effective_from %></td>
+        <td><%= fee_schedule.status %></td>
+        <td><%= fee_schedule.ownerOccRate %></td>
+        <td><%= fee_schedule.sfrBaseRate %></td>
+        <td><%= fee_schedule.sfrIncRate %></td>
+        <td><%= fee_schedule.mfrBaseRate %></td>
+        <td><%= fee_schedule.mfrIncRate %></td>
+        <td><%= fee_schedule.insBaseRate %></td>
+        <td><%= fee_schedule.insIncRate %></td>
+        <td>
+          <%= link_to fee_schedule, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to fee_schedule, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New I fee schedule', new_i_fee_schedule_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Fee Schedule"), new_i_fee_schedule_path, :class => "btn btn-info" -%>

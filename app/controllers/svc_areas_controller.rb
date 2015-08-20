@@ -77,6 +77,6 @@ class SvcAreasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def svc_area_params
-      params.require(:svc_area).permit(:zip, :city, :state, :serviced)
+      params.require(:svc_area).permit(:zip, :city, :state, :serviced, :notes)
     end
 end

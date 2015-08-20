@@ -7,6 +7,7 @@
       <th>City</th>
       <th>Zip</th>
       <th>Serviced</th>
+      <th>Notes</th>
       <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= svc_area.city %></td>
         <td><%= svc_area.zip %></td>
         <td><%= svc_area.is_serviced %></td>
+        <td><%= svc_area.notes %></td>
         <td>
           <%= link_to svc_area, class: 'btn btn-primary' do %>
             <i class='fa fa-eye'></i> Show

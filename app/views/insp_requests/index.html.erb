@@ -27,7 +27,7 @@
         <td><%= insp_request.selectInsp %></td>
         <td><%= insp_request.has_appointment? %></td>
         <td>
-          <%= link_to insp_request, class: 'btn btn-primary' do %>
+          <%= link_to insp_request, class: 'btn btn-primary', disabled: insp_request.check_conditions_for_appointment do %>
             <i class='fa fa-eye'></i> Appointment
           <% end %>
         </td>

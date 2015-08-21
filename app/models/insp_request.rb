@@ -26,4 +26,31 @@ class InspRequest < ActiveRecord::Base
   def disable_agent?
     self.try(:agent) ? false : true
   end
+
+  def check_conditions_for_appointment
+    svc_criterium = SvcCriterium.where(propRes: true).first
+    property = self.try(:property)
+    return true unless property_previously_inspection_check(svc_criterium, property) and foundation_check(property) and service_area_check(property)
+  end
+
+  def property_previously_inspection_check(svc_criterium, property)
+    if svc_criterium.try(:prevInsp) == 0
+      insp_requests = property.try(:insp_requests)
+      if insp_requests
+        insp_requests.each do |insp_request|
+          appointment = insp_request.try(:appointment)
+          return false unless appointment
+          return false unless appointment.try(:inspection)
+        end
+      end
+    end
+  end
+
+  def foundation_check(property)
+    property.try(:foundation) == "Raised" or property.try(:foundation) == "Slab"
+  end
+
+  def service_area_check(property)
+    service_area = SvcArea.where(zip: property.try(:zip), serviced: true).first
+  end
 end

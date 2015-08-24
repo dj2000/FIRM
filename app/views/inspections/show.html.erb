@@ -1,74 +1,76 @@
-<p id="notice"><%= notice %></p>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <h1 class="panel-title">Inspection</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Inspection Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Application</td>
+          <td><%= @inspection.appointment %></td>
+        </tr>
+        <tr>
+          <td>Foundation Condition</td>
+          <td><%= @inspection.fCondition %></td>
+        </tr>
+        <tr>
+          <td>Business cards</td>
+          <td><%= @inspection.humanize("businessCards") %></td>
+        </tr>
+        <tr>
+          <td>Number Of Days</td>
+          <td><%= @inspection.nOD %></td>
+        </tr>
+        <tr>
+          <td>Number of Guys</td>
+          <td><%= @inspection.nOG %></td>
+        </tr>
+        <tr>
+          <td>Paid</td>
+          <td><%= @inspection.humanize("paid") %></td>
+        </tr>
+        <tr>
+          <td>Inspection Report URL</td>
+          <td><%= @inspection.reportURL %></td>
+        </tr>
+        <tr>
+          <td>Footprint URL</td>
+          <td><%= @inspection.footprintURL %></td>
+        </tr>
+        <tr>
+          <td>Repairs Required</td>
+          <td><%= @inspection.humanize("repairs") %></td>
+        </tr>
+        <tr>
+          <td>Permit Required</td>
+          <td><%= @inspection.humanize("permit") %></td>
+        </tr>
+        <tr>
+          <td>Interior Access</td>
+          <td><%= @inspection.humanize("interiorAccess") %></td>
+        </tr>
+        <tr>
+          <td>Verified Report</td>
+          <td><%= @inspection.humanize("verifiedReport") %></td>
+        </tr>
+        <tr>
+          <td>Verified Complete</td>
+          <td><%= @inspection.humanize("verifiedComp") %></td>
+        </tr>
+        <tr>
+          <td>Notes</td>
+          <td><%= @inspection.notes %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<p>
-  <strong>Application:</strong>
-  <%= @inspection.appointment_id %>
-</p>
-
-<p>
-  <strong>Fcondition:</strong>
-  <%= @inspection.fCondition %>
-</p>
-
-<p>
-  <strong>Businesscards:</strong>
-  <%= @inspection.businessCards %>
-</p>
-
-<p>
-  <strong>Nod:</strong>
-  <%= @inspection.nOD %>
-</p>
-
-<p>
-  <strong>Nog:</strong>
-  <%= @inspection.nOG %>
-</p>
-
-<p>
-  <strong>Paid?:</strong>
-  <%= @inspection.paid? %>
-</p>
-
-<p>
-  <strong>Reporturl:</strong>
-  <%= @inspection.reportURL %>
-</p>
-
-<p>
-  <strong>Footprinturl:</strong>
-  <%= @inspection.footprintURL %>
-</p>
-
-<p>
-  <strong>Repairs?:</strong>
-  <%= @inspection.repairs? %>
-</p>
-
-<p>
-  <strong>Permit?:</strong>
-  <%= @inspection.permit? %>
-</p>
-
-<p>
-  <strong>Interioraccess:</strong>
-  <%= @inspection.interiorAccess %>
-</p>
-
-<p>
-  <strong>Verifiedreport:</strong>
-  <%= @inspection.verifiedReport %>
-</p>
-
-<p>
-  <strong>Verifiedcomp:</strong>
-  <%= @inspection.verifiedComp %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @inspection.notes %>
-</p>
-
-<%= link_to 'Edit', edit_inspection_path(@inspection) %> |
-<%= link_to 'Back', inspections_path %>
+<%= link_to 'Edit', edit_inspection_path(@inspection), class: 'btn btn-info' %>
+<%= link_to 'Back', inspections_path, class: 'btn btn-info' %>

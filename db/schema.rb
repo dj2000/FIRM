@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 20150824100411) do
     t.boolean  "businessCards"
     t.integer  "nOD"
     t.integer  "nOG"
-    t.boolean  "paid?"
+    t.boolean  "paid"
     t.string   "reportURL"
     t.string   "footprintURL"
     t.boolean  "repairs"

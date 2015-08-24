@@ -1,46 +1,58 @@
-<h1>Listing inspections</h1>
+<h1>Listing Inspections</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
       <th>Application</th>
-      <th>Fcondition</th>
-      <th>Businesscards</th>
-      <th>Nod</th>
-      <th>Nog</th>
-      <th>Paid?</th>
-      <th>Reporturl</th>
-      <th>Footprinturl</th>
-      <th>Repairs?</th>
-      <th>Permit?</th>
-      <th>Interioraccess</th>
-      <th>Verifiedreport</th>
-      <th>Verifiedcomp</th>
+      <th>Foundation Condition</th>
+      <th>Business Cards</th>
+      <th>Number Of Days</th>
+      <th>Number of Guys</th>
+      <th>Paid</th>
+      <th>Inspection Report URL</th>
+      <th>Footprint URL</th>
+      <th>Repairs Required</th>
+      <th>Permit Required</th>
+      <th>Interior Access</th>
+      <th>Verified Report</th>
+      <th>Verified Complete</th>
       <th>Notes</th>
-      <th colspan="3"></th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
-        <td><%= inspection.application_id %></td>
+        <td><%= inspection.appointment %></td>
         <td><%= inspection.fCondition %></td>
         <td><%= inspection.businessCards %></td>
         <td><%= inspection.nOD %></td>
         <td><%= inspection.nOG %></td>
-        <td><%= inspection.paid? %></td>
+        <td><%= inspection.paid %></td>
         <td><%= inspection.reportURL %></td>
         <td><%= inspection.footprintURL %></td>
-        <td><%= inspection.repairs? %></td>
-        <td><%= inspection.permit? %></td>
+        <td><%= inspection.repairs %></td>
+        <td><%= inspection.permit %></td>
         <td><%= inspection.interiorAccess %></td>
         <td><%= inspection.verifiedReport %></td>
         <td><%= inspection.verifiedComp %></td>
         <td><%= inspection.notes %></td>
-        <td><%= link_to 'Show', inspection %></td>
-        <td><%= link_to 'Edit', edit_inspection_path(inspection) %></td>
-        <td><%= link_to 'Destroy', inspection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to inspection, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_inspection_path(inspection), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to inspection, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -48,4 +60,4 @@
 
 <br>
 
-<%= link_to 'New Inspection', new_inspection_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection"), new_inspection_path, :class => "btn btn-info" %>

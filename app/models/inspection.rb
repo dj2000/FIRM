@@ -4,4 +4,8 @@ class Inspection < ActiveRecord::Base
   has_many :bids
   has_many :comm_histories
   has_many :invoices
+
+  def humanize(attribute)
+		self.send("#{attribute}") ? "Yes" : "No"
+  end
 end

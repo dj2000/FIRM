@@ -25,7 +25,6 @@ class Property < ActiveRecord::Base
 
   #To populate select dropdown
   def property_select_value
-    state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
   end
 

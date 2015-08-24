@@ -69,6 +69,6 @@ class InspectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inspection_params
-      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid?, :reportURL, :footprintURL, :repairs?, :permit?, :interiorAccess, :verifiedReport, :verifiedComp, :notes)
+      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid, :reportURL, :footprintURL, :repairs, :permit, :interiorAccess, :verifiedReport, :verifiedComp, :notes)
     end
 end

@@ -1,72 +1,52 @@
-<%= form_for(@inspection) do |f| %>
-  <% if @inspection.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
-
-      <ul>
-      <% @inspection.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@inspection) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :fCondition, label: "Foundation Condition" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :application_id %><br>
-    <%= f.number_field :application_id %>
-  </div><div class="field">
-    <%= f.label :fCondition %><br>
-    <%= f.text_field :fCondition %>
+    <div class="col-md-6">
+      <%#= f.association :appointment, :collection => @appointments, :label_method => :property_select_value, label: 'Select Appointment', :prompt => "Select Appointment" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :businessCards %><br>
-    <%= f.check_box :businessCards %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :nOD, label: "Number Of Days" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :nOG, label: "Number Of Guys" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :nOD %><br>
-    <%= f.number_field :nOD %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :reportURL %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :footprintURL %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :nOG %><br>
-    <%= f.number_field :nOG %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :repairs, label: "Repairs Needed" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :permit, label: "Permit Needed" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :paid? %><br>
-    <%= f.check_box :paid? %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :verifiedReport, label: "Verified Report" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :verifiedComp, label: "Verified Completed" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :reportURL %><br>
-    <%= f.text_field :reportURL %>
-  </div>
-  <div class="field">
-    <%= f.label :footprintURL %><br>
-    <%= f.text_field :footprintURL %>
-  </div>
-  <div class="field">
-    <%= f.label :repairs? %><br>
-    <%= f.check_box :repairs? %>
-  </div>
-  <div class="field">
-    <%= f.label :permit? %><br>
-    <%= f.check_box :permit? %>
-  </div>
-  <div class="field">
-    <%= f.label :interiorAccess %><br>
-    <%= f.check_box :interiorAccess %>
-  </div>
-  <div class="field">
-    <%= f.label :verifiedReport %><br>
-    <%= f.check_box :verifiedReport %>
-  </div>
-  <div class="field">
-    <%= f.label :verifiedComp %><br>
-    <%= f.check_box :verifiedComp %>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :notes %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: 'btn btn-success' %>
+    <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
   </div>
 <% end %>

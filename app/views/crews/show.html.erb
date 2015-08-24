@@ -1,24 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Foreman:</strong>
-  <%= @crew.foreman %>
-</p>
-
-<p>
-  <strong>Size:</strong>
-  <%= @crew.size %>
-</p>
-
-<p>
-  <strong>Doublebook?:</strong>
-  <%= @crew.doubleBook? %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @crew.notes %>
-</p>
-
-<%= link_to 'Edit', edit_crew_path(@crew) %> |
-<%= link_to 'Back', crews_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Crew</h1>
+  </div>
+  <div class="panel-body">
+		<table class='table table-bordered table-striped table-responsive table-hover'>
+			<thead>
+				<tr>
+				<th>Crew Attributes</th>
+					<th>Values</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Foreman</td>
+					<td><%= @crew.foreman %></td>
+				</tr>
+				<tr>
+					<td>Size</td>
+					<td><%= @crew.size %></td>
+				</tr>
+				<tr>
+					<td>Double Book</td>
+					<td><%= @crew.is_double_book %></td>
+				</tr>
+				<tr>
+					<td>Notes</td>
+					<td><%= @crew.notes %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%= link_to 'Edit', edit_crew_path(@crew), class: 'btn btn-info' %>
+<%= link_to 'Back', crews_path, class: 'btn btn-info' %>

@@ -30,7 +30,7 @@ class InspRequest < ActiveRecord::Base
   def check_conditions_for_appointment
     svc_criterium = SvcCriterium.where(propRes: true).first
     property = self.try(:property)
-    return true unless property_previously_inspection_check(svc_criterium, property) and foundation_check(property) and service_area_check(property)
+    property_previously_inspection_check(svc_criterium, property) and foundation_check(property) and service_area_check(property)
   end
 
   def property_previously_inspection_check(svc_criterium, property)

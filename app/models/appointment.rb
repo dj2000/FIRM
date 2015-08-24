@@ -23,7 +23,7 @@ class Appointment < ActiveRecord::Base
   							},
               if: "scheduled_inspection.blank?"
 
-  validates :schedStart, :schedEnd, :inspector_id, presence: true, if: "scheduled_inspection.present?"
+  validates :schedStart, :schedEnd, :inspector_id, :allDay, :prepaid, presence: true, if: "scheduled_inspection.present?"
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 

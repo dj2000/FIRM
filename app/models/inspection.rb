@@ -5,6 +5,10 @@ class Inspection < ActiveRecord::Base
   has_many :comm_histories
   has_many :invoices
 
+  validates :fCondition, :reportURL, :footprintURL, presence: true
+
+  FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
+
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"
   end

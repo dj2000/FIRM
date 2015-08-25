@@ -1,11 +1,26 @@
 <%= simple_form_for(@inspection) do |f| %>
   <%= f.error_notification %>
+  <fieldset>
+    <legend>
+    </legend>
+  </fieldset>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :fCondition, label: "Foundation Condition" %>
+      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
     </div>
+    <div class="col-md-6 appointment hide">
+      <%= label_tag "Inspector" %>
+      <%= text_field_tag "inspector_name", nil, class: "appointment inspector form-control", disabled: true %>
+    </div>
+  </div>
+  <div class="appointment_info hide "></div>
+  <fieldset>
+    <legend>
+    </legend>
+  </fieldset>
+  <div class="row">
     <div class="col-md-6">
-      <%#= f.association :appointment, :collection => @appointments, :label_method => :property_select_value, label: 'Select Appointment', :prompt => "Select Appointment" %>
+      <%= f.input :fCondition, as: :select, label: "Foundation Condition", collection: Inspection::FOUNDATION_CONDITION.map{|v| [v, v]}, prompt: "Select Foundation Condition" %>
     </div>
   </div>
   <div class="row">
@@ -50,3 +65,33 @@
     <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
   </div>
 <% end %>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#inspection_appointment_id").on('change', function(){
+    var appointment_id = $(this).val();
+    if(appointment_id != ""){
+      $.ajax({
+        url: '/inspections/' + appointment_id + '/appointment_info',
+        type: 'GET'
+      });
+    }
+    else{
+      alert("Please select appointment.")
+      $(".appointment_info").addClass("hide");
+      $(".appointment").addClass("hide");
+    }
+  });
+</script>

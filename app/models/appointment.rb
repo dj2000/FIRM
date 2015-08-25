@@ -49,6 +49,17 @@ class Appointment < ActiveRecord::Base
     self.new_record? || (inspFee.blank? and schedStart.blank? and inspector_id.blank? and schedEnd.blank? )
   end
 
+  #To return uninspected appointments
+  def self.uninspected_appointments
+    inspections = Inspection.all.map(&:appointment_id)
+    Appointment.where.not(id: inspections)
+  end
+
+  #To populate appointment dropdown
+  def appointment_select
+    self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + "-" + self.try(:inspector).try(:firstName)
+  end
+
   private
 
   def check_end_datetime

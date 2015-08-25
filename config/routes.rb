@@ -27,7 +27,9 @@ Rails.application.routes.draw do
 
   resources :bids
 
-  resources :inspections
+  resources :inspections do
+    get :appointment_info, on: :member
+  end
 
   resources :receipts
 

@@ -1,5 +1,6 @@
 class InspectionsController < ApplicationController
   before_action :set_inspection, only: [:show, :edit, :update, :destroy]
+  before_action :uninspected_appointments, only: [:edit, :update, :new, :create]
 
   # GET /inspections
   # GET /inspections.json
@@ -61,10 +62,22 @@ class InspectionsController < ApplicationController
     end
   end
 
+  def appointment_info
+    @appointment = Appointment.find(params[:id])
+    @insp_request = @appointment.insp_request
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection
       @inspection = Inspection.find(params[:id])
+    end
+
+    def uninspected_appointments
+      @appointments = Appointment.uninspected_appointments
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

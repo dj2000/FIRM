@@ -1,9 +1,6 @@
 <%= simple_form_for(@inspection) do |f| %>
   <%= f.error_notification %>
-  <fieldset>
-    <legend>
-    </legend>
-  </fieldset>
+  <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
       <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
@@ -14,10 +11,7 @@
     </div>
   </div>
   <div class="appointment_info hide "></div>
-  <fieldset>
-    <legend>
-    </legend>
-  </fieldset>
+  <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
       <%= f.input :fCondition, as: :select, label: "Foundation Condition", collection: Inspection::FOUNDATION_CONDITION.map{|v| [v, v]}, prompt: "Select Foundation Condition" %>
@@ -33,7 +27,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :reportURL %>
+      <%= f.input :report, as: :file  %>
     </div>
     <div class="col-md-6">
       <%= f.input :footprintURL %>

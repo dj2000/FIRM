@@ -5,7 +5,9 @@ class Inspection < ActiveRecord::Base
   has_many :comm_histories
   has_many :invoices
 
-  validates :fCondition, :reportURL, :footprintURL, presence: true
+  validates :fCondition, :footprintURL, presence: true
+
+  has_attached_file :report
 
   FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
 

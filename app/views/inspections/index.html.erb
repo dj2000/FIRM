@@ -24,19 +24,19 @@
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
-        <td><%= inspection.appointment %></td>
+        <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
         <td><%= inspection.fCondition %></td>
-        <td><%= inspection.businessCards %></td>
+        <td><%= inspection.humanize("businessCards") %></td>
         <td><%= inspection.nOD %></td>
         <td><%= inspection.nOG %></td>
-        <td><%= inspection.paid %></td>
-        <td><%= inspection.reportURL %></td>
+        <td><%= inspection.humanize("paid") %></td>
+        <td><%= inspection.report %></td>
         <td><%= inspection.footprintURL %></td>
-        <td><%= inspection.repairs %></td>
-        <td><%= inspection.permit %></td>
-        <td><%= inspection.interiorAccess %></td>
-        <td><%= inspection.verifiedReport %></td>
-        <td><%= inspection.verifiedComp %></td>
+        <td><%= inspection.humanize("repairs") %></td>
+        <td><%= inspection.humanize("permit") %></td>
+        <td><%= inspection.humanize("interiorAccess") %></td>
+        <td><%= inspection.humanize("verifiedReport") %></td>
+        <td><%= inspection.humanize("verifiedComp") %></td>
         <td><%= inspection.notes %></td>
         <td>
           <%= link_to inspection, class: 'btn btn-primary' do %>

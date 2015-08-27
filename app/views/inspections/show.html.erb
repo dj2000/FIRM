@@ -13,7 +13,7 @@
       <tbody>
         <tr>
           <td>Application</td>
-          <td><%= @inspection.appointment %></td>
+          <td><%= @inspection.try(:appointment).try(:appointment_select) %></td>
         </tr>
         <tr>
           <td>Foundation Condition</td>
@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td>Inspection Report URL</td>
-          <td><%= @inspection.reportURL %></td>
+          <td><%= @inspection.report %></td>
         </tr>
         <tr>
           <td>Footprint URL</td>

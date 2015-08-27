@@ -82,7 +82,7 @@ class AppointmentsController < ApplicationController
       @start_day = date
       @end_day = date
     end
-    @appointments =  Appointment.where("(DATE(schedStart) BETWEEN ? AND ?) OR (DATE(schedEnd) BETWEEN ? AND ?)", @start_day, @end_day, @start_day, @end_day)
+    @appointments =  Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', @start_day, @end_day, @start_day, @end_day)
     render json: @appointments.as_json
   end
 

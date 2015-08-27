@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824100411) do
+ActiveRecord::Schema.define(version: 20150827061817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,7 +192,6 @@ ActiveRecord::Schema.define(version: 20150824100411) do
     t.integer  "nOD"
     t.integer  "nOG"
     t.boolean  "paid"
-    t.string   "reportURL"
     t.string   "footprintURL"
     t.boolean  "repairs"
     t.boolean  "permit"
@@ -202,6 +201,10 @@ ActiveRecord::Schema.define(version: 20150824100411) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "report_file_name"
+    t.string   "report_content_type"
+    t.integer  "report_file_size"
+    t.datetime "report_updated_at"
   end
 
   create_table "inspectors", force: true do |t|

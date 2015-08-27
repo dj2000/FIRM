@@ -18,17 +18,7 @@
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
       $('.full-calendar').fullCalendar("changeView", defaultView);
-      var data = dateText.date;
-      $.ajax({
-        type: "GET",
-        url: "/appointments/get_scheduled_appointments",
-        data: { date: data, view_type: defaultView},
-        dataType: 'JSON',
-        success: function(result){
-          $('.full-calendar').fullCalendar('removeEvents');
-          $('.full-calendar').fullCalendar('addEventSource', result );
-        }
-      });
+      update(defaultView);
     });
   })
     
@@ -43,7 +33,6 @@
     weekends: false,
     selectable: <%= @editable %>,
     selectHelper: true,
-    allDaySlot: false,
     firstDay:1,
     eventStartEditable: false,
     timeFormat: 'hh:mm A',
@@ -69,6 +58,30 @@
     $.ajax({
       type: "GET",
       url: "/appointments/" + cal_event.id + "/edit.js"
+    });
+  }
+
+  $(".fc-month-button").on("click", function(){
+    update("month");
+  });
+  $(".fc-agendaWeek-button").on("click", function(){
+    update("agendaWeek");
+  });
+  $(".fc-agendaDay-button").on("click", function(){
+    update("agendaDay");
+  });
+
+  function update(view){
+    var date = $(".datepicker").datepicker("getDate");
+    $.ajax({
+      type: "GET",
+      url: "/appointments/get_scheduled_appointments",
+      data: { date: date, view_type: view},
+      dataType: 'JSON',
+      success: function(result){
+        $('.full-calendar').fullCalendar('removeEvents');
+        $('.full-calendar').fullCalendar('addEventSource', result );
+      }
     });
   }
 </script>

@@ -23,7 +23,9 @@ class Appointment < ActiveRecord::Base
   							},
               if: "scheduled_inspection.blank?"
 
-  validates :schedStart, :schedEnd, :inspector_id, :allDay, :prepaid, presence: true, if: "scheduled_inspection.present?"
+  validates :prepaid, presence: true, if: "scheduled_inspection.blank?"
+
+  validates :schedStart, :schedEnd, :inspector_id, presence: true, if: "scheduled_inspection.present?"
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 
@@ -37,7 +39,7 @@ class Appointment < ActiveRecord::Base
       title: self.try(:inspector).try(:firstName),
       color: 'tomato',
       inspector_id: self.inspector_id,
-      allDay: self.allDay || false
+      allDay: false
     }
   end
 
@@ -57,7 +59,7 @@ class Appointment < ActiveRecord::Base
 
   #To populate appointment dropdown
   def appointment_select
-    self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + "-" + self.try(:inspector).try(:firstName)
+    self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
   end
 
   private

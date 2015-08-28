@@ -5,9 +5,13 @@ class Inspection < ActiveRecord::Base
   has_many :comm_histories
   has_many :invoices
 
+  accepts_nested_attributes_for :bids, allow_destroy: true, reject_if: proc { |attributes| attributes['costRepair'].blank? || attributes['feeSeismicUpg'].blank? || attributes['feeAdmin'].blank? }
+
   validates :fCondition, :footprintURL, presence: true
 
   has_attached_file :report
+
+  validates_attachment_content_type :report, :content_type => %w( application/msword application/pdf )
 
   FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
 

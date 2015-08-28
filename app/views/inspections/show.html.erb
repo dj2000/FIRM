@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td>Inspection Report URL</td>
-          <td><%= @inspection.report %></td>
+          <td><%= link_to @inspection.report_file_name, @inspection.report.url, style: 'color:#07c' %></td>
         </tr>
         <tr>
           <td>Footprint URL</td>
@@ -71,6 +71,21 @@
     </table>
   </div>
 </div>
-
-<%= link_to 'Edit', edit_inspection_path(@inspection), class: 'btn btn-info' %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <h1 class="panel-title">Add Bid</h1>
+  </div>
+  <div class="panel-body">
+    <%= simple_nested_form_for @inspection do |f| %>
+      <%= f.fields_for :bids do |bid| %>
+        <%= render partial: 'bids/form', locals: { bid: bid} %>
+      <% end %>
+      <p>
+        <%= f.link_to_add "Add a bid", :bids, class: "btn btn-info" %>
+        <%= f.submit "Submit", class: "btn btn-info" %>
+      </p>
+    <% end %>
+  </div>
+</div>
+<br/>
 <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>

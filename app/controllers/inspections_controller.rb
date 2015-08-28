@@ -11,6 +11,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
+    @bids = @inspection.bids.present? ? @inspection.bids : @inspection.bids.build
   end
 
   # GET /inspections/new
@@ -77,11 +78,12 @@ class InspectionsController < ApplicationController
     end
 
     def uninspected_appointments
-      @appointments = Appointment.uninspected_appointments
+      @appointments = Appointment.uninspected_appointments || []
+      @appointments << @inspection.try(:appointment) if @inspection
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inspection_params
-      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid, :reportURL, :footprintURL, :repairs, :permit, :interiorAccess, :verifiedReport, :verifiedComp, :notes, :appointment_id, :report)
+      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid, :reportURL, :footprintURL, :repairs, :permit, :interiorAccess, :verifiedReport, :verifiedComp, :notes, :appointment_id, :report, bids_attributes: [:id, :costRepair, :feeSeismicUpg, :feeAdmin,  :_destroy])
     end
 end

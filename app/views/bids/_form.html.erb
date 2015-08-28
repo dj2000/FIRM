@@ -1,41 +1,15 @@
-<%= form_for(@bid) do |f| %>
-  <% if @bid.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bid.errors.count, "error") %> prohibited this bid from being saved:</h2>
-
-      <ul>
-      <% @bid.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :inspection_id %><br>
-    <%= f.text_field :inspection_id %>
+<div class="row">
+  <div class="col-md-6">
+    <%= bid.input :costRepair, label: "Repair Cost" %>
   </div>
-  <div class="field">
-    <%= f.label :costRepair %><br>
-    <%= f.text_field :costRepair %>
+  <div class="col-md-6">
+    <%= bid.input :feeSeismicUpg, label: "Seismic Upgrade Fee" %>
   </div>
-  <div class="field">
-    <%= f.label :feeSeismicUpg %><br>
-    <%= f.text_field :feeSeismicUpg %>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= bid.input :feeAdmin, label: "Administration Fee" %>
   </div>
-  <div class="field">
-    <%= f.label :feeAdmin %><br>
-    <%= f.text_field :feeAdmin %>
-  </div>
-  <div class="field">
-    <%= f.label :payPlan_id %><br>
-    <%= f.number_field :payPlan_id %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
+<p><%= bid.link_to_remove "Remove Bid", class: "btn btn-info" %></p>
+<fieldset><legend></legend></fieldset>

@@ -5,12 +5,17 @@
     <div class="col-md-6">
       <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
     </div>
-    <div class="col-md-6 appointment hide">
+    <div class="col-md-6 appointment <%= 'hide' unless f.object.appointment_id %>">
       <%= label_tag "Inspector" %>
-      <%= text_field_tag "inspector_name", nil, class: "appointment inspector form-control", disabled: true %>
+      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
     </div>
   </div>
-  <div class="appointment_info hide "></div>
+  <div class="appointment_info <%= 'hide' unless f.object.appointment_id %> ">
+    <% if f.object.appointment_id %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+      <%= render 'appointment_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">

@@ -1,35 +1,26 @@
-<h1>Listing bids</h1>
-
-<table>
+<h1>Listing Bids</h1>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Inspection</th>
-      <th>Costrepair</th>
-      <th>Feeseismicupg</th>
-      <th>Feeadmin</th>
-      <th>Payplan</th>
-      <th>Status</th>
-      <th colspan="3"></th>
+      <th>Repair Cost</th>
+      <th>Seismic Upgrade Fee</th>
+      <th>Administration Fee</th>
+      <% unless request.path == "/bids" %>
+        <th colspan="2" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
-
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
-        <td><%= bid.inspection_id %></td>
         <td><%= bid.costRepair %></td>
         <td><%= bid.feeSeismicUpg %></td>
         <td><%= bid.feeAdmin %></td>
-        <td><%= bid.payPlan_id %></td>
-        <td><%= bid.status %></td>
-        <td><%= link_to 'Show', bid %></td>
-        <td><%= link_to 'Edit', edit_bid_path(bid) %></td>
-        <td><%= link_to 'Destroy', bid, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% unless request.path == "/bids" %>
+          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>
+          <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), bid, method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-danger' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Bid', new_bid_path %>

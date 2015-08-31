@@ -72,20 +72,24 @@
   </div>
 </div>
 <div class="panel panel-primary">
-  <div class="panel-heading">
-  <h1 class="panel-title">Add Bid</h1>
-  </div>
   <div class="panel-body">
-    <%= simple_nested_form_for @inspection do |f| %>
-      <%= f.fields_for :bids do |bid| %>
-        <%= render partial: 'bids/form', locals: { bid: bid} %>
-      <% end %>
-      <p>
-        <%= f.link_to_add "Add a bid", :bids, class: "btn btn-info" %>
-        <%= f.submit "Submit", class: "btn btn-info" %>
-      </p>
-    <% end %>
+    <div class="bid">
+      <%= render template: 'bids/index', locals: { bids: @inspection.bids } %>
+    </div>
+    <p><%= link_to "Add Bid", new_bid_path(inspection_id: @inspection.id), remote: true, class: 'btn btn-info pull-right' %></p>
   </div>
 </div>
 <br/>
 <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
+<div class="modal" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>

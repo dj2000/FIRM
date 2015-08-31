@@ -1,0 +1,6 @@
+<% if @bid.errors.present? %>
+	$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
+<% else %>
+	$('.bid').html("<%= escape_javascript(render template: 'bids/index', locals: { bids: @inspection.bids }) %>");
+	$(".modal").modal('hide');
+<% end %>

@@ -1,0 +1,3 @@
+alert("Bid has been deleted.");
+$('.bid').html("<%= escape_javascript(render template: 'bids/index', locals: { bids: @inspection.bids }) %>");
+$(".modal").modal('hide');

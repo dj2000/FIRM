@@ -1,64 +1,51 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Jobminamt:</strong>
-  <%= @pay_plan.jobMinAmt %>
-</p>
-
-<p>
-  <strong>Jobmaxamt:</strong>
-  <%= @pay_plan.jobMaxAmt %>
-</p>
-
-<p>
-  <strong>Pmt1pcnt:</strong>
-  <%= @pay_plan.pmt1Pcnt %>
-</p>
-
-<p>
-  <strong>Pmt2pcnt:</strong>
-  <%= @pay_plan.pmt2Pcnt %>
-</p>
-
-<p>
-  <strong>Pmt3pcnt:</strong>
-  <%= @pay_plan.pmt3Pcnt %>
-</p>
-
-<p>
-  <strong>Pmt4pcnt:</strong>
-  <%= @pay_plan.pmt4Pcnt %>
-</p>
-
-<p>
-  <strong>Pmt5pcnt:</strong>
-  <%= @pay_plan.pmt5Pcnt %>
-</p>
-
-<p>
-  <strong>Pmt1desc:</strong>
-  <%= @pay_plan.pmt1Desc %>
-</p>
-
-<p>
-  <strong>Pmt2desc:</strong>
-  <%= @pay_plan.pmt2Desc %>
-</p>
-
-<p>
-  <strong>Pmt3desc:</strong>
-  <%= @pay_plan.pmt3Desc %>
-</p>
-
-<p>
-  <strong>Pmt4desc:</strong>
-  <%= @pay_plan.pmt4Desc %>
-</p>
-
-<p>
-  <strong>Pmt5desc:</strong>
-  <%= @pay_plan.pmt5Desc %>
-</p>
-
-<%= link_to 'Edit', edit_pay_plan_path(@pay_plan) %> |
-<%= link_to 'Back', pay_plans_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Payment Plan</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Payment Plan Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Amount Range Start</td>
+          <td><%= @pay_plan.jobMinAmt %></td>
+        </tr>
+        <tr>
+          <td>Amount Range End</td>
+          <td><%= @pay_plan.jobMaxAmt %></td>
+        </tr>
+        <tr>
+          <td>Deposit</td>
+          <td><%= @pay_plan.deposit %></td>
+        </tr>
+        <tr>
+          <td>1st Payment</td>
+          <td><%= @pay_plan.pmt1Pcnt %></td>
+        </tr>
+        <tr>
+          <td>2nd Payment</td>
+          <td><%= @pay_plan.pmt2Pcnt %></td>
+        </tr>
+        <tr>
+          <td>3rd Payment</td>
+          <td><%= @pay_plan.pmt3Pcnt %></td>
+        </tr>
+        <tr>
+          <td>4th Payment</td>
+          <td><%= @pay_plan.pmt4Pcnt %></td>
+        </tr>
+        <tr>
+          <td>5th Payment</td>
+          <td><%= @pay_plan.pmt5Pcnt %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<%= link_to 'Back', pay_plans_path, class: 'btn btn-info' %>

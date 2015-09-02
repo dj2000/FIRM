@@ -22,4 +22,5 @@
 //= require bootstrap-timepicker
 //= require fullcalendar
 //= require jquery_nested_form
+//= require jquery.maskedinput.min
 //= require_tree .

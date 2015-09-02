@@ -13,34 +13,34 @@
       <tbody>
         <tr>
           <td>Amount Range Start</td>
-          <td><%= @pay_plan.jobMinAmt %></td>
+          <td><%= number_to_currency(@pay_plan.jobMinAmt) %></td>
         </tr>
         <tr>
           <td>Amount Range End</td>
-          <td><%= @pay_plan.jobMaxAmt %></td>
+          <td><%= number_to_currency(@pay_plan.jobMaxAmt) %></td>
         </tr>
         <tr>
           <td>Deposit</td>
           <td><%= @pay_plan.deposit %></td>
         </tr>
         <tr>
-          <td>1st Payment</td>
+          <td><%= @pay_plan.pmt1Desc %></td>
           <td><%= @pay_plan.pmt1Pcnt %></td>
         </tr>
         <tr>
-          <td>2nd Payment</td>
+          <td><%= @pay_plan.pmt2Desc %></td>
           <td><%= @pay_plan.pmt2Pcnt %></td>
         </tr>
         <tr>
-          <td>3rd Payment</td>
+          <td><%= @pay_plan.pmt3Desc %></td>
           <td><%= @pay_plan.pmt3Pcnt %></td>
         </tr>
         <tr>
-          <td>4th Payment</td>
+          <td><%= @pay_plan.pmt4Desc %></td>
           <td><%= @pay_plan.pmt4Pcnt %></td>
         </tr>
         <tr>
-          <td>5th Payment</td>
+          <td><%= @pay_plan.pmt5Desc %></td>
           <td><%= @pay_plan.pmt5Pcnt %></td>
         </tr>
       </tbody>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827061817) do
+ActiveRecord::Schema.define(version: 20150902103049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,13 +243,14 @@ ActiveRecord::Schema.define(version: 20150827061817) do
     t.integer  "pmt3Pcnt"
     t.integer  "pmt4Pcnt"
     t.integer  "pmt5Pcnt"
-    t.integer  "pmt1Desc"
-    t.integer  "pmt2Desc"
-    t.integer  "pmt3Desc"
-    t.integer  "pmt4Desc"
-    t.integer  "pmt5Desc"
+    t.string   "pmt1Desc"
+    t.string   "pmt2Desc"
+    t.string   "pmt3Desc"
+    t.string   "pmt4Desc"
+    t.string   "pmt5Desc"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "deposit"
   end
 
   create_table "permits", force: true do |t|

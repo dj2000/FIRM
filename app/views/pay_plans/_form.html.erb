@@ -1,32 +1,57 @@
 <%= simple_form_for(@pay_plan) do |f| %>
   <%= f.error_notification %>
+  <%= f.error :base, class: "alert alert-danger" %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :jobMinAmt, label: "Amount Range Start" %>
+      <%= f.input :jobMinAmt, label: "Amount Range Start", as: :string %>
     </div>
     <div class="col-md-6">
-      <%= f.input :jobMaxAmt, label: "Amount Range End" %>
+      <%= f.input :jobMaxAmt, label: "Amount Range End", as: :string %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :pmt1Pcnt, label: "1st Payment" %>
+      <%= f.input :pmt1Desc, label: false, placeholder: "1st Payment Title" %>
     </div>
     <div class="col-md-6">
-      <%= f.input :pmt2Pcnt, label: "2nd Payment" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt3Pcnt, label: "3rd Payment" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt4Pcnt, label: "4th Payment" %>
+      <%= f.input :pmt1Pcnt, label: false, placeholder: "1st Payment Value" %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :pmt5Pcnt, label: "5th Payment" %>
+      <%= f.input :pmt2Desc, label: false, placeholder: "2nd Payment Title" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :pmt2Pcnt, label: false, placeholder: "2nd Payment Value" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :pmt3Desc, label: false, placeholder: "3rd Payment Title" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :pmt3Pcnt, label: false, placeholder: "3rd Payment Value" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :pmt4Desc, label: false, placeholder: "4th Payment Title" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :pmt4Pcnt, label: false, placeholder: "4th Payment Value" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :pmt5Desc, label: false, placeholder: "5th Payment Title" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :pmt5Pcnt, label: false, placeholder: "5th Payment Value" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :deposit, label: "Deposit" %>
     </div>
   </div>
   <div class="actions">
@@ -34,3 +59,7 @@
   </div>
 <% end %>
 <%= link_to "Back", pay_plans_path, class: "btn btn-info" %>
+<script>
+  $("#pay_plan_jobMinAmt").mask("$99999", { autoclear: false, placeholder: "" });
+  $("#pay_plan_jobMaxAmt").mask("$99999", { autoclear: false, placeholder: "" });
+</script>

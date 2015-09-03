@@ -18,8 +18,8 @@
   <tbody>
     <% @pay_plans.each do |pay_plan| %>
       <tr>
-        <td><%= pay_plan.jobMinAmt %></td>
-        <td><%= pay_plan.jobMaxAmt %></td>
+        <td><%= number_to_currency(pay_plan.jobMinAmt) %></td>
+        <td><%= number_to_currency(pay_plan.jobMaxAmt) %></td>
         <td><%= pay_plan.deposit %></td>
         <td><%= pay_plan.pmt1Pcnt %></td>
         <td><%= pay_plan.pmt2Pcnt %></td>

@@ -1,6 +1,6 @@
 class Bid < ActiveRecord::Base
   belongs_to :inspection
-  has_many :pay_plans
+  belongs_to :payPlan
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, presence: true
 end

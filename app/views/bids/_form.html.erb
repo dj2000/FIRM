@@ -2,16 +2,24 @@
 	<%= f.error_notification %>
 	<div class="row">
 	  <div class="col-md-6">
-	    <%= f.input :costRepair, label: "Repair Cost" %>
+	    <%= f.input :title %>
 	  </div>
 	  <div class="col-md-6">
-	    <%= f.input :feeSeismicUpg, label: "Seismic Upgrade Fee" %>
+	    <%= f.input :costRepair, label: "Repair Cost" %>
 	  </div>
 	</div>
 	<div class="row">
 	  <div class="col-md-6">
+	    <%= f.input :feeSeismicUpg, label: "Seismic Upgrade Fee" %>
+	  </div>
+	  <div class="col-md-6">
 	    <%= f.input :feeAdmin, label: "Administration Fee" %>
 	    <%= f.hidden_field :inspection_id, value: @inspection.id %>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+	    <%= f.association :payPlan, collection: @payment_plans, label_method: :payment_plan_select %>
 	  </div>
 	</div>
 	<div class="modal-footer">

@@ -26,4 +26,8 @@ class PayPlan < ActiveRecord::Base
   def amount
 		errors.add(:jobMinAmt, "Amount Range End should be greater than Amount Range Start.") if self.jobMaxAmt < self.jobMinAmt
   end
+
+  def payment_plan_select
+		"$#{self.jobMinAmt} - $#{self.jobMaxAmt}"
+  end
 end

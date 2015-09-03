@@ -11,6 +11,11 @@
   </div>
   <div class="row">
     <div class="col-md-6">
+      <%= f.input :deposit, label: "Deposit" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
       <%= f.input :pmt1Desc, label: false, placeholder: "1st Payment Title" %>
     </div>
     <div class="col-md-6">
@@ -47,11 +52,6 @@
     </div>
     <div class="col-md-6">
       <%= f.input :pmt5Pcnt, label: false, placeholder: "5th Payment Value" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :deposit, label: "Deposit" %>
     </div>
   </div>
   <div class="actions">

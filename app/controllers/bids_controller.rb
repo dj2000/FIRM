@@ -1,4 +1,5 @@
 class BidsController < ApplicationController
+	before_action :payment_plans
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
 
   # GET /bids
@@ -71,8 +72,12 @@ class BidsController < ApplicationController
       @bids = @inspection.try(:bids)
     end
 
+    def payment_plans
+      @payment_plans = PayPlan.all
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def bid_params
-      params.require(:bid).permit(:inspection_id, :costRepair, :feeSeismicUpg, :feeAdmin, :payPlan_id, :status)
+      params.require(:bid).permit(:inspection_id, :costRepair, :feeSeismicUpg, :feeAdmin, :payPlan_id, :status, :title)
     end
 end

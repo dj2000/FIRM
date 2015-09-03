@@ -11,7 +11,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
-    @bids = @inspection.bids.present? ? @inspection.bids : @inspection.bids.build
+    @bids = @inspection.bids
   end
 
   # GET /inspections/new

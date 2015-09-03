@@ -1,4 +1,4 @@
 $(".appointment.inspector").val("<%= @appointment.try(:inspector).try(:name) %>")
-$(".appointment_info").html("<%= escape_javascript(render partial: 'appointment_info') %>")
+$(".appointment_info").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
 $(".appointment_info").removeClass("hide");
 $(".appointment").removeClass("hide");

@@ -1,5 +1,6 @@
 class CommHistoriesController < ApplicationController
   before_action :set_comm_history, only: [:show, :edit, :update, :destroy]
+  before_action :bids
 
   # GET /comm_histories
   # GET /comm_histories.json
@@ -25,10 +26,9 @@ class CommHistoriesController < ApplicationController
   # POST /comm_histories.json
   def create
     @comm_history = CommHistory.new(comm_history_params)
-
     respond_to do |format|
       if @comm_history.save
-        format.html { redirect_to @comm_history, notice: 'Comm history was successfully created.' }
+        format.html { redirect_to @comm_history, notice: 'Bids follow up was successfully created.' }
         format.json { render :show, status: :created, location: @comm_history }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class CommHistoriesController < ApplicationController
   def update
     respond_to do |format|
       if @comm_history.update(comm_history_params)
-        format.html { redirect_to @comm_history, notice: 'Comm history was successfully updated.' }
+        format.html { redirect_to @comm_history, notice: 'Bids follow up was successfully updated.' }
         format.json { render :show, status: :ok, location: @comm_history }
       else
         format.html { render :edit }
@@ -56,8 +56,16 @@ class CommHistoriesController < ApplicationController
   def destroy
     @comm_history.destroy
     respond_to do |format|
-      format.html { redirect_to comm_histories_url, notice: 'Comm history was successfully destroyed.' }
+      format.html { redirect_to comm_histories_url, notice: 'Bids follow up was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def insp_request_info
+    @bid = Bid.find(params[:id])
+    @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -67,8 +75,20 @@ class CommHistoriesController < ApplicationController
       @comm_history = CommHistory.find(params[:id])
     end
 
+    def bids
+      @bids = Bid.where("status IS NULL OR status = ? ","callBack")
+      @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
+      @bids = @bids.map{|b| [b.try(:title), b.id]}
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def comm_history_params
-      params.require(:comm_history).permit(:inspection_id, :caller, :caller, :recipient, :callSummary, :callOutcome, :callBackDate, :notes)
+      update_bid
+      params.require(:comm_history).permit(:caller, :recipient, :callSummary, :callOutcome, :callBackDate, :notes, :bid_id)
+    end
+
+    def update_bid
+      @bid = Bid.find(params[:comm_history][:bid_id])
+      @bid.update(status: params[:comm_history][:status])
     end
 end

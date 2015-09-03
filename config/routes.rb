@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   resources :contracts
 
-  resources :comm_histories
+  resources :comm_histories do
+    get :insp_request_info, on: :member
+  end
 
   resources :pay_plans
 

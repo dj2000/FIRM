@@ -1,0 +1,4 @@
+$(".insp_request.inspector_info").val("<%= @bid.try(:inspection).try(:appointment).try(:inspector).try(:name) %>")
+$(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
+$(".insp_request").removeClass("hide");
+$(".inspector_info").removeClass("hide");

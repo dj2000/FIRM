@@ -24,4 +24,13 @@ class Inspector < ActiveRecord::Base
   def senior_inspector
     self.try(:senior) ? "Yes" : "No"
   end
+
+  def self.assign_colors
+    colors = {}
+    inspector_ids = Inspector.all.map(&:id)
+    inspector_ids.each do |inspector_id|
+      colors["#{inspector_id}"] = "##{rand(0xffffff).to_s(16)}"
+    end
+    colors
+  end
 end

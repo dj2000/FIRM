@@ -61,14 +61,6 @@ class CommHistoriesController < ApplicationController
     end
   end
 
-  def insp_request_info
-    @bid = Bid.find(params[:id])
-    @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comm_history

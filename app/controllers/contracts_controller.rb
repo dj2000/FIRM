@@ -1,5 +1,6 @@
 class ContractsController < ApplicationController
   before_action :set_contract, only: [:show, :edit, :update, :destroy]
+  before_action :bids
 
   # GET /contracts
   # GET /contracts.json
@@ -65,6 +66,12 @@ class ContractsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_contract
       @contract = Contract.find(params[:id])
+    end
+
+    def bids
+      @bids = Bid.where("status = ? ","Verbal Close")
+      @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
+      @bids = @bids.map{|b| [b.try(:title), b.id]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

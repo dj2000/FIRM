@@ -21,9 +21,7 @@ Rails.application.routes.draw do
 
   resources :contracts
 
-  resources :comm_histories do
-    get :insp_request_info, on: :member
-  end
+  resources :comm_histories
 
   resources :pay_plans
 
@@ -58,6 +56,7 @@ Rails.application.routes.draw do
   resources :insp_requests do 
     get :get_property_clients, on: :collection
     get :get_client_agents, on: :collection
+    get :insp_request_info, on: :member
   end
 
 

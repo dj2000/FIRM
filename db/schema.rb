@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902103049) do
+ActiveRecord::Schema.define(version: 20150904050925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150902103049) do
     t.boolean  "allDay"
     t.integer  "inspector_id"
     t.string   "contact"
-    t.decimal  "inspFee",         precision: 5, scale: 3
+    t.float    "inspFee"
     t.boolean  "prepaid"
     t.string   "pmtMethod"
     t.string   "pmtRef"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150902103049) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "svcArea_id"
-    t.decimal  "amount_received", precision: 5, scale: 3
+    t.float    "amount_received"
   end
 
   create_table "bids", force: true do |t|
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150902103049) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   create_table "client_properties", force: true do |t|
@@ -104,6 +105,8 @@ ActiveRecord::Schema.define(version: 20150902103049) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bid_id"
+    t.datetime "call_time"
   end
 
   create_table "commissions", force: true do |t|

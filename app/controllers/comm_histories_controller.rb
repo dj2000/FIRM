@@ -83,8 +83,8 @@ class CommHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comm_history_params
-      update_bid
-      params.require(:comm_history).permit(:caller, :recipient, :callSummary, :callOutcome, :callBackDate, :notes, :bid_id)
+      update_bid if params[:comm_history][:bid_id].present?
+      params.require(:comm_history).permit(:caller, :recipient, :callSummary, :callOutcome, :callBackDate, :notes, :bid_id, :call_time)
     end
 
     def update_bid

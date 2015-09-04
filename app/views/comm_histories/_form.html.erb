@@ -19,7 +19,15 @@
       <%= f.input :recipient %>
     </div>
     <div class="col-md-4">
-      <%= f.input :recipient, label: "Call Time" %>
+      <div class="form-group">
+        <%= f.label 'Call Time' %>
+        <div class='input-group datetimepicker'>
+          <%= f.text_field :call_time, class: 'form-control' %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="insp_request <%= 'hide' unless f.object.bid_id %> ">
@@ -87,5 +95,8 @@
   });
   $('.input-group.date').datepicker({ 
     format: 'yyyy-mm-dd'
+  });
+  $('.datetimepicker').datetimepicker({
+    format: 'YYYY-MM-DD hh:mm:ss'
   });
 </script>

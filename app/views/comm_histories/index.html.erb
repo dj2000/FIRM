@@ -21,8 +21,8 @@
         <td><%= comm_history.caller %></td>
         <td><%= comm_history.recipient %></td>
         <td><%= comm_history.callSummary %></td>
-        <td><%= comm_history.callOutcome %></td>
-        <td><%= comm_history.callBackDate %></td>
+        <td><%= comm_history.try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S") %></td>
+        <td><%= comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= comm_history.notes %></td>
         <td>
           <%= link_to comm_history, class: 'btn btn-primary' do %>

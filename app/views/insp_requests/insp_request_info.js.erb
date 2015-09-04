@@ -2,3 +2,5 @@ $(".insp_request.inspector_info").val("<%= @bid.try(:inspection).try(:appointmen
 $(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
 $(".insp_request").removeClass("hide");
 $(".inspector_info").removeClass("hide");
+$(".payment_plan").removeClass("hide");
+$("input.payment_plan").val("<%= @bid.try(:payPlan).try(:payment_plan_select) %>")

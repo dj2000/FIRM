@@ -1,6 +1,5 @@
 <%= simple_form_for(@contract) do |f| %>
   <%= f.error_notification %>
-
   <div class="row">
     <div class="col-md-6">
       <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid" %>
@@ -10,7 +9,6 @@
       <%= text_field_tag "inspector_name", f.object.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
     </div>
   </div>
-  <br/>
   <!-- <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
@@ -25,6 +23,13 @@
     <% end %>
   </div>
   <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-6 payment_plan <%= 'hide' unless f.object.bid_id %>">
+      <%= label_tag "Contract Payment Plan" %>
+      <%= text_field_tag "payment_plan", f.object.try(:bid).try(:payPlan).try(:payment_plan_select), class: "form-control payment_plan", disabled: true %>
+    </div>
+  </div>
+  <br/>
   <div class="actions">
     <%= f.submit "Submit", class: "btn btn-info" %>
   </div>

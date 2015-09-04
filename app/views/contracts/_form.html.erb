@@ -28,6 +28,22 @@
       <%= label_tag "Contract Payment Plan" %>
       <%= text_field_tag "payment_plan", f.object.try(:bid).try(:payPlan).try(:payment_plan_select), class: "form-control payment_plan", disabled: true %>
     </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label 'Contract Date' %>
+        <div class='input-group date'>
+          <%= f.text_field :date, class: "form-control", value: f.object.try(:date).try(:strftime, "%Y-%m-%d") %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-6">
+    </div>
   </div>
   <br/>
   <div class="actions">
@@ -61,12 +77,10 @@
       alert("Please select Bid.")
       $(".inspector_info").addClass("hide");
       $(".insp_request").addClass("hide");
+      $(".payment_plan").addClass("hide");
     }
   });
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
-  });
-  $('.datetimepicker').datetimepicker({
-    format: 'YYYY-MM-DD hh:mm:ss'
   });
 </script>

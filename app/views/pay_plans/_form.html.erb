@@ -1,4 +1,4 @@
-<%= simple_form_for(@pay_plan) do |f| %>
+<%= simple_nested_form_for(@pay_plan) do |f| %>
   <%= f.error_notification %>
   <%= f.error :base, class: "alert alert-danger" %>
   <div class="row">
@@ -14,52 +14,46 @@
       <%= f.input :deposit, label: "Deposit" %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt1Desc, label: false, placeholder: "1st Payment Title" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt1Pcnt, label: false, placeholder: "1st Payment Value" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt2Desc, label: false, placeholder: "2nd Payment Title" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt2Pcnt, label: false, placeholder: "2nd Payment Value" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt3Desc, label: false, placeholder: "3rd Payment Title" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt3Pcnt, label: false, placeholder: "3rd Payment Value" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt4Desc, label: false, placeholder: "4th Payment Title" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt4Pcnt, label: false, placeholder: "4th Payment Value" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :pmt5Desc, label: false, placeholder: "5th Payment Title" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :pmt5Pcnt, label: false, placeholder: "5th Payment Value" %>
-    </div>
-  </div>
+  <%= f.fields_for :payments, :wrapper => false do |payment| %>
+    <%= render 'payments/form', payment: payment %>
+  <% end %>
+  <p><%= f.link_to_add "Add a payment", :payments, class: "btn btn-success" %></p>
   <div class="actions">
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
 <%= link_to "Back", pay_plans_path, class: "btn btn-info" %>
 <script>
+  update();
   $("#pay_plan_jobMinAmt").mask("$99999", { autoclear: false, placeholder: "" });
   $("#pay_plan_jobMaxAmt").mask("$99999", { autoclear: false, placeholder: "" });
+  $(document).on('nested:fieldAdded', function(event){
+    update();
+  });
+
+  $(document).on('nested:fieldRemoved', function(event){
+    update();
+  });
+
+  function update(){
+    $(".title:visible").each(function(index, value){
+      index = index + 1;
+      var ordinal = get_ordinal(index);
+      if($(this).index() == 0)
+        $(this).val(index + ordinal + " Payment");
+    });
+    $(".payment_value:visible").each(function(index, value){
+      index = index + 1;
+      var ordinal = get_ordinal(index);
+      $(this).attr("placeholder", index + ordinal + " Payment Value ");
+    });
+  }
+  function get_ordinal(number){
+    switch (number) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  }
 </script>

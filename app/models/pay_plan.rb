@@ -1,7 +1,9 @@
 class PayPlan < ActiveRecord::Base
   belongs_to :bid
 
-  validates :pmt1Pcnt, :pmt2Pcnt, :pmt3Pcnt, :jobMinAmt, :pmt1Desc, :pmt2Desc, :pmt3Desc, presence: true
+  has_many :payments, dependent: :destroy
+
+  accepts_nested_attributes_for :payments, reject_if: proc { |attributes| attributes['title'].blank? || attributes['value'].to_i <= 0 }, allow_destroy: true
 
   validates :jobMaxAmt,
 							presence: true,
@@ -17,9 +19,8 @@ class PayPlan < ActiveRecord::Base
 
   def calculate_final
 		total = 0
-		[:pmt1Pcnt, :pmt2Pcnt, :pmt3Pcnt, :pmt4Pcnt, :pmt5Pcnt, :deposit].each do |col|
-			total += self.send(col) unless self.send(col).blank?
-		end
+		payments_total = self.try(:payments).map(&:value).sum
+		total = payments_total + self.deposit if deposit
 		errors.add(:base, "All payment percentages total should be 100.") unless total == 100.0
   end
 

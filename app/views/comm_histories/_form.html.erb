@@ -22,7 +22,7 @@
       <div class="form-group">
         <%= f.label 'Call Time' %>
         <div class='input-group datetimepicker'>
-          <%= f.text_field :call_time, class: 'form-control' %>
+          <%= f.text_field :call_time, class: 'form-control', value: f.object.try(:call_time).try(:strftime, "%Y-%m-%d %H:%M:%S") %>
           <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -40,20 +40,20 @@
   <div class="row">
     <div class="col-md-4">
       <div>
-        <%= radio_button_tag 'comm_history[status]', 'Verbal Close', f.object.try(:bid).try(:status) == "Verbal Close" %>
-        <%= label_tag "Verbal Close" %>
+        <%= f.radio_button :callOutcome, "Verbal Close" %>
+        <%= f.label "Verbal Close" %>
       </div>
       <div>
-        <%= radio_button_tag 'comm_history[status]', 'Not Interested', f.object.try(:bid).try(:status) == "Not Interested" %>
-        <%= label_tag "Not Interested" %>
+        <%= f.radio_button :callOutcome, "Not Interested" %>
+        <%= f.label "Not Interested" %>
       </div>
       <div>
-        <%= radio_button_tag 'comm_history[status]', 'CallBack', f.object.try(:bid).try(:status) == "CallBack" %>
-        <%= label_tag "CallBack" %>
+        <%= f.radio_button :callOutcome, "CallBack" %>
+        <%= f.label "CallBack" %>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="form-group">
+      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %>">
         <%= f.label 'Call Back Date' %>
         <div class='input-group date'>
           <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
@@ -111,6 +111,13 @@
     format: 'yyyy-mm-dd'
   });
   $('.datetimepicker').datetimepicker({
-    format: 'YYYY-MM-DD hh:mm:ss'
+    format: 'YYYY-MM-DD hh:mm:ss',
+    defaultDate: new Date()
+  });
+  $("input[name='comm_history[callOutcome]']").change(function(){
+    if ($(this).val() == "CallBack")
+      $(".call_back_date").removeClass('hide');
+    else
+      $(".call_back_date").addClass('hide');
   });
 </script>

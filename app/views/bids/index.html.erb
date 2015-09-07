@@ -2,6 +2,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Title</th>
       <th>Repair Cost</th>
       <th>Seismic Upgrade Fee</th>
       <th>Administration Fee</th>
@@ -14,6 +15,7 @@
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
+        <td><%= bid.title %></td>
         <td><%= bid.costRepair %></td>
         <td><%= bid.feeSeismicUpg %></td>
         <td><%= bid.feeAdmin %></td>

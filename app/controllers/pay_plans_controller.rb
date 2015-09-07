@@ -15,6 +15,7 @@ class PayPlansController < ApplicationController
   # GET /pay_plans/new
   def new
     @pay_plan = PayPlan.new
+    @payments = @pay_plan.payments.present? ? @pay_plan.payments : @pay_plan.payments.build
   end
 
   # GET /pay_plans/1/edit
@@ -75,6 +76,6 @@ class PayPlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pay_plan_params
-      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :pmt1Pcnt, :pmt2Pcnt, :pmt3Pcnt, :pmt4Pcnt, :pmt5Pcnt, :pmt1Desc, :pmt2Desc, :pmt3Desc, :pmt4Desc, :pmt5Desc, :deposit)
+      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, payments_attributes: [:id, :title, :value, :_destroy])
     end
 end

@@ -21,28 +21,14 @@
         </tr>
         <tr>
           <td>Deposit</td>
-          <td><%= @pay_plan.deposit %></td>
+          <td><%= "#{@pay_plan.deposit}%" %></td>
         </tr>
-        <tr>
-          <td><%= @pay_plan.pmt1Desc %></td>
-          <td><%= @pay_plan.pmt1Pcnt %></td>
-        </tr>
-        <tr>
-          <td><%= @pay_plan.pmt2Desc %></td>
-          <td><%= @pay_plan.pmt2Pcnt %></td>
-        </tr>
-        <tr>
-          <td><%= @pay_plan.pmt3Desc %></td>
-          <td><%= @pay_plan.pmt3Pcnt %></td>
-        </tr>
-        <tr>
-          <td><%= @pay_plan.pmt4Desc %></td>
-          <td><%= @pay_plan.pmt4Pcnt %></td>
-        </tr>
-        <tr>
-          <td><%= @pay_plan.pmt5Desc %></td>
-          <td><%= @pay_plan.pmt5Pcnt %></td>
-        </tr>
+        <% @pay_plan.payments.each do |payment| %>
+          <tr>
+            <td><%= payment.title %></td>
+            <td><%= "#{payment.value}%" %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

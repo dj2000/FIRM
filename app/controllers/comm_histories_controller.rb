@@ -81,6 +81,14 @@ class CommHistoriesController < ApplicationController
 
     def update_bid
       @bid = Bid.find(params[:comm_history][:bid_id])
-      @bid.update(status: params[:comm_history][:status])
+      case params[:comm_history][:callOutcome]
+      when "Verbal Close"
+        status = "Accepted"
+      when "Not Interested"
+        status = "Declined"
+      when "CallBack"
+        status = "CallBack"
+      end
+      @bid.update(status: status)
     end
 end

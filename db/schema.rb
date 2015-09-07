@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904050925) do
+ActiveRecord::Schema.define(version: 20150907085259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,19 +241,17 @@ ActiveRecord::Schema.define(version: 20150904050925) do
   create_table "pay_plans", force: true do |t|
     t.integer  "jobMinAmt"
     t.integer  "jobMaxAmt"
-    t.integer  "pmt1Pcnt"
-    t.integer  "pmt2Pcnt"
-    t.integer  "pmt3Pcnt"
-    t.integer  "pmt4Pcnt"
-    t.integer  "pmt5Pcnt"
-    t.string   "pmt1Desc"
-    t.string   "pmt2Desc"
-    t.string   "pmt3Desc"
-    t.string   "pmt4Desc"
-    t.string   "pmt5Desc"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "deposit"
+  end
+
+  create_table "payments", force: true do |t|
+    t.string   "title"
+    t.integer  "value"
+    t.integer  "pay_plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permits", force: true do |t|

@@ -68,7 +68,7 @@ class CommHistoriesController < ApplicationController
     end
 
     def bids
-      @bids = Bid.where("status IS NULL OR status = ? ","callBack")
+      @bids = Bid.where("status = ? OR status = ? ", "Pending", "CallBack")
       @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}
     end

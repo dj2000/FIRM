@@ -36,6 +36,10 @@
           <td><%= @comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
+          <td>Call Outcome</td>
+          <td><%= @comm_history.try(:callOutcome) %></td>
+        </tr>
+        <tr>
           <td>Notes</td>
           <td><%= @comm_history.notes %></td>
         </tr>

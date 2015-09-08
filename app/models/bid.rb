@@ -1,6 +1,7 @@
 class Bid < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :payPlan
+  has_one :comm_history
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, presence: true
 

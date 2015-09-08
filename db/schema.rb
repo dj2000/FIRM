@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907085259) do
+ActiveRecord::Schema.define(version: 20150908100707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 20150907085259) do
 
   create_table "contracts", force: true do |t|
     t.integer  "bid_id"
-    t.integer  "payPlan_id"
     t.date     "date"
     t.string   "signedBy"
     t.string   "acceptedBy"
@@ -128,6 +127,8 @@ ActiveRecord::Schema.define(version: 20150907085259) do
     t.date     "downPmtDate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "confirmed_by"
+    t.date     "accepted_date"
   end
 
   create_table "crew_skills", force: true do |t|

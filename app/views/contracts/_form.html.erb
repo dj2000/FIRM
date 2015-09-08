@@ -2,20 +2,24 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid" %>
+      <%= f.association :bid, as: :select, collection: @bids, selected: f.object.bid_id , label: "Select Bid", include_blank: "Select Bid" %>
     </div>
     <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
       <%= text_field_tag "inspector_name", f.object.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
     </div>
   </div>
-  <!-- <fieldset><legend></legend></fieldset>
+  <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <%= f.input :confirmed_by %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
+      <%= label_tag "Call Time" %>
+      <%= text_field_tag "call_time", f.object.try(:bid).try(:comm_history).try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S"), class: "call_time form-control", disabled: true %>
     </div>
-  </div> -->
+  </div>
+  <br/>
   <div class="insp_request <%= 'hide' unless f.object.bid_id %> ">
     <% if f.object.bid_id %>
       <% @insp_request = f.object.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
@@ -24,9 +28,16 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6 payment_plan <%= 'hide' unless f.object.bid_id %>">
+    <div class="col-md-5 payment_plan <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Contract Payment Plan" %>
       <%= text_field_tag "payment_plan", f.object.try(:bid).try(:payPlan).try(:payment_plan_select), class: "form-control payment_plan", disabled: true %>
+    </div>
+    <div class="col-md-1 payment_plan details <%= 'hide' unless f.object.bid_id %>">
+      <% if f.object.bid_id %>
+        <%= link_to pay_plan_path(f.object.try(:bid).try(:payPlan)), remote: true, class: 'link' do %>
+          <i class='fa fa-eye'></i> Details
+        <% end %>
+      <% end %>
     </div>
     <div class="col-md-6">
       <div class="form-group">
@@ -42,7 +53,63 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <%= f.check_box :accepted?, { checked: (params[:contract][:accepted].present? and params[:contract][:accepted] == "1") ? true : false } %>
+      <%= f.label "Accepted" %>
+    </div>
+    <div class="col-md-4 accepted <%= 'hide' unless params[:contract][:accepted].present? %>">
+       <div class="form-group">
+        <%= f.label 'Date Accepted' %>
+        <div class='input-group date'>
+          <%= f.text_field :accepted_date, class: "form-control", value: f.object.try(:accepted_date).try(:strftime, "%Y-%m-%d") %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 accepted <%= 'hide' unless params[:contract][:accepted].present? %>">
+      <%= f.input :acceptedBy, label: "Accepted By" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.check_box :signed?, { checked: (params[:contract][:signed].present? and params[:contract][:signed] == "1") ? true : false } %>
+      <%= f.label "Signed" %>
+    </div>
+    <div class="col-md-4 signed <%= 'hide' unless params[:contract][:signed].present? %>">
+       <div class="form-group">
+        <%= f.label 'Date Signed' %>
+        <div class='input-group date'>
+          <%= f.text_field :dateSigned, class: "form-control", value: f.object.try(:dateSigned).try(:strftime, "%Y-%m-%d") %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 signed <%= 'hide' unless params[:contract][:signed].present? %>">
+      <%= f.input :signedBy, label: "Signed By" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.check_box :down_payment?, { checked: (params[:contract][:down_payment].present? and params[:contract][:down_payment] == "1") ? true : false } %>
+      <%= f.label "Down Payment" %>
+    </div>
+    <div class="col-md-4 down_payment <%= 'hide' unless params[:contract][:down_payment].present? %>">
+       <div class="form-group">
+        <%= f.label 'Date Received' %>
+        <div class='input-group date'>
+          <%= f.text_field :downPmtDate, class: "form-control", value: f.object.try(:downPmtDate).try(:strftime, "%Y-%m-%d") %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 down_payment <%= 'hide' unless params[:contract][:down_payment].present? %>">
+      <%= f.input :downPmtAmt, label: "Amount Paid" %>
     </div>
   </div>
   <br/>
@@ -80,7 +147,22 @@
       $(".payment_plan").addClass("hide");
     }
   });
+
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   });
+
+  $.each(["accepted", "signed", "down_payment"], function(index, value) { 
+    $('#contract_' + value).change(function(){
+      show_hide(value, $(this));
+    });
+  });
+
+  function show_hide(value, object){
+    var check = object.prop('checked');
+    if(check == true)
+      $("." + value).removeClass("hide");
+    else
+      $("." + value).addClass("hide");
+  }
 </script>

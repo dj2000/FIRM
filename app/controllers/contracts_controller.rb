@@ -69,13 +69,13 @@ class ContractsController < ApplicationController
     end
 
     def bids
-      @bids = Bid.where("status = ? ","Verbal Close")
+      @bids = Bid.where("status = ? ","Accepted")
       @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contract_params
-      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate)
+      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate, :confirmed_by, :accepted, :accepted_date, :signed, :down_payment)
     end
 end

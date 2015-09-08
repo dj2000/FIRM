@@ -10,6 +10,10 @@ class PayPlansController < ApplicationController
   # GET /pay_plans/1
   # GET /pay_plans/1.json
   def show
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /pay_plans/new

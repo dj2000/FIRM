@@ -57,15 +57,16 @@
       <%= f.check_box :accepted?, { checked: (params[:contract][:accepted].present? and params[:contract][:accepted] == "1") ? true : false } %>
       <%= f.label "Accepted" %>
     </div>
-    <div class="col-md-4 accepted <%= 'hide' unless params[:contract][:accepted].present? %>">
+    <div class="col-md-4 accepted <%= 'hide' unless params[:contract][:accepted].present? %> <%= 'has-error' if f.object.errors["accepted_date"].first %>">
        <div class="form-group">
-        <%= f.label 'Date Accepted' %>
+        <%= f.label 'Date Accepted', class: "control-label" %>
         <div class='input-group date'>
           <%= f.text_field :accepted_date, class: "form-control", value: f.object.try(:accepted_date).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
+        <span class="help-block"><%= f.object.errors["accepted_date"].first %></span>
       </div>
     </div>
     <div class="col-md-4 accepted <%= 'hide' unless params[:contract][:accepted].present? %>">
@@ -77,15 +78,16 @@
       <%= f.check_box :signed?, { checked: (params[:contract][:signed].present? and params[:contract][:signed] == "1") ? true : false } %>
       <%= f.label "Signed" %>
     </div>
-    <div class="col-md-4 signed <%= 'hide' unless params[:contract][:signed].present? %>">
+    <div class="col-md-4 signed <%= 'hide' unless params[:contract][:signed].present? %> <%= 'has-error' if f.object.errors["dateSigned"].first %>">
        <div class="form-group">
-        <%= f.label 'Date Signed' %>
+        <%= f.label 'Date Signed', class: "control-label" %>
         <div class='input-group date'>
           <%= f.text_field :dateSigned, class: "form-control", value: f.object.try(:dateSigned).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
+        <span class="help-block"><%= f.object.errors["dateSigned"].first %></span>
       </div>
     </div>
     <div class="col-md-4 signed <%= 'hide' unless params[:contract][:signed].present? %>">
@@ -97,15 +99,16 @@
       <%= f.check_box :down_payment?, { checked: (params[:contract][:down_payment].present? and params[:contract][:down_payment] == "1") ? true : false } %>
       <%= f.label "Down Payment" %>
     </div>
-    <div class="col-md-4 down_payment <%= 'hide' unless params[:contract][:down_payment].present? %>">
+    <div class="col-md-4 down_payment <%= 'hide' unless params[:contract][:down_payment].present? %> <%= 'has-error' if f.object.errors["downPmtDate"].first %>">
        <div class="form-group">
-        <%= f.label 'Date Received' %>
+        <%= f.label 'Date Received', class: "control-label" %>
         <div class='input-group date'>
           <%= f.text_field :downPmtDate, class: "form-control", value: f.object.try(:downPmtDate).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
+        <span class="help-block"><%= f.object.errors["downPmtDate"].first %></span>
       </div>
     </div>
     <div class="col-md-4 down_payment <%= 'hide' unless params[:contract][:down_payment].present? %>">

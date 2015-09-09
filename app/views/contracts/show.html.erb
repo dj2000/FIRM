@@ -20,7 +20,7 @@
           <td><%= @contract.try(:date).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
-          <td>Accepted Date</td>
+          <td>Date Accepted</td>
           <td><%= @contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
@@ -28,48 +28,24 @@
           <td><%= @contract.acceptedBy %></td>
         </tr>
         <tr>
-          <td>Accepted By</td>
+          <td>Date Signed</td>
           <td><%= @contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Signed By</td>
+          <td><%= @contract.signedBy %></td>
+        </tr>
+        <tr>
+          <td>Date Received</td>
+          <td><%= @contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Amout Received</td>
+          <td><%= @contract.downPmtAmt %></td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Bid:</strong>
-  <%= @contract.bid_id %>
-</p>
-
-
-<p>
-  <strong>Date:</strong>
-  <%= @contract.date %>
-</p>
-
-<p>
-  <strong>Signedby:</strong>
-  <%= @contract.signedBy %>
-</p>
-
-<p>
-  <strong>Acceptedby:</strong>
-  <%= @contract.acceptedBy %>
-</p>
-
-<p>
-  <strong>Datesigned:</strong>
-  <%= @contract.dateSigned %>
-</p>
-
-<p>
-  <strong>Downpmtamt:</strong>
-  <%= @contract.downPmtAmt %>
-</p>
-
-<p>
-  <strong>Downpmtdate:</strong>
-  <%= @contract.downPmtDate %>
-</p>
+<br/>
 <%= link_to 'Back', contracts_path, class: "btn btn-info" %>

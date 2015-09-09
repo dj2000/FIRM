@@ -80,6 +80,6 @@ class PayPlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pay_plan_params
-      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, payments_attributes: [:id, :title, :value, :_destroy])
+      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, :title, payments_attributes: [:id, :title, :value, :_destroy])
     end
 end

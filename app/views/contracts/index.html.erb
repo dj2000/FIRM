@@ -5,12 +5,12 @@
     <tr>
       <th>Bid</th>
       <th>Contract Date</th>
+      <th>Date Accepted</th>
       <th>Accepted By</th>
-      <th>Accepted Date</th>
+      <th>Date Signed</th>
       <th>Signed By</th>
-      <th>Signed Date</th>
-      <th>Down Payment Amount Paid</th>
-      <th>Down Payment Received Date</th>
+      <th>Date Received</th>
+      <th>Amout Received</th>
       <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
@@ -19,13 +19,13 @@
     <% @contracts.each do |contract| %>
       <tr>
         <td><%= contract.try(:bid).try(:title) %></td>
-        <td><%= contract.date %></td>
+        <td><%= contract.try(:date).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.acceptedBy %></td>
-        <td><%=  %></td>
+        <td><%= contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.signedBy %></td>
-        <td><%= contract.dateSigned %></td>
+        <td><%= contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.downPmtAmt %></td>
-        <td><%= contract.downPmtDate %></td>
         <td>
           <%= link_to contract, class: 'btn btn-primary' do %>
             <i class='fa fa-eye'></i> Show

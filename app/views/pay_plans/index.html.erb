@@ -3,6 +3,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Title</th>
       <th>Amount Range Start</th>
       <th>Amount Range End</th>
       <th>Deposit</th>
@@ -13,9 +14,10 @@
   <tbody>
     <% @pay_plans.each do |pay_plan| %>
       <tr>
+        <td><%= pay_plan.title %></td>
         <td><%= number_to_currency(pay_plan.jobMinAmt) %></td>
         <td><%= number_to_currency(pay_plan.jobMaxAmt) %></td>
-        <td><%= pay_plan.deposit %></td>
+        <td><%= "#{pay_plan.deposit}%" %></td>
         <td>
           <%= link_to pay_plan, class: 'btn btn-primary' do %>
             <i class='fa fa-eye'></i> Show

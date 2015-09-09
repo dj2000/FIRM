@@ -76,6 +76,13 @@ class ContractsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contract_params
+      update_params
       params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate, :confirmed_by, :accepted, :accepted_date, :signed, :down_payment)
+    end
+
+    def update_params
+      params[:contract][:acceptedBy] = params[:contract][:accepted_date] = nil if params[:contract][:accepted] == "0" || params[:contract][:accepted] == ""
+      params[:contract][:dateSigned] = params[:contract][:signedBy] = nil if params[:contract][:signed] == "0" || params[:contract][:signed] == ""
+      params[:contract][:downPmtDate] = params[:contract][:downPmtAmt] = nil if params[:contract][:down_payment] == "0" || params[:contract][:down_payment] == ""
     end
 end

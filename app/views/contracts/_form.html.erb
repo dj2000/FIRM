@@ -32,7 +32,7 @@
       <%= label_tag "Contract Payment Plan" %>
       <%= text_field_tag "payment_plan", f.object.try(:bid).try(:payPlan).try(:payment_plan_select), class: "form-control payment_plan", disabled: true %>
     </div>
-    <div class="col-md-1 payment_plan details <%= 'hide' unless f.object.bid_id %>">
+    <div class="col-md-1 payment_plan details margin-top-25 <%= 'hide' unless f.object.bid_id %>">
       <% if f.object.bid_id %>
         <%= link_to pay_plan_path(f.object.try(:bid).try(:payPlan)), remote: true, class: 'link' do %>
           <i class='fa fa-eye'></i> Details

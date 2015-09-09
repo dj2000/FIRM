@@ -14,15 +14,15 @@ class Contract < ActiveRecord::Base
 
 	validates :downPmtDate, :downPmtAmt, presence: true, if: Proc.new { |a| a.down_payment == "1" }
 
-  def accepted?
-		self.accepted_date and self.acceptedBy
+  def accepted?(params = nil)
+    (params and params[:accepted] and params[:accepted] == "1") || (self.accepted_date and self.acceptedBy)
   end
 
-  def signed?
-		self.dateSigned and self.signedBy
+  def signed?(params = nil)
+		(params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
   end
 
-  def down_payment?
-		self.downPmtAmt and self.downPmtDate
+  def down_payment?(params = nil)
+		(params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
   end
 end

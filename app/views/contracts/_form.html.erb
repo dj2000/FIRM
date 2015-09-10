@@ -1,16 +1,23 @@
 <%= simple_form_for(@contract) do |f| %>
   <%= f.error_notification %>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <%= f.input :title %>
+    </div>
+    <div class="col-md-4">
       <%= f.association :bid, as: :select, collection: @bids, selected: f.object.bid_id , label: "Select Bid", include_blank: "Select Bid" %>
     </div>
-    <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
+    <div class="col-md-4 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
       <%= text_field_tag "inspector_name", f.object.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
     </div>
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
+      <%= label_tag "Verbal Close By" %>
+      <%= text_field_tag "verbal_close_by", f.object.try(:bid).try(:comm_history).try(:caller), class: "verbal_close_by form-control", disabled: true %>
+    </div>
     <div class="col-md-4">
       <%= f.input :confirmed_by %>
     </div>

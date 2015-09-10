@@ -6,7 +6,7 @@ class Contract < ActiveRecord::Base
 
   attr_accessor :accepted, :signed, :down_payment
 
-  validates :bid_id, :date, presence: true
+  validates :bid_id, :date, :title, presence: true
 
   validates :acceptedBy, :accepted_date, presence: true, if: Proc.new { |a| a.accepted == "1" }
 

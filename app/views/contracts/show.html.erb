@@ -12,6 +12,10 @@
       </thead>
       <tbody>
         <tr>
+          <td>Title</td>
+          <td><%= @contract.title %></td>
+        </tr>
+        <tr>
           <td>Bid</td>
           <td><%= @contract.try(:bid).try(:title) %></td>
         </tr>

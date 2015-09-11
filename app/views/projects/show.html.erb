@@ -1,74 +1,74 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Vcdate:</strong>
-  <%= @project.vcDate %>
-</p>
-
-<p>
-  <strong>Contract:</strong>
-  <%= @project.contract_id %>
-</p>
-
-<p>
-  <strong>Jobcost:</strong>
-  <%= @project.jobCost %>
-</p>
-
-<p>
-  <strong>Scheduleby:</strong>
-  <%= @project.scheduleBy %>
-</p>
-
-<p>
-  <strong>Schedulepref:</strong>
-  <%= @project.schedulePref %>
-</p>
-
-<p>
-  <strong>Estduration:</strong>
-  <%= @project.estDuration %>
-</p>
-
-<p>
-  <strong>Schedulestart:</strong>
-  <%= @project.scheduleStart %>
-</p>
-
-<p>
-  <strong>Scheduleend:</strong>
-  <%= @project.scheduleEnd %>
-</p>
-
-<p>
-  <strong>Authorizedby:</strong>
-  <%= @project.authorizedBy %>
-</p>
-
-<p>
-  <strong>Authorizedon:</strong>
-  <%= @project.authorizedOn %>
-</p>
-
-<p>
-  <strong>Crew:</strong>
-  <%= @project.crew_id %>
-</p>
-
-<p>
-  <strong>Verifiedaccess:</strong>
-  <%= @project.verifiedAccess %>
-</p>
-
-<p>
-  <strong>Verifiedew:</strong>
-  <%= @project.verifiedEW %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @project.notes %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Project</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Project Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Contract</td>
+          <td><%= @project.try(:contract).try(:title) %></td>
+        </tr>
+        <tr>
+          <td>Job Cost</td>
+          <td><%= @project.jobCost %></td>
+        </tr>
+        <tr>
+          <td>Schedule By</td>
+          <td><%= @project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Preferred Schedule Start</td>
+          <td><%= @project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Preferred Schedule End</td>
+          <td><%= @project.try(:schedule_pref_end).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Est. Duration(d)</td>
+          <td><%= @project.estDuration %></td>
+        </tr>
+        <tr>
+          <td>Schedule Start</td>
+          <td><%= @project.try(:scheduleStart).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Schedule End</td>
+          <td><%= @project.try(:scheduleEnd).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Schedule Authorize By</td>
+          <td><%= @project.authorizedBy %></td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td><%= @project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Crew</td>
+          <td><%= @project.try(:crew).try(:foreman) %></td>
+        </tr>
+        <tr>
+          <td>Interior Access Verified</td>
+          <td><%= @project.humanize("verifiedAccess") %></td>
+        </tr>
+        <tr>
+          <td>Electricity and Water Verified</td>
+          <td><%= @project.humanize("verifiedEW") %></td>
+        </tr>
+        <tr>
+          <td>Notes</td>
+          <td><%= @project.notes %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to "Back", projects_path, class: "btn btn-info" %>

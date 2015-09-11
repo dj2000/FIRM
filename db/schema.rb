@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910074516) do
+ActiveRecord::Schema.define(version: 20150910113136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,7 +199,6 @@ ActiveRecord::Schema.define(version: 20150910074516) do
     t.boolean  "paid"
     t.string   "footprintURL"
     t.boolean  "repairs"
-    t.boolean  "permit"
     t.boolean  "interiorAccess"
     t.boolean  "verifiedReport"
     t.boolean  "verifiedComp"
@@ -316,6 +315,10 @@ ActiveRecord::Schema.define(version: 20150910074516) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.date     "schedule_pref_start"
+    t.date     "schedule_pref_end"
+    t.boolean  "permit"
   end
 
   create_table "properties", force: true do |t|

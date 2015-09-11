@@ -73,7 +73,7 @@ class ProjectsController < ApplicationController
     end
 
     def contracts
-      @contracts = Contract.all
+      @contracts = Contract.unprojected_contracts
       @contracts << @project.try(:contract) if @project and @project.contract_id
     end
 end

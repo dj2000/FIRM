@@ -25,4 +25,10 @@ class Contract < ActiveRecord::Base
   def down_payment?(params = nil)
 		(params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
   end
+
+  ## Contracts doesn't have any project
+  def self.unprojected_contracts
+    projects = Project.all.map(&:contract_id)
+    Contract.where.not(id: projects)
+  end
 end

@@ -35,7 +35,7 @@ class ProjSchedsController < ApplicationController
   # POST /proj_scheds.json
   def create
     @proj_sched = ProjSched.new(proj_sched_params)
-
+    @project = Project.find(params[:proj_sched][:project_id])
     respond_to do |format|
       if @proj_sched.save
         format.html { redirect_to @proj_sched, notice: 'Proj sched was successfully created.' }

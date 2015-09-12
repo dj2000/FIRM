@@ -16,7 +16,21 @@ class Project < ActiveRecord::Base
 
   validates_presence_of :crew_id, :scheduleStart, :scheduleEnd, if: "crew_schedule.present?"
 
+  validate :check_preferred_scehdule_end_datetime
+
   def humanize(attribute)
     self.send("#{attribute}") ? "Yes" : "No"
+  end
+
+  def self.permitted_projects
+    self.where(permit: true)
+  end
+
+  private
+
+  def check_preferred_scehdule_end_datetime
+    if self.schedule_pref_start.present? and self.schedule_pref_end.present?
+      self.errors.add(:schedule_pref_end, "Preferred Schedule End Date should be greater than Preferred Schedule Start Date.") if self.schedule_pref_end < self.schedule_pref_start
+    end
   end
 end

@@ -1,41 +1,44 @@
-<%= form_for(@permit) do |f| %>
-  <% if @permit.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@permit.errors.count, "error") %> prohibited this permit from being saved:</h2>
-
-      <ul>
-      <% @permit.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@permit) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :reference, label: "Permit Reference No." %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :reference %><br>
-    <%= f.text_field :reference %>
+    <div class="col-md-6">
+      <%= f.association :project, as: :select, collection: @projects, label_method: :title %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :project_id %><br>
-    <%= f.number_field :project_id %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= label_tag "Issue Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["issueDate"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :issueDate, class: "form-control", value: f.object.try(:issueDate) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["issueDate"].first %></span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :issuedBy, label: "Issued By" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :issueDate %><br>
-    <%= f.date_select :issueDate %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :status %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :valuation %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :issuedBy %><br>
-    <%= f.text_field :issuedBy %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :valuation %><br>
-    <%= f.text_field :valuation %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="actions pull-right">
+    <%= f.submit "Submit", class: "btn btn-info" %>
   </div>
 <% end %>
+<script type="text/javascript">
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

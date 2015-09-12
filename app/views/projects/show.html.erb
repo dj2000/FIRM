@@ -24,6 +24,10 @@
           <td><%= @project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
+          <td>Permit Required</td>
+          <td><%= @project.humanize("permit") %></td>
+        </tr>
+        <tr>
           <td>Preferred Schedule Start</td>
           <td><%= @project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
         </tr>
@@ -71,4 +75,7 @@
     </table>
   </div>
 </div>
-<%= link_to "Back", projects_path, class: "btn btn-info" %>
+<p class="pull-right">
+  <%= link_to "Back", projects_path, class: "btn btn-info" %>
+  <%= link_to "Schedule Project", proj_scheds_path(id: @project), class: "btn btn-success" %>
+</p>

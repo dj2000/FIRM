@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   resources :crews
 
-  resources :proj_scheds
+  resources :proj_scheds do
+    get :scheduled_projects, on: :collection
+  end
 
   resources :projects
 

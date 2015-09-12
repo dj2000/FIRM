@@ -1,0 +1,3 @@
+<% unless @proj_sched.errors.present? %>
+	$(window.location.replace('/projects/<%= @proj_sched.project_id %>'))
+<% end %>

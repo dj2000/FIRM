@@ -4,14 +4,24 @@ class ProjSched < ActiveRecord::Base
 
   validates :crew_id, :schedule_start_date, :schedule_end_date, :startTime, :endTime, presence: true
 
+  COLORS = Crew.assign_colors
+
   def as_json
     {
-      start: self.startTime,
-      end: self.endTime,
+      start: self.sched_start,
+      end: self.sched_end,
+      title: self.try(:crew).try(:foreman),
       id: self.id,
-      title: self.try(:inspector).try(:firstName),
-      color: 'tomato',
-      crew_id: self.crew_id
+      color: ProjSched::COLORS["#{self.crew_id}"],
+      allDay: false
     }
+  end
+
+  def sched_start
+		"#{schedule_start_date.strftime("%Y-%m-%d")} #{startTime.strftime("%I:%M %p")}".to_datetime
+  end
+
+  def sched_end
+		"#{schedule_end_date.strftime("%Y-%m-%d")} #{endTime.strftime("%I:%M %p")}".to_datetime
   end
 end

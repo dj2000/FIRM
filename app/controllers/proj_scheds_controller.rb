@@ -29,6 +29,10 @@ class ProjSchedsController < ApplicationController
 
   # GET /proj_scheds/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # POST /proj_scheds
@@ -75,6 +79,7 @@ class ProjSchedsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_proj_sched
       @proj_sched = ProjSched.find(params[:id])
+      @project = @proj_sched.try(:project)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

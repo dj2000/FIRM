@@ -8,23 +8,25 @@
       <%= f.association :project, as: :select, collection: @projects, label_method: :title %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= label_tag "Issue Date" %>
-      <div class="form-group <%= 'has-error' if f.object.errors["issueDate"].first %>">
-        <div class='input-group date'>
-          <%= f.text_field :issueDate, class: "form-control", value: f.object.try(:issueDate) %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
+  <% if action_name == "edit" and f.object.status == "Approved" %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= label_tag "Issue Date" %>
+        <div class="form-group <%= 'has-error' if f.object.errors["issueDate"].first %>">
+          <div class='input-group date'>
+            <%= f.text_field :issueDate, class: "form-control", value: f.object.try(:issueDate) %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["issueDate"].first %></span>
         </div>
-        <span class="help-block"><%= f.object.errors["issueDate"].first %></span>
+      </div>
+      <div class="col-md-6">
+        <%= f.input :issuedBy, label: "Issued By" %>
       </div>
     </div>
-    <div class="col-md-6">
-      <%= f.input :issuedBy, label: "Issued By" %>
-    </div>
-  </div>
+  <% end %>
   <div class="row">
     <div class="col-md-6">
       <%= f.input :status, collection: Permit::STATUS.map{|v| [v, v]}, as: :select %>

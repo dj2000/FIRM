@@ -8,7 +8,7 @@
       <%= f.association :project, as: :select, collection: @projects, label_method: :title %>
     </div>
   </div>
-  <% if action_name == "edit" and f.object.status == "Approved" %>
+  <% if (action_name == "edit" and f.object.status == "Approved") || action_name == "new" %>
     <div class="row">
       <div class="col-md-6">
         <%= label_tag "Issue Date" %>

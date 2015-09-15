@@ -1,3 +1,9 @@
+<% if @projects.blank? %>
+	<p class="alert alert-danger">
+		There are no projects created.
+		<%= link_to "New Project", new_project_path, class: "link" %>
+	</p>
+<% end %>
 <h1>New Permit</h1>
 
 <%= render 'form' %>

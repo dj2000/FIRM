@@ -1,41 +1,53 @@
-<%= form_for(@proj_insp) do |f| %>
-  <% if @proj_insp.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@proj_insp.errors.count, "error") %> prohibited this proj_insp from being saved:</h2>
-
-      <ul>
-      <% @proj_insp.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@proj_insp) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.association :project, as: :select, collection: @projects, label_method: :title %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :project_id %><br>
-    <%= f.number_field :project_id %>
+    <div class="col-md-6">
+      <%= f.input :reference %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :reference %><br>
-    <%= f.text_field :reference %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= label_tag "Schedule Date" %>
+        <div class="form-group <%= 'has-error' if f.object.errors["scheduleDate"].first %>">
+          <div class='input-group date'>
+            <%= f.text_field :scheduleDate, class: "form-control", value: f.object.try(:scheduleDate) %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["scheduleDate"].first %></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :inspectBy, label: "To be Inspected By" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :scheduleDate %><br>
-    <%= f.date_select :scheduleDate %>
-  </div>
-  <div class="field">
-    <%= f.label :inspectBy %><br>
-    <%= f.text_field :inspectBy %>
-  </div>
-  <div class="field">
-    <%= f.label :completeDate %><br>
-    <%= f.date_select :completeDate %>
-  </div>
-  <div class="field">
-    <%= f.label :result %><br>
-    <%= f.text_field :result %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= label_tag "Completed Date" %>
+        <div class="form-group <%= 'has-error' if f.object.errors["completeDate"].first %>">
+          <div class='input-group date'>
+            <%= f.text_field :completeDate, class: "form-control", value: f.object.try(:completeDate) %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["completeDate"].first %></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :result %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: "btn btn-info" %>
   </div>
 <% end %>
+<script type="text/javascript">
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

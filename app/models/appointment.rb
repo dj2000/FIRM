@@ -7,6 +7,8 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :scheduled_inspection
 
+  COLORS = Inspector.assign_colors
+
   PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Mailing", "Inspector"]
 
   validates :inspFee, 
@@ -37,7 +39,7 @@ class Appointment < ActiveRecord::Base
       end: self.schedEnd,
       id: self.id,
       title: self.try(:inspector).try(:firstName),
-      color: 'tomato',
+      color: Appointment::COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
       allDay: false
     }

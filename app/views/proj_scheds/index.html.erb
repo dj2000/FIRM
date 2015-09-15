@@ -39,6 +39,9 @@
     eventSources: [{
       url: "/proj_scheds",
     }],
+    eventRender: function(event, element) {
+        $(element).tooltip({title:event.project, container: "body"});
+    },
     eventClick: function(cal_event, js_event, view){
       <% if @editable %>
         calendar_event_clicked(cal_event, js_event, view);

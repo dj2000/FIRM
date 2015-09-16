@@ -17,11 +17,13 @@
       <%= f.input :jobMaxAmt, label: "Amount Range End", as: :string %>
     </div>
   </div>
-  <%= f.fields_for :payments, :wrapper => false do |payment| %>
-    <%= render 'payments/form', payment: payment %>
-  <% end %>
-  <div class="actions pull-right">
-    <%= f.link_to_add "Add a payment", :payments, class: "btn btn-success" %>
+  <div class="row payments">
+    <%= f.fields_for :payments, wrapper: false do |payment| %>
+      <%= render 'payments/form', payment: payment %>
+    <% end %>
+  </div>
+  <div class="pull-right">
+    <%= f.link_to_add "Add a payment", :payments, :data => { :target => ".payments" }, class: "btn btn-success" %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <%= link_to "Back", pay_plans_path, class: "btn btn-info" %>
   </div>

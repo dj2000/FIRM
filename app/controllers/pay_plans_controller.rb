@@ -24,6 +24,7 @@ class PayPlansController < ApplicationController
 
   # GET /pay_plans/1/edit
   def edit
+    @payments = @pay_plan.payments.present? ? @pay_plan.payments : @pay_plan.payments.build
   end
 
   # POST /pay_plans

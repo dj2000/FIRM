@@ -1,9 +1,11 @@
-<div class="fields row">
-  <div class="col-md-5">
-    <%= payment.input :title, label: false, input_html: { value: "1st Payment", class: "title" } %>
-  </div>
-  <div class="col-md-5">
-    <%= payment.input :value, label: false, placeholder: "1st Payment Value", input_html: { class: "payment_value" } %>
-  </div>
-  <%= payment.link_to_remove "Remove this payment", class: "btn btn-danger" %>
+<div class="fields">
+	<div class="col-md-5">
+	  <%= payment.input :title, label: false, input_html: { value: "1st Payment", class: "title" } %>
+	</div>
+	<div class="col-md-5">
+	  <%= payment.input :value, label: false, placeholder: "1st Payment Value", input_html: { class: "payment_value" } %>
+	</div>
+	<div class="col-md-2">
+		<%= payment.link_to_remove "Remove this payment", class: "btn btn-danger" %>
+	</div>
 </div>

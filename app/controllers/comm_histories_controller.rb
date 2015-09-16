@@ -90,5 +90,6 @@ class CommHistoriesController < ApplicationController
         status = "CallBack"
       end
       @bid.update(status: status)
+      params[:comm_history][:callBackDate] = "" unless params[:comm_history][:callOutcome] == "CallBack"
     end
 end

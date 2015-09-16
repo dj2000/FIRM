@@ -86,17 +86,6 @@
     <div class="col-md-6">
       <%= f.input :permit, as: :boolean %>
     </div>
-    <div class="col-md-6">
-      <%= f.input :crew, as: :string, disabled: true, value: f.object.try(:crew).try(:foreman) %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= f.input :scheduleStart, as: :string, input_html: { value: f.object.try(:scheduleStart).try(:strftime, "%d %b %Y %H:%M:%S")} , disabled: true, label: "Schedule Start Date" %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :scheduleEnd, as: :string, input_html: { value: f.object.try(:scheduleEnd).try(:strftime, "%d %b %Y %H:%M:%S")} , disabled: true, label: "Schedule End Date" %>
-    </div>
   </div>
   <div class="row">
     <div class="col-md-6">

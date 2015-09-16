@@ -47,7 +47,7 @@
       <% end %>
     </div>
     <div class="col-md-6">
-      <div class="form-group">
+      <div class="form-group <%= 'has-error' if f.object.errors["date"].first %>">
         <%= f.label 'Contract Date' %>
         <div class='input-group date'>
           <%= f.text_field :date, class: "form-control", value: f.object.try(:date).try(:strftime, "%Y-%m-%d") %>
@@ -55,6 +55,7 @@
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
+        <span class="help-block"><%= f.object.errors["date"].first %></span>
       </div>
     </div>
   </div>

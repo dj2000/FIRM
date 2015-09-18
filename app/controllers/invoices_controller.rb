@@ -63,8 +63,8 @@ class InvoicesController < ApplicationController
   end
 
   def info
-    attribute = params[:attribute]
-    instance_variable_set("@#{attribute}", attribute.camelize.constantize.find(params[:id]))
+    @attribute = params[:attribute]
+    instance_variable_set("@#{@attribute}", @attribute.camelize.constantize.find(params[:id]))
     @bid = @project.try(:contract).try(:bid)
     @inspection = (@inspection || @bid.try(:inspection))
     respond_to do |format|

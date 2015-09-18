@@ -40,7 +40,7 @@
         <% end %>
       <% end %>
     </div>
-    <div class="col-md-1 pay_plan_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-2 pay_plan_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
       <%= f.object.try(:pay_plan).try(:title) %>
     </div>
     <div class="col-md-1 pay_plan_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
@@ -80,6 +80,10 @@
     if(attribute == "Inspection"){
       $(".inspection").show();
       $(".project").hide();
+      $(".customer_info").addClass('hide');
+      $(".customer_details").addClass('hide');
+      $(".pay_plan_info").addClass('hide');
+      $(".pay_plan_details").addClass('hide');
     }
     else if(attribute == "Project"){
       $(".project").show();

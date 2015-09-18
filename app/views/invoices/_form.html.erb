@@ -1,45 +1,106 @@
-<%= form_for(@invoice) do |f| %>
-  <% if @invoice.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
-
-      <ul>
-      <% @invoice.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@invoice) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :type, as: :radio_buttons, collection: ['Inspection', 'Project'] %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :reference %><br>
-    <%= f.text_field :reference %>
+    <div class="col-md-6 project">
+      <%= f.association :project, collection: @projects, label: "Project" %>
+    </div>
+    <div class="col-md-6 inspection">
+      <%= f.association :inspection, collection: @inspections, label: "Inspection" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :reference %> 
+    </div>
+    <div class="col-md-6">
+      <%= label_tag "Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["invoiceDate"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :invoiceDate, class: "form-control", value: f.object.try(:invoiceDate) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["invoiceDate"].first %></span>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :inspection_id %><br>
-    <%= f.text_field :inspection_id %>
-  </div>
-  <div class="field">
-    <%= f.label :project_id %><br>
-    <%= f.text_field :project_id %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :invoiceDate %><br>
-    <%= f.date_select :invoiceDate %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-1 customer_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <%= f.object.try(:client).try(:name) %>
+    </div>
+    <div class="col-md-1 customer_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <% if f.object.try(:client) %>
+        <%= link_to client_path(f.object.try(:client)), remote: true, class: 'link' do %>
+          <i class='fa fa-eye'></i> Details
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-md-1 pay_plan_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <%= f.object.try(:pay_plan).try(:title) %>
+    </div>
+    <div class="col-md-1 pay_plan_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <% if f.object.try(:pay_plan) %>
+        <%= link_to pay_plan_path(f.object.try(:pay_plan)), remote: true, class: 'link' do %>
+          <i class='fa fa-eye'></i> Details
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :description, label: "Invoice Description" %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: "btn btn-info" %>
   </div>
 <% end %>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".inspection").hide();
+  $(".project").hide();
+  $("input[name='invoice[type]']").on('change', function(){
+    var attribute = $(this).val();
+    if(attribute == "Inspection"){
+      $(".inspection").show();
+      $(".project").hide();
+    }
+    else if(attribute == "Project"){
+      $(".project").show();
+      $(".inspection").hide();
+    }
+  });
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+  $("#invoice_inspection_id").change(function(){
+    var id = $(this).val();
+    $.ajax({
+      type: "GET",
+      url: "/invoices/" + id + "/info?attribute=inspection" 
+    })
+  });
+  $("#invoice_project_id").change(function(){
+    var id = $(this).val();
+    $.ajax({
+      type: "GET",
+      url: "/invoices/" + id + "/info?attribute=project" 
+    })
+  });
+</script>

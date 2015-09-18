@@ -12,6 +12,10 @@
       </thead>
       <tbody>
         <tr>
+          <td>Name</td>
+          <td><%= @inspection.name %></td>
+        </tr>
+        <tr>
           <td>Application</td>
           <td><%= @inspection.try(:appointment).try(:appointment_select) %></td>
         </tr>

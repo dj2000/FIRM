@@ -35,7 +35,10 @@ Rails.application.routes.draw do
 
   resources :receipts
 
-  resources :invoices
+  resources :invoices do
+    get :update_collection, on: :member
+    get :info, on: :member
+  end
 
   resources :i_fee_schedules
 

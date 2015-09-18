@@ -2,10 +2,13 @@
   <%= f.error_notification %>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <%= f.input :name %>
+    </div>
+    <div class="col-md-4">
       <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
     </div>
-    <div class="col-md-6 appointment <%= 'hide' unless f.object.appointment_id %>">
+    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id %>">
       <%= label_tag "Inspector" %>
       <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
     </div>

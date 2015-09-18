@@ -3,6 +3,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Name</th>
       <th>Appointment</th>
       <th>Foundation Condition</th>
       <th>Number Of Days</th>
@@ -20,6 +21,7 @@
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
+        <td><%= inspection.name %></td>
         <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
         <td><%= inspection.fCondition %></td>
         <td><%= inspection.nOD %></td>

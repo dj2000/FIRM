@@ -5,17 +5,13 @@
 	$(".pay_plan_details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan)), class: "link", remote: true) %> ');
 	$(".balance_due #balance_due").val("<%= @inspection.try(:appointment).try(:inspFee) %>")
 	$(".invoice_amount #invoice_amount").val("<%= @bid.try(:total_cost) %>")
-	$(".customer_info").removeClass('hide');
-	$(".customer_details").removeClass('hide');
-	$(".pay_plan_info").removeClass('hide');
-	$(".pay_plan_details").removeClass('hide');
-	$(".balance_due").removeClass('hide');
-	$(".invoice_amount").removeClass('hide');
+	$(".customer_info").show();
+	$(".customer_details").show();
+	$(".pay_plan_info").show();
+	$(".pay_plan_details").show();
 <% else %>
-	$(".customer_info").addClass('hide');
-	$(".customer_details").addClass('hide');
-	$(".pay_plan_info").addClass('hide');
-	$(".pay_plan_details").addClass('hide');
-	$(".balance_due").addClass('hide');
-	$(".invoice_amount").addClass('hide');
+	$(".customer_info").hide();
+	$(".customer_details").hide();
+	$(".pay_plan_info").hide();
+	$(".pay_plan_details").hide();
 <% end %>

@@ -2,7 +2,7 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :type, as: :radio_buttons, collection: ['Inspection', 'Project'] %>
+      <%= f.input :invoice_type, as: :radio_buttons, collection: ['Inspection', 'Project'] %>
     </div>
     <div class="col-md-6 project">
       <%= f.association :project, collection: @projects, label: "Project" %>
@@ -30,37 +30,37 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-2 customer_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-6">
+      <%= f.input :description, label: "Invoice Description" %>
+    </div>
+    <div class="col-md-2 customer_info">
       <%= f.object.try(:client).try(:name) %>
     </div>
-    <div class="col-md-1 customer_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-1 customer_details">
       <% if f.object.try(:client) %>
         <%= link_to client_path(f.object.try(:client)), remote: true, class: 'link' do %>
           <i class='fa fa-eye'></i> Details
         <% end %>
       <% end %>
     </div>
-    <div class="col-md-2 pay_plan_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-2 pay_plan_info">
       <%= f.object.try(:pay_plan).try(:title) %>
     </div>
-    <div class="col-md-1 pay_plan_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-1 pay_plan_details">
       <% if f.object.try(:pay_plan) %>
         <%= link_to pay_plan_path(f.object.try(:pay_plan)), remote: true, class: 'link' do %>
           <i class='fa fa-eye'></i> Details
         <% end %>
       <% end %>
     </div>
-    <div class="col-md-6">
-      <%= f.input :description, label: "Invoice Description" %>
-    </div>
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6 balance_due <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-6 balance_due">
       <%= label_tag "Balance Due" %>
-      <%= text_field_tag "balance_due", nil, class: 'form-control' %>
+      <%= text_field_tag "balance_due", f.object.try(:balance_due), class: 'form-control' %>
     </div>
-    <div class="col-md-6 invoice_amount <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-6 invoice_amount">
       <%= f.input :amount %>
     </div>
     <div class="col-md-6">
@@ -95,23 +95,31 @@
   </div>
 </div>
 <script>
-  $(".inspection").hide();
-  $(".project").hide();
-  $("input[name='invoice[type]']").on('change', function(){
+$(document).ready(function(){
+  <% if params && params[:invoice] && params[:invoice][:invoice_type] == "Inspection" %>
+    $(".inspection").show();
+    $(".project").hide();
+    $(".inspection select").change();
+  <% else %>
+    $(".inspection").hide();
+    $(".project").show();
+    $(".project select").change();
+  <% end %>
+  $("input[name='invoice[invoice_type]']").on('change', function(){
     var attribute = $(this).val();
     if(attribute == "Inspection"){
-      $(".inspection").show();
       $(".project").hide();
-      $(".customer_info").addClass('hide');
-      $(".customer_details").addClass('hide');
-      $(".pay_plan_info").addClass('hide');
-      $(".pay_plan_details").addClass('hide');
-      $(".balance_due").addClass('hide');
-      $(".invoice_amount").addClass('hide');
+      $(".inspection").show();
+      $(".customer_info").hide();
+      $(".customer_details").hide();
+      $(".pay_plan_info").hide();
+      $(".pay_plan_details").hide();
+      $(".project select").val("");
     }
     else if(attribute == "Project"){
       $(".project").show();
       $(".inspection").hide();
+      $(".inspection select").val("");
     }
   });
   $('.input-group.date').datepicker({
@@ -133,12 +141,10 @@
     var id = $(this).val();
     if(id == ""){
       alert("Please select atleast one project.");
-      $(".customer_info").addClass('hide');
-      $(".customer_details").addClass('hide');
-      $(".pay_plan_info").addClass('hide');
-      $(".pay_plan_details").addClass('hide');
-      $(".balance_due").addClass('hide');
-      $(".invoice_amount").addClass('hide');
+      $(".customer_info").hide();
+      $(".customer_details").hide();
+      $(".pay_plan_info").hide();
+      $(".pay_plan_details").hide();
     }
     else{
       $.ajax({
@@ -147,4 +153,5 @@
       });
     }
   });
+});
 </script>

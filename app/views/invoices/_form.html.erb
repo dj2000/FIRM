@@ -30,7 +30,7 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-1 customer_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+    <div class="col-md-2 customer_info <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
       <%= f.object.try(:client).try(:name) %>
     </div>
     <div class="col-md-1 customer_details <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
@@ -52,6 +52,28 @@
     </div>
     <div class="col-md-6">
       <%= f.input :description, label: "Invoice Description" %>
+    </div>
+  </div>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-6 balance_due <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <%= label_tag "Balance Due" %>
+      <%= text_field_tag "balance_due", nil, class: 'form-control' %>
+    </div>
+    <div class="col-md-6 invoice_amount <%= 'hide' unless (f.object.project_id || f.object.inspection_id) %>">
+      <%= f.input :amount %>
+    </div>
+    <div class="col-md-6">
+      <%= label_tag "Due Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["due_date"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :due_date, class: "form-control", value: f.object.try(:due_date) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["due_date"].first %></span>
+      </div>
     </div>
   </div>
   <div class="actions">
@@ -84,6 +106,8 @@
       $(".customer_details").addClass('hide');
       $(".pay_plan_info").addClass('hide');
       $(".pay_plan_details").addClass('hide');
+      $(".balance_due").addClass('hide');
+      $(".invoice_amount").addClass('hide');
     }
     else if(attribute == "Project"){
       $(".project").show();
@@ -109,6 +133,12 @@
     var id = $(this).val();
     if(id == ""){
       alert("Please select atleast one project.");
+      $(".customer_info").addClass('hide');
+      $(".customer_details").addClass('hide');
+      $(".pay_plan_info").addClass('hide');
+      $(".pay_plan_details").addClass('hide');
+      $(".balance_due").addClass('hide');
+      $(".invoice_amount").addClass('hide');
     }
     else{
       $.ajax({

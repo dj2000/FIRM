@@ -12,5 +12,4 @@ class Invoice < ActiveRecord::Base
   def pay_plan
 		self.try(:project).try(:contract).try(:bid).try(:payPlan)
   end
-
 end

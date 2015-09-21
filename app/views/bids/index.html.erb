@@ -6,6 +6,7 @@
       <th>Repair Cost</th>
       <th>Seismic Upgrade Fee</th>
       <th>Administration Fee</th>
+      <th>Bid Total</th>
       <th>Payment Plan</th>
       <% unless request.path == "/bids" %>
         <th colspan="2" class="text-center">Actions</th>
@@ -19,6 +20,7 @@
         <td><%= bid.costRepair %></td>
         <td><%= bid.feeSeismicUpg %></td>
         <td><%= bid.feeAdmin %></td>
+        <td><%= bid.total_cost %></td>
         <td><%= bid.try(:payPlan).try(:payment_plan_select) %></td>
         <% unless request.path == "/bids" %>
           <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>

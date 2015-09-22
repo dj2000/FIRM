@@ -2,7 +2,7 @@ class Inspector < ActiveRecord::Base
   has_many :appointments
   has_many :insp_skills
   has_many :insp_comm_scales
-  validates :firstName, :lastName, :senior, presence: true
+  validates :firstName, :lastName, presence: true
   validates :phoneH, :phoneC,
 							length: { :minimum => 10, :maximum => 15 },
 							allow_blank: true,

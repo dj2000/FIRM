@@ -4,7 +4,7 @@ class InspRequest < ActiveRecord::Base
   belongs_to :agent
   belongs_to :property
 
-  REFERRAL_SOURCE = %w(Internet Advertisement TV Friend Other)
+  REFERRAL_SOURCE = ['Previous Agent', 'Agent', 'Previous Customer', 'Online', 'Google', 'Yelp', 'Angie’s List', 'Job Sign', 'Sign on Van/Truck', 'Miscellaneous']
 
   SELECTION_CRITERIA = ['Specific Inspector', 'Senior Inspector', 'Next Available']
 

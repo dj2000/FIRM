@@ -1,37 +1,41 @@
-<%= form_for(@receipt) do |f| %>
-  <% if @receipt.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
-
-      <ul>
-      <% @receipt.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@receipt) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :reference %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :reference %><br>
-    <%= f.text_field :reference %>
+    <div class="col-md-6">
+      <%= label_tag "Receipt Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["date"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :date, class: "form-control", value: f.object.try(:date) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["date"].first %></span>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.association :invoice, collection: @invoices, label_method: :invoice_select_dropdown %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :amount, label: "Amount Received" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :invoice_id %><br>
-    <%= f.number_field :invoice_id %>
-  </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
-  </div>
-  <div class="field">
-    <%= f.label :recBy %><br>
-    <%= f.text_field :recBy %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :recBy %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: "btn btn-info" %>
   </div>
 <% end %>
+<script type="text/javascript">
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

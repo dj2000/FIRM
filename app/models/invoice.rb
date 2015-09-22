@@ -27,4 +27,8 @@ class Invoice < ActiveRecord::Base
       contract.try(:balance)
     end
   end
+
+  def invoice_select_dropdown
+    "#{self.invoice_type} - #{self.reference}"
+  end
 end

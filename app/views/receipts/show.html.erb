@@ -1,29 +1,38 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Reference:</strong>
-  <%= @receipt.reference %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @receipt.date %>
-</p>
-
-<p>
-  <strong>Invoice:</strong>
-  <%= @receipt.invoice_id %>
-</p>
-
-<p>
-  <strong>Amount:</strong>
-  <%= @receipt.amount %>
-</p>
-
-<p>
-  <strong>Recby:</strong>
-  <%= @receipt.recBy %>
-</p>
-
-<%= link_to 'Edit', edit_receipt_path(@receipt) %> |
-<%= link_to 'Back', receipts_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Receipt</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Receipt Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reference</td>
+          <td><%= @receipt.reference %></td>
+        </tr>
+        <tr>
+          <td>Receipt Date</td>
+          <td><%= @receipt.try(:date).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Invoice</td>
+          <td><%= @receipt.try(:invoice).try(:invoice_select_dropdown) %></td>
+        </tr>
+        <tr>
+          <td>Amount Received</td>
+          <td><%= @receipt.amount %></td>
+        </tr>
+        <tr>
+          <td>Recby</td>
+          <td><%= @receipt.recBy %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to 'Back', receipts_path, class: "btn btn-info" %>

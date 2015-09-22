@@ -39,8 +39,8 @@ class InspRequest < ActiveRecord::Base
       if insp_requests
         insp_requests.each do |insp_request|
           appointment = insp_request.try(:appointment)
-          return false unless appointment
-          return false unless appointment.try(:inspection)
+          return true unless appointment
+          return true unless appointment.try(:inspection)
         end
       end
     end

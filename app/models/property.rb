@@ -3,7 +3,7 @@ class Property < ActiveRecord::Base
   has_many :clients, through: :client_properties, dependent: :destroy
   has_many :insp_requests, dependent: :destroy
 
-  OCCUPIED_BY = %w(Rented Owner Occupied Vacant)
+  OCCUPIED_BY = %w(Rented Owner Vacant)
 
   LOT_TYPE = %w(Hill Flat Slope)
 

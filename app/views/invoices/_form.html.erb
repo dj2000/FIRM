@@ -96,14 +96,17 @@
 </div>
 <script>
 $(document).ready(function(){
-  <% if params && params[:invoice] && params[:invoice][:invoice_type] == "Inspection" %>
+  <% if (params && params[:invoice] && params[:invoice][:invoice_type] == "Inspection") || (@invoice.try(:invoice_type) == "Inspection") %>
     $(".inspection").show();
     $(".project").hide();
     $(".inspection select").change();
-  <% else %>
+  <% elsif (params && params[:invoice] && params[:invoice][:invoice_type] == "Project") || (@invoice.try(:invoice_type) == "Project") %>
     $(".inspection").hide();
     $(".project").show();
     $(".project select").change();
+  <% else %>
+    $(".inspection").hide();
+    $(".project").hide();
   <% end %>
   $("input[name='invoice[invoice_type]']").on('change', function(){
     var attribute = $(this).val();

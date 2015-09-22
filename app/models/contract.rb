@@ -14,6 +14,8 @@ class Contract < ActiveRecord::Base
 
 	validates :downPmtDate, :downPmtAmt, presence: true, if: Proc.new { |a| a.down_payment == "1" }
 
+  validate :down_payment_amount, if: Proc.new { |a| a.down_payment == "1" }
+
   def accepted?(params = nil)
     (params and params[:accepted] and params[:accepted] == "1") || (self.accepted_date and self.acceptedBy)
   end
@@ -30,5 +32,16 @@ class Contract < ActiveRecord::Base
   def self.unprojected_contracts
     projects = Project.all.map(&:contract_id)
     Contract.where.not(id: projects)
+  end
+
+  ## Calculating balance due for Invoice
+  def balance
+    (self.try(:bid).try(:total_cost) - (self.try(:downPmtAmt) || 0 ))
+  end
+
+  private
+  def down_payment_amount
+    bid = self.try(:bid)
+    self.errors.add(:downPmtAmt, "Amount Received should not be greater than bid's total.") if self.downPmtAmt > 0 and bid.try(:total_cost) < self.downPmtAmt
   end
 end

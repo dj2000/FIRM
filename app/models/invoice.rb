@@ -19,7 +19,12 @@ class Invoice < ActiveRecord::Base
   end
 
   def balance_due
-    inspection = (self.try(:inspection) || self.try(:project).try(:contract).try(:bid).try(:inspection))
-    inspection.try(:appointment).try(:inspFee)
+    contract = self.try(:project).try(:contract)
+    inspection = (self.try(:inspection) || bid.try(:inspection))
+    if self.invoice_type == "Inspection"
+      inspection.try(:appointment).try(:inspFee)
+    elsif self.invoice_type == "Project"
+      contract.try(:balance)
+    end
   end
 end

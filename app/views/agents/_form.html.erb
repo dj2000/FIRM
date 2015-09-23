@@ -60,7 +60,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <% if @remote %>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <% else %>
+      <%= link_to "Back", agents_path, class: 'btn btn-info' %>
+    <% end %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>

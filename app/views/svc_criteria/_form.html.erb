@@ -28,7 +28,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :yearBuilt, label: "Construction Year:" %>
+      <%= f.input :yearBuilt, as: :select, collection: SvcCriterium::YEAR_BUILT.map{|v| [v, v]}, label: 'Construction Year:' %>
     </div>
     <div class="col-md-6">
       <%= f.input :notes, as: :text %>

@@ -7,11 +7,9 @@ class Property < ActiveRecord::Base
 
   LOT_TYPE = %w(Hill Flat Slope)
 
-  FOUNDATION = %w(Raised Slab Other)
+  FOUNDATION = %w(Raised Slab)
 
   PROPERTY_TYPE = %w(SFR MFR)
-
-  YEAR_BUILT = (1901..Date.today.year)
 
   validates :street, :city, :state, presence: true
 

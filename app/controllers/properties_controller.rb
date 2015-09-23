@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
+  before_action :validate_info
 
   def index
     @properties = Property.all
@@ -62,6 +63,12 @@ class PropertiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_property
       @property = Property.find(params[:id])
+    end
+
+    def validate_info
+      @zip_codes = SvcArea.where(serviced: true).map{|z| [z.zip, z.zip]}
+      @year = SvcCriterium.where(propRes: true).first.yearBuilt
+      @years = (1901..@year).map{|y| [y, y]}
     end
 
     def states_cities

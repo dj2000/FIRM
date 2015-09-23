@@ -33,7 +33,7 @@
     </div>
     <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.input :zip %>
+        <%= f.input :zip, as: :select, collection: @zip_codes, input_html: { class: "zip_code" } %>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, selected: f.object.new_record? ? 1965 : f.object.yearBuilt , label: 'Select Year Built' %>
+        <%= f.input :yearBuilt, as: :select, collection: @years, selected: f.object.new_record? ? 1965 : f.object.yearBuilt , label: 'Select Year Built', input_html: { class: 'year_built' } %>
       </div>
     </div>
   </div>

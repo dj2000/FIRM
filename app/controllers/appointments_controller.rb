@@ -11,7 +11,11 @@ class AppointmentsController < ApplicationController
       @appointment.save(validate: false)
       @editable = true
     end
-    @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
+    if params[:start] and params[:end]
+      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start], params[:end], params[:start], params[:end])
+    else
+      @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
+    end
     respond_to do |format|
       format.html
       format.json{ render json: @appointments.as_json }
@@ -70,19 +74,25 @@ class AppointmentsController < ApplicationController
   end
 
   def get_scheduled_appointments
-    date = params[:date].to_date
-    case params[:view_type]
-    when "month"
-      @start_day = date.beginning_of_month
-      @end_day = date.end_of_month
-    when "agendaWeek"
-      @start_day = date.beginning_of_week(start_day = :monday)
-      @end_day = date.end_of_week(end_day = :saturday)
+    if params[:start_date] and params[:end_date]
+      @start_day = params[:start_date]
+      @end_day = params[:end_date]
     else
-      @start_day = date
-      @end_day = date
+      date = params[:date].to_date
+      case params[:view_type]
+      when "month"
+        @start_day = date.beginning_of_month
+        @end_day = date.end_of_month
+      when "agendaWeek"
+        @start_day = date.beginning_of_week(start_day = :monday)
+        @end_day = date.end_of_week(end_day = :saturday)
+      else
+        @start_day = date
+        @end_day = date
+      end
     end
-    @appointments =  Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', @start_day, @end_day, @start_day, @end_day)
+    @appointments =  Appointment.where('(("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)) OR ("schedStart"::date = ? OR "schedEnd"::date = ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
+    @appointments = @appointments.where(inspector_id: params[:inspector_id]) if params[:inspector_id].present?
     render json: @appointments.as_json
   end
 

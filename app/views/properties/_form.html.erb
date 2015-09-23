@@ -88,7 +88,7 @@
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
+        <%= f.input :foundation, input_html: { value: @foundation_type, disabled: true }, label: "Foundation Type" %>
       </div>
     </div>
     <div class='col-sm-6'>

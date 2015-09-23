@@ -67,8 +67,10 @@ class PropertiesController < ApplicationController
 
     def validate_info
       @zip_codes = SvcArea.where(serviced: true).map{|z| [z.zip, z.zip]}
-      @year = SvcCriterium.where(propRes: true).first.yearBuilt
+      @svc_criterium = SvcCriterium.where(propRes: true).first
+      @year = @svc_criterium.try(:yearBuilt)
       @years = (1901..@year).map{|y| [y, y]}
+      @foundation_type = @svc_criterium.try(:foundation)
     end
 
     def states_cities

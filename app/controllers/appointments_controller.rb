@@ -88,10 +88,12 @@ class AppointmentsController < ApplicationController
         @end_day = date.end_of_week(end_day = :saturday)
       else
         @start_day = date
-        @end_day = date
+        @end_day = date + 1.day
       end
     end
-    @appointments =  Appointment.where('(("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)) OR ("schedStart"::date = ? OR "schedEnd"::date = ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
+    @start_day = @start_day.to_datetime
+    @end_day = @end_day.to_datetime
+    @appointments =  Appointment.where('(("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)) OR ("schedStart" >= ? OR "schedEnd" <= ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
     @appointments = @appointments.where(inspector_id: params[:inspector_id]) if params[:inspector_id].present?
     render json: @appointments.as_json
   end

@@ -47,4 +47,9 @@ class Property < ActiveRecord::Base
   def set_default_year_built
     self.yearBuilt = 1965 if self.yearBuilt.blank?
   end
+
+  def calculate_latitude_and_longitude
+    latitude, longitude = Geocoder::Calculations.extract_coordinates(self.try(:address))
+    { lat: latitude, long: longitude }
+  end
 end

@@ -116,10 +116,8 @@
 <% end %>
 <script>
 $(".property_map").hide();
-$.each(["street", "state", "city", "zip"], function(index, value) {
-  $('#property_' + value).focusout(function(){
-    check_map_attributes();
-  });
+$("input[type=number],select,input[type=text]").focusout(function(){
+  check_map_attributes();
 });
 function check_map_attributes(){
   var street = $("#property_street").val();

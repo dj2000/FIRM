@@ -59,6 +59,16 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def map
+		@latitude = params[:lat]
+		@longitude = params[:long]
+  end
+
+  def get_map
+		@latitude, @longitude = Geocoder::Calculations.extract_coordinates(params[:address])
+		render json: { lat: @latitude, long: @longitude }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_property

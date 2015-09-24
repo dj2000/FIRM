@@ -13,8 +13,4 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$('.modal').on('shown.bs.modal', function () {
-	  $('.zip_code', this).chosen();
-	  $('.year_built', this).chosen();
-	});
 });

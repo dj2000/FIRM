@@ -69,7 +69,10 @@ Rails.application.routes.draw do
 
   resources :client_properties
 
-  resources :properties
+  resources :properties do
+    get :map, on: :collection
+    get :get_map, on: :collection
+  end
 
   resources :agents
 

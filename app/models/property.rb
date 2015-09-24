@@ -21,6 +21,10 @@ class Property < ActiveRecord::Base
 
   before_save :set_default_year_built
 
+  geocoded_by :address
+
+  after_validation :geocode, if: Proc.new{|p| p.city_changed? or p.state_changed? or p.street_changed? or p.zip_changed? }
+
   #To populate select dropdown
   def property_select_value
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
@@ -33,6 +37,10 @@ class Property < ActiveRecord::Base
 
   def humanize(attribute)
     self.send("#{attribute}") ? "Yes" : "No"
+  end
+
+  def address
+    "#{street}, #{city}, #{state}, #{zip}"
   end
 
   # For setting default year built

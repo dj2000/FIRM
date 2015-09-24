@@ -11,7 +11,7 @@ class Inspection < ActiveRecord::Base
 
   has_attached_file :report
 
-  validates_attachment_content_type :report, :content_type => %w( application/msword application/pdf )
+  validates_attachment_content_type :report, :content_type => %w( application/msword application/pdf application/vnd.openxmlformats-officedocument.wordprocessingml.document )
 
   FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
 

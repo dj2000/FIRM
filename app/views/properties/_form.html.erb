@@ -83,7 +83,7 @@
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :foundation, input_html: { value: @foundation_type, disabled: true }, label: "Foundation Type" %>
+        <%= f.input :foundation, input_html: { value: @foundation_type, readonly: true }, label: "Foundation Type" %>
       </div>
     </div>
     <div class='col-sm-6'>
@@ -113,7 +113,7 @@
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
     <% if action_name == "new" %>
       <input type="button" value="Map" onclick="getMap()" class="btn btn-success property_map" />
-    <% elsif @property.latitude %>
+    <% elsif (@property.latitude and @property.longitude) %>
       <%= link_to "Map", map_properties_path(lat: @property.try(:latitude), long: @property.try(:longitude)), class: "btn btn-success property_map", target: "_blank" %>
     <% else %>
       <%= link_to "Map", map_properties_path(@property.try(:calculate_latitude_and_longitude)), class: "btn btn-success property_map", target: "_blank" %>

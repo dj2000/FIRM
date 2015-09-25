@@ -34,8 +34,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <%= f.input :report, as: :file, input_html: { accept: ".pdf, .doc, .docx"}  %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :completed_appointment_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
     <div class="col-md-6">
       <%= f.input :footprintURL %>
@@ -55,6 +58,14 @@
     </div>
     <div class="col-md-6">
       <%= f.input :notes %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :client_information_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :footprint_diagram, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
   </div>
   <div class="actions">

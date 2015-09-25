@@ -37,6 +37,6 @@ class ProjSched < ActiveRecord::Base
     if double_book
       crews_availability = ProjSched.where('project_id != ? AND crew_id = ? AND (((schedule_start_date BETWEEN ? AND ?) AND ("startTime" BETWEEN ? AND ?)) OR ((schedule_end_date BETWEEN ? AND ?) AND ("endTime" BETWEEN ? AND ?)))', self.project_id, self.crew_id, self.schedule_start_date, self.schedule_end_date, start_time, end_time, self.schedule_start_date, self.schedule_end_date, start_time, end_time)
     end
-		self.errors.add(:crew_id, "Crew is not available for this time slot.") if double_book == false || crews_availability.present?
+		self.errors.add(:crew_id, "Crew is not available for this time slot.") if double_book == false || crews_availability.blank?
   end
 end

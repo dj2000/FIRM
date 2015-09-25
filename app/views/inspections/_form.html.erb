@@ -35,7 +35,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <%= f.input :report, as: :file  %>
+      <%= f.input :report, as: :file, input_html: { accept: ".pdf, .doc, .docx"}  %>
     </div>
     <div class="col-md-6">
       <%= f.input :footprintURL %>

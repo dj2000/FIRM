@@ -67,6 +67,18 @@
           <td>Notes</td>
           <td><%= @inspection.notes %></td>
         </tr>
+        <tr>
+          <td>Completed Appointment Sheet</td>
+          <td><%= link_to @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet.url, style: 'color:#07c' %></td>
+        </tr>
+        <tr>
+          <td>Client Information Sheet</td>
+          <td><%= link_to @inspection.client_information_sheet_file_name, @inspection.client_information_sheet.url, style: 'color:#07c' %></td>
+        </tr>
+        <tr>
+          <td>Footprint diagram of property</td>
+          <td><%= link_to @inspection.footprint_diagram_file_name, @inspection.footprint_diagram.url, style: 'color:#07c' %></td>
+        </tr>
       </tbody>
     </table>
   </div>

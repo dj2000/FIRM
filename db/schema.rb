@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923114758) do
+ActiveRecord::Schema.define(version: 20150925102551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,18 @@ ActiveRecord::Schema.define(version: 20150923114758) do
     t.integer  "report_file_size"
     t.datetime "report_updated_at"
     t.string   "name"
+    t.string   "completed_appointment_sheet_file_name"
+    t.string   "completed_appointment_sheet_content_type"
+    t.integer  "completed_appointment_sheet_file_size"
+    t.datetime "completed_appointment_sheet_updated_at"
+    t.string   "client_information_sheet_file_name"
+    t.string   "client_information_sheet_content_type"
+    t.integer  "client_information_sheet_file_size"
+    t.datetime "client_information_sheet_updated_at"
+    t.string   "footprint_diagram_file_name"
+    t.string   "footprint_diagram_content_type"
+    t.integer  "footprint_diagram_file_size"
+    t.datetime "footprint_diagram_updated_at"
   end
 
   create_table "inspectors", force: true do |t|

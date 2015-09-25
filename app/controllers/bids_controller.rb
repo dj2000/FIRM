@@ -1,4 +1,5 @@
 class BidsController < ApplicationController
+	before_action :payment_plans
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
 
   # GET /bids
@@ -15,6 +16,7 @@ class BidsController < ApplicationController
   # GET /bids/new
   def new
     @bid = Bid.new
+    @inspection = Inspection.find(params[:inspection_id])
   end
 
   # GET /bids/1/edit
@@ -25,14 +27,15 @@ class BidsController < ApplicationController
   # POST /bids.json
   def create
     @bid = Bid.new(bid_params)
-
+    @inspection = @bid.try(:inspection)
+    @bids = @inspection.try(:bids)
     respond_to do |format|
       if @bid.save
         format.html { redirect_to @bid, notice: 'Bid was successfully created.' }
-        format.json { render :show, status: :created, location: @bid }
+        format.js
       else
         format.html { render :new }
-        format.json { render json: @bid.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -43,10 +46,10 @@ class BidsController < ApplicationController
     respond_to do |format|
       if @bid.update(bid_params)
         format.html { redirect_to @bid, notice: 'Bid was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bid }
+        format.js
       else
         format.html { render :edit }
-        format.json { render json: @bid.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -57,7 +60,7 @@ class BidsController < ApplicationController
     @bid.destroy
     respond_to do |format|
       format.html { redirect_to bids_url, notice: 'Bid was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js
     end
   end
 
@@ -65,10 +68,16 @@ class BidsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_bid
       @bid = Bid.find(params[:id])
+      @inspection = @bid.try(:inspection)
+      @bids = @inspection.try(:bids)
+    end
+
+    def payment_plans
+      @payment_plans = PayPlan.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bid_params
-      params.require(:bid).permit(:inspection_id, :costRepair, :feeSeismicUpg, :feeAdmin, :payPlan_id, :status)
+      params.require(:bid).permit(:inspection_id, :costRepair, :feeSeismicUpg, :feeAdmin, :payPlan_id, :status, :title)
     end
 end

@@ -8,6 +8,7 @@
 	$(".alert.alert-danger").append("<br/><%= @appointment.errors[:base].first if @appointment.errors[:base].present? %>")
 <% else %>
 	<% if referrer %>
+		$('.full-calendar').fullCalendar('removeEvents');
 		$(".full-calendar").fullCalendar('refetchEvents');
 		$(".modal").modal('hide');
 	<% else %>

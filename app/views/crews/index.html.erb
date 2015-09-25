@@ -1,13 +1,13 @@
-<h1>Listing crews</h1>
+<h1>Listing Crews</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
       <th>Foreman</th>
       <th>Size</th>
-      <th>Doublebook?</th>
+      <th>Doublebook</th>
       <th>Notes</th>
-      <th colspan="3"></th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
@@ -16,11 +16,23 @@
       <tr>
         <td><%= crew.foreman %></td>
         <td><%= crew.size %></td>
-        <td><%= crew.doubleBook? %></td>
+        <td><%= crew.is_double_book %></td>
         <td><%= crew.notes %></td>
-        <td><%= link_to 'Show', crew %></td>
-        <td><%= link_to 'Edit', edit_crew_path(crew) %></td>
-        <td><%= link_to 'Destroy', crew, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to crew, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_crew_path(crew), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to crew, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +40,4 @@
 
 <br>
 
-<%= link_to 'New Crew', new_crew_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Crew"), new_crew_path, :class => "btn btn-info" %>

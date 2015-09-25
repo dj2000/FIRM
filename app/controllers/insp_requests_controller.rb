@@ -6,9 +6,15 @@ class InspRequestsController < ApplicationController
   end
 
   def show
-    @appointment = @insp_request.appointment || @insp_request.build_appointment
-    @inspectors = Inspector.all.map{|i| [ i.firstName, i.id ]}
-    @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first
+    if @insp_request.check_conditions_for_appointment
+      @appointment = @insp_request.appointment || @insp_request.build_appointment
+      @inspectors = Inspector.all.map{|i| [ i.firstName, i.id ]}
+      @client_property = ClientProperty.where(property_id: @insp_request.property_id, client_id: @insp_request.client_id).first
+      render action: :show
+    else
+      flash[:notice] = 'Appointment is not allowed.'
+      redirect_to insp_requests_path
+    end
   end
 
   def new
@@ -25,7 +31,7 @@ class InspRequestsController < ApplicationController
     @insp_request = InspRequest.new(insp_request_params)
     respond_to do |format|
       if @insp_request.save
-        format.html { redirect_to insp_requests_path, notice: 'Insp request was successfully created.' }
+        format.html { redirect_to insp_requests_path, notice: 'Inspection request was successfully created.' }
         format.json { render :show, status: :created, location: @insp_request }
       else
         properties_clients_agents
@@ -38,7 +44,7 @@ class InspRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @insp_request.update(insp_request_params)
-        format.html { redirect_to @insp_request, notice: 'Insp request was successfully updated.' }
+        format.html { redirect_to @insp_request, notice: 'Inspection request was successfully updated.' }
         format.json { render :show, status: :ok, location: @insp_request }
       else
         properties_clients_agents
@@ -51,7 +57,7 @@ class InspRequestsController < ApplicationController
   def destroy
     @insp_request.destroy
     respond_to do |format|
-      format.html { redirect_to insp_requests_url, notice: 'Insp request was successfully destroyed.' }
+      format.html { redirect_to insp_requests_url, notice: 'Inspection request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,6 +70,15 @@ class InspRequestsController < ApplicationController
   def get_client_agents
     client = Client.find(params[:selector_id])
     @agents = client.agents.map{|a| [a.name, a.id]}
+  end
+
+  def insp_request_info
+    @contract = Contract.find_by_id(params[:id])
+    @bid = @contract.try(:bid) || Bid.find(params[:id])
+    @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

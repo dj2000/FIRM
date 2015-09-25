@@ -7,6 +7,8 @@ class Appointment < ActiveRecord::Base
 
   attr_accessor :scheduled_inspection
 
+  COLORS = Inspector.assign_colors
+
   PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Mailing", "Inspector"]
 
   validates :inspFee, 
@@ -34,10 +36,10 @@ class Appointment < ActiveRecord::Base
       start: self.schedStart,
       end: self.schedEnd,
       id: self.id,
-      title: self.try(:inspector).try(:firstName),
-      color: 'tomato',
+      title: self.try(:inspector).try(:name),
+      color: Appointment::COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
-      allDay: self.allDay || false
+      allDay: false
     }
   end
 
@@ -47,6 +49,17 @@ class Appointment < ActiveRecord::Base
 
   def empty?
     self.new_record? || (inspFee.blank? and schedStart.blank? and inspector_id.blank? and schedEnd.blank? )
+  end
+
+  #To return uninspected appointments
+  def self.uninspected_appointments
+    inspections = Inspection.all.map(&:appointment_id)
+    Appointment.where.not(id: inspections)
+  end
+
+  #To populate appointment dropdown
+  def appointment_select
+    self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
   end
 
   private

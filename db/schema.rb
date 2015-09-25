@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820102358) do
+ActiveRecord::Schema.define(version: 20150923114758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
   end
 
   create_table "client_properties", force: true do |t|
@@ -104,6 +105,8 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bid_id"
+    t.datetime "call_time"
   end
 
   create_table "commissions", force: true do |t|
@@ -116,7 +119,6 @@ ActiveRecord::Schema.define(version: 20150820102358) do
 
   create_table "contracts", force: true do |t|
     t.integer  "bid_id"
-    t.integer  "payPlan_id"
     t.date     "date"
     t.string   "signedBy"
     t.string   "acceptedBy"
@@ -125,6 +127,9 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.date     "downPmtDate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "confirmed_by"
+    t.date     "accepted_date"
+    t.string   "title"
   end
 
   create_table "crew_skills", force: true do |t|
@@ -137,7 +142,7 @@ ActiveRecord::Schema.define(version: 20150820102358) do
   create_table "crews", force: true do |t|
     t.string   "foreman"
     t.integer  "size"
-    t.boolean  "doubleBook?"
+    t.boolean  "double_book"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -191,17 +196,20 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.boolean  "businessCards"
     t.integer  "nOD"
     t.integer  "nOG"
-    t.boolean  "paid?"
-    t.string   "reportURL"
+    t.boolean  "paid"
     t.string   "footprintURL"
-    t.boolean  "repairs?"
-    t.boolean  "permit?"
+    t.boolean  "repairs"
     t.boolean  "interiorAccess"
     t.boolean  "verifiedReport"
     t.boolean  "verifiedComp"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "report_file_name"
+    t.string   "report_content_type"
+    t.integer  "report_file_size"
+    t.datetime "report_updated_at"
+    t.string   "name"
   end
 
   create_table "inspectors", force: true do |t|
@@ -218,33 +226,35 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "notes"
   end
 
   create_table "invoices", force: true do |t|
     t.string   "reference"
-    t.string   "type"
+    t.string   "invoice_type"
     t.string   "inspection_id"
     t.string   "project_id"
-    t.string   "description"
+    t.text     "description"
     t.date     "invoiceDate"
     t.decimal  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "due_date"
   end
 
   create_table "pay_plans", force: true do |t|
     t.integer  "jobMinAmt"
     t.integer  "jobMaxAmt"
-    t.integer  "pmt1Pcnt"
-    t.integer  "pmt2Pcnt"
-    t.integer  "pmt3Pcnt"
-    t.integer  "pmt4Pcnt"
-    t.integer  "pmt5Pcnt"
-    t.integer  "pmt1Desc"
-    t.integer  "pmt2Desc"
-    t.integer  "pmt3Desc"
-    t.integer  "pmt4Desc"
-    t.integer  "pmt5Desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "deposit"
+    t.string   "title"
+  end
+
+  create_table "payments", force: true do |t|
+    t.string   "title"
+    t.integer  "value"
+    t.integer  "pay_plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -283,12 +293,13 @@ ActiveRecord::Schema.define(version: 20150820102358) do
   create_table "proj_scheds", force: true do |t|
     t.integer  "project_id"
     t.integer  "crew_id"
-    t.date     "date"
+    t.date     "schedule_start_date"
     t.time     "startTime"
     t.time     "endTime"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "schedule_end_date"
   end
 
   create_table "projects", force: true do |t|
@@ -308,6 +319,10 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.date     "schedule_pref_start"
+    t.date     "schedule_pref_end"
+    t.boolean  "permit"
   end
 
   create_table "properties", force: true do |t|
@@ -331,6 +346,8 @@ ActiveRecord::Schema.define(version: 20150820102358) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "occupied_by"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "receipts", force: true do |t|

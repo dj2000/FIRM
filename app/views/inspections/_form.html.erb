@@ -1,72 +1,94 @@
-<%= form_for(@inspection) do |f| %>
-  <% if @inspection.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@inspection.errors.count, "error") %> prohibited this inspection from being saved:</h2>
-
-      <ul>
-      <% @inspection.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@inspection) do |f| %>
+  <%= f.error_notification %>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.input :name %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :application_id %><br>
-    <%= f.number_field :application_id %>
-  </div><div class="field">
-    <%= f.label :fCondition %><br>
-    <%= f.text_field :fCondition %>
+    <div class="col-md-4">
+      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
+    </div>
+    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id %>">
+      <%= label_tag "Inspector" %>
+      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :businessCards %><br>
-    <%= f.check_box :businessCards %>
+  <div class="appointment_info <%= 'hide' unless f.object.appointment_id %> ">
+    <% if f.object.appointment_id %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :nOD %><br>
-    <%= f.number_field :nOD %>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :fCondition, as: :select, label: "Foundation Condition", collection: Inspection::FOUNDATION_CONDITION.map{|v| [v, v]}, prompt: "Select Foundation Condition" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :nOG %><br>
-    <%= f.number_field :nOG %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :nOD, label: "Number Of Days" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :nOG, label: "Number Of Guys" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :paid? %><br>
-    <%= f.check_box :paid? %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :report, as: :file  %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :footprintURL %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :reportURL %><br>
-    <%= f.text_field :reportURL %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :verifiedReport, label: "Verified Report" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :verifiedComp, label: "Verified Completed" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :footprintURL %><br>
-    <%= f.text_field :footprintURL %>
-  </div>
-  <div class="field">
-    <%= f.label :repairs? %><br>
-    <%= f.check_box :repairs? %>
-  </div>
-  <div class="field">
-    <%= f.label :permit? %><br>
-    <%= f.check_box :permit? %>
-  </div>
-  <div class="field">
-    <%= f.label :interiorAccess %><br>
-    <%= f.check_box :interiorAccess %>
-  </div>
-  <div class="field">
-    <%= f.label :verifiedReport %><br>
-    <%= f.check_box :verifiedReport %>
-  </div>
-  <div class="field">
-    <%= f.label :verifiedComp %><br>
-    <%= f.check_box :verifiedComp %>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :repairs, label: "Repairs Needed" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :notes %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: 'btn btn-success' %>
+    <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
   </div>
 <% end %>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#inspection_appointment_id").on('change', function(){
+    var appointment_id = $(this).val();
+    if(appointment_id != ""){
+      $.ajax({
+        url: '/inspections/' + appointment_id + '/appointment_info',
+        type: 'GET'
+      });
+    }
+    else{
+      alert("Please select appointment.")
+      $(".appointment_info").addClass("hide");
+      $(".appointment").addClass("hide");
+    }
+  });
+</script>

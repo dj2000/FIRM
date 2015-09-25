@@ -1,49 +1,123 @@
-<%= form_for(@comm_history) do |f| %>
-  <% if @comm_history.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comm_history.errors.count, "error") %> prohibited this comm_history from being saved:</h2>
-
-      <ul>
-      <% @comm_history.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_form_for(@comm_history) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :inspection_id %><br>
-    <%= f.number_field :inspection_id %>
+    <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
+      <%= label_tag "Inspector" %>
+      <%= text_field_tag "inspector_name", f.object.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :caller %><br>
-    <%= f.text_field :caller %>
+  <br/>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.input :caller %>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :recipient %>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.label 'Call Time' %>
+        <div class='input-group datetimepicker'>
+          <%= f.text_field :call_time, class: 'form-control', value: f.object.try(:call_time).try(:strftime, "%Y-%m-%d %H:%M:%S") %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :caller %><br>
-    <%= f.text_field :caller %>
+  <div class="insp_request <%= 'hide' unless f.object.bid_id %> ">
+    <% if f.object.bid_id %>
+      <% @insp_request = f.object.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :recipient %><br>
-    <%= f.text_field :recipient %>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-4">
+      <div>
+        <%= f.radio_button :callOutcome, "Verbal Close" %>
+        <%= f.label "Verbal Close" %>
+      </div>
+      <div>
+        <%= f.radio_button :callOutcome, "Not Interested" %>
+        <%= f.label "Not Interested" %>
+      </div>
+      <div>
+        <%= f.radio_button :callOutcome, "CallBack" %>
+        <%= f.label "CallBack" %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %>">
+        <%= f.label 'Call Back Date' %>
+        <div class='input-group date'>
+          <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :callSummary %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :callSummary %><br>
-    <%= f.text_area :callSummary %>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <div class="col-md-8">
+      <%= f.input :notes %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :callOutcome %><br>
-    <%= f.text_field :callOutcome %>
-  </div>
-  <div class="field">
-    <%= f.label :callBackDate %><br>
-    <%= f.datetime_select :callBackDate %>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
-  </div>
+  <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Submit', class: "btn btn-primary" %>
   </div>
 <% end %>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#comm_history_bid_id").on('change', function(){
+    var bid_id = $(this).val();
+    if(bid_id != ""){
+      $.ajax({
+        url: '/insp_requests/' + bid_id + '/insp_request_info',
+        type: 'GET'
+      });
+    }
+    else{
+      alert("Please select Bid.")
+      $(".inspector_info").addClass("hide");
+      $(".insp_request").addClass("hide");
+    }
+  });
+  $('.input-group.date').datepicker({ 
+    format: 'yyyy-mm-dd'
+  });
+  $('.datetimepicker').datetimepicker({
+    format: 'YYYY-MM-DD hh:mm:ss',
+    defaultDate: new Date()
+  });
+  $("input[name='comm_history[callOutcome]']").change(function(){
+    if ($(this).val() == "CallBack")
+      $(".call_back_date").removeClass('hide');
+    else
+      $(".call_back_date").addClass('hide');
+  });
+</script>

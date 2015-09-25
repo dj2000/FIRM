@@ -4,7 +4,7 @@ class InspRequest < ActiveRecord::Base
   belongs_to :agent
   belongs_to :property
 
-  REFERRAL_SOURCE = %w(Internet Advertisement TV Friend Other)
+  REFERRAL_SOURCE = ['Previous Agent', 'Agent', 'Previous Customer', 'Online', 'Google', 'Yelp', 'Angie’s List', 'Job Sign', 'Sign on Van/Truck', 'Miscellaneous']
 
   SELECTION_CRITERIA = ['Specific Inspector', 'Senior Inspector', 'Next Available']
 
@@ -25,5 +25,32 @@ class InspRequest < ActiveRecord::Base
 
   def disable_agent?
     self.try(:agent) ? false : true
+  end
+
+  def check_conditions_for_appointment
+    svc_criterium = SvcCriterium.where(propRes: true).first
+    property = self.try(:property)
+    property_previously_inspection_check(svc_criterium, property) and foundation_check(property) and service_area_check(property)
+  end
+
+  def property_previously_inspection_check(svc_criterium, property)
+    if svc_criterium.try(:prevInsp) == 0
+      insp_requests = property.try(:insp_requests)
+      if insp_requests
+        insp_requests.each do |insp_request|
+          appointment = insp_request.try(:appointment)
+          return true unless appointment
+          return true unless appointment.try(:inspection)
+        end
+      end
+    end
+  end
+
+  def foundation_check(property)
+    property.try(:foundation) == "Raised" or property.try(:foundation) == "Slab"
+  end
+
+  def service_area_check(property)
+    service_area = SvcArea.where(zip: property.try(:zip), serviced: true).first
   end
 end

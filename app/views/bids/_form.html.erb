@@ -1,41 +1,29 @@
-<%= form_for(@bid) do |f| %>
-  <% if @bid.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bid.errors.count, "error") %> prohibited this bid from being saved:</h2>
-
-      <ul>
-      <% @bid.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :inspection_id %><br>
-    <%= f.text_field :inspection_id %>
-  </div>
-  <div class="field">
-    <%= f.label :costRepair %><br>
-    <%= f.text_field :costRepair %>
-  </div>
-  <div class="field">
-    <%= f.label :feeSeismicUpg %><br>
-    <%= f.text_field :feeSeismicUpg %>
-  </div>
-  <div class="field">
-    <%= f.label :feeAdmin %><br>
-    <%= f.text_field :feeAdmin %>
-  </div>
-  <div class="field">
-    <%= f.label :payPlan_id %><br>
-    <%= f.number_field :payPlan_id %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+<%= simple_form_for @bid, html: { remote: true } do |f| %>
+	<%= f.error_notification %>
+	<div class="row">
+	  <div class="col-md-6">
+	    <%= f.input :title %>
+	  </div>
+	  <div class="col-md-6">
+	    <%= f.input :costRepair, label: "Repair Cost" %>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+	    <%= f.input :feeSeismicUpg, label: "Seismic Upgrade Fee" %>
+	  </div>
+	  <div class="col-md-6">
+	    <%= f.input :feeAdmin, label: "Administration Fee" %>
+	    <%= f.hidden_field :inspection_id, value: @inspection.id %>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+	    <%= f.association :payPlan, collection: @payment_plans, label_method: :payment_plan_select %>
+	  </div>
+	</div>
+	<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>

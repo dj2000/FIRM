@@ -1,65 +1,64 @@
-<%= form_for(@pay_plan) do |f| %>
-  <% if @pay_plan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pay_plan.errors.count, "error") %> prohibited this pay_plan from being saved:</h2>
-
-      <ul>
-      <% @pay_plan.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= simple_nested_form_for(@pay_plan) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error :base, class: "alert alert-danger" %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :title %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :jobMinAmt %><br>
-    <%= f.number_field :jobMinAmt %>
+    <div class="col-md-6">
+      <%= f.input :deposit, label: "Deposit" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :jobMaxAmt %><br>
-    <%= f.number_field :jobMaxAmt %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :jobMinAmt, label: "Amount Range Start", as: :string %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :jobMaxAmt, label: "Amount Range End", as: :string %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :pmt1Pcnt %><br>
-    <%= f.number_field :pmt1Pcnt %>
+  <div class="row payments">
+    <%= f.fields_for :payments, wrapper: false do |payment| %>
+      <%= render 'payments/form', payment: payment %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :pmt2Pcnt %><br>
-    <%= f.number_field :pmt2Pcnt %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt3Pcnt %><br>
-    <%= f.number_field :pmt3Pcnt %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt4Pcnt %><br>
-    <%= f.number_field :pmt4Pcnt %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt5Pcnt %><br>
-    <%= f.number_field :pmt5Pcnt %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt1Desc %><br>
-    <%= f.number_field :pmt1Desc %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt2Desc %><br>
-    <%= f.number_field :pmt2Desc %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt3Desc %><br>
-    <%= f.number_field :pmt3Desc %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt4Desc %><br>
-    <%= f.number_field :pmt4Desc %>
-  </div>
-  <div class="field">
-    <%= f.label :pmt5Desc %><br>
-    <%= f.number_field :pmt5Desc %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="pull-right">
+    <%= f.link_to_add "Add a payment", :payments, :data => { :target => ".payments" }, class: "btn btn-success" %>
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <%= link_to "Back", pay_plans_path, class: "btn btn-info" %>
   </div>
 <% end %>
+<script>
+  update();
+  $("#pay_plan_jobMinAmt").mask("$99999", { autoclear: false, placeholder: "" });
+  $("#pay_plan_jobMaxAmt").mask("$99999", { autoclear: false, placeholder: "" });
+  $(document).on('nested:fieldAdded', function(event){
+    update();
+  });
+
+  $(document).on('nested:fieldRemoved', function(event){
+    update();
+  });
+
+  function update(){
+    $(".title:visible").each(function(index, value){
+      index = index + 1;
+      var ordinal = get_ordinal(index);
+      if($(this).index() == 0)
+        $(this).val(index + ordinal + " Payment");
+    });
+    $(".payment_value:visible").each(function(index, value){
+      index = index + 1;
+      var ordinal = get_ordinal(index);
+      $(this).attr("placeholder", index + ordinal + " Payment Value ");
+    });
+  }
+  function get_ordinal(number){
+    switch (number) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  }
+</script>

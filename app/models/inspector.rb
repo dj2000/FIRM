@@ -2,7 +2,7 @@ class Inspector < ActiveRecord::Base
   has_many :appointments
   has_many :insp_skills
   has_many :insp_comm_scales
-  validates :firstName, :lastName, :senior, presence: true
+  validates :firstName, :lastName, presence: true
   validates :phoneH, :phoneC,
 							length: { :minimum => 10, :maximum => 15 },
 							allow_blank: true,
@@ -23,5 +23,14 @@ class Inspector < ActiveRecord::Base
 
   def senior_inspector
     self.try(:senior) ? "Yes" : "No"
+  end
+
+  def self.assign_colors
+    colors = {}
+    inspector_ids = Inspector.all.map(&:id)
+    inspector_ids.each do |inspector_id|
+      colors["#{inspector_id}"] = "##{rand(0xffffff).to_s(16)}"
+    end
+    colors
   end
 end

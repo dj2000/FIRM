@@ -1,35 +1,90 @@
-<h1>Listing proj_scheds</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Project</th>
-      <th>Crew</th>
-      <th>Date</th>
-      <th>Starttime</th>
-      <th>Endtime</th>
-      <th>Notes</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @proj_scheds.each do |proj_sched| %>
-      <tr>
-        <td><%= proj_sched.project_id %></td>
-        <td><%= proj_sched.crew_id %></td>
-        <td><%= proj_sched.date %></td>
-        <td><%= proj_sched.startTime %></td>
-        <td><%= proj_sched.endTime %></td>
-        <td><%= proj_sched.notes %></td>
-        <td><%= link_to 'Show', proj_sched %></td>
-        <td><%= link_to 'Edit', edit_proj_sched_path(proj_sched) %></td>
-        <td><%= link_to 'Destroy', proj_sched, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="left">
+  <span>
+    <% if @project %>
+      <%= link_to "Back", @project, class: "btn btn-primary right" %>
     <% end %>
-  </tbody>
-</table>
+  </span>
+  <br></br>
+  <div class="datepicker datepicker-left"></div>
+  <div class="full-calendar border"></div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      daysOfWeekDisabled: [0,6]
+    });
+    $('.datepicker').on('changeDate', function (dateText) {
+      $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
+      var defaultView = $('.full-calendar').fullCalendar('getView').name;
+      $('.full-calendar').fullCalendar("changeView", defaultView);
+      update(defaultView);
+    });
+  })
+    
+  $('.full-calendar').fullCalendar({
+    header: {
+        left: '',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    editable: <%= @editable %>,
+    weekends: false,
+    selectable: <%= @editable %>,
+    selectHelper: true,
+    firstDay:1,
+    eventStartEditable: false,
+    timeFormat: 'hh:mm A',
+    eventSources: [{
+      url: "/proj_scheds",
+    }],
+    eventRender: function(event, element) {
+      $(element).tooltip({title:event.project, container: "body"});
+    },
+    eventClick: function(cal_event, js_event, view){
+      <% if @editable %>
+        calendar_event_clicked(cal_event, js_event, view);
+      <% end %>
+    },
+    select: function(start, end, jsEvent, view) {
+      <% if @editable %>
+        $('.modal').html('<%= escape_javascript(render partial: "crew_inspection") %>');
+        $(".schedule_start_date").val(start.format("YYYY-MM-DD"));
+        $(".schedule_end_date").val(start.format("YYYY-MM-DD"));
+        $(".modal").modal('show');
+      <% end %>
+    }
+  });
 
-<br>
+  function calendar_event_clicked(cal_event, js_event, view){
+    $.ajax({
+      type: "GET",
+      url: "/proj_scheds/" + cal_event.id + "/edit.js"
+    });
+  }
 
-<%= link_to 'New Proj sched', new_proj_sched_path %>
+  $(".fc-month-button").on("click", function(){
+    update("month");
+  });
+  $(".fc-agendaWeek-button").on("click", function(){
+    update("agendaWeek");
+  });
+  $(".fc-agendaDay-button").on("click", function(){
+    update("agendaDay");
+  });
+
+  function update(view){
+    var date = $(".datepicker").datepicker("getDate");
+    $.ajax({
+      type: "GET",
+      url: "/proj_scheds/scheduled_projects",
+      data: { date: date, view_type: view},
+      dataType: 'JSON',
+      success: function(result){
+        $('.full-calendar').fullCalendar('removeEvents');
+        $('.full-calendar').fullCalendar('addEventSource', result );
+      }
+    });
+  }
+</script>

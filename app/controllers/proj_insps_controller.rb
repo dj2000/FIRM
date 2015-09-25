@@ -1,6 +1,6 @@
 class ProjInspsController < ApplicationController
   before_action :set_proj_insp, only: [:show, :edit, :update, :destroy]
-
+  before_action :permitted_projects
   # GET /proj_insps
   # GET /proj_insps.json
   def index
@@ -28,7 +28,7 @@ class ProjInspsController < ApplicationController
 
     respond_to do |format|
       if @proj_insp.save
-        format.html { redirect_to @proj_insp, notice: 'Proj insp was successfully created.' }
+        format.html { redirect_to @proj_insp, notice: 'Project inspection was successfully created.' }
         format.json { render :show, status: :created, location: @proj_insp }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ProjInspsController < ApplicationController
   def update
     respond_to do |format|
       if @proj_insp.update(proj_insp_params)
-        format.html { redirect_to @proj_insp, notice: 'Proj insp was successfully updated.' }
+        format.html { redirect_to @proj_insp, notice: 'Project inspection was successfully updated.' }
         format.json { render :show, status: :ok, location: @proj_insp }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class ProjInspsController < ApplicationController
   def destroy
     @proj_insp.destroy
     respond_to do |format|
-      format.html { redirect_to proj_insps_url, notice: 'Proj insp was successfully destroyed.' }
+      format.html { redirect_to proj_insps_url, notice: 'Project inspection was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,6 +65,10 @@ class ProjInspsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_proj_insp
       @proj_insp = ProjInsp.find(params[:id])
+    end
+
+    def permitted_projects
+      @projects = Project.permitted_projects
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

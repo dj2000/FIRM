@@ -1,5 +1,6 @@
 class PermitsController < ApplicationController
   before_action :set_permit, only: [:show, :edit, :update, :destroy]
+  before_action :permitted_projects
 
   # GET /permits
   # GET /permits.json
@@ -65,6 +66,10 @@ class PermitsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_permit
       @permit = Permit.find(params[:id])
+    end
+
+    def permitted_projects
+      @projects = Project.permitted_projects
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

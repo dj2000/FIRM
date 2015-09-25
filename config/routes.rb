@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   resources :crews
 
-  resources :proj_scheds
+  resources :proj_scheds do
+    get :scheduled_projects, on: :collection
+  end
 
   resources :projects
 
@@ -27,11 +29,16 @@ Rails.application.routes.draw do
 
   resources :bids
 
-  resources :inspections
+  resources :inspections do
+    get :appointment_info, on: :member
+  end
 
   resources :receipts
 
-  resources :invoices
+  resources :invoices do
+    get :update_collection, on: :member
+    get :info, on: :member
+  end
 
   resources :i_fee_schedules
 
@@ -54,6 +61,7 @@ Rails.application.routes.draw do
   resources :insp_requests do 
     get :get_property_clients, on: :collection
     get :get_client_agents, on: :collection
+    get :insp_request_info, on: :member
   end
 
 
@@ -61,7 +69,10 @@ Rails.application.routes.draw do
 
   resources :client_properties
 
-  resources :properties
+  resources :properties do
+    get :map, on: :collection
+    get :get_map, on: :collection
+  end
 
   resources :agents
 

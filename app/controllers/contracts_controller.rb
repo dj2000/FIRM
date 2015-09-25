@@ -1,5 +1,6 @@
 class ContractsController < ApplicationController
   before_action :set_contract, only: [:show, :edit, :update, :destroy]
+  before_action :bids
 
   # GET /contracts
   # GET /contracts.json
@@ -67,8 +68,21 @@ class ContractsController < ApplicationController
       @contract = Contract.find(params[:id])
     end
 
+    def bids
+      @bids = Bid.where("status = ? ","Accepted")
+      @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
+      @bids = @bids.map{|b| [b.try(:title), b.id]}
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def contract_params
-      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate)
+      update_params
+      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate, :confirmed_by, :accepted, :accepted_date, :signed, :down_payment, :title)
+    end
+
+    def update_params
+      params[:contract][:acceptedBy] = params[:contract][:accepted_date] = nil if params[:contract][:accepted] == "0" || params[:contract][:accepted] == ""
+      params[:contract][:dateSigned] = params[:contract][:signedBy] = nil if params[:contract][:signed] == "0" || params[:contract][:signed] == ""
+      params[:contract][:downPmtDate] = params[:contract][:downPmtAmt] = nil if params[:contract][:down_payment] == "0" || params[:contract][:down_payment] == ""
     end
 end

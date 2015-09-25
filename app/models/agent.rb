@@ -3,10 +3,10 @@ class Agent < ActiveRecord::Base
   has_many :clients, through: :agent_clients, dependent: :destroy
   has_many :insp_requests, dependent: :destroy
 
-  validates :firstName, :lastName, :phoneH, :phoneW, :phoneC, presence: true
+  validates :firstName, :lastName, presence: true
   validates :phoneH, :phoneW, :phoneC,
   						uniqueness: true,
-							length: { :minimum => 10, :maximum => 15 },
+							length: { :minimum => 10, :maximum => 15, allow_blank: true },
               format: { with: /\A[0-9\-]+*\z/ }
 
   validates :email, email_format: { message: "Invalid Email Address" }

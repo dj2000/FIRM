@@ -1,0 +1,32 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Payment Plan Attributes</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Title</td>
+      <td><%= @pay_plan.title %></td>
+    </tr>
+    <tr>
+      <td>Amount Range Start</td>
+      <td><%= number_to_currency(@pay_plan.jobMinAmt) %></td>
+    </tr>
+    <tr>
+      <td>Amount Range End</td>
+      <td><%= number_to_currency(@pay_plan.jobMaxAmt) %></td>
+    </tr>
+    <tr>
+      <td>Deposit</td>
+      <td><%= "#{@pay_plan.deposit}%" %></td>
+    </tr>
+    <% @pay_plan.payments.each do |payment| %>
+      <tr>
+        <td><%= payment.title %></td>
+        <td><%= "#{payment.value}%" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

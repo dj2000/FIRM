@@ -1,44 +1,55 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Bid:</strong>
-  <%= @contract.bid_id %>
-</p>
-
-<p>
-  <strong>Payplan:</strong>
-  <%= @contract.payPlan_id %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @contract.date %>
-</p>
-
-<p>
-  <strong>Signedby:</strong>
-  <%= @contract.signedBy %>
-</p>
-
-<p>
-  <strong>Acceptedby:</strong>
-  <%= @contract.acceptedBy %>
-</p>
-
-<p>
-  <strong>Datesigned:</strong>
-  <%= @contract.dateSigned %>
-</p>
-
-<p>
-  <strong>Downpmtamt:</strong>
-  <%= @contract.downPmtAmt %>
-</p>
-
-<p>
-  <strong>Downpmtdate:</strong>
-  <%= @contract.downPmtDate %>
-</p>
-
-<%= link_to 'Edit', edit_contract_path(@contract) %> |
-<%= link_to 'Back', contracts_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Contract</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Contract Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Title</td>
+          <td><%= @contract.title %></td>
+        </tr>
+        <tr>
+          <td>Bid</td>
+          <td><%= @contract.try(:bid).try(:title) %></td>
+        </tr>
+        <tr>
+          <td>Contract Date</td>
+          <td><%= @contract.try(:date).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Date Accepted</td>
+          <td><%= @contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Accepted By</td>
+          <td><%= @contract.acceptedBy %></td>
+        </tr>
+        <tr>
+          <td>Date Signed</td>
+          <td><%= @contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Signed By</td>
+          <td><%= @contract.signedBy %></td>
+        </tr>
+        <tr>
+          <td>Date Received</td>
+          <td><%= @contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Amout Received</td>
+          <td><%= @contract.downPmtAmt %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<%= link_to 'Back', contracts_path, class: "btn btn-info" %>

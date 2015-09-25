@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
+  before_action :validate_info
 
   def index
     @properties = Property.all
@@ -58,10 +59,28 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def map
+		@latitude = params[:lat]
+		@longitude = params[:long]
+  end
+
+  def get_map
+		@latitude, @longitude = Geocoder::Calculations.extract_coordinates(params[:address])
+		render json: { lat: @latitude, long: @longitude }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_property
       @property = Property.find(params[:id])
+    end
+
+    def validate_info
+      @zip_codes = SvcArea.where(serviced: true).map{|z| [z.zip, z.zip]}
+      @svc_criterium = SvcCriterium.where(propRes: true).first
+      @year = @svc_criterium.try(:yearBuilt)
+      @years = (1901..@year).map{|y| [y, y]}
+      @foundation_type = @svc_criterium.try(:foundation)
     end
 
     def states_cities

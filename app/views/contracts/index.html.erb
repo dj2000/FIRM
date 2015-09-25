@@ -1,34 +1,48 @@
 <h1>Listing contracts</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Title</th>
       <th>Bid</th>
-      <th>Payplan</th>
-      <th>Date</th>
-      <th>Signedby</th>
-      <th>Acceptedby</th>
-      <th>Datesigned</th>
-      <th>Downpmtamt</th>
-      <th>Downpmtdate</th>
-      <th colspan="3"></th>
+      <th>Contract Date</th>
+      <th>Date Accepted</th>
+      <th>Accepted By</th>
+      <th>Date Signed</th>
+      <th>Signed By</th>
+      <th>Date Received</th>
+      <th>Amout Received</th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @contracts.each do |contract| %>
       <tr>
-        <td><%= contract.bid_id %></td>
-        <td><%= contract.payPlan_id %></td>
-        <td><%= contract.date %></td>
-        <td><%= contract.signedBy %></td>
+        <td><%= contract.title %></td>
+        <td><%= contract.try(:bid).try(:title) %></td>
+        <td><%= contract.try(:date).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.acceptedBy %></td>
-        <td><%= contract.dateSigned %></td>
+        <td><%= contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.signedBy %></td>
+        <td><%= contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.downPmtAmt %></td>
-        <td><%= contract.downPmtDate %></td>
-        <td><%= link_to 'Show', contract %></td>
-        <td><%= link_to 'Edit', edit_contract_path(contract) %></td>
-        <td><%= link_to 'Destroy', contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to contract, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_contract_path(contract), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to contract, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +50,4 @@
 
 <br>
 
-<%= link_to 'New Contract', new_contract_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Contract"), new_contract_path, class: "btn btn-info" %>

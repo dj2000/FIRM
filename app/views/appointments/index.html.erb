@@ -1,3 +1,6 @@
+<div class="right">
+  <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
+</div>
 <div class="left">
   <span>
     <% if @appointment %>
@@ -12,23 +15,14 @@
 <script>
   $(document).ready(function(){
     $('.datepicker').datepicker({
-      daysOfWeekDisabled: [0,6]
+      daysOfWeekDisabled: [0,6],
+      todayHighlight: true
     });
     $('.datepicker').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
       $('.full-calendar').fullCalendar("changeView", defaultView);
-      var data = dateText.date;
-      $.ajax({
-        type: "GET",
-        url: "/appointments/get_scheduled_appointments",
-        data: { date: data, view_type: defaultView},
-        dataType: 'JSON',
-        success: function(result){
-          $('.full-calendar').fullCalendar('removeEvents');
-          $('.full-calendar').fullCalendar('addEventSource', result );
-        }
-      });
+      update(defaultView);
     });
   })
     
@@ -38,12 +32,11 @@
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
     },
-    defaultView: 'month',
+    defaultView: 'agendaWeek',
     editable: <%= @editable %>,
     weekends: false,
     selectable: <%= @editable %>,
     selectHelper: true,
-    allDaySlot: false,
     firstDay:1,
     eventStartEditable: false,
     timeFormat: 'hh:mm A',
@@ -71,4 +64,46 @@
       url: "/appointments/" + cal_event.id + "/edit.js"
     });
   }
+
+  $(".fc-month-button").on("click", function(){
+    update("month");
+  });
+  $(".fc-agendaWeek-button").on("click", function(){
+    update("agendaWeek");
+  });
+  $(".fc-agendaDay-button").on("click", function(){
+    update("agendaDay");
+  });
+
+  function update(view){
+    var date = $(".datepicker").datepicker("getDate");
+    var inspector_id = $(".inspector_select").val();
+    $.ajax({
+      type: "GET",
+      url: "/appointments/get_scheduled_appointments",
+      data: { date: date, view_type: view, inspector_id: inspector_id},
+      dataType: 'JSON',
+      success: function(result){
+        $('.full-calendar').fullCalendar('removeEvents');
+        $('.full-calendar').fullCalendar('addEventSource', result );
+      }
+    });
+  }
+
+  $(".inspector_select").change(function(){
+    var inspector_id = $(this).val();
+    var start_date = $('.full-calendar').fullCalendar('getView').start.format("YYYY-MM-DD");
+    var end_date = $('.full-calendar').fullCalendar('getView').end.format("YYYY-MM-DD");
+    var defaultView = $('.full-calendar').fullCalendar('getView').name;
+    $.ajax({
+      type: "GET",
+      url: "/appointments/get_scheduled_appointments",
+      data: { start_date: start_date, end_date: end_date, view_type: defaultView, inspector_id: inspector_id},
+      dataType: 'JSON',
+      success: function(result){
+        $('.full-calendar').fullCalendar('removeEvents');
+        $('.full-calendar').fullCalendar('addEventSource', result );
+      }
+    });
+  });
 </script>

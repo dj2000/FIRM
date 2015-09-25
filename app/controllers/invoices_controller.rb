@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :projects_inspections
 
   # GET /invoices
   # GET /invoices.json
@@ -61,14 +62,29 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def info
+    @attribute = params[:attribute]
+    instance_variable_set("@#{@attribute}", @attribute.camelize.constantize.find(params[:id]))
+    @bid = @project.try(:contract).try(:bid)
+    @inspection = (@inspection || @bid.try(:inspection))
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
       @invoice = Invoice.find(params[:id])
     end
 
+    def projects_inspections
+      @projects = Project.all.map{|p| [p.title, p.id]}
+      @inspections = Inspection.all.map{|p| [p.name, p.id]}
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:reference, :type, :inspection_id, :project_id, :description, :invoiceDate, :amount)
+      params.require(:invoice).permit(:reference, :invoice_type, :inspection_id, :project_id, :description, :invoiceDate, :amount, :due_date)
     end
 end

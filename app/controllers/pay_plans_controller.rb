@@ -10,25 +10,31 @@ class PayPlansController < ApplicationController
   # GET /pay_plans/1
   # GET /pay_plans/1.json
   def show
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /pay_plans/new
   def new
     @pay_plan = PayPlan.new
+    @payments = @pay_plan.payments.present? ? @pay_plan.payments : @pay_plan.payments.build
   end
 
   # GET /pay_plans/1/edit
   def edit
+    @payments = @pay_plan.payments.present? ? @pay_plan.payments : @pay_plan.payments.build
   end
 
   # POST /pay_plans
   # POST /pay_plans.json
   def create
+    format_amount
     @pay_plan = PayPlan.new(pay_plan_params)
-
     respond_to do |format|
       if @pay_plan.save
-        format.html { redirect_to @pay_plan, notice: 'Pay plan was successfully created.' }
+        format.html { redirect_to @pay_plan, notice: 'Payment plan was successfully created.' }
         format.json { render :show, status: :created, location: @pay_plan }
       else
         format.html { render :new }
@@ -40,9 +46,10 @@ class PayPlansController < ApplicationController
   # PATCH/PUT /pay_plans/1
   # PATCH/PUT /pay_plans/1.json
   def update
+    format_amount
     respond_to do |format|
       if @pay_plan.update(pay_plan_params)
-        format.html { redirect_to @pay_plan, notice: 'Pay plan was successfully updated.' }
+        format.html { redirect_to @pay_plan, notice: 'Payment plan was successfully updated.' }
         format.json { render :show, status: :ok, location: @pay_plan }
       else
         format.html { render :edit }
@@ -56,7 +63,7 @@ class PayPlansController < ApplicationController
   def destroy
     @pay_plan.destroy
     respond_to do |format|
-      format.html { redirect_to pay_plans_url, notice: 'Pay plan was successfully destroyed.' }
+      format.html { redirect_to pay_plans_url, notice: 'Payment plan was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -67,8 +74,13 @@ class PayPlansController < ApplicationController
       @pay_plan = PayPlan.find(params[:id])
     end
 
+    def format_amount
+      params[:pay_plan][:jobMinAmt] = params[:pay_plan][:jobMinAmt].gsub("$","").to_i
+      params[:pay_plan][:jobMaxAmt] = params[:pay_plan][:jobMaxAmt].gsub("$","").to_i
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def pay_plan_params
-      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :pmt1Pcnt, :pmt2Pcnt, :pmt3Pcnt, :pmt4Pcnt, :pmt5Pcnt, :pmt1Desc, :pmt2Desc, :pmt3Desc, :pmt4Desc, :pmt5Desc)
+      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, :title, payments_attributes: [:id, :title, :value, :_destroy])
     end
 end

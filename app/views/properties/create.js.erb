@@ -2,8 +2,14 @@
 	$(".modal-title").html("New Property");
 	$(".modal-body").html("<%= escape_javascript(render partial: 'form') %>")
 <% else %>
-	$('.add-client').show()
+	$('.add-client').show();
+	$('.add-property').hide();
 	$(".property_select").append("<option value='<%= @property.id %>' selected> <%= @property.property_select_value %></option>");
 	$(".property_select").trigger("chosen:updated");
+	$(".client_select").html("<option>Select Customer</option><%= escape_javascript(options_for_select([])) %>");
+	$(".client_select").attr("disabled", true);
+	$(".client_select").trigger("chosen:updated");
+	$(".insp_request_client").removeClass("has-error");
+	$(".insp_request_client").find("span.help-block").html("");
 	$(".modal").modal('hide');
 <% end %>

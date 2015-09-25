@@ -1,10 +1,20 @@
 class ProjSchedsController < ApplicationController
   before_action :set_proj_sched, only: [:show, :edit, :update, :destroy]
-
+  before_action :crews
   # GET /proj_scheds
   # GET /proj_scheds.json
   def index
-    @proj_scheds = ProjSched.all
+    @editable = false
+    if params[:id]
+      @project = Project.find(params[:id])
+      @proj_sched = ProjSched.new
+      @editable = true
+    end
+    @proj_scheds = ProjSched.where.not(schedule_start_date: nil, schedule_end_date: nil)
+    respond_to do |format|
+      format.html
+      format.json{ render json: @proj_scheds.as_json }
+    end
   end
 
   # GET /proj_scheds/1
@@ -19,20 +29,24 @@ class ProjSchedsController < ApplicationController
 
   # GET /proj_scheds/1/edit
   def edit
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # POST /proj_scheds
   # POST /proj_scheds.json
   def create
     @proj_sched = ProjSched.new(proj_sched_params)
-
+    @project = Project.find(params[:proj_sched][:project_id])
     respond_to do |format|
       if @proj_sched.save
         format.html { redirect_to @proj_sched, notice: 'Proj sched was successfully created.' }
-        format.json { render :show, status: :created, location: @proj_sched }
+        format.js
       else
         format.html { render :new }
-        format.json { render json: @proj_sched.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -43,10 +57,10 @@ class ProjSchedsController < ApplicationController
     respond_to do |format|
       if @proj_sched.update(proj_sched_params)
         format.html { redirect_to @proj_sched, notice: 'Proj sched was successfully updated.' }
-        format.json { render :show, status: :ok, location: @proj_sched }
+        format.js
       else
         format.html { render :edit }
-        format.json { render json: @proj_sched.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -65,10 +79,15 @@ class ProjSchedsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_proj_sched
       @proj_sched = ProjSched.find(params[:id])
+      @project = @proj_sched.try(:project)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proj_sched_params
-      params.require(:proj_sched).permit(:project_id, :crew_id, :date, :startTime, :endTime, :notes)
+      params.require(:proj_sched).permit(:project_id, :crew_id, :startTime, :endTime, :notes, :schedule_start_date, :schedule_end_date)
+    end
+
+    def crews
+      @crews = Crew.all
     end
 end

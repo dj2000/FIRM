@@ -3,6 +3,8 @@ class SvcCriterium < ActiveRecord::Base
 
   DEFAULTS = { "True" => "1", "False" => "0", "Ignore" => "2" }
 
+  YEAR_BUILT = (1901..Date.today.year)
+
   validates :yearBuilt, :prevInsp, :hpoz, :cdo, :ownerOcc, presence: true
 
   validates :foundation, uniqueness: true, presence: true

@@ -33,19 +33,14 @@
     </div>
     <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.input :zip %>
+        <%= f.input :zip, as: :select, collection: @zip_codes, input_html: { class: "zip_code" } %>
       </div>
     </div>
   </div>
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :mapPage %>
-      </div>
-    </div>
-    <div class='col-sm-6'>
-      <div class="form-group">
-        <%= f.input :yearBuilt, as: :select, collection: Property::YEAR_BUILT.map{|v| [v, v]}, selected: f.object.new_record? ? 1965 : f.object.yearBuilt , label: 'Select Year Built' %>
+        <%= f.input :yearBuilt, as: :select, collection: @years, selected: f.object.new_record? ? 1965 : f.object.yearBuilt , label: 'Select Year Built', input_html: { class: 'year_built' } %>
       </div>
     </div>
   </div>
@@ -88,7 +83,7 @@
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :foundation, as: :select, collection: Property::FOUNDATION.map{|v| [v, v]}, selected: 'Raised', label: "Foundation Type" %>
+        <%= f.input :foundation, input_html: { value: @foundation_type, readonly: true }, label: "Foundation Type" %>
       </div>
     </div>
     <div class='col-sm-6'>
@@ -110,7 +105,60 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <% if @remote %>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <% else %>
+      <%= link_to "Back", properties_path, class: 'btn btn-info' %>
+    <% end %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% if action_name == "new" %>
+      <input type="button" value="Map" onclick="getMap()" class="btn btn-success property_map" />
+    <% elsif (@property.latitude and @property.longitude) %>
+      <%= link_to "Map", map_properties_path(lat: @property.try(:latitude), long: @property.try(:longitude)), class: "btn btn-success property_map", target: "_blank" %>
+    <% else %>
+      <%= link_to "Map", map_properties_path(@property.try(:calculate_latitude_and_longitude)), class: "btn btn-success property_map", target: "_blank" %>
+    <% end %>
   </div>
 <% end %>
+<script>
+<% if action_name == "new" %>
+  $(".property_map").hide();
+<% end %>
+$("input[type=number],select,input[type=text]").focusin(function(){
+  check_map_attributes();
+});
+function check_map_attributes(){
+  var street = $("#property_street").val();
+  var state = $("#property_state").val();
+  var city = $("#property_city").val();
+  var zip = $("#property_zip").val();
+  if(street != "" && state != "Please Select" && city != "Please Select" && zip != "")
+    $(".property_map").show();
+  else
+    $(".property_map").hide();
+}
+function getMap(){
+  var street = $("#property_street").val();
+  var state = $("#property_state").val();
+  var city = $("#property_city").val();
+  var zip = $("#property_zip").val();
+  var address = street + ", " + city + ", " + state + ", " + zip;
+  $.ajax({
+    type: "GET",
+    url: "/properties/get_map",
+    data: { address: address },
+    success: function(result){
+      window.open('/properties/map?lat=' + result["lat"] + '&long=' + result["long"])
+    }
+  });
+}
+<% if @remote %>
+  $('.modal').on('shown.bs.modal', function () {
+    $('.zip_code', this).chosen();
+    $('.year_built', this).chosen();
+  });
+<% else %>
+  $(".zip_code").chosen();
+  $(".year_built").chosen();
+<% end %>
+</script>

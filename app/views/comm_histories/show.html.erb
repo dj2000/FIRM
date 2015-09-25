@@ -1,44 +1,50 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Inspection:</strong>
-  <%= @comm_history.inspection_id %>
-</p>
-
-<p>
-  <strong>Caller:</strong>
-  <%= @comm_history.caller %>
-</p>
-
-<p>
-  <strong>Caller:</strong>
-  <%= @comm_history.caller %>
-</p>
-
-<p>
-  <strong>Recipient:</strong>
-  <%= @comm_history.recipient %>
-</p>
-
-<p>
-  <strong>Callsummary:</strong>
-  <%= @comm_history.callSummary %>
-</p>
-
-<p>
-  <strong>Calloutcome:</strong>
-  <%= @comm_history.callOutcome %>
-</p>
-
-<p>
-  <strong>Callbackdate:</strong>
-  <%= @comm_history.callBackDate %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @comm_history.notes %>
-</p>
-
-<%= link_to 'Edit', edit_comm_history_path(@comm_history) %> |
-<%= link_to 'Back', comm_histories_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Bid Follow Up</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Bid Follow Up Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bid</td>
+          <td><%= @comm_history.try(:bid).try(:title) %></td>
+        </tr>
+        <tr>
+          <td>Caller</td>
+          <td><%= @comm_history.caller %></td>
+        </tr>
+        <tr>
+          <td>Recipient</td>
+          <td><%= @comm_history.recipient %></td>
+        </tr>
+        <tr>
+          <td>Call Summary</td>
+          <td><%= @comm_history.callSummary %></td>
+        </tr>
+        <tr>
+          <td>Call Time</td>
+          <td><%= @comm_history.try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S") %></td>
+        </tr>
+        <tr>
+          <td>Call Back Date</td>
+          <td><%= @comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Call Outcome</td>
+          <td><%= @comm_history.try(:callOutcome) %></td>
+        </tr>
+        <tr>
+          <td>Notes</td>
+          <td><%= @comm_history.notes %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to 'Back', comm_histories_path, class: "btn btn-info" %>

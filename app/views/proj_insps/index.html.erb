@@ -1,15 +1,15 @@
-<h1>Listing proj_insps</h1>
+<h1>Listing Project Inspections</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
       <th>Project</th>
       <th>Reference</th>
-      <th>Scheduledate</th>
-      <th>Inspectby</th>
-      <th>Completedate</th>
+      <th>Scheduled Date</th>
+      <th>Inspected By</th>
+      <th>Completed Date</th>
       <th>Result</th>
-      <th colspan="3"></th>
+      <th colspan="3 text-center">Actions</th>
     </tr>
   </thead>
 
@@ -18,13 +18,25 @@
       <tr>
         <td><%= proj_insp.project_id %></td>
         <td><%= proj_insp.reference %></td>
-        <td><%= proj_insp.scheduleDate %></td>
+        <td><%= proj_insp.try(:scheduleDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= proj_insp.inspectBy %></td>
-        <td><%= proj_insp.completeDate %></td>
+        <td><%= proj_insp.try(:completeDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= proj_insp.result %></td>
-        <td><%= link_to 'Show', proj_insp %></td>
-        <td><%= link_to 'Edit', edit_proj_insp_path(proj_insp) %></td>
-        <td><%= link_to 'Destroy', proj_insp, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to proj_insp, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_proj_insp_path(proj_insp), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to proj_insp, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +44,4 @@
 
 <br>
 
-<%= link_to 'New Proj insp', new_proj_insp_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Project Inspection"), new_proj_insp_path, :class => "btn btn-info" %>

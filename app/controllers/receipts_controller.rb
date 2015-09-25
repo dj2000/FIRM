@@ -1,6 +1,6 @@
 class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
-
+  before_action :invoices
   # GET /receipts
   # GET /receipts.json
   def index
@@ -70,5 +70,9 @@ class ReceiptsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
       params.require(:receipt).permit(:reference, :date, :invoice_id, :amount, :recBy)
+    end
+
+    def invoices
+      @invoices = Invoice.all
     end
 end

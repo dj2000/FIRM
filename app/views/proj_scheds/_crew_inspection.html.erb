@@ -1,0 +1,100 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel">Crew's Calendar</h4>
+    </div>
+    <div class="modal-body">
+      <%= simple_form_for @proj_sched, html: { remote: true } do |f| %>
+        <%= f.error_notification %>
+        <div class="row">
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'Start Date' %>
+              <div class='input-group date'>
+                <%= f.text_field :schedule_start_date, class: "form-control schedule_start_date", value: f.object.try(:schedule_start_date).try(:strftime, "%Y-%m-%d") %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'Start Time' %>
+              <div class="input-group bootstrap-timepicker timepicker">
+                <%= f.text_field :startTime, class: "form-control timepicker startTime", value: f.object.try(:startTime).try(:strftime, "%I:%M %p") %>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-2'>
+            <div class="form-group">
+              <%= check_box_tag :allDay %>
+              <%= label_tag "All Day" %>
+              <%= f.hidden_field :project_id, value: @project.id %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'End Date' %>
+              <div class='input-group date'>
+                <%= f.text_field :schedule_end_date, class: "form-control schedule_end_date", value: f.object.try(:schedule_end_date).try(:strftime, "%Y-%m-%d") %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-4'>
+            <div class="form-group">
+              <%= f.label 'End Time' %>
+              <div class="input-group bootstrap-timepicker timepicker">
+                <%= f.text_field :endTime, class: "form-control timepicker EndTime", value: f.object.try(:endTime).try(:strftime, "%I:%M %p") %>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <%= f.association :crew, collection: @crews, prompt: 'Please select', label_method: :foreman %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit 'Submit', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.input-group.date').datepicker({ 
+      format: 'yyyy-mm-dd',
+      daysOfWeekDisabled: [0,6]
+    });
+    $('.timepicker').timepicker();
+    $('#allDay').change(function() {
+      var date_obj = new moment();
+      var date = date_obj.format("YYYY-MM-DD");
+      var time = date_obj.format("hh:mm A");
+      if($(this).is(":checked")) {
+        var start_date = $(".schedule_start_date").val();
+        $(".schedule_end_date").val(start_date);
+        $(".startTime").val("09:00 AM");
+        $(".EndTime").val("05:00 PM");
+      }
+      else{
+        $(".schedule_start_date").val(date);
+        $(".schedule_end_date").val(date);
+        $(".startTime").val(time);
+        $(".EndTime").val(time);
+      }
+    });
+  })
+</script>

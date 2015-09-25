@@ -1,5 +1,6 @@
 class InspectionsController < ApplicationController
   before_action :set_inspection, only: [:show, :edit, :update, :destroy]
+  before_action :uninspected_appointments, only: [:edit, :update, :new, :create]
 
   # GET /inspections
   # GET /inspections.json
@@ -10,6 +11,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
+    @bids = @inspection.bids
   end
 
   # GET /inspections/new
@@ -61,14 +63,27 @@ class InspectionsController < ApplicationController
     end
   end
 
+  def appointment_info
+    @appointment = Appointment.find(params[:id])
+    @insp_request = @appointment.insp_request
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection
       @inspection = Inspection.find(params[:id])
     end
 
+    def uninspected_appointments
+      @appointments = Appointment.uninspected_appointments || []
+      @appointments << @inspection.try(:appointment) if @inspection
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def inspection_params
-      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid?, :reportURL, :footprintURL, :repairs?, :permit?, :interiorAccess, :verifiedReport, :verifiedComp, :notes)
+      params.require(:inspection).permit(:fCondition, :businessCards, :nOD, :nOG, :paid, :reportURL, :footprintURL, :repairs, :permit, :interiorAccess, :verifiedReport, :verifiedComp, :notes, :name, :appointment_id, :report, bids_attributes: [:id, :costRepair, :feeSeismicUpg, :feeAdmin,  :_destroy])
     end
 end

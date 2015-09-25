@@ -3,15 +3,13 @@ class Property < ActiveRecord::Base
   has_many :clients, through: :client_properties, dependent: :destroy
   has_many :insp_requests, dependent: :destroy
 
-  OCCUPIED_BY = %w(Rented Owner Occupied Vacant)
+  OCCUPIED_BY = %w(Rented Owner Vacant)
 
   LOT_TYPE = %w(Hill Flat Slope)
 
-  FOUNDATION = %w(Raised Slab Other)
+  FOUNDATION = %w(Raised Slab)
 
   PROPERTY_TYPE = %w(SFR MFR)
-
-  YEAR_BUILT = (1901..Date.today.year)
 
   validates :street, :city, :state, presence: true
 
@@ -23,9 +21,12 @@ class Property < ActiveRecord::Base
 
   before_save :set_default_year_built
 
+  geocoded_by :address
+
+  after_validation :geocode, if: Proc.new{|p| p.city_changed? or p.state_changed? or p.street_changed? or p.zip_changed? }
+
   #To populate select dropdown
   def property_select_value
-    state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
   end
 
@@ -38,8 +39,17 @@ class Property < ActiveRecord::Base
     self.send("#{attribute}") ? "Yes" : "No"
   end
 
+  def address
+    "#{street}, #{city}, #{state}, #{zip}"
+  end
+
   # For setting default year built
   def set_default_year_built
     self.yearBuilt = 1965 if self.yearBuilt.blank?
+  end
+
+  def calculate_latitude_and_longitude
+    latitude, longitude = Geocoder::Calculations.extract_coordinates(self.try(:address))
+    { lat: latitude, long: longitude }
   end
 end

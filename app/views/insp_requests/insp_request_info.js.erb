@@ -13,3 +13,4 @@ $(".call_time").removeClass("hide");
 $(".call_time").val("<%= @bid.try(:comm_history).try(:call_time).try(:strftime, '%d %b %Y %H:%M:%S') %>");
 $("input.verbal_close_by").val("<%= @bid.try(:comm_history).try(:caller) %>")
 $(".contract").removeClass("hide");
+$("#project_jobCost").val("<%= @bid.try(:total_cost) %>");

@@ -53,14 +53,15 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %>">
-        <%= f.label 'Call Back Date' %>
+      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
+        <%= f.label 'Call Outcome' %>
         <div class='input-group date'>
           <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
         </div>
+        <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
       </div>
     </div>
     <div class="col-md-4">

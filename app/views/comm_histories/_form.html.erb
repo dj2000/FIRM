@@ -13,7 +13,7 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :caller %>
+      <%= f.input :caller, input_html: { value: current_user.try(:name) } %>
     </div>
     <div class="col-md-4">
       <%= f.input :recipient %>

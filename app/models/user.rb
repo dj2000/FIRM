@@ -3,4 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  validates :first_name, :last_name, presence: true
+
+  def name
+  	"#{self.try(:first_name)} #{self.try(:last_name)}"
+  end
 end

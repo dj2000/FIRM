@@ -5,9 +5,6 @@
     <div class="col-md-6">
       <%= f.input :title %>
     </div>
-    <div class="col-md-6">
-      <%= f.input :deposit, label: "Deposit" %>
-    </div>
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -15,6 +12,11 @@
     </div>
     <div class="col-md-6">
       <%= f.input :jobMaxAmt, label: "Amount Range End", as: :string %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :deposit, label: "Deposit(%)" %>
     </div>
   </div>
   <div class="row payments">

@@ -45,7 +45,7 @@
         </tr>
         <tr>
           <td>Amout Received</td>
-          <td><%= @contract.downPmtAmt %></td>
+          <td><%= number_to_currency(@contract.downPmtAmt) %></td>
         </tr>
       </tbody>
     </table>

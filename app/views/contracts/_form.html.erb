@@ -120,7 +120,7 @@
       </div>
     </div>
     <div class="col-md-5 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %>">
-      <%= f.input :downPmtAmt, label: "Amount Paid" %>
+      <%= f.input :downPmtAmt, label: "Amount Paid", as: :string, input_html: { value: "$#{f.object.downPmtAmt}" } %>
     </div>
   </div>
   <br/>

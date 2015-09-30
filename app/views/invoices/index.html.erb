@@ -19,8 +19,8 @@
       <tr>
         <td><%= invoice.reference %></td>
         <td><%= invoice.invoice_type %></td>
-        <td><%= invoice.inspection_id %></td>
-        <td><%= invoice.project_id %></td>
+        <td><%= invoice.try(:inspection).try(:name) %></td>
+        <td><%= invoice.try(:project).try(:title) %></td>
         <td><%= invoice.description %></td>
         <td><%= invoice.invoiceDate %></td>
         <td><%= invoice.amount %></td>

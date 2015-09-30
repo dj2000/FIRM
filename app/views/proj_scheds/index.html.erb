@@ -52,6 +52,7 @@
         $('.modal').html('<%= escape_javascript(render partial: "crew_inspection") %>');
         $(".schedule_start_date").val(start.format("YYYY-MM-DD"));
         $(".schedule_end_date").val(start.format("YYYY-MM-DD"));
+        $(".startTime").val(start.format("h:mm A"));
         $(".modal").modal('show');
       <% end %>
     }

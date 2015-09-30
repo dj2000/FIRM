@@ -48,12 +48,13 @@
             </div>
           </div>
           <div class='col-sm-4'>
-            <div class="form-group">
+            <div class="form-group <%= 'has-error' if f.object.errors["endTime"].first %>">
               <%= f.label 'End Time' %>
               <div class="input-group bootstrap-timepicker timepicker">
                 <%= f.text_field :endTime, class: "form-control timepicker EndTime", value: f.object.try(:endTime).try(:strftime, "%I:%M %p") %>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
               </div>
+              <span class="help-block"><%= f.object.errors["endTime"].first %></span>
             </div>
           </div>
         </div>

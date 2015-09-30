@@ -6,6 +6,8 @@ class ProjSched < ActiveRecord::Base
 
   validate :availability_of_crew
 
+  validate :check_end_time
+
   COLORS = Crew.assign_colors
 
   def as_json
@@ -38,5 +40,11 @@ class ProjSched < ActiveRecord::Base
       crews_availability = ProjSched.where('project_id != ? AND crew_id = ? AND (((schedule_start_date BETWEEN ? AND ?) AND ("startTime" BETWEEN ? AND ?)) OR ((schedule_end_date BETWEEN ? AND ?) AND ("endTime" BETWEEN ? AND ?)))', self.project_id, self.crew_id, self.schedule_start_date, self.schedule_end_date, start_time, end_time, self.schedule_start_date, self.schedule_end_date, start_time, end_time)
     end
 		self.errors.add(:crew_id, "Crew is not available for this time slot.") if double_book == false || crews_availability.blank?
+  end
+
+  def check_end_time
+    if self.startTime.present? and self.endTime.present?
+      self.errors.add(:endTime, "Schedule End time should be greater than Schedule Start time.") if self.startTime > self.endTime
+    end
   end
 end

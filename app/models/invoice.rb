@@ -3,10 +3,13 @@ class Invoice < ActiveRecord::Base
   belongs_to :project
   has_many :receipts
 
+  attr_accessor :balanceDue
+
   validates :reference, :invoice_type, :description, :invoiceDate, :amount, :due_date, presence: true
 
   validates :inspection_id, presence: true, if: Proc.new{|i| i.invoice_type == "Inspection"}
   validates :project_id, presence: true, if: Proc.new{|i| i.invoice_type == "Project"}
+  validate :check_balance_due
 
   ## For getting client name of respective inspection or project
   def client
@@ -30,5 +33,11 @@ class Invoice < ActiveRecord::Base
 
   def invoice_select_dropdown
     "#{self.invoice_type} - #{self.reference}"
+  end
+
+  private
+
+  def check_balance_due
+    self.errors.add(:amount, "Amount can not be greater than Balance Due.") if self.balanceDue.to_f < self.amount
   end
 end

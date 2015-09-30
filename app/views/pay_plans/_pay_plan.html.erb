@@ -20,12 +20,18 @@
     </tr>
     <tr>
       <td>Deposit</td>
-      <td><%= "#{@pay_plan.deposit}%" %></td>
+      <td>
+        <%= number_to_percentage(@pay_plan.deposit, precision: 0) %>
+        <%= " / #{@project.try(:calculate_amount, @pay_plan.deposit)}" if @project %>
+      </td>
     </tr>
     <% @pay_plan.payments.each do |payment| %>
       <tr>
         <td><%= payment.title %></td>
-        <td><%= "#{payment.value}%" %></td>
+        <td>
+          <%= number_to_percentage(payment.value, precision: 0) %>
+          <%= " / #{@project.try(:calculate_amount, payment.value)}" if @project %>
+        </td>
       </tr>
     <% end %>
   </tbody>

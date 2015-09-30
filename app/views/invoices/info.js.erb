@@ -2,7 +2,7 @@
 	$(".customer_info").html("<%= @inspection.try(:appointment).try(:insp_request).try(:client).try(:name) %>");
 	$(".customer_details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, client_path(@inspection.try(:appointment).try(:insp_request).try(:client)), class: "link", remote: true) %> ');
 	$(".pay_plan_info").html("<%= @bid.try(:payPlan).try(:title) %>");
-	$(".pay_plan_details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan)), class: "link", remote: true) %> ');
+	$(".pay_plan_details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan), project_id: @project.id), class: "link", remote: true) %> ');
 	$(".customer_info").show();
 	$(".customer_details").show();
 	$(".pay_plan_info").show();

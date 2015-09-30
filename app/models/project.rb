@@ -26,6 +26,10 @@ class Project < ActiveRecord::Base
     self.where(permit: true)
   end
 
+  def calculate_amount(percentage_amount)
+    ((self.jobCost * percentage_amount) / 100).to_f if self.jobCost > 0
+  end
+
   private
 
   def check_preferred_scehdule_end_datetime

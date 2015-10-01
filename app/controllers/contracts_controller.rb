@@ -69,8 +69,8 @@ class ContractsController < ApplicationController
     end
 
     def bids
-      @bids = Bid.where("status = ? ","Accepted")
-      @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
+      @bids = Bid.uncontracted_bids
+      @bids << @contract.try(:bid) if @contract and @contract.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}
     end
 

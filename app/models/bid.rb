@@ -23,4 +23,9 @@ class Bid < ActiveRecord::Base
   def calculate_amount(percentage_amount)
     ((self.total_cost * percentage_amount) / 100).to_f if self.total_cost > 0
   end
+
+  def self.uncontracted_bids
+    bids = Contract.all.map(&:bid_id)
+    self.where.not(id: bids)
+  end
 end

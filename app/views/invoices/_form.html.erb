@@ -58,7 +58,7 @@
   <div class="row">
     <div class="col-md-6 balance_due">
       <%= label_tag "Balance Due" %>
-      <%= text_field_tag "invoice[balanceDue]", f.object.try(:balance_due), class: 'form-control' %>
+      <%= text_field_tag "invoice[balanceDue]", f.object.try(:balance_due), class: 'form-control', disabled: true %>
     </div>
     <div class="col-md-6 invoice_amount">
       <%= f.input :amount %>

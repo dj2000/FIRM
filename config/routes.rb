@@ -33,7 +33,9 @@ Rails.application.routes.draw do
     get :appointment_info, on: :member
   end
 
-  resources :receipts
+  resources :receipts do
+    get :invoice_info, on: :member
+  end
 
   resources :invoices do
     get :update_collection, on: :member

@@ -38,6 +38,6 @@ class Invoice < ActiveRecord::Base
   private
 
   def check_balance_due
-    self.errors.add(:amount, "Amount can not be greater than Balance Due.") if self.balanceDue.to_f < self.amount
+    self.errors.add(:amount, "Amount can not be greater than Balance Due.") if (self.balanceDue and self.balanceDue.to_f < self.amount)
   end
 end

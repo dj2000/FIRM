@@ -61,6 +61,13 @@ class ReceiptsController < ApplicationController
     end
   end
 
+  def invoice_info
+    @invoice = Invoice.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_receipt

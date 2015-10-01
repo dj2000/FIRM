@@ -6,6 +6,7 @@
       <th>Reference</th>
       <th>Receipt Date</th>
       <th>Invoice</th>
+      <th>Invoice Balance</th>
       <th>Amount Received</th>
       <th>Received By</th>
       <th colspan="3" class="text-center">Actions</th>
@@ -18,6 +19,7 @@
         <td><%= receipt.reference %></td>
         <td><%= receipt.date %></td>
         <td><%= receipt.try(:invoice).try(:invoice_select_dropdown) %></td>
+        <td><%= receipt.try(:invoice).try(:amount) %></td>
         <td><%= receipt.amount %></td>
         <td><%= receipt.recBy %></td>
         <td>

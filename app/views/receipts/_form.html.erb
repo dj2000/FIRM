@@ -18,8 +18,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <%= f.association :invoice, collection: @invoices, label_method: :invoice_select_dropdown %>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group invoice_info">
+        <%= label_tag "Invoice Balance" %>
+        <%= text_field_tag "invoice[amount]", @invoice.try(:amount), class: "form-control", disabled: true %>
+      </div>
     </div>
     <div class="col-md-6">
       <%= f.input :amount, label: "Amount Received" %>
@@ -35,7 +41,27 @@
   </div>
 <% end %>
 <script type="text/javascript">
+  <% if @receipt.invoice_id %>
+    $(".invoice_info").show();
+    $("#invoice_amount").val("<%= @receipt.invoice.amount.to_f %>");
+  <% else %>
+    $(".invoice_info").hide();
+  <% end %>
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   }).datepicker("setDate", new Date());
+
+  $("#receipt_invoice_id").change(function(){
+    var invoice_id = $(this).val();
+    if(invoice_id == ""){
+      $(".invoice_info").hide();
+      alert("Please select invoice.");
+    }
+    else{
+      $.ajax({
+        type: "GET",
+        url: "/receipts/" + invoice_id + "/invoice_info"
+      });
+    }
+  });
 </script>

@@ -53,6 +53,7 @@
         $('.modal').html('<%= escape_javascript(render partial: "schedule_inspection") %>');
         $(".start_date").val(start.format("YYYY-MM-DD"));
         $(".end_date").val(start.format("YYYY-MM-DD"));
+        $(".start_time").val(start.format("h:mm A"));
         $(".modal").modal('show');
       <% end %>
     }

@@ -10,7 +10,7 @@ class PayPlansController < ApplicationController
   # GET /pay_plans/1
   # GET /pay_plans/1.json
   def show
-    @project = Project.find(params[:project_id]) if params[:project_id].present?
+    @bid = Bid.find(params[:bid_id]) if params[:bid_id].present?
     respond_to do |format|
       format.js
       format.html

@@ -19,4 +19,8 @@ class Bid < ActiveRecord::Base
 		end
 		total
   end
+
+  def calculate_amount(percentage_amount)
+    ((self.total_cost * percentage_amount) / 100).to_f if self.total_cost > 0
+  end
 end

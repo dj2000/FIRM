@@ -1,7 +1,7 @@
 $(".insp_request.inspector_info").val("<%= @bid.try(:inspection).try(:appointment).try(:inspector).try(:name) %>")
 $(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
 $("input.payment_plan").val("<%= @bid.try(:payPlan).try(:payment_plan_select) %>")
-$(".payment_plan.details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan)), class: "link", remote: true) %> ');
+$(".payment_plan.details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan), bid_id: @bid.id), class: "link", remote: true) %> ');
 $(".call_time").val("<%= @bid.try(:comm_history).try(:call_time).try(:strftime, '%d %b %Y %H:%M:%S') %>");
 $(".contract").find("input.accepted_by").val("<%= @contract.try(:acceptedBy) %>");
 $(".contract").find("input.signed_by").val("<%= @contract.try(:signedBy) %>");

@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-1 payment_plan details margin-top-25 <%= 'hide' unless f.object.bid_id %>">
       <% if f.object.bid_id %>
-        <%= link_to pay_plan_path(f.object.try(:bid).try(:payPlan)), remote: true, class: 'link' do %>
+        <%= link_to pay_plan_path(f.object.try(:bid).try(:payPlan), bid_id: f.object.try(:bid)), remote: true, class: 'link' do %>
           <i class='fa fa-eye'></i> Details
         <% end %>
       <% end %>

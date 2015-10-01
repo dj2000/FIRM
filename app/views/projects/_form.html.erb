@@ -75,6 +75,32 @@
   </div>
   <div class="row">
     <div class="col-md-6">
+      <%= label_tag "Schedule Start Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["scheduleStart"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :scheduleStart, class: "form-control", value: f.object.try(:scheduleStart) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["scheduleStart"].first %></span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <%= label_tag "Schedule End Date" %>
+      <div class="form-group <%= 'has-error' if f.object.errors["scheduleEnd"].first %>">
+        <div class='input-group date'>
+          <%= f.text_field :scheduleEnd, class: "form-control", value: f.object.try(:scheduleEnd) %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+        <span class="help-block"><%= f.object.errors["scheduleEnd"].first %></span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
       <%= f.input :estDuration, label: "Est. Duration(d)" %>
     </div>
     <div class="col-md-6">

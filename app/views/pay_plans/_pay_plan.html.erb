@@ -26,7 +26,7 @@
       <td>Deposit</td>
       <td>
         <%= number_to_percentage(@pay_plan.deposit, precision: 0) %>
-        <%= number_to_currency(" #{@bid.try(:calculate_amount, @pay_plan.deposit)}") if @bid %>
+        <%= " / " + number_to_currency(" #{@bid.try(:calculate_amount, @pay_plan.deposit)}") if @bid %>
       </td>
     </tr>
     <% @pay_plan.payments.each do |payment| %>
@@ -34,7 +34,7 @@
         <td><%= payment.title %></td>
         <td>
           <%= number_to_percentage(payment.value, precision: 0) %>
-          <%= number_to_currency(" #{@bid.try(:calculate_amount, payment.value)}") if @bid %>
+          <%= " / " + number_to_currency(" #{@bid.try(:calculate_amount, payment.value)}") if @bid %>
         </td>
       </tr>
     <% end %>

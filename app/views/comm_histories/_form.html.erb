@@ -54,7 +54,7 @@
     </div>
     <div class="col-md-4">
       <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
-        <%= f.label 'Call Outcome' %>
+        <%= f.label 'Call Backdate' %>
         <div class='input-group date'>
           <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
           <span class="input-group-addon">
@@ -75,8 +75,9 @@
     </div>
   </div>
   <br/>
-  <div class="actions">
+  <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
+    <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">

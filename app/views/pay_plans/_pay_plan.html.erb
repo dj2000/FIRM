@@ -19,6 +19,10 @@
       <td><%= number_to_currency(@pay_plan.jobMaxAmt) %></td>
     </tr>
     <tr>
+      <td>Project Cost</td>
+      <td><%= number_to_currency(@bid.try(:total_cost)) %></td>
+    </tr>
+    <tr>
       <td>Deposit</td>
       <td>
         <%= number_to_percentage(@pay_plan.deposit, precision: 0) %>

@@ -75,6 +75,30 @@ class ProjSchedsController < ApplicationController
     end
   end
 
+  def scheduled_projects
+    if params[:start_date] and params[:end_date]
+      @start_day = params[:start_date]
+      @end_day = params[:end_date]
+    else
+      date = params[:date].to_date
+      case params[:view_type]
+      when "month"
+        @start_day = date.beginning_of_month
+        @end_day = date.end_of_month
+      when "agendaWeek"
+        @start_day = date.beginning_of_week(start_day = :monday)
+        @end_day = date.end_of_week(end_day = :saturday)
+      else
+        @start_day = date
+        @end_day = date + 1.day
+      end
+    end
+    @proj_scheds =  ProjSched.where('(("schedule_start_date" BETWEEN ? AND ?) OR ("schedule_end_date" BETWEEN ? AND ?)) OR ("schedule_start_date" >= ? OR "schedule_end_date" <= ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
+    @proj_scheds = @proj_scheds.where(crew_id: params[:crew_id]) if params[:crew_id].present?
+    render json: @proj_scheds.as_json
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_proj_sched

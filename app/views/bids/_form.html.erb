@@ -5,15 +5,15 @@
 	    <%= f.input :title %>
 	  </div>
 	  <div class="col-md-6">
-	    <%= f.input :costRepair, label: "Repair Cost" %>
+	    <%= f.input :costRepair, label: "Repair Cost", as: :string, input_html: { value: "$#{f.object.costRepair}" } %>
 	  </div>
 	</div>
 	<div class="row">
 	  <div class="col-md-6">
-	    <%= f.input :feeSeismicUpg, label: "Seismic Upgrade Fee" %>
+	    <%= f.input :feeSeismicUpg, label: "Seismic Upgrade Fee", as: :string, input_html: { value: "$#{f.object.feeSeismicUpg}" } %>
 	  </div>
 	  <div class="col-md-6">
-	    <%= f.input :feeAdmin, label: "Administration Fee" %>
+	    <%= f.input :feeAdmin, label: "Administration Fee", as: :string, input_html: { value: "$#{f.object.feeAdmin}" } %>
 	    <%= f.hidden_field :inspection_id, value: @inspection.id %>
 	  </div>
 	</div>

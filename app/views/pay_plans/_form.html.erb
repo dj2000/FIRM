@@ -2,19 +2,24 @@
   <%= f.error_notification %>
   <%= f.error :base, class: "alert alert-danger" %>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :title %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :deposit, label: "Deposit" %>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :jobMinAmt, label: "Amount Range Start", as: :string %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :jobMaxAmt, label: "Amount Range End", as: :string %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <%= f.input :deposit_label, label: false, input_html: { value: "Deposit (%)" } %>
+    </div>
+    <div class="col-md-5">
+      <%= f.input :deposit, label: false, placeholder: "Deposit Value" %>
     </div>
   </div>
   <div class="row payments">
@@ -45,12 +50,12 @@
       index = index + 1;
       var ordinal = get_ordinal(index);
       if($(this).index() == 0)
-        $(this).val(index + ordinal + " Payment");
+        $(this).val(index + ordinal + " Payment (%)");
     });
     $(".payment_value:visible").each(function(index, value){
       index = index + 1;
       var ordinal = get_ordinal(index);
-      $(this).attr("placeholder", index + ordinal + " Payment Value ");
+      $(this).attr("placeholder", index + ordinal + " Payment Value");
     });
   }
   function get_ordinal(number){

@@ -1,3 +1,6 @@
+<div class="right">
+  <%= select_tag "crew", options_for_select(@crews.map{|c| [c.foreman, c.id]}), class: "form-control crew_select", prompt: "Select Crew" %>
+</div>
 <div class="left">
   <span>
     <% if @project %>
@@ -12,7 +15,8 @@
 <script>
   $(document).ready(function(){
     $('.datepicker').datepicker({
-      daysOfWeekDisabled: [0,6]
+      daysOfWeekDisabled: [0,6],
+      todayHighlight: true
     });
     $('.datepicker').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
@@ -52,6 +56,7 @@
         $('.modal').html('<%= escape_javascript(render partial: "crew_inspection") %>');
         $(".schedule_start_date").val(start.format("YYYY-MM-DD"));
         $(".schedule_end_date").val(start.format("YYYY-MM-DD"));
+        $(".startTime").val(start.format("h:mm A"));
         $(".modal").modal('show');
       <% end %>
     }
@@ -76,10 +81,11 @@
 
   function update(view){
     var date = $(".datepicker").datepicker("getDate");
+    var crew_id = $(".crew_select").val();
     $.ajax({
       type: "GET",
       url: "/proj_scheds/scheduled_projects",
-      data: { date: date, view_type: view},
+      data: { date: date, view_type: view, crew_id: crew_id},
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');
@@ -87,4 +93,21 @@
       }
     });
   }
+
+  $(".crew_select").change(function(){
+    var crew_id = $(this).val();
+    var start_date = $('.full-calendar').fullCalendar('getView').start.format("YYYY-MM-DD");
+    var end_date = $('.full-calendar').fullCalendar('getView').end.format("YYYY-MM-DD");
+    var defaultView = $('.full-calendar').fullCalendar('getView').name;
+    $.ajax({
+      type: "GET",
+      url: "/proj_scheds/scheduled_projects",
+      data: { start_date: start_date, end_date: end_date, view_type: defaultView, crew_id: crew_id},
+      dataType: 'JSON',
+      success: function(result){
+        $('.full-calendar').fullCalendar('removeEvents');
+        $('.full-calendar').fullCalendar('addEventSource', result );
+      }
+    });
+  });
 </script>

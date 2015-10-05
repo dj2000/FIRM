@@ -35,19 +35,39 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <%= f.input :completed_appointment_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3 margin-top-25 blue-link">
+      <% if f.object.try(:completed_appointment_sheet) %>
+        <%= f.object.completed_appointment_sheet_file_name %>
+      <% end %>
+    </div>
+    <div class="col-md-3">
       <%= f.input :client_information_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
+    </div>
+    <div class="col-md-3 margin-top-25 blue-link">
+      <% if f.object.try(:completed_appointment_sheet) %>
+        <%= f.object.client_information_sheet_file_name %>
+      <% end %>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <%= f.input :footprint_diagram, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3 margin-top-25 blue-link">
+      <% if f.object.try(:completed_appointment_sheet) %>
+        <%= f.object.footprint_diagram_file_name %>
+      <% end %>
+    </div>
+    <div class="col-md-3">
       <%= f.input :report, as: :file, input_html: { accept: ".pdf, .doc, .docx"}  %>
+    </div>
+    <div class="col-md-3 margin-top-25 blue-link">
+      <% if f.object.try(:completed_appointment_sheet) %>
+        <%= f.object.report_file_name %>
+      <% end %>
     </div>
   </div>
   <fieldset><legend></legend></fieldset>

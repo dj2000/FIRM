@@ -1,6 +1,7 @@
 class BidsController < ApplicationController
 	before_action :payment_plans
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
+  before_action :format_amount, only: [:create, :update]
 
   # GET /bids
   # GET /bids.json
@@ -74,6 +75,12 @@ class BidsController < ApplicationController
 
     def payment_plans
       @payment_plans = PayPlan.all
+    end
+
+    def format_amount
+      params[:bid][:costRepair] = params[:bid][:costRepair].gsub("$","").to_i
+      params[:bid][:feeSeismicUpg] = params[:bid][:feeSeismicUpg].gsub("$","").to_i
+      params[:bid][:feeAdmin] = params[:bid][:feeAdmin].gsub("$","").to_i
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

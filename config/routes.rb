@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   resources :insp_comm_scales
 
   resources :commissions
@@ -33,7 +33,9 @@ Rails.application.routes.draw do
     get :appointment_info, on: :member
   end
 
-  resources :receipts
+  resources :receipts do
+    get :invoice_info, on: :member
+  end
 
   resources :invoices do
     get :update_collection, on: :member

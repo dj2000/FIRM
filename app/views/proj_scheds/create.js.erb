@@ -1,5 +1,6 @@
 <% if @proj_sched.errors.present? %>
 	$(".modal").html("<%= escape_javascript(render 'crew_inspection') %>");
+	$(".alert.alert-danger").append("<br/><%= @proj_sched.errors["base"].first %>")
 <% else %>
 	$(window.location.replace('/projects/<%= @proj_sched.project_id %>'));
 <% end %>

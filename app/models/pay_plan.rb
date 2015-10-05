@@ -5,7 +5,7 @@ class PayPlan < ActiveRecord::Base
 
   accepts_nested_attributes_for :payments, reject_if: proc { |attributes| attributes['title'].blank? || attributes['value'].to_i <= 0 }, allow_destroy: true
 
-  validates :jobMinAmt, :title, presence: true
+  validates :jobMinAmt, :deposit, :title, presence: true
 
   validates :jobMaxAmt,
 							presence: true,

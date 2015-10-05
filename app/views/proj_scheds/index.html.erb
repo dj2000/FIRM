@@ -81,10 +81,11 @@
 
   function update(view){
     var date = $(".datepicker").datepicker("getDate");
+    var crew_id = $(".crew_select").val();
     $.ajax({
       type: "GET",
       url: "/proj_scheds/scheduled_projects",
-      data: { date: date, view_type: view},
+      data: { date: date, view_type: view, crew_id: crew_id},
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');

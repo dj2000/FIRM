@@ -6,7 +6,7 @@ class ProjSched < ActiveRecord::Base
 
   validate :availability_of_crew
 
-  validate :check_end_time
+  validate :check_end_time, :check_project_scheduled_start_and_end_date
 
   COLORS = Crew.assign_colors
 
@@ -49,6 +49,19 @@ class ProjSched < ActiveRecord::Base
   def check_end_time
     if self.startTime.present? and self.endTime.present?
       self.errors.add(:endTime, "Schedule End time should be greater than Schedule Start time.") if self.startTime > self.endTime
+    end
+  end
+
+  ## Validation check for start and end date while scheduling project with project's scheduled start and end date.
+  def check_project_scheduled_start_and_end_date
+    start_date = self.try(:project).try(:scheduleStart)
+    end_date = self.try(:project).try(:scheduleEnd)
+    self.errors.add(:base, "Please select scheduled start date or scheduled end date.") unless start_date || end_date
+    if start_date and end_date
+      date_range = (start_date..end_date)
+      unless date_range.include?(self.schedule_start_date) and date_range.include?(self.schedule_end_date)
+        self.errors.add(:base, "Please select date range from #{start_date.strftime("%d %b %Y")} and #{end_date.strftime("%d %b %Y")}")
+      end
     end
   end
 end

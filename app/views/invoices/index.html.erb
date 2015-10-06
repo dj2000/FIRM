@@ -3,12 +3,14 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Invoice Number</th>
       <th>Reference</th>
       <th>Type</th>
       <th>Inspection</th>
       <th>Project</th>
       <th>Description</th>
       <th>Invoice Date</th>
+      <th>Balance</th>
       <th>Amount</th>
       <th colspan="3" class="text-center">Actions</th>
     </tr>
@@ -17,12 +19,14 @@
   <tbody>
     <% @invoices.each do |invoice| %>
       <tr>
+        <td><%= invoice.id %></td>
         <td><%= invoice.reference %></td>
         <td><%= invoice.invoice_type %></td>
         <td><%= invoice.try(:inspection).try(:name) %></td>
         <td><%= invoice.try(:project).try(:title) %></td>
         <td><%= invoice.description %></td>
         <td><%= invoice.invoiceDate %></td>
+        <td><%= invoice.balance_due %></td>
         <td><%= invoice.amount %></td>
         <td>
           <%= link_to invoice, class: 'btn btn-primary' do %>

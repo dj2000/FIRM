@@ -3,6 +3,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Receipt Number</th>
       <th>Reference</th>
       <th>Receipt Date</th>
       <th>Invoice</th>
@@ -16,6 +17,7 @@
   <tbody>
     <% @receipts.each do |receipt| %>
       <tr>
+        <td><%= receipt.id %></td>
         <td><%= receipt.reference %></td>
         <td><%= receipt.date %></td>
         <td><%= receipt.try(:invoice).try(:invoice_select_dropdown) %></td>

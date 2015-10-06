@@ -3,6 +3,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Invoice Number</th>
       <th>Reference</th>
       <th>Type</th>
       <th>Inspection</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @invoices.each do |invoice| %>
       <tr>
+        <td><%= invoice.id %></td>
         <td><%= invoice.reference %></td>
         <td><%= invoice.invoice_type %></td>
         <td><%= invoice.try(:inspection).try(:name) %></td>

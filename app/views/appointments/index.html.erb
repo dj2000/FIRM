@@ -54,6 +54,8 @@
         $(".start_date").val(start.format("YYYY-MM-DD"));
         $(".end_date").val(start.format("YYYY-MM-DD"));
         $(".start_time").val(start.format("h:mm A"));
+        var end_time = start.add(2, 'hours').add(30, 'minutes');
+        $(".end_time").val(end_time.format("h:mm A"));
         $(".modal").modal('show');
       <% end %>
     }

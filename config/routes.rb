@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     get :get_scheduled_appointments, on: :collection
     get :print, on: :member
     get :send_email, on: :member
+    get :calculate_inspection_fee, on: :member
   end
 
   resources :insp_requests do 

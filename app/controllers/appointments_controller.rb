@@ -115,6 +115,14 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def calculate_inspection_fee
+    @insp_request = InspRequest.find(params[:id])
+    @appointment = @insp_request.appointment
+    respond_to do |format|
+      format.json{ render json: @appointment.try(:calculate_inspection_fee, params[:is_insurance]) }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
@@ -127,7 +135,7 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection)
+      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection, :is_insurance)
     end
 
     def client_property_params

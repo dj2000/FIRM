@@ -37,7 +37,7 @@ class Appointment < ActiveRecord::Base
       end: self.schedEnd,
       id: self.id,
       title: self.try(:inspector).try(:name),
-      color: Appointment::COLORS["#{self.inspector_id}"],
+      color: COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
       allDay: false
     }
@@ -73,9 +73,10 @@ class Appointment < ActiveRecord::Base
     inspection_fee
   end
 
-  def calculate_inspection_fee
+  def calculate_inspection_fee(is_insurance)
     amount = basic_amount(150)
-    amount += basic_amount(250) if self.is_insurance?
+    amount += basic_amount(250) if (is_insurance == "true" || is_insurance == true)
+    self.inspFee = amount
   end
 
   private

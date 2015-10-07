@@ -54,12 +54,28 @@ class Appointment < ActiveRecord::Base
   #To return uninspected appointments
   def self.uninspected_appointments
     inspections = Inspection.all.map(&:appointment_id)
-    Appointment.where.not(id: inspections)
+    Appointment.where.not(id: inspections, schedStart: nil, schedEnd: nil)
   end
 
   #To populate appointment dropdown
   def appointment_select
     self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
+  end
+
+  def basic_amount(amount)
+    inspection_fee = 0
+    property = self.try(:insp_request).try(:property)
+    property_type = property.try(:prop_type)
+    if property_type
+      inspection_fee += property_type == "MFR" ? (amount + (property.try(:units) || 1 ) * 25 ) : amount
+      inspection_fee += ((property.try(:size) - 2000).to_f / 1000) * 25   if (property_type == "SFR" and property.try(:size) > 2000 )
+    end
+    inspection_fee
+  end
+
+  def calculate_inspection_fee
+    amount = basic_amount(150)
+    amount += basic_amount(250) if self.is_insurance?
   end
 
   private

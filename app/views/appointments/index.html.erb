@@ -34,7 +34,7 @@
     },
     defaultView: 'agendaWeek',
     editable: <%= @editable %>,
-    weekends: false,
+    hiddenDays: [0],
     selectable: <%= @editable %>,
     selectHelper: true,
     firstDay:1,
@@ -42,7 +42,7 @@
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
     eventSources: [{
-      url: "/appointments",
+      url: "/appointments"
     }],
     eventClick: function(cal_event, js_event, view){
       <% if @editable %>
@@ -81,6 +81,9 @@
 
   function update(view){
     var date = $(".datepicker").datepicker("getDate");
+    if(date == null){
+      date = new Date();
+    }
     var inspector_id = $(".inspector_select").val();
     $.ajax({
       type: "GET",

@@ -77,19 +77,6 @@ class AppointmentsController < ApplicationController
     if params[:start_date] and params[:end_date]
       @start_day = params[:start_date]
       @end_day = params[:end_date]
-    else
-      date = params[:date].to_date
-      case params[:view_type]
-      when "month"
-        @start_day = date.beginning_of_month
-        @end_day = date.end_of_month
-      when "agendaWeek"
-        @start_day = date.beginning_of_week(start_day = :monday)
-        @end_day = date.end_of_week(end_day = :saturday)
-      else
-        @start_day = date
-        @end_day = date + 1.day
-      end
     end
     @start_day = @start_day.to_datetime
     @end_day = @end_day.to_datetime

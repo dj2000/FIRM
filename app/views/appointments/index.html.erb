@@ -18,19 +18,19 @@
       daysOfWeekDisabled: [0,6],
       todayHighlight: true
     });
+
     $('.datepicker').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
       $('.full-calendar').fullCalendar("changeView", defaultView);
-      update(defaultView);
     });
   })
     
   $('.full-calendar').fullCalendar({
     header: {
-        left: '',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+      left: '',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'agendaWeek',
     editable: <%= @editable %>,
@@ -41,13 +41,13 @@
     eventStartEditable: false,
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
-    eventSources: [{
-      url: "/appointments"
-    }],
     eventClick: function(cal_event, js_event, view){
       <% if @editable %>
         calendar_event_clicked(cal_event, js_event, view);
       <% end %>
+    },
+    viewRender: function( view, element ){
+      update(view);
     },
     select: function(start, end, jsEvent, view) {
       <% if @editable %>
@@ -69,48 +69,53 @@
     });
   }
 
-  $(".fc-month-button").on("click", function(){
-    update("month");
-  });
-  $(".fc-agendaWeek-button").on("click", function(){
-    update("agendaWeek");
-  });
-  $(".fc-agendaDay-button").on("click", function(){
-    update("agendaDay");
-  });
-
   function update(view){
-    var date = $(".datepicker").datepicker("getDate");
-    if(date == null){
-      date = new Date();
-    }
     var inspector_id = $(".inspector_select").val();
-    $.ajax({
-      type: "GET",
-      url: "/appointments/get_scheduled_appointments",
-      data: { date: date, view_type: view, inspector_id: inspector_id},
-      dataType: 'JSON',
-      success: function(result){
-        $('.full-calendar').fullCalendar('removeEvents');
-        $('.full-calendar').fullCalendar('addEventSource', result );
-      }
-    });
+    loadAppointments(view, inspector_id);
   }
 
   $(".inspector_select").change(function(){
     var inspector_id = $(this).val();
-    var start_date = $('.full-calendar').fullCalendar('getView').start.format("YYYY-MM-DD");
-    var end_date = $('.full-calendar').fullCalendar('getView').end.format("YYYY-MM-DD");
-    var defaultView = $('.full-calendar').fullCalendar('getView').name;
+    var defaultView = $('.full-calendar').fullCalendar('getView')
+    loadAppointments(defaultView, inspector_id);
+  });
+
+  function renderBackground(startDate, endDate){
+    var events = new Array();
+    var currentDate = startDate;
+    var tHash = {"9:00": "#D5B8EE", "11:30": "FFFFFF", "14:00": "#E5E7B6"};
+
+    while (startDate <= endDate) {
+      for (var key in tHash){
+        var startTime = key.split(":");
+        var hours = parseInt(startTime[0]);
+        var minutes = parseInt(startTime[1]);
+        events.push({
+          start: currentDate.hours(hours).minutes(minutes).format("YYYY-MM-DD h:m A"),
+          end: currentDate.hours(hours + 2).minutes(minutes + 30).format("YYYY-MM-DD h:m A"),
+          rendering: 'background',
+          color: tHash[key]
+        })
+      }
+      currentDate = startDate.add(1, 'days');
+    }
+    return events
+  }
+
+  function loadAppointments(view, inspector_id){
+    var start_date = view.start.format("YYYY-MM-DD");
+    var end_date = view.end.format("YYYY-MM-DD");
+    events = renderBackground(moment(start_date), moment(end_date));
     $.ajax({
       type: "GET",
       url: "/appointments/get_scheduled_appointments",
-      data: { start_date: start_date, end_date: end_date, view_type: defaultView, inspector_id: inspector_id},
+      data: { start_date: start_date, end_date: end_date, view_type: view.name, inspector_id: inspector_id},
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');
         $('.full-calendar').fullCalendar('addEventSource', result );
+        $('.full-calendar').fullCalendar('addEventSource', events );
       }
     });
-  });
+  }
 </script>

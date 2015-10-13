@@ -62,23 +62,6 @@ class Appointment < ActiveRecord::Base
     self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
   end
 
-  def basic_amount(amount)
-    inspection_fee = 0
-    property = self.try(:insp_request).try(:property)
-    property_type = property.try(:prop_type)
-    if property_type
-      inspection_fee += property_type == "MFR" ? (amount + (property.try(:units) || 1 ) * 25 ) : amount
-      inspection_fee += ((property.try(:size) - 2000).to_f / 1000) * 25   if (property_type == "SFR" and property.try(:size) > 2000 )
-    end
-    inspection_fee
-  end
-
-  def calculate_inspection_fee(is_insurance)
-    amount = basic_amount(150)
-    amount += basic_amount(250) if (is_insurance == "true" || is_insurance == true)
-    self.inspFee = amount
-  end
-
   private
 
   def check_end_datetime

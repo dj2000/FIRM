@@ -104,9 +104,8 @@ class AppointmentsController < ApplicationController
 
   def calculate_inspection_fee
     @insp_request = InspRequest.find(params[:id])
-    @appointment = @insp_request.appointment
     respond_to do |format|
-      format.json{ render json: @appointment.try(:calculate_inspection_fee, params[:is_insurance]) }
+      format.json{ render json: @insp_request.try(:calculate_inspection_fee, @insp_request.appointment, params[:is_insurance], :json) }
     end
   end
 

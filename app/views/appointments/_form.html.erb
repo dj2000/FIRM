@@ -34,7 +34,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :inspFee, label: "Inspection Fee", value: number_with_precision(f.object.try(:calculate_inspection_fee, f.object.try(:is_insurance)), precision: 2), input_html: { readonly: true } %>
+            <%= f.input :inspFee, label: "Inspection Fee", value: number_with_precision(f.object.try(:insp_request).try(:calculate_inspection_fee, f.object, f.object.try(:is_insurance)), precision: 2) %>
           </div>
         </div>
         <div class='col-sm-6'>

@@ -39,9 +39,14 @@
     </div>
   </div>
   <div class="row">
-    <div class='col-sm-12'>
+    <div class='col-sm-6'>
       <div class="form-group">
         <%= f.input :email %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :is_opt_out_mailer, as: :boolean, checked_value: true, unchecked_value: false, label: "Opt Out of Mailing List" %>
       </div>
     </div>
   </div>

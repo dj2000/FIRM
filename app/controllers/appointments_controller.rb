@@ -109,6 +109,24 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  ## To render default background events for appointments and block out periods
+  def background_events
+    @events = Array.new
+    colors_hash = { "9:00" => "#D5B8EE", "11:30" => "FFFFFF", "14:00" => "#E5E7B6" }
+    params[:start] = Date.parse(params[:start])
+    params[:end] = Date.parse(params[:end])
+    (params[:start]..params[:end]).each do |date|
+      colors_hash.each do |time, event_color|
+        start_date = "#{date} #{time}".to_datetime
+        end_date = start_date + 2.hours + 30.minutes
+        @events << { start: start_date, end: end_date, rendering: 'background', color: event_color}
+      end
+    end
+    respond_to do |format|
+      format.json{ render json: @events.as_json}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment

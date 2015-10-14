@@ -4,14 +4,14 @@
       <h4 class="modal-title" id="exampleModalLabel">Inspector's Calendar</h4>
     </div>
     <div class="modal-body">
-      <%= simple_form_for @appointment, html: { remote: true } do |f| %>
+      <%= simple_form_for (@block_out_period || @appointment), html: { remote: true } do |f| %>
         <%= f.error_notification %>
         <div class="row">
           <div class='col-sm-4'>
             <div class="form-group">
               <%= f.label 'Start Date' %>
               <div class='input-group date'>
-                <%= f.text_field :schedStart, class: "form-control start_date", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d"), name: "schedStart[]" %>
+                <%= f.text_field :schedStart, class: "form-control start_date", value: f.object.try(:schedStart).try(:strftime, "%Y-%m-%d") || @appointment.try(:schedStart).try(:strftime, "%Y-%m-%d"), name: "schedStart[]" %>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -23,7 +23,7 @@
             <div class="form-group">
               <%= f.label 'Start Time' %>
               <div class="input-group bootstrap-timepicker timepicker">
-                <%= f.text_field :schedStart, class: "form-control timepicker start_time", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p"), name: "schedStart[]" %>
+                <%= f.text_field :schedStart, class: "form-control timepicker start_time", value: f.object.try(:schedStart).try(:strftime, "%I:%M %p") || @appointment.try(:schedStart).try(:strftime, "%I:%M %p"), name: "schedStart[]" %>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
               </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="form-group">
               <%= f.label 'End Date' %>
               <div class='input-group date'>
-                <%= f.text_field :schedEnd, class: "form-control end_date", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d"), name: "schedEnd[]" %>
+                <%= f.text_field :schedEnd, class: "form-control end_date", value: f.object.try(:schedEnd).try(:strftime, "%Y-%m-%d") || @appointment.try(:schedEnd).try(:strftime, "%Y-%m-%d"), name: "schedEnd[]" %>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -50,7 +50,7 @@
             <div class="form-group">
               <%= f.label 'End Time' %>
               <div class="input-group bootstrap-timepicker timepicker">
-                <%= f.text_field :schedEnd, class: "form-control timepicker end_time", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p"), name: "schedEnd[]" %>
+                <%= f.text_field :schedEnd, class: "form-control timepicker end_time", value: f.object.try(:schedEnd).try(:strftime, "%I:%M %p") || @appointment.try(:schedEnd).try(:strftime, "%I:%M %p"), name: "schedEnd[]" %>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
               </div>
             </div>
@@ -60,6 +60,7 @@
           <div class='col-sm-6'>
             <div class="form-group">
               <%= f.association :inspector, collection: @inspectors, prompt: 'Please select' %>
+              <%= f.hidden_field :appointment_id, value: @block_out_period ? @appointment.id : nil %>
             </div>
           </div>
         </div>

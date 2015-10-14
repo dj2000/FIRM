@@ -4,6 +4,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :insp_request, class_name: 'InspRequest', foreign_key: 'inspRequest_id'
   belongs_to :inspector
   has_one :inspection
+  has_one :block_out_period
 
   attr_accessor :scheduled_inspection
 
@@ -39,7 +40,8 @@ class Appointment < ActiveRecord::Base
       title: self.try(:inspector).try(:name),
       color: COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
-      allDay: false
+      allDay: false,
+      type: 'appointment'
     }
   end
 

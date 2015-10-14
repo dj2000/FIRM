@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013083445) do
+ActiveRecord::Schema.define(version: 20151013115907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,16 @@ ActiveRecord::Schema.define(version: 20151013083445) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+  end
+
+  create_table "block_out_periods", force: true do |t|
+    t.integer  "appointment_id"
+    t.datetime "schedStart"
+    t.datetime "schedEnd"
+    t.boolean  "allDay"
+    t.integer  "inspector_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "client_properties", force: true do |t|

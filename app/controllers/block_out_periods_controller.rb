@@ -13,7 +13,7 @@ class BlockOutPeriodsController < ApplicationController
 
   def new
 		@appointment = Appointment.find(params[:appointment_id])
-		@block_out_period = @appointment.build_block_out_period
+		@block_out_period = @appointment.build_block_out_period unless @appointment.block_out_period
   end
 
   def create

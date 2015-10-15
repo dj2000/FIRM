@@ -1,2 +1,6 @@
-$(".modal").html("<%= escape_javascript(render partial: 'appointments/schedule_inspection') %>")
-$(".modal").modal('show');
+<% if @block_out_period %>
+	$(".modal").html("<%= escape_javascript(render partial: 'appointments/schedule_inspection') %>")
+	$(".modal").modal('show');
+<% else %>
+	alert("Block Out Period can not be created");
+<% end %>

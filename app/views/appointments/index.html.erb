@@ -46,9 +46,14 @@
         calendar_event_clicked(cal_event, js_event, view);
       <% end %>
     },
-    viewRender: function( view, element ){
-      update(view);
-    },
+    eventSources: [
+      {
+        url: '/appointments.json'
+      },
+      {
+        url: '/appointments/background_events.json'
+      }
+    ],
     select: function(start, end, jsEvent, view) {
       <% if @editable %>
         $('.modal').html('<%= escape_javascript(render partial: "schedule_inspection") %>');

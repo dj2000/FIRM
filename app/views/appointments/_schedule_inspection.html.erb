@@ -60,7 +60,6 @@
           <div class='col-sm-6'>
             <div class="form-group">
               <%= f.association :inspector, collection: @inspectors, prompt: 'Please select' %>
-              <%= f.hidden_field :appointment_id, value: @block_out_period ? @appointment.id : nil %>
             </div>
           </div>
         </div>

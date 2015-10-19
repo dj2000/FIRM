@@ -12,8 +12,7 @@ class BlockOutPeriodsController < ApplicationController
   end
 
   def new
-		@appointment = Appointment.find(params[:appointment_id])
-		@block_out_period = @appointment.build_block_out_period unless @appointment.block_out_period
+		@block_out_period = BlockOutPeriod.new
   end
 
   def create
@@ -33,7 +32,7 @@ class BlockOutPeriodsController < ApplicationController
   def block_out_period_params
 		params[:block_out_period][:schedStart] = params[:schedStart].join(" ").to_datetime
     params[:block_out_period][:schedEnd] = params[:schedEnd].join(" ").to_datetime
-    params.require(:block_out_period).permit(:schedStart, :schedEnd, :allDay, :inspector_id, :appointment_id)
+    params.require(:block_out_period).permit(:schedStart, :schedEnd, :allDay, :inspector_id)
   end
 
   def inspectors

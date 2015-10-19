@@ -2,9 +2,9 @@ class BlockOutPeriod < ActiveRecord::Base
 	belongs_to :appointment
 	belongs_to :inspector
 
-  validates :schedStart, :schedEnd, :inspector_id, :appointment_id, presence: true
+  validates :schedStart, :schedEnd, :inspector_id, presence: true
 
-  validate :check_end_datetime, :check_inspector
+  validate :check_end_datetime
 
 	def as_json
     {
@@ -24,12 +24,6 @@ class BlockOutPeriod < ActiveRecord::Base
   def check_end_datetime
     if self.schedStart.present? and self.schedEnd.present?
       self.errors.add(:base, "Schedule End time should be greater than Schedule Start time.") if self.schedEnd < self.schedStart
-    end
-  end
-
-  def check_inspector
-    if self.appointment_id and (self.appointment.inspector_id == self.inspector_id and self.appointment_id == self.appointment_id)
-      self.errors.add(:inspector_id, "Can't schedule for block out period.")
     end
   end
 end

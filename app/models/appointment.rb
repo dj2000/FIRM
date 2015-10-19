@@ -4,7 +4,6 @@ class Appointment < ActiveRecord::Base
   belongs_to :insp_request, class_name: 'InspRequest', foreign_key: 'inspRequest_id'
   belongs_to :inspector
   has_one :inspection
-  has_one :block_out_period
 
   attr_accessor :scheduled_inspection
 
@@ -30,7 +29,7 @@ class Appointment < ActiveRecord::Base
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 
-  validate :check_end_datetime, if: "scheduled_inspection.present?"
+  validate :check_end_datetime, :check_inspector, if: "scheduled_inspection.present?"
 
   def as_json
     {
@@ -76,6 +75,11 @@ class Appointment < ActiveRecord::Base
     if self.schedStart.blank? and self.schedEnd.blank?
       self.errors.add(:base, "Schedule appointment before continuing.")
     end
+  end
+
+  def check_inspector
+    block_out_periods = BlockOutPeriod.where(inspector_id: self.inspector_id).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', self.schedStart, self.schedEnd, self.schedStart, self.schedEnd)
+    self.errors.add(:inspector_id, "Inspector is not available for this period.") if block_out_periods.present?
   end
 
 end

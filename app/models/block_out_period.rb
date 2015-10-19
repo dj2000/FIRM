@@ -1,5 +1,4 @@
 class BlockOutPeriod < ActiveRecord::Base
-	belongs_to :appointment
 	belongs_to :inspector
 
   validates :schedStart, :schedEnd, :inspector_id, presence: true

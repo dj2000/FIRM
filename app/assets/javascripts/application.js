@@ -23,4 +23,5 @@
 //= require fullcalendar
 //= require jquery_nested_form
 //= require jquery.maskedinput.min
+//= require dropzone
 //= require_tree .

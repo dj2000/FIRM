@@ -41,6 +41,5 @@ class BlockOutPeriodsController < ApplicationController
 
   def set_block_out_period
     @block_out_period = BlockOutPeriod.find(params[:id])
-    @appointment = @block_out_period.appointment
   end
 end

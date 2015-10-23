@@ -77,19 +77,6 @@ class AppointmentsController < ApplicationController
     if params[:start_date] and params[:end_date]
       @start_day = params[:start_date]
       @end_day = params[:end_date]
-    else
-      date = params[:date].to_date
-      case params[:view_type]
-      when "month"
-        @start_day = date.beginning_of_month
-        @end_day = date.end_of_month
-      when "agendaWeek"
-        @start_day = date.beginning_of_week(start_day = :monday)
-        @end_day = date.end_of_week(end_day = :saturday)
-      else
-        @start_day = date
-        @end_day = date + 1.day
-      end
     end
     @start_day = @start_day.to_datetime
     @end_day = @end_day.to_datetime
@@ -115,6 +102,31 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def calculate_inspection_fee
+    @insp_request = InspRequest.find(params[:id])
+    respond_to do |format|
+      format.json{ render json: @insp_request.try(:calculate_inspection_fee, @insp_request.appointment, params[:is_insurance], :json) }
+    end
+  end
+
+  ## To render default background events for appointments and block out periods
+  def background_events
+    @events = Array.new
+    colors_hash = { "9:00" => "#D5B8EE", "11:30" => "FFFFFF", "14:00" => "#E5E7B6" }
+    params[:start] = Date.parse(params[:start])
+    params[:end] = Date.parse(params[:end])
+    (params[:start]..params[:end]).each do |date|
+      colors_hash.each do |time, event_color|
+        start_date = "#{date} #{time}".to_datetime
+        end_date = start_date + 2.hours + 30.minutes
+        @events << { start: start_date, end: end_date, rendering: 'background', color: event_color}
+      end
+    end
+    respond_to do |format|
+      format.json{ render json: @events.as_json}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_appointment
@@ -127,7 +139,7 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection)
+      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection, :is_insurance)
     end
 
     def client_property_params

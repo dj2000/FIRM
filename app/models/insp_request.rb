@@ -53,4 +53,21 @@ class InspRequest < ActiveRecord::Base
   def service_area_check(property)
     service_area = SvcArea.where(zip: property.try(:zip), serviced: true).first
   end
+
+  def basic_amount(amount)
+    inspection_fee = 0
+    property = self.try(:property)
+    property_type = property.try(:prop_type)
+    if property_type
+      inspection_fee += property_type == "MFR" ? (amount + (property.try(:units) || 1 ) * 25 ) : amount
+      inspection_fee += ((property.try(:size) - 2000).to_f / 1000) * 25   if (property_type == "SFR" and property.size.present? and property.size > 2000 )
+    end
+    inspection_fee
+  end
+
+  def calculate_inspection_fee(appointment, is_insurance, format = nil)
+    amount = basic_amount(150)
+    amount += basic_amount(250) if (is_insurance == "true" || is_insurance == true)
+    appointment.inspFee = (format.nil? and appointment.inspFee) ? appointment.inspFee : amount
+  end
 end

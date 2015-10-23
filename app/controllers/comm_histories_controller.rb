@@ -68,7 +68,7 @@ class CommHistoriesController < ApplicationController
     end
 
     def bids
-      @bids = Bid.where("status = ? OR status = ? ", "Pending", "CallBack")
+      @bids = Bid.where("status = ? OR status = ? ", "Pending", "Follow-up")
       @bids << @comm_history.try(:bid) if @comm_history and @comm_history.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}
     end
@@ -86,10 +86,10 @@ class CommHistoriesController < ApplicationController
         status = "Accepted"
       when "Not Interested"
         status = "Declined"
-      when "CallBack"
-        status = "CallBack"
+      when "Follow-up"
+        status = "Follow-up"
       end
       @bid.update(status: status)
-      params[:comm_history][:callBackDate] = "" unless params[:comm_history][:callOutcome] == "CallBack"
+      params[:comm_history][:callBackDate] = "" unless params[:comm_history][:callOutcome] == "Follow-up"
     end
 end

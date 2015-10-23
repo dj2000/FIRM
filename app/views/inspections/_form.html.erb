@@ -1,4 +1,4 @@
-<%= simple_form_for(@inspection) do |f| %>
+<%= simple_form_for(@inspection, multipart: true, html: {class: "dropzone", id: "file-dropzone"}) do |f| %>
   <%= f.error_notification %>
   <fieldset><legend></legend></fieldset>
   <div class="row">
@@ -87,8 +87,27 @@
       <%= f.input :notes %>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6 preview">
+      <div class="fallback">
+        <%= file_field_tag :attachment, multiple: true %>
+      </div>
+      <div class="dz-default dz-message">Drop files here or click to upload.</div>
+    </div>
+    <% if f.object.documents.present? %>
+      <div class="col-md-6">
+        <%= label_tag "Uploaded Miscellaneous Documents" %>
+        <br/>
+        <% f.object.documents.each do |document| %>
+          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+          <br/>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <br/>
   <div class="actions">
-    <%= f.submit "Submit", class: 'btn btn-success' %>
+    <%= f.submit "Submit", class: 'btn btn-success submit-button' %>
     <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
   </div>
 <% end %>
@@ -121,4 +140,42 @@
       $(".appointment").addClass("hide");
     }
   });
+  // Dropzone settings
+  Dropzone.options.fileDropzone = {
+    autoProcessQueue: false,
+    uploadMultiple: true,
+    parallelUploads: 100,
+    maxFiles: 100,
+    previewsContainer: ".preview",
+    paramName: "document_attributes",
+    acceptedFiles: ".pdf, .doc, .docx",
+    addRemoveLinks: false,
+    init: function() {
+      var myDropzone = this;
+      this.element.querySelector("input[type=submit]").addEventListener("click", function(e) {
+        e.preventDefault();
+        if (myDropzone.getAcceptedFiles().length > 0) {
+          myDropzone.processQueue();
+        }
+        else{
+          $("#file-dropzone").submit();
+        }
+      });
+      this.on("errormultiple", function(files, response) {
+        if ($(".alert-danger").length == 0) {
+          $("<div class='alert alert-danger'>Please review the problems below:</div>").insertAfter($("h1"));
+        }
+        $.each(response, function( attr, error) {
+          var container = $(".inspection_" + attr)
+          if(!container.hasClass("has-error")){
+            container.addClass("has-error");
+            container.append("<span class='help-block'>" + error + "</span>");
+          }
+        });
+      });
+      this.on("successmultiple", function(files, response) {
+        window.location.href = "/inspections/" + response.id
+      });
+    }
+  }
 </script>

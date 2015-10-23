@@ -29,7 +29,7 @@ class Appointment < ActiveRecord::Base
 
   validate :is_scheduled, if: "scheduled_inspection.blank?"
 
-  validate :check_end_datetime, if: "scheduled_inspection.present?"
+  validate :check_end_datetime, :check_inspector, if: "scheduled_inspection.present?"
 
   def as_json
     {
@@ -37,9 +37,10 @@ class Appointment < ActiveRecord::Base
       end: self.schedEnd,
       id: self.id,
       title: self.try(:inspector).try(:name),
-      color: Appointment::COLORS["#{self.inspector_id}"],
+      color: COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
-      allDay: false
+      allDay: false,
+      type: 'appointment'
     }
   end
 
@@ -62,22 +63,6 @@ class Appointment < ActiveRecord::Base
     self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
   end
 
-  def basic_amount(amount)
-    inspection_fee = 0
-    property = self.try(:insp_request).try(:property)
-    property_type = property.try(:prop_type)
-    if property_type
-      inspection_fee += property_type == "MFR" ? (amount + (property.try(:units) || 1 ) * 25 ) : amount
-      inspection_fee += ((property.try(:size) - 2000).to_f / 1000) * 25   if (property_type == "SFR" and property.try(:size) > 2000 )
-    end
-    inspection_fee
-  end
-
-  def calculate_inspection_fee
-    amount = basic_amount(150)
-    amount += basic_amount(250) if self.is_insurance?
-  end
-
   private
 
   def check_end_datetime
@@ -90,6 +75,11 @@ class Appointment < ActiveRecord::Base
     if self.schedStart.blank? and self.schedEnd.blank?
       self.errors.add(:base, "Schedule appointment before continuing.")
     end
+  end
+
+  def check_inspector
+    block_out_periods = BlockOutPeriod.where(inspector_id: self.inspector_id).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', self.schedStart, self.schedEnd, self.schedStart, self.schedEnd)
+    self.errors.add(:inspector_id, "Inspector is not available for this period.") if block_out_periods.present?
   end
 
 end

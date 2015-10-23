@@ -16,4 +16,8 @@ class Client < ActiveRecord::Base
   def name
     "#{self.try(:firstName)} #{self.try(:lastName)}"
   end
+
+  def opt_out_mailer?
+    self.is_opt_out_mailer ? "Yes" : "No"
+  end
 end

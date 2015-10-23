@@ -35,6 +35,10 @@
       <td><%= @client.email %></td>
     </tr>
     <tr>
+      <td>Opt Out of Mailing List</td>
+      <td><%= @client.opt_out_mailer? %></td>
+    </tr>
+    <tr>
       <td>Mail Address</td>
       <td><%= @client.mailAddress %></td>
     </tr>

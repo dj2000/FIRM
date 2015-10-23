@@ -10,6 +10,7 @@
       <th>Office Number</th>
       <th>Cell Number</th>
       <th>Email</th>
+      <th>Opt Out of Mailing List</th>
       <th>Mail Address</th>
       <th colspan="3">Action</th>
     </tr>
@@ -25,6 +26,7 @@
         <td><%= number_to_phone(client.phoneW) %></td>
         <td><%= number_to_phone(client.phoneC) %></td>
         <td><%= client.email %></td>
+        <td><%= client.opt_out_mailer? %></td>
         <td><%= client.mailAddress %></td>
         <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), client, class: 'btn btn-primary' %></td>
         <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_client_path(client), class: 'btn btn-info' %></td>

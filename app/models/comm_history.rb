@@ -4,9 +4,13 @@ class CommHistory < ActiveRecord::Base
 
   validates :caller, :recipient, :callSummary, :notes, :bid_id, presence: true
 
-  validate :call_back_date, if: Proc.new{|c| c.callOutcome == "CallBack" }
+  validates :callBackDate, presence: true, if: Proc.new{|c| c.callOutcome == "Follow-up" }
+
+  validate :call_back_date, if: Proc.new{|c| c.callOutcome == "Follow-up" }
 
   def call_back_date
-		self.errors.add(:callBackDate, "Call Back Date should be greater than Call Date.") unless self.callBackDate >= self.call_time
+		if self.call_time and self.callBackDate
+			self.errors.add(:callBackDate, "Call Back Date should be greater than Call Date.") unless self.callBackDate >= self.call_time
+		end
   end
 end

@@ -1,0 +1,8 @@
+<% if @block_out_period.errors.present? %>
+	$(".modal").html("<%= escape_javascript(render partial: 'appointments/schedule_inspection') %>")
+	$(".alert.alert-danger").append("<br/><%= @block_out_period.errors[:base].first if @block_out_period.errors[:base].present? %>")
+<% else %>
+	$(".full-calendar").fullCalendar( 'removeEvents');
+	$(".full-calendar").fullCalendar( 'refetchEvents');
+	$('.modal').modal('hide');
+<% end %>

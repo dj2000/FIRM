@@ -48,12 +48,12 @@
         <%= f.label "Not Interested" %>
       </div>
       <div>
-        <%= f.radio_button :callOutcome, "CallBack" %>
-        <%= f.label "CallBack" %>
+        <%= f.radio_button :callOutcome, "Follow-up" %>
+        <%= f.label "Follow-up" %>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "CallBack" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
+      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
         <%= f.label 'Call Backdate' %>
         <div class='input-group date'>
           <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
@@ -117,7 +117,7 @@
     defaultDate: new Date()
   });
   $("input[name='comm_history[callOutcome]']").change(function(){
-    if ($(this).val() == "CallBack")
+    if ($(this).val() == "Follow-up")
       $(".call_back_date").removeClass('hide');
     else
       $(".call_back_date").addClass('hide');

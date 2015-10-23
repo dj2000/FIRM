@@ -34,7 +34,7 @@
       <div class="row">
         <div class='col-sm-6'>
           <div class="form-group">
-            <%= f.input :inspFee, label: "Inspection Fee", value: number_with_precision(f.object.try(:inspFee), precision: 2) %>
+            <%= f.input :inspFee, label: "Inspection Fee", value: number_with_precision(f.object.try(:insp_request).try(:calculate_inspection_fee, f.object, f.object.try(:is_insurance)), precision: 2) %>
           </div>
         </div>
         <div class='col-sm-6'>
@@ -44,9 +44,14 @@
         </div>
       </div>
       <div class="row">
-        <div class='col-sm-6'>
+        <div class='col-sm-3'>
           <div class="form-group">
             <%= f.input :prepaid, as: :boolean, checked_value: true, unchecked_value: false %>
+          </div>
+        </div>
+        <div class='col-sm-3'>
+          <div class="form-group">
+            <%= f.input :is_insurance, as: :boolean, checked_value: true, unchecked_value: false, label: "Include Insurance" %>
           </div>
         </div>
         <div class='col-sm-6'>
@@ -104,6 +109,16 @@
   $(document).ready(function(){
     $('.datepicker').datepicker({ 
       format: 'yyyy-mm-dd'
+    });
+    $('#appointment_is_insurance').click(function(){
+      var checked = $(this).is(':checked');
+      $.ajax({
+        type: "GET",
+        url: "/appointments/" + <%= @insp_request.id %> + "/calculate_inspection_fee?is_insurance=" + checked,
+        success: function(result){
+          $("#appointment_inspFee").val(result);
+        }
+      });
     });
     <% if @appointment.prepaid %>
       $(".payment_method").show();

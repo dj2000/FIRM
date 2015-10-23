@@ -29,6 +29,9 @@ Rails.application.routes.draw do
 
   resources :bids
 
+  match "/block_out_periods/new/:appointment_id" => "block_out_periods#new", via: :get
+  resources :block_out_periods
+
   resources :inspections do
     get :appointment_info, on: :member
   end
@@ -58,6 +61,8 @@ Rails.application.routes.draw do
     get :get_scheduled_appointments, on: :collection
     get :print, on: :member
     get :send_email, on: :member
+    get :calculate_inspection_fee, on: :member
+    get :background_events, on: :collection
   end
 
   resources :insp_requests do 

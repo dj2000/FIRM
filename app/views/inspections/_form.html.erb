@@ -150,10 +150,12 @@
     paramName: "document_attributes",
     acceptedFiles: ".pdf, .doc, .docx",
     addRemoveLinks: false,
+    clickable: '.preview',
     init: function() {
       var myDropzone = this;
       this.element.querySelector("input[type=submit]").addEventListener("click", function(e) {
         e.preventDefault();
+        e.stopPropagation();
         if (myDropzone.getAcceptedFiles().length > 0) {
           myDropzone.processQueue();
         }
@@ -165,6 +167,9 @@
         if ($(".alert-danger").length == 0) {
           $("<div class='alert alert-danger'>Please review the problems below:</div>").insertAfter($("h1"));
         }
+        $.each(files, function(index, file){
+          file.status = Dropzone.QUEUED;
+        });
         $.each(response, function( attr, error) {
           var container = $(".inspection_" + attr)
           if(!container.hasClass("has-error")){

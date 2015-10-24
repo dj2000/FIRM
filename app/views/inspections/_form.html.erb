@@ -101,6 +101,7 @@
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
         <% f.object.documents.each do |document| %>
+          <%= image_tag document.attachment.url %>
           <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
           <br/>
         <% end %>
@@ -165,15 +166,23 @@
         if (typeof (FileReader) != "undefined") {
             var dvPreview = $(".preview");
             dvPreview.html("");
-            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf)$/;
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
             $($(this)[0].files).each(function () {
                 var file = $(this);
+                var file_name = file[0].name.toLowerCase().split(".")[1]
+                var documentImage = getDocumentImages(file_name)
+                console.log(documentImage)
                 if (regex.test(file[0].name.toLowerCase())) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         var img = $("<img />");
-                        img.attr("style", "height:100px;width: 100px");
-                        img.attr("src", e.target.result);
+                        img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
+                        if (documentImage){
+                          img.attr('src', documentImage )
+                        }
+                        else{
+                          img.attr("src", e.target.result);
+                        }
                         dvPreview.append(img);
                     }
                     reader.readAsDataURL(file[0]);
@@ -187,6 +196,17 @@
             alert("This browser does not support HTML5 FileReader.");
         }
     });
+
+  function getDocumentImages(type){
+    var imgName = '';
+    if (type == 'docx' || type == 'doc'){
+      imgName = '/assets/word_icon.png'
+    }
+    else if(type == 'pdf'){
+      imgName = '/assets/pdf_icon.png'
+    }
+    return imgName;
+  }
   // // Dropzone settings
   // Dropzone.options.fileDropzone = {
   //   autoProcessQueue: false,

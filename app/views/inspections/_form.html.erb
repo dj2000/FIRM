@@ -141,42 +141,37 @@
 
   $("#documentFile").change(function () {
     if (typeof (FileReader) != "undefined") {
-      var dvPreview = $(".preview");
-      dvPreview.html("");
-      var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
+      var divPreview = $(".preview");
+      divPreview.html("");
       $($(this)[0].files).each(function () {
         var file = $(this);
-        var file_name = file[0].name.toLowerCase().split(".").slice(-1)[0]
-        if (regex.test(file[0].name.toLowerCase())) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_name, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            dvPreview.append(img);
+        var file_name = file[0].name;
+        var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var documentImage = getDocumentImages(file_ext, e.target.result)
+          var img = $("<img />");
+          img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
+          if (documentImage){
+            img.attr('src', documentImage)
           }
-          reader.readAsDataURL(file[0]);
-        } else {
-            alert(file[0].name + " is not a valid image file.");
-            dvPreview.html("");
-            return false;
+          divPreview.append(img);
         }
+        reader.readAsDataURL(file[0]);
       });
-    } else {
-        alert("This browser does not support HTML5 FileReader.");
+    }
+    else {
+      alert("This browser does not support HTML5 FileReader.");
     }
   });
 
-  function getDocumentImages(type, resource){
-    var imgName = '';
+  function getDocumentImages(type, target){
+    var imgName;
     if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/'+type+'_icon.png'
+      imgName = '/assets/' + type + '_icon.png'
     }
     else{
-      imgName =  resource;
+      imgName =  target;
     }
     return imgName;
   }

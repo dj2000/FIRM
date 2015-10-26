@@ -65,6 +65,7 @@ class CommHistoriesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comm_history
       @comm_history = CommHistory.find(params[:id])
+      @bid = @comm_history.try(:bid)
     end
 
     def bids

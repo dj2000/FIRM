@@ -90,7 +90,7 @@ class InspectionsController < ApplicationController
 
     def create_documents
       if params[:document_attributes].present?
-        params[:document_attributes].each do |index, file|
+        params[:document_attributes].each do |file|
           @inspection.documents << Document.new(attachment: file)
         end
       end

@@ -76,6 +76,7 @@ class InspectionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection
       @inspection = Inspection.find(params[:id])
+      @documents = @inspection.try(:documents)
     end
 
     def uninspected_appointments
@@ -89,9 +90,13 @@ class InspectionsController < ApplicationController
     end
 
     def create_documents
-      if params[:document_attributes].present?
-        params[:document_attributes].each do |file|
-          @inspection.documents << Document.new(attachment: file)
+      [:document_attributes, :email_document_attributes].each do |attribute|
+        params_values =  params["#{attribute}".to_sym]
+        document_type = (attribute.to_sym == :email_document_attributes ) ? 'email' : nil
+        if params_values.present?
+          params_values.each do |file|
+            @inspection.documents << Document.new(attachment: file, document_type: document_type )
+          end
         end
       end
     end

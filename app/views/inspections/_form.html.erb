@@ -1,5 +1,10 @@
 <%= simple_form_for(@inspection, multipart: true, html: {id: "file-dropzone"}) do |f| %>
   <%= f.error_notification %>
+  <% if f.object.errors["documents"].present? %>
+    <p class="alert alert-danger">
+      Either Miscellaneous or Email Documents are invalid.
+    </p>
+  <% end %>
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
@@ -87,16 +92,35 @@
       <%= f.input :notes %>
     </div>
   </div>
+  <fieldset><legend></legend></fieldset>
   <div class="row">
     <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
-    <div class="col-md-6 preview">
-      <div class="dz-default dz-message">Drop files here or click to upload.</div>
+    <div class="col-md-6 document_preview preview">
+      <div class="text-center">No Preview Available.</div>
     </div>
     <% if f.object.documents.present? %>
       <div class="col-md-6">
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
-        <% f.object.documents.each do |document| %>
+        <% f.object.documents.other_documents.each do |document| %>
+          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+          <br/>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+  <br/>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
+    <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "emailDocumentFile",  accept: ".pdf"%>
+    <div class="col-md-6 email_preview preview">
+      <div class="text-center">No Preview Available.</div>
+    </div>
+    <% if f.object.documents.present? %>
+      <div class="col-md-6">
+        <%= label_tag "Uploaded Email Documents" %>
+        <br/>
+        <% f.object.documents.email_documents.each do |document| %>
           <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
           <br/>
         <% end %>
@@ -141,7 +165,32 @@
 
   $("#documentFile").change(function () {
     if (typeof (FileReader) != "undefined") {
-      var divPreview = $(".preview");
+      var divPreview = $(".document_preview");
+      divPreview.html("");
+      $($(this)[0].files).each(function () {
+        var file = $(this);
+        var file_name = file[0].name;
+        var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var documentImage = getDocumentImages(file_ext, e.target.result)
+          var img = $("<img />");
+          img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
+          if (documentImage){
+            img.attr('src', documentImage)
+          }
+          divPreview.append(img);
+        }
+        reader.readAsDataURL(file[0]);
+      });
+    }
+    else {
+      alert("This browser does not support HTML5 FileReader.");
+    }
+  });
+  $("#emailDocumentFile").change(function () {
+    if (typeof (FileReader) != "undefined") {
+      var divPreview = $(".email_preview");
       divPreview.html("");
       $($(this)[0].files).each(function () {
         var file = $(this);

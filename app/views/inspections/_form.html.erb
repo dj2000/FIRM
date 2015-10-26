@@ -88,12 +88,8 @@
     </div>
   </div>
   <div class="row">
-  <!-- <input type='file' id="imgInp" name="" multiple/> -->
-    <%= file_field_tag 'document_attributes[]', multiple: true, id: "imgInp" %>
+    <%= file_field_tag 'document_attributes[]', multiple: true, id: "imgInp", accept: ".pdf, .doc, .docx" %>
     <div class="col-md-6 preview">
-      <div class="fallback">
-        <!-- <input type='file' id="imgInp" name="document_attributes[]" multiple/> -->
-      </div>
       <div class="dz-default dz-message">Drop files here or click to upload.</div>
     </div>
     <% if f.object.documents.present? %>
@@ -107,6 +103,7 @@
         <% end %>
       </div>
     <% end %>
+  </div>
   <br/>
   <div class="actions">
     <%= f.submit "Submit", class: 'btn btn-success submit-button' %>
@@ -142,62 +139,37 @@
       $(".appointment").addClass("hide");
     }
   });
-  // $("#imgInp").change(function(){
-  //       readURL(this);
-  //   });
-  // function readURL(input) {
-  //       console.log(input)
-  //       if (input.files && input.files[0]) {
-  //           var reader = new FileReader();
-            
-  //           reader.onload = function (e) {
-  //               $('#blah').attr('src', e.target.result);
-  //           }
-            
-  //           reader.readAsDataURL(input.files[0]);
-  //       }
-  //   }
-    
-  //   $("#imgInp").change(function(){
-  //       readURL(this);
-  //   });
 
   $("#imgInp").change(function () {
-        if (typeof (FileReader) != "undefined") {
-            var dvPreview = $(".preview");
+    if (typeof (FileReader) != "undefined") {
+      var dvPreview = $(".preview");
+      dvPreview.html("");
+      var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
+      $($(this)[0].files).each(function () {
+        var file = $(this);
+        var file_name = file[0].name.toLowerCase().split(".").slice(-1)[0];
+        if (regex.test(file[0].name.toLowerCase())) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var documentImage = getDocumentImages(file_name, e.target.result)
+            var img = $("<img />");
+            img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
+            if (documentImage){
+              img.attr('src', documentImage)
+            }
+            dvPreview.append(img);
+          }
+          reader.readAsDataURL(file[0]);
+          } else {
+            alert(file[0].name + " is not a valid image file.");
             dvPreview.html("");
-            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var file_name = file[0].name.toLowerCase().split(".")[1]
-
-                if (regex.test(file[0].name.toLowerCase())) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var documentImage = getDocumentImages(file_name, e.target.result)
-                        console.log("image name is")
-                        console.log(file[0].name.toLowerCase().split(".").slice(-1)[0])
-                        var img = $("<img />");
-                        img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
-                        if (documentImage){
-                          img.attr('src', documentImage)
-                        }
-                        // else{
-                        //   img.attr("src", e.target.result);
-                        // }
-                        dvPreview.append(img);
-                    }
-                    reader.readAsDataURL(file[0]);
-                } else {
-                    alert(file[0].name + " is not a valid image file.");
-                    dvPreview.html("");
-                    return false;
-                }
-            });
-        } else {
-            alert("This browser does not support HTML5 FileReader.");
-        }
-    });
+            return false;
+          }
+        });
+    } else {
+      alert("This browser does not support HTML5 FileReader.");
+    }
+  });
 
   function getDocumentImages(type, resource){
     var imgName = '';
@@ -209,47 +181,4 @@
     }
     return imgName;
   }
-  // // Dropzone settings
-  // Dropzone.options.fileDropzone = {
-  //   autoProcessQueue: false,
-  //   uploadMultiple: true,
-  //   parallelUploads: 100,
-  //   maxFiles: 100,
-  //   previewsContainer: ".preview",
-  //   paramName: "document_attributes",
-  //   acceptedFiles: ".pdf, .doc, .docx",
-  //   addRemoveLinks: false,
-  //   clickable: '.preview',
-  //   init: function() {
-  //     var myDropzone = this;
-  //     this.element.querySelector("input[type=submit]").addEventListener("click", function(e) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
-  //       if (myDropzone.getAcceptedFiles().length > 0) {
-  //         myDropzone.processQueue();
-  //       }
-  //       else{
-  //         $("#file-dropzone").submit();
-  //       }
-  //     });
-  //     this.on("errormultiple", function(files, response) {
-  //       if ($(".alert-danger").length == 0) {
-  //         $("<div class='alert alert-danger'>Please review the problems below:</div>").insertAfter($("h1"));
-  //       }
-  //       $.each(files, function(index, file){
-  //         file.status = Dropzone.QUEUED;
-  //       });
-  //       $.each(response, function( attr, error) {
-  //         var container = $(".inspection_" + attr)
-  //         if(!container.hasClass("has-error")){
-  //           container.addClass("has-error");
-  //           container.append("<span class='help-block'>" + error + "</span>");
-  //         }
-  //       });
-  //     });
-  //     this.on("successmultiple", function(files, response) {
-  //       window.location.href = "/inspections/" + response.id
-  //     });
-  //   }
-  // }
 </script>

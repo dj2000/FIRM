@@ -1,0 +1,54 @@
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#inspection-files" aria-controls="inspection-files" role="tab" data-toggle="tab">
+        <i class="fa fa-binoculars"></i>
+        Inspection Files
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="#miscellaneous-files" aria-controls="miscellaneous-files" role="tab" data-toggle="tab">
+      <i class="fa fa-file-pdf-o"></i>
+      Miscellaneous Files
+      </a>
+    </li>
+    <li role="presentation">
+      <a href="#email-files" aria-controls="email-files" role="tab" data-toggle="tab">
+        <i class="fa fa-envelope"></i>
+        Email Files
+      </a>
+    </li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="inspection-files">
+      <br/>
+      Inspection Report URL: 
+      <%= link_to_if @inspection.report_file_name, @inspection.report_file_name, @inspection.report.url, class: 'blue-link' %>
+      <hr/>
+      Completed Appointment Sheet URL: 
+      <%= link_to_if @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet.url, class: 'blue-link' %>
+      <hr/>
+      Client Information Sheet URL: 
+      <%= link_to_if @inspection.client_information_sheet_file_name, @inspection.client_information_sheet_file_name, @inspection.client_information_sheet.url, class: 'blue-link' %>
+      <hr/>
+      Footprint diagram of property URL: 
+      <%= link_to_if @inspection.footprint_diagram_file_name, @inspection.footprint_diagram_file_name, @inspection.footprint_diagram.url, class: 'blue-link' %>
+      <hr/>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="miscellaneous-files">
+      <br/>
+      <% @documents.other_documents.each do |document| %>
+        <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %><hr/>
+      <% end %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="email-files">
+      <br/>
+      <% @documents.email_documents.each do |document| %>
+        <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %><hr/>
+      <% end %>
+    </div>
+  </div>
+
+</div>

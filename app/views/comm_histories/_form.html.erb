@@ -78,6 +78,7 @@
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success hide email", onclick: "sendEmail()", data: { client_email: "" } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
@@ -122,4 +123,12 @@
     else
       $(".call_back_date").addClass('hide');
   });
+
+  function sendEmail(){
+    var email = $(".email").attr('data-client-email');
+    var bidName = $("#comm_history_bid_id").text().replace('Select Bid\n', '')
+    var callSummaryText = $("#comm_history_callSummary").val();
+    var link = 'mailto:' + email + '?subject=' + bidName + '&body=' + callSummaryText;
+    window.location.href = link;
+  }
 </script>

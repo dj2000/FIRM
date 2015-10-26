@@ -14,3 +14,5 @@ $(".call_time").val("<%= @bid.try(:comm_history).try(:call_time).try(:strftime, 
 $("input.verbal_close_by").val("<%= @bid.try(:comm_history).try(:caller) %>")
 $(".contract").removeClass("hide");
 $("#project_jobCost").val("<%= @bid.try(:total_cost) %>");
+$(".email").removeClass("hide");
+$(".email").attr('data-client-email', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) %>")

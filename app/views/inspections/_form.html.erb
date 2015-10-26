@@ -170,19 +170,21 @@
             $($(this)[0].files).each(function () {
                 var file = $(this);
                 var file_name = file[0].name.toLowerCase().split(".")[1]
-                var documentImage = getDocumentImages(file_name)
-                console.log(documentImage)
+
                 if (regex.test(file[0].name.toLowerCase())) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
+                        var documentImage = getDocumentImages(file_name, e.target.result)
+                        console.log("image name is")
+                        console.log(file[0].name.toLowerCase().split(".").slice(-1)[0])
                         var img = $("<img />");
                         img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
                         if (documentImage){
-                          img.attr('src', documentImage )
+                          img.attr('src', documentImage)
                         }
-                        else{
-                          img.attr("src", e.target.result);
-                        }
+                        // else{
+                        //   img.attr("src", e.target.result);
+                        // }
                         dvPreview.append(img);
                     }
                     reader.readAsDataURL(file[0]);
@@ -197,13 +199,13 @@
         }
     });
 
-  function getDocumentImages(type){
+  function getDocumentImages(type, resource){
     var imgName = '';
-    if (type == 'docx' || type == 'doc'){
-      imgName = '/assets/word_icon.png'
+    if (type == 'docx' || type == 'doc' || type == 'pdf'){
+      imgName = '/assets/'+type+'_icon.png'
     }
-    else if(type == 'pdf'){
-      imgName = '/assets/pdf_icon.png'
+    else{
+      imgName =  resource;
     }
     return imgName;
   }

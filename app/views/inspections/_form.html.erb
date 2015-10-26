@@ -88,12 +88,8 @@
     </div>
   </div>
   <div class="row">
-  <!-- <input type='file' id="imgInp" name="" multiple/> -->
-    <%= file_field_tag 'document_attributes[]', multiple: true, id: "imgInp" %>
+    <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
     <div class="col-md-6 preview">
-      <div class="fallback">
-        <!-- <input type='file' id="imgInp" name="document_attributes[]" multiple/> -->
-      </div>
       <div class="dz-default dz-message">Drop files here or click to upload.</div>
     </div>
     <% if f.object.documents.present? %>
@@ -101,12 +97,12 @@
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
         <% f.object.documents.each do |document| %>
-          <%= image_tag document.attachment.url %>
           <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
           <br/>
         <% end %>
       </div>
     <% end %>
+    </div>
   <br/>
   <div class="actions">
     <%= f.submit "Submit", class: 'btn btn-success submit-button' %>
@@ -142,60 +138,37 @@
       $(".appointment").addClass("hide");
     }
   });
-  // $("#imgInp").change(function(){
-  //       readURL(this);
-  //   });
-  // function readURL(input) {
-  //       console.log(input)
-  //       if (input.files && input.files[0]) {
-  //           var reader = new FileReader();
-            
-  //           reader.onload = function (e) {
-  //               $('#blah').attr('src', e.target.result);
-  //           }
-            
-  //           reader.readAsDataURL(input.files[0]);
-  //       }
-  //   }
-    
-  //   $("#imgInp").change(function(){
-  //       readURL(this);
-  //   });
 
-  $("#imgInp").change(function () {
-        if (typeof (FileReader) != "undefined") {
-            var dvPreview = $(".preview");
-            dvPreview.html("");
-            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
-            $($(this)[0].files).each(function () {
-                var file = $(this);
-                var file_name = file[0].name.toLowerCase().split(".").slice(-1)[0]
-
-                if (regex.test(file[0].name.toLowerCase())) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var documentImage = getDocumentImages(file_name, e.target.result)
-                        console.log("image name is")
-                        console.log(file[0].name.toLowerCase().split(".").slice(-1)[0])
-                        var img = $("<img />");
-                        img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
-                        if (documentImage){
-                          img.attr('src', documentImage)
-                        }
-                        
-                        dvPreview.append(img);
-                    }
-                    reader.readAsDataURL(file[0]);
-                } else {
-                    alert(file[0].name + " is not a valid image file.");
-                    dvPreview.html("");
-                    return false;
-                }
-            });
+  $("#documentFile").change(function () {
+    if (typeof (FileReader) != "undefined") {
+      var dvPreview = $(".preview");
+      dvPreview.html("");
+      var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.doc|.docx)$/;
+      $($(this)[0].files).each(function () {
+        var file = $(this);
+        var file_name = file[0].name.toLowerCase().split(".").slice(-1)[0]
+        if (regex.test(file[0].name.toLowerCase())) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var documentImage = getDocumentImages(file_name, e.target.result)
+            var img = $("<img />");
+            img.attr("style", "height:100px;width: 100px;border-radius: 8px;");
+            if (documentImage){
+              img.attr('src', documentImage)
+            }
+            dvPreview.append(img);
+          }
+          reader.readAsDataURL(file[0]);
         } else {
-            alert("This browser does not support HTML5 FileReader.");
+            alert(file[0].name + " is not a valid image file.");
+            dvPreview.html("");
+            return false;
         }
-    });
+      });
+    } else {
+        alert("This browser does not support HTML5 FileReader.");
+    }
+  });
 
   function getDocumentImages(type, resource){
     var imgName = '';
@@ -207,5 +180,4 @@
     }
     return imgName;
   }
-  
 </script>

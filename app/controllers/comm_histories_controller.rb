@@ -5,7 +5,12 @@ class CommHistoriesController < ApplicationController
   # GET /comm_histories
   # GET /comm_histories.json
   def index
-    @comm_histories = CommHistory.all
+    @bid = Bid.find(params[:id]) if params[:id]
+    @comm_histories = @bid ? @bid.comm_histories : CommHistory.all
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /comm_histories/1

@@ -1,0 +1,53 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <% if request.format == :html %>
+        <th>Bid</th>
+      <% end %>
+      <th>Caller</th>
+      <th>Recipient</th>
+      <th>Call Summary</th>
+      <th>Call Time</th>
+      <th>Call Outcome</th>
+      <th>Call Back Date</th>
+      <th>Notes</th>
+      <% if request.format == :html %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comm_histories.each do |comm_history| %>
+      <tr>
+        <% if request.format == :html %>
+          <td><%= comm_history.try(:bid).try(:title) %></td>
+        <% end %>
+        <td><%= comm_history.caller %></td>
+        <td><%= comm_history.recipient %></td>
+        <td><%= comm_history.callSummary %></td>
+        <td><%= comm_history.try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S") %></td>
+        <td><%= comm_history.callOutcome %></td>
+        <td><%= comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
+        <td><%= comm_history.notes %></td>
+        <% if request.format == :html %>
+          <td>
+            <%= link_to comm_history, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_comm_history_path(comm_history), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to comm_history, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

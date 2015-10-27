@@ -2,6 +2,7 @@ class Bid < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :payPlan
   has_many :comm_histories
+  has_one :verbal_close_comm_history, -> { where(callOutcome: "Verbal Close") }, class_name: 'CommHistory', foreign_key: 'bid_id'
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, :title, :payPlan_id, presence: true
 
@@ -27,5 +28,9 @@ class Bid < ActiveRecord::Base
   def self.uncontracted_bids
     bids = Contract.all.map(&:bid_id)
     self.where.not(id: bids)
+  end
+
+  def self.accepted_bids
+    bids = Bid.where(status: "Accepted")
   end
 end

@@ -2,7 +2,6 @@ $(".insp_request.inspector_info").val("<%= @bid.try(:inspection).try(:appointmen
 $(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
 $("input.payment_plan").val("<%= @bid.try(:payPlan).try(:payment_plan_select) %>")
 $(".payment_plan.details").html('<%= j link_to("<i class=\'fa fa-eye\'></i> Details".html_safe, pay_plan_path(@bid.try(:payPlan), bid_id: @bid.id), class: "link", remote: true) %> ');
-$(".call_time").val("<%= @bid.try(:comm_history).try(:call_time).try(:strftime, '%d %b %Y %H:%M:%S') %>");
 $(".contract").find("input.accepted_by").val("<%= @contract.try(:acceptedBy) %>");
 $(".contract").find("input.signed_by").val("<%= @contract.try(:signedBy) %>");
 $(".contract").find("input.date_signed").val("<%= @contract.try(:dateSigned).try(:strftime, '%d %b %Y') %>");
@@ -10,8 +9,8 @@ $(".insp_request").removeClass("hide");
 $(".inspector_info").removeClass("hide");
 $(".payment_plan").removeClass("hide");
 $(".call_time").removeClass("hide");
-$(".call_time").val("<%= @bid.try(:comm_history).try(:call_time).try(:strftime, '%d %b %Y %H:%M:%S') %>");
-$("input.verbal_close_by").val("<%= @bid.try(:comm_history).try(:caller) %>")
+$(".call_time").val("<%= @bid.try(:verbal_close_comm_history).try(:call_time).try(:strftime, '%d %b %Y %H:%M:%S') %>");
+$("input.verbal_close_by").val("<%= @bid.try(:verbal_close_comm_history).try(:caller) %>")
 $(".contract").removeClass("hide");
 $("#project_jobCost").val("<%= @bid.try(:total_cost) %>");
 $(".email").removeClass("hide");

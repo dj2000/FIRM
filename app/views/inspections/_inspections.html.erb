@@ -1,0 +1,51 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Appointment</th>
+      <th>Foundation Condition</th>
+      <th>Number Of Days</th>
+      <th>Number of Guys</th>
+      <th>Paid</th>
+      <th>Repairs Required</th>
+      <th>Interior Access</th>
+      <th>Verified Report</th>
+      <th>Verified Complete</th>
+      <th>Notes</th>
+      <th colspan="3" class="text-center">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inspections.each do |inspection| %>
+      <tr>
+        <td><%= inspection.name %></td>
+        <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
+        <td><%= inspection.fCondition %></td>
+        <td><%= inspection.nOD %></td>
+        <td><%= inspection.nOG %></td>
+        <td><%= inspection.humanize("paid") %></td>
+        <td><%= inspection.humanize("repairs") %></td>
+        <td><%= inspection.humanize("interiorAccess") %></td>
+        <td><%= inspection.humanize("verifiedReport") %></td>
+        <td><%= inspection.humanize("verifiedComp") %></td>
+        <td><%= inspection.notes %></td>
+        <td>
+          <%= link_to inspection, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Bids
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_inspection_path(inspection), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to inspection, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

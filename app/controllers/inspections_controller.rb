@@ -5,7 +5,19 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    @inspections = Inspection.all
+    if params[:search_filter] == "Property"
+      @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id])
+    elsif params[:search_filter] == "Client"
+      @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id])
+    else
+      @inspections = Inspection.all
+    end
+    @properties = Property.all.map{|p| [p.property_select_value, p.id]}
+    @clients = Client.all.map{|c| [c.name, c.id]}
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /inspections/1

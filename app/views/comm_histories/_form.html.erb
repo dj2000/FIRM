@@ -9,7 +9,6 @@
       <%= text_field_tag "inspector_name", f.object.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
     </div>
   </div>
-  <br/>
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
@@ -78,6 +77,7 @@
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", onclick: "sendEmail()", data: { client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
@@ -107,6 +107,7 @@
       alert("Please select Bid.")
       $(".inspector_info").addClass("hide");
       $(".insp_request").addClass("hide");
+      $(".email").addClass("hide");
     }
   });
   $('.input-group.date').datepicker({ 
@@ -122,4 +123,16 @@
     else
       $(".call_back_date").addClass('hide');
   });
+
+  function sendEmail(){
+    var email = $(".email").attr('data-client-email');
+    var bidName = $("#comm_history_bid_id option:selected").text().replace('Select Bid\n', '')
+    var callSummaryText = $("#comm_history_callSummary").val();
+    var link = 'mailto:' + email + '?subject=' + bidName + '&body=' + callSummaryText;
+    window.location.href = link;
+  }
+
+  <% if @comm_history.bid_id %>
+    $(".email").removeClass('hide');
+  <% end %>
 </script>

@@ -1,6 +1,6 @@
 <fieldset><legend></legend></fieldset>
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<%= label_tag "Property" %>
 		<br/>
 		<%= @insp_request.property.try(:street) %>
@@ -10,7 +10,7 @@
 		<% end %>
 		<% end %>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<%= label_tag "Client" %>
 		<br/>
 		<%= @insp_request.client.try(:name) %>
@@ -20,7 +20,7 @@
 		<% end %>
 		<% end %>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<%= label_tag "Agent" %>
 		<br/>
 		<%= @insp_request.agent.try(:name) %>
@@ -28,6 +28,25 @@
 		<%= link_to agent_path(@insp_request.agent), remote: true, class: 'link' do %>
 		<i class='fa fa-eye'></i> Details
 		<% end %>
+		<% end %>
+	</div>
+	<div class="col-md-2">
+		<%= label_tag "Inspection" %>
+		<br/>
+		<%= @bid.try(:inspection).try(:name) %>
+		<% if @bid.try(:inspection) %>
+			<%= link_to inspection_path(@bid.try(:inspection)), remote: true, class: 'link' do %>
+				<i class='fa fa-eye'></i> Details
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-md-2">
+		<%= label_tag "Call History" %>
+		<br/>
+		<% if @bid.try(:comm_histories) %>
+			<%= link_to comm_histories_path(id: @bid), remote: true, class: 'link' do %>
+				<i class='fa fa-eye'></i> Details
+			<% end %>
 		<% end %>
 	</div>
 </div>

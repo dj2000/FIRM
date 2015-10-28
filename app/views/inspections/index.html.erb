@@ -1,57 +1,53 @@
+<%= form_tag('/inspections', method: 'get', id: 'search-inspection') do %>
+  <div class="row">
+    <div class="col-md-3">
+    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
+    </div>
+    <div class="col-md-3">
+      <%= select_tag "property_id", options_for_select(@properties), class: "form-control property hide", prompt: "Select Property" %>
+      <%= select_tag "client_id", options_for_select(@clients), class: "form-control client hide", prompt: "Select Client" %>
+    </div>
+    <div class="col-md-3">
+      <a href="javascript:void(0)" class='btn btn-primary searchInspection'>Search</a>
+    </div>
+  </div>
+<% end %>
 <h1>Inspections Entry</h1>
-
-<table class='table table-bordered table-striped table-responsive table-hover'>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Appointment</th>
-      <th>Foundation Condition</th>
-      <th>Number Of Days</th>
-      <th>Number of Guys</th>
-      <th>Paid</th>
-      <th>Repairs Required</th>
-      <th>Interior Access</th>
-      <th>Verified Report</th>
-      <th>Verified Complete</th>
-      <th>Notes</th>
-      <th colspan="3" class="text-center">Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @inspections.each do |inspection| %>
-      <tr>
-        <td><%= inspection.name %></td>
-        <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
-        <td><%= inspection.fCondition %></td>
-        <td><%= inspection.nOD %></td>
-        <td><%= inspection.nOG %></td>
-        <td><%= inspection.humanize("paid") %></td>
-        <td><%= inspection.humanize("repairs") %></td>
-        <td><%= inspection.humanize("interiorAccess") %></td>
-        <td><%= inspection.humanize("verifiedReport") %></td>
-        <td><%= inspection.humanize("verifiedComp") %></td>
-        <td><%= inspection.notes %></td>
-        <td>
-          <%= link_to inspection, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Bids
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_inspection_path(inspection), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to inspection, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="inspection-data">
+  <%= render partial: "inspections" %>
+</div>
 
 <br>
 
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection"), new_inspection_path, :class => "btn btn-info" %>
+<script>
+$(".search_filter").change(function(){
+  var filter = $(this).val();
+  if(filter == "Property"){
+    $("select.property").removeClass("hide");
+    $("select.client").addClass("hide");
+    $(".property").chosen();
+    $(".client").chosen();
+    $('.client').chosen('destroy');
+    $('select.client').val('').trigger('chosen:updated');
+  }
+  else if (filter == "Client"){
+    $("select.client").removeClass("hide");
+    $("select.property").addClass("hide");
+    $(".client").chosen();
+    $('.property').chosen();
+    $('.property').chosen('destroy');
+    $('select.property').val('').trigger('chosen:updated');
+  }
+  else{
+    alert("Please select search criteria.")
+  }
+});
+
+$(".searchInspection").on('click', function(){
+  $.ajax({
+    url: '/inspections',
+    data: $("#search-inspection").serialize()
+  })
+});
+</script>

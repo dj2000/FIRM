@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019095804) do
+ActiveRecord::Schema.define(version: 20151028073004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20151019095804) do
   end
 
   create_table "bids", force: true do |t|
-    t.string   "inspection_id"
+    t.integer  "inspection_id"
     t.decimal  "costRepair"
     t.decimal  "feeSeismicUpg"
     t.decimal  "feeAdmin"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20151019095804) do
     t.string   "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "document_type"
   end
 
   create_table "i_fee_schedules", force: true do |t|

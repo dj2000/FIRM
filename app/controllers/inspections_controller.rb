@@ -5,7 +5,21 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    @inspections = Inspection.all
+    if params[:client_id].present? || params[:property_id].present?
+      if params[:search_filter] == "Property"
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id])
+      elsif params[:search_filter] == "Client"
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id])
+      end
+    else
+      @inspections = Inspection.all
+    end
+    @properties = Property.all.map{|p| [p.property_select_value, p.id]}
+    @clients = Client.all.map{|c| [c.name, c.id]}
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /inspections/1
@@ -76,6 +90,7 @@ class InspectionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection
       @inspection = Inspection.find(params[:id])
+      @documents = @inspection.try(:documents)
     end
 
     def uninspected_appointments
@@ -89,9 +104,13 @@ class InspectionsController < ApplicationController
     end
 
     def create_documents
-      if params[:document_attributes].present?
-        params[:document_attributes].each do |index, file|
-          @inspection.documents << Document.new(attachment: file)
+      [:document_attributes, :email_document_attributes].each do |attribute|
+        params_values =  params["#{attribute}".to_sym]
+        document_type = (attribute.to_sym == :email_document_attributes ) ? 'email' : nil
+        if params_values.present?
+          params_values.each do |file|
+            @inspection.documents << Document.new(attachment: file, document_type: document_type )
+          end
         end
       end
     end

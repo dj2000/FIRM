@@ -21,7 +21,6 @@
 @import 'bootstrap-timepicker';
 @import "font-awesome";
 @import "fullcalendar";
-@import "dropzone";
 
 #login-wraper {
   -webkit-border-radius: 15px;
@@ -126,5 +125,5 @@ body {
   margin-top: 25px;
 }
 .blue-link{
-  color:#07c;
+  color:#07c !important;
 }

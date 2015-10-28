@@ -5,7 +5,21 @@ class ContractsController < ApplicationController
   # GET /contracts
   # GET /contracts.json
   def index
-    @contracts = Contract.all
+    if params[:client_id].present? || params[:property_id].present?
+      if params[:search_filter] == "Property"
+        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.property_id = ? ", params[:property_id])
+      elsif params[:search_filter] == "Client"
+        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.client_id = ? ", params[:client_id])
+      end
+    else
+      @contracts = Contract.all
+    end
+    @properties = Property.all.map{|p| [p.property_select_value, p.id]}
+    @clients = Client.all.map{|c| [c.name, c.id]}
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /contracts/1

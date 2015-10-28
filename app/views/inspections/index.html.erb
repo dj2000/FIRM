@@ -27,19 +27,14 @@ $(".search_filter").change(function(){
     $("select.property").removeClass("hide");
     $("select.client").addClass("hide");
     $(".property").chosen();
-    if ($("body").find('.chosen-container').length > 0) {
-      $("body").find('select.client').chosen('destroy');
-    }
-    //$('.client').chosen('destroy');
+    $(".client").chosen();
+    $('.client').chosen('destroy');
   }
   else if (filter == "Client"){
     $("select.client").removeClass("hide");
     $("select.property").addClass("hide");
     $(".client").chosen();
-    if ($("body").find('.chosen-container').length > 0) {
-      $("body").find('select.property').chosen('destroy');
-    }
-    //$('.property').chosen('destroy');
+    $('.property').chosen('destroy');
   }
   else{
     alert("Please select search criteria.")

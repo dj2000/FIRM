@@ -1,7 +1,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <% if request.format == :html %>
+      <% if request.format == :html || params[:search_filter].present? %>
         <th>Bid</th>
       <% end %>
       <th>Caller</th>
@@ -11,7 +11,7 @@
       <th>Call Outcome</th>
       <th>Call Back Date</th>
       <th>Notes</th>
-      <% if request.format == :html %>
+      <% if request.format == :html || params[:search_filter].present? %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
     </tr>
@@ -20,7 +20,7 @@
   <tbody>
     <% @comm_histories.each do |comm_history| %>
       <tr>
-        <% if request.format == :html %>
+        <% if request.format == :html || params[:search_filter].present? %>
           <td><%= comm_history.try(:bid).try(:title) %></td>
         <% end %>
         <td><%= comm_history.caller %></td>
@@ -30,7 +30,7 @@
         <td><%= comm_history.callOutcome %></td>
         <td><%= comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= comm_history.notes %></td>
-        <% if request.format == :html %>
+        <% if request.format == :html || params[:search_filter].present? %>
           <td>
             <%= link_to comm_history, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Show

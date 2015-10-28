@@ -1,4 +1,49 @@
+<%= form_tag('/comm_histories', method: 'get', id: 'search-comm-histories') do %>
+  <div class="row">
+    <div class="col-md-3">
+    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
+    </div>
+    <div class="col-md-3">
+      <%= select_tag "property_id", options_for_select(@properties), class: "form-control property hide", prompt: "Select Property" %>
+      <%= select_tag "client_id", options_for_select(@clients), class: "form-control client hide", prompt: "Select Client" %>
+    </div>
+    <div class="col-md-3">
+      <a href="javascript:void(0)" class='btn btn-primary searchCommHistories'>Search</a>
+    </div>
+  </div>
+<% end %>
 <h1>Listing Bids Follow Up</h1>
+<div class="comm-histories-data">
 <%= render partial: 'comm_histories' %>
+</div>
 <br>
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Bids Follow Up"), new_comm_history_path, :class => "btn btn-info" %>
+<script>
+$(".search_filter").change(function(){
+  var filter = $(this).val();
+  if(filter == "Property"){
+    $("select.property").removeClass("hide");
+    $("select.client").addClass("hide");
+    $(".property").chosen();
+    $(".client").chosen();
+    $('.client').chosen('destroy');
+  }
+  else if (filter == "Client"){
+    $("select.client").removeClass("hide");
+    $("select.property").addClass("hide");
+    $(".client").chosen();
+    $('.property').chosen();
+    $('.property').chosen('destroy');
+  }
+  else{
+    alert("Please select search criteria.")
+  }
+});
+
+$(".searchCommHistories").on('click', function(){
+  $.ajax({
+    url: '/comm_histories',
+    data: $("#search-comm-histories").serialize()
+  })
+});
+</script>

@@ -6,10 +6,20 @@ class CommHistoriesController < ApplicationController
   # GET /comm_histories.json
   def index
     @bid = Bid.find(params[:id]) if params[:id]
-    @comm_histories = @bid ? @bid.comm_histories : CommHistory.all
+    if params[:client_id].present? || params[:property_id].present?
+      if params[:search_filter] == "Property"
+        @comm_histories = CommHistory.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.property_id = ? ", params[:property_id])
+      elsif params[:search_filter] == "Client"
+        @comm_histories = CommHistory.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.client_id = ? ", params[:client_id])
+      end
+    else
+      @comm_histories = @bid ? @bid.comm_histories : CommHistory.all
+    end
+    @properties = Property.all.map{|p| [p.property_select_value, p.id]}
+    @clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
-      format.html
       format.js
+      format.html
     end
   end
 

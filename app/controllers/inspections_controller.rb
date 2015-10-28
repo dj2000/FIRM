@@ -5,10 +5,12 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    if params[:search_filter] == "Property"
-      @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id])
-    elsif params[:search_filter] == "Client"
-      @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id])
+    if params[:client_id].present? || params[:property_id].present?
+      if params[:search_filter] == "Property"
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id])
+      elsif params[:search_filter] == "Client"
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id])
+      end
     else
       @inspections = Inspection.all
     end

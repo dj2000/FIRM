@@ -27,6 +27,7 @@ $(".search_filter").change(function(){
     $(".property").chosen();
     $(".client").chosen();
     $('.client').chosen('destroy');
+    $('select.client').val('').trigger('chosen:updated');
   }
   else if (filter == "Client"){
     $("select.client").removeClass("hide");
@@ -34,6 +35,7 @@ $(".search_filter").change(function(){
     $(".client").chosen();
     $('.property').chosen();
     $('.property').chosen('destroy');
+    $('select.property').val('').trigger('chosen:updated');
   }
   else{
     alert("Please select search criteria.")

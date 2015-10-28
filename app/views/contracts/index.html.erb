@@ -35,6 +35,7 @@ $(".search_filter").change(function(){
     $("select.client").removeClass("hide");
     $("select.property").addClass("hide");
     $(".client").chosen();
+    $('.property').chosen();
     $('.property').chosen('destroy');
     $('select.property').val('').trigger('chosen:updated');
   }

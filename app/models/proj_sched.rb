@@ -18,7 +18,7 @@ class ProjSched < ActiveRecord::Base
       id: self.id,
       color: ProjSched::COLORS["#{self.crew_id}"],
       allDay: false,
-      project: self.project.title
+      project: self.try(:project).try(:title)
     }
   end
 

@@ -1,0 +1,23 @@
+<%= simple_form_for(@commission_rate) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+  	<div class="col-md-6">
+  		<%= f.input :title %>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-md-6">
+  		<%= f.input :scale_start, as: :string %>
+  	</div>
+  	<div class="col-md-6">
+  		<%= f.input :scale_end, as: :string %>
+  	</div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+<script>
+	$("#commission_rate_scale_start").mask("$99999", { autoclear: false, placeholder: "" });
+  $("#commission_rate_scale_end").mask("$99999", { autoclear: false, placeholder: "" });
+</script>

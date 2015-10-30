@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :crews
 
+  resources :commission_rates
+
   resources :proj_scheds do
     get :scheduled_projects, on: :collection
   end

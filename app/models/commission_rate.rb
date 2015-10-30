@@ -13,4 +13,8 @@ class CommissionRate < ActiveRecord::Base
 			self.errors.add(:scale_end, "Scale end can't be less than scale start.") if self.scale_start >= self.scale_end
 		end
 	end
+
+	def commission_rate_select
+		"#{self.title} (#{self.scale})"
+	end
 end

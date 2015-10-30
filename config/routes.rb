@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :commissions
+
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :insp_comm_scales
-
-  resources :commissions
 
   resources :proj_insps
 

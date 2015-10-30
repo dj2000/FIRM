@@ -1,19 +1,29 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Year:</strong>
-  <%= @commission.year %>
-</p>
-
-<p>
-  <strong>Weekno:</strong>
-  <%= @commission.weekNo %>
-</p>
-
-<p>
-  <strong>Rate:</strong>
-  <%= @commission.rate %>
-</p>
-
-<%= link_to 'Edit', edit_commission_path(@commission) %> |
-<%= link_to 'Back', commissions_path %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Commission</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Commission Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inspector</td>
+          <td><%= @commission.try(:inspector).try(:name) %></td>
+        </tr>
+        <tr>
+          <td>Inspector</td>
+          <td><%= @commission.try(:commission_rate).try(:commission_rate_select) %></td>
+        </tr>
+        <tr>
+          <td>Percentage</td>
+          <td><%= number_to_percentage(@commission.percentage, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+   </div>
+</div>

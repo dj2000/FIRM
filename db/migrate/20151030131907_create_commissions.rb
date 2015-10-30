@@ -1,10 +1,10 @@
 class CreateCommissions < ActiveRecord::Migration
   def change
+  	drop_table :commissions
     create_table :commissions do |t|
-      t.integer :year
-      t.integer :weekNo
-      t.decimal :rate
-
+      t.integer :inspector_id
+      t.integer :commission_rate_id
+      t.string :percentage
       t.timestamps
     end
   end

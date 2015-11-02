@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030131907) do
+ActiveRecord::Schema.define(version: 20151102105653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,17 @@ ActiveRecord::Schema.define(version: 20151030131907) do
     t.datetime "call_time"
   end
 
+  create_table "commission_payment_details", force: true do |t|
+    t.integer  "inspector_id"
+    t.integer  "contract_id"
+    t.date     "commission_date"
+    t.decimal  "amount"
+    t.date     "paid_date"
+    t.string   "payment_reference"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "commission_rates", force: true do |t|
     t.integer  "scale_start"
     t.integer  "scale_end"
@@ -131,9 +142,9 @@ ActiveRecord::Schema.define(version: 20151030131907) do
   create_table "commissions", force: true do |t|
     t.integer  "inspector_id"
     t.integer  "commission_rate_id"
-    t.string   "percentage"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "percentage"
   end
 
   create_table "contracts", force: true do |t|
@@ -149,6 +160,7 @@ ActiveRecord::Schema.define(version: 20151030131907) do
     t.string   "confirmed_by"
     t.date     "accepted_date"
     t.string   "title"
+    t.string   "status"
   end
 
   create_table "crew_skills", force: true do |t|

@@ -39,6 +39,22 @@ class Contract < ActiveRecord::Base
     (self.try(:bid).try(:total_cost) - (self.try(:downPmtAmt) || 0 ))
   end
 
+  ## Calculation of commission for each contract
+  def calculate_commission
+    bid = self.try(:bid)
+    amount = 0
+    project_cost = bid.try(:total_cost)
+    inspector_id = bid.try(:inspection).try(:appointment).try(:inspector_id)
+    commissions = Commission.joins(:inspector, :commission_rate).where(inspector_id: inspector_id)
+    commissions.each do |c|
+      if c.scale.include?(project_cost)
+        percentage_amount = c.percentage
+        amount = ((project_cost * percentage_amount) / 100).to_f
+      end
+    end
+    amount
+  end
+
   private
   def down_payment_amount
     bid = self.try(:bid)

@@ -1,5 +1,8 @@
 <%= simple_form_for(@commission_rate) do |f| %>
   <%= f.error_notification %>
+  <% if f.object.errors[:base].present? %>
+    <p class="alert alert-danger"><%= f.object.errors[:base].first %></p>
+  <% end %>
   <div class="row">
   	<div class="col-md-6">
   		<%= f.input :title %>

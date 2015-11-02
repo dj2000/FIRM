@@ -4,7 +4,7 @@ class CommissionRatesController < ApplicationController
   # GET /commission_rates
   # GET /commission_rates.json
   def index
-    @commission_rates = CommissionRate.all
+    @commission_rates = CommissionRate.all.order(:created_at)
   end
 
   # GET /commission_rates/1
@@ -69,10 +69,8 @@ class CommissionRatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commission_rate_params
-      if params[:commission_rate][:scale_start].present? and params[:commission_rate][:scale_end].present?
-        params[:commission_rate][:scale_start] = params[:commission_rate][:scale_start].gsub("$","").to_i
-        params[:commission_rate][:scale_end] = params[:commission_rate][:scale_end].gsub("$","").to_i
-      end
+      params[:commission_rate][:scale_start] = params[:commission_rate][:scale_start].gsub("$","").to_i if params[:commission_rate][:scale_start].present?
+      params[:commission_rate][:scale_end] = params[:commission_rate][:scale_end].gsub("$","").to_i if params[:commission_rate][:scale_end].present?
       params.require(:commission_rate).permit(:scale_start, :scale_end, :title)
     end
 end

@@ -48,6 +48,6 @@ class CommissionsController < ApplicationController
 
     def inspectors_and_commission_rates
       @inspectors = Inspector.all
-      @commission_rates = CommissionRate.all
+      @commission_rates = CommissionRate.all.order(:created_at)
     end
 end

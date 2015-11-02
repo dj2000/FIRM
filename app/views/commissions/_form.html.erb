@@ -6,7 +6,7 @@
       <%= f.association :inspector, as: :select, collection: @inspectors, label_method: :name, selected: f.object.inspector_id , label: "Select Inspector", include_blank: "Select Inspector" %>
     </div>
     <div class="col-md-6">
-      <%= f.association :commission_rate, as: :select, collection: @commission_rates, label_method: :commission_rate_select, selected: f.object.commission_rate_id , label: "Select Commission Rate", include_blank: "Select Commission Rate" %>
+      <%= f.association :commission_rate, as: :select, collection: @commission_rates, label_method: :commission_rate_select, selected: f.object.commission_rate_id , label: "Select Scale", include_blank: "Select Scale" %>
     </div>
   </div>
 

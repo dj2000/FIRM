@@ -20,8 +20,9 @@ class Bid < ActiveRecord::Base
 		total
   end
 
-  def calculate_amount(percentage_amount)
-    ((self.total_cost * percentage_amount) / 100).to_f if self.total_cost > 0
+  def calculate_amount(percentage_amount, cost = nil)
+    cost = cost ? cost : self.total_cost
+    ((cost.to_f * percentage_amount.to_f) / 100).to_f if cost > 0.0
   end
 
   def self.uncontracted_bids

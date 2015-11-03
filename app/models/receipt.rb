@@ -2,9 +2,10 @@ class Receipt < ActiveRecord::Base
   belongs_to :invoice
   validates :reference, :date, :invoice_id, :amount, presence: true
 
-  after_save :update_invoice_balance
+  after_save :update_invoice_balance, if: "self.amount_changed?"
 
   def update_invoice_balance
+    binding.pry
     amount_values = self.amount_change.map(&:to_f)
     new_amount = amount_values.last
     prev_amount = amount_values.first

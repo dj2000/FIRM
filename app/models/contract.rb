@@ -39,20 +39,54 @@ class Contract < ActiveRecord::Base
     (self.try(:bid).try(:total_cost) - (self.try(:downPmtAmt) || 0 ))
   end
 
-  ## Calculation of commission for each contract
-  def calculate_commission
-    bid = self.try(:bid)
-    amount = 0
-    project_cost = bid.try(:total_cost)
-    inspector_id = bid.try(:inspection).try(:appointment).try(:inspector_id)
-    commissions = Commission.joins(:inspector, :commission_rate).where(inspector_id: inspector_id)
+  ## Scale for contract's amount
+  def calculate_scale(amount, inspector_id)
+    calculated_amount = 0
+    commissions = Commission.where(inspector_id: inspector_id)
     commissions.each do |c|
-      if c.scale.include?(project_cost)
+      if c.scale.include?(amount)
         percentage_amount = c.percentage
-        amount = ((project_cost * percentage_amount) / 100).to_f
+        calculated_amount = self.bid.try(:calculate_amount, percentage_amount, amount)
       end
     end
-    amount
+    calculated_amount
+  end
+
+  ## Calculate commission for contract
+  def self.calculate_commissions(start_date, end_date, inspector_id)
+    commission = 0
+    paid_off_contracts = paid_off_contracts(start_date, end_date, inspector_id)
+    paid_off_contracts.each do |contract|
+      total_sales_amount = contract.calculate_total_sales_of_inspector(inspector_id)
+      commission += contract.calculate_scale(total_sales_amount, inspector_id)
+    end
+    commission
+  end
+
+  ## Contracts which are paid off
+  def self.paid_off_contracts(start_date, end_date, inspector_id)
+    paid_off_contracts = Array.new
+    receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
+                where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
+
+    receipts.each do |project_id, receipts|
+      project = Project.find(project_id)
+      total_amount = receipts.map(&:amount).inject(:+)
+      contract = project.contract
+      project_cost = contract.bid.total_cost
+      paid_off_contracts << contract if (project_cost == total_amount and receipts.last.date.between?(start_date, end_date))
+    end
+    paid_off_contracts
+  end
+
+  ## Total Sales for inspector
+  def calculate_total_sales_of_inspector(inspector_id)
+    accepted_date = self.try(:accepted_date)
+    start_date = accepted_date.beginning_of_week
+    end_date = accepted_date.end_of_week
+    contracts = Contract.joins(:bid => [:inspection => :appointment]).
+                          where("appointments.inspector_id = ? AND (accepted_date BETWEEN (?) AND (?))", inspector_id, start_date, end_date)
+    contracts.map(&:bid).map(&:total_cost).inject(:+)
   end
 
   private

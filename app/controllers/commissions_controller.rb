@@ -37,6 +37,11 @@ class CommissionsController < ApplicationController
     respond_with(@commission)
   end
 
+  def process_commissions
+    @inspectors = @inspectors.map{|i| [i.name, i.id]}
+    @date = (Date.today - 7.days).beginning_of_week
+  end
+
   private
     def set_commission
       @commission = Commission.find(params[:id])

@@ -1,0 +1,30 @@
+<h1>Process Commissions</h1>
+<%= form_tag calculation_of_inspector_commissions_contracts_path, method: :get, remote: true do %>
+	<div class="row">
+		<div class="col-md-5">
+      <%= label_tag "Commission Period Date" %>
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :commission_period_date, @date, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+		<div class="col-md-5">
+			<%= label_tag "Inspector" %>
+			<%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
+		</div>
+	</div>
+	<%= submit_tag 'Calculate Commission', class: "btn btn-success" %>
+<% end %>
+<div class="calculated-commissions"></div>
+<script type="text/javascript">
+ 	var endDate = moment().subtract(1, 'weeks').endOf('week').format('YYYY-MM-DD');
+	$('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd',
+    endDate: endDate,
+    daysOfWeekDisabled: '0'
+  });
+</script>

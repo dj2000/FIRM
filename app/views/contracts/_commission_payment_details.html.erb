@@ -1,0 +1,37 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Commission Payment Details</th>
+      <th>Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inspector</td>
+      <td><%= @inspector.name %></td>
+    </tr>
+    <tr>
+      <td>Contract</td>
+      <td>
+        <% @contracts.map(&:title).each do |contract_title| %>
+          <%= contract_title %>
+          <br/>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>Commission Rate</td>
+      <td><%= @rate %></td>
+    </tr>
+    <tr>
+      <td>Commission Amount</td>
+      <td><%= @amount %></td>
+    </tr>
+    <tr>
+      <td>Date Paid</td>
+      <td>
+        <%=  %>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -31,6 +31,14 @@
         </tbody>
       </table>
     <% end %>
-  <%= link_to_if request.path != "/commissions/print", "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
+  <%= link_to_if (request.path != "/commissions/print" and @records), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
   </div>
 </div>
+<script type="text/javascript">
+  var endDate = moment().subtract(1, 'weeks').endOf('week').format('YYYY-MM-DD');
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd',
+    endDate: endDate,
+    daysOfWeekDisabled: '0'
+  });
+</script>

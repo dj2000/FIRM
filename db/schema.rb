@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103104211) do
+ActiveRecord::Schema.define(version: 20151104130420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,12 +123,13 @@ ActiveRecord::Schema.define(version: 20151103104211) do
   create_table "commission_payment_details", force: true do |t|
     t.integer  "inspector_id"
     t.integer  "contract_id"
-    t.date     "commission_date"
     t.decimal  "amount"
     t.date     "paid_date"
     t.string   "payment_reference"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "commission_rate"
+    t.decimal  "project_cost"
   end
 
   create_table "commission_rates", force: true do |t|

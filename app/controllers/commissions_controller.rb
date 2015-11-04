@@ -63,6 +63,14 @@ class CommissionsController < ApplicationController
     if params[:inspector].present?
       @inspector = Inspector.find(params[:inspector])
       @records = Contract.calculate_commissions(@start, @end, params[:inspector])
+      @total = 0
+      @commission_payment_details = Array.new
+      @records.each do |contract_id, record|
+        commission_payment_detail = CommissionPaymentDetail.where(contract_id: contract_id, inspector_id: params[:inspector]).first_or_create
+        commission_payment_detail.update(commission_rate: record["rate"], amount: record["commission"], project_cost: record["total_sales_amount"], paid_date: record["paid_date"])
+        @commission_payment_details << commission_payment_detail
+        @total += record["commission"]
+      end
     end
   end
 

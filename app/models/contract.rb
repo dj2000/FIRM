@@ -58,21 +58,24 @@ class Contract < ActiveRecord::Base
   def self.calculate_commissions(start_date, end_date, inspector_id)
     records = Hash.new{ |h, k| h[k] = {} }
     paid_off_contracts = paid_off_contracts(start_date, end_date, inspector_id)
-    paid_off_contracts.each do |contract|
-      records[contract.id]["title"] = contract.title
+    paid_off_contracts.each do |contract_id, record|
+			contract = record["contract"]
+			contract_hash = records[contract.id]
+      contract_hash["title"] = contract.title
       total_sales_amount = contract.calculate_total_sales_of_inspector(inspector_id)
       scale = contract.calculate_scale(total_sales_amount, inspector_id)
       commission = contract.calculate_amount(total_sales_amount, scale)
-      records[contract.id]["commission"] = commission
-      records[contract.id]["total_sales_amount"] = total_sales_amount
-      records[contract.id]["scale"] = scale
+      contract_hash["commission"] = commission
+      contract_hash["total_sales_amount"] = total_sales_amount
+      contract_hash["rate"] = scale
+      contract_hash["paid_date"] = record["paid_date"]
     end
     records
   end
 
   ## Contracts which are paid off
   def self.paid_off_contracts(start_date, end_date, inspector_id)
-    paid_off_contracts = Array.new
+    paid_off_contracts = Hash.new{ |h, k| h[k] = {} }
     receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
                 where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
     receipts.each do |project_id, receipts|
@@ -80,7 +83,11 @@ class Contract < ActiveRecord::Base
       total_amount = receipts.map(&:amount).inject(:+)
       contract = project.contract
       project_cost = contract.bid.total_cost
-      paid_off_contracts << contract if (project_cost == total_amount and receipts.last.date.between?(start_date, end_date))
+      date = receipts.last.date
+      if (project_cost == total_amount and date.between?(start_date, end_date))
+				paid_off_contracts[contract.id]["contract"] = contract
+				paid_off_contracts[contract.id]["paid_date"] = date
+      end
     end
     paid_off_contracts
   end

@@ -1,39 +1,33 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-  <h1 class="panel-title">Inspector: <%= @inspector.name %></h1>
-  </div>
-  <div class="panel-body">
-    <% @records.each do |contract_id, record| %>
-      <table class='table table-bordered table-striped table-responsive table-hover'>
-        <thead>
-          <tr>
-            <th>Contract Title</th>
-            <th><%= record["title"] %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Commission Rate</td>
-            <td><%= record["scale"] %></td>
-          </tr>
-          <tr>
-            <td>Commission Amount</td>
-            <td><%= record["commission"] %></td>
-          </tr>
-          <tr>
-            <td>Date Paid</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Payment Reference</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Contract</th>
+      <th>Project Cost</th>
+      <th>Commission Rate</th>
+      <th>Commission Amount</th>
+      <th>Date Paid</th>
+      <th>Payment Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @commission_payment_details.each do |detail| %>
+    	<tr>
+      	<td><%= detail.contract.title %></td>
+      	<td><%= detail.project_cost %></td>
+      	<td><%= detail.commission_rate %></td>
+      	<td><%= detail.amount %></td>
+      	<td><%= detail.try(:paid_date).try(:strftime, "%d %b %Y") %></td>
+      	<td><%= detail.payment_reference %></td>
+    	</tr>
     <% end %>
-  <%= link_to_if (request.path != "/commissions/print" and @records), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
-  </div>
-</div>
+    <tr>
+    	<td colspan="5" align="right">Total</td>
+    	<td><%= @total %></td>
+    </tr>
+  </tbody>
+</table>
+<%= link_to_if (request.path != "/commissions/print" and @commission_payment_details.present?), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
+
 <script type="text/javascript">
   var endDate = moment().subtract(1, 'weeks').endOf('week').format('YYYY-MM-DD');
   $('.input-group.date').datepicker({

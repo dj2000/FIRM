@@ -76,16 +76,6 @@ class ContractsController < ApplicationController
     end
   end
 
-  def calculation_of_inspector_commissions
-    @start = params[:commission_period_date].to_date.beginning_of_week
-    @end = params[:commission_period_date].to_date.end_of_week(:saturday)
-    @commission = Contract.calculate_commissions(@start, @end, params[:inspector])
-    respond_to do |format|
-      format.js
-      format.html
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contract

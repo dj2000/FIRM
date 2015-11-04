@@ -41,26 +41,33 @@ class Contract < ActiveRecord::Base
 
   ## Scale for contract's amount
   def calculate_scale(amount, inspector_id)
-    calculated_amount = 0
+    percentage_amount = 0
     commissions = Commission.where(inspector_id: inspector_id)
     commissions.each do |c|
-      if c.scale.include?(amount)
-        percentage_amount = c.percentage
-        calculated_amount = self.bid.try(:calculate_amount, percentage_amount, amount)
-      end
+      percentage_amount = c.percentage if c.scale.include?(amount)
     end
-    calculated_amount
+    percentage_amount
+  end
+
+  def calculate_amount(amount, percentage)
+    calculated_amount = 0
+    calculated_amount = self.bid.try(:calculate_amount, percentage, amount)
   end
 
   ## Calculate commission for contract
   def self.calculate_commissions(start_date, end_date, inspector_id)
-    commission = 0
+    records = Hash.new{ |h, k| h[k] = {} }
     paid_off_contracts = paid_off_contracts(start_date, end_date, inspector_id)
     paid_off_contracts.each do |contract|
+      records[contract.id]["title"] = contract.title
       total_sales_amount = contract.calculate_total_sales_of_inspector(inspector_id)
-      commission += contract.calculate_scale(total_sales_amount, inspector_id)
+      scale = contract.calculate_scale(total_sales_amount, inspector_id)
+      commission = contract.calculate_amount(total_sales_amount, scale)
+      records[contract.id]["commission"] = commission
+      records[contract.id]["total_sales_amount"] = total_sales_amount
+      records[contract.id]["scale"] = scale
     end
-    commission
+    records
   end
 
   ## Contracts which are paid off
@@ -68,7 +75,6 @@ class Contract < ActiveRecord::Base
     paid_off_contracts = Array.new
     receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
                 where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
-
     receipts.each do |project_id, receipts|
       project = Project.find(project_id)
       total_amount = receipts.map(&:amount).inject(:+)

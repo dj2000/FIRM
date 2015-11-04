@@ -1,0 +1,36 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  <h1 class="panel-title">Inspector: <%= @inspector.name %></h1>
+  </div>
+  <div class="panel-body">
+    <% @records.each do |contract_id, record| %>
+      <table class='table table-bordered table-striped table-responsive table-hover'>
+        <thead>
+          <tr>
+            <th>Contract Title</th>
+            <th><%= record["title"] %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Commission Rate</td>
+            <td><%= record["scale"] %></td>
+          </tr>
+          <tr>
+            <td>Commission Amount</td>
+            <td><%= record["commission"] %></td>
+          </tr>
+          <tr>
+            <td>Date Paid</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Payment Reference</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  <%= link_to_if request.path != "/commissions/print", "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
+  </div>
+</div>

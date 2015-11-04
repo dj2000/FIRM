@@ -5,7 +5,6 @@ class Receipt < ActiveRecord::Base
   after_save :update_invoice_balance, if: "self.amount_changed?"
 
   def update_invoice_balance
-    binding.pry
     amount_values = self.amount_change.map(&:to_f)
     new_amount = amount_values.last
     prev_amount = amount_values.first

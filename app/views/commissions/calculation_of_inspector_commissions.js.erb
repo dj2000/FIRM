@@ -1,0 +1,6 @@
+<% if params[:inspector] == "" %>
+	alert("Please select inspector.")
+	$(".calculated-commissions").html("")
+<% else %>
+	$(".calculated-commissions").html("<%= j (render partial: 'commission_payment_details') %>")
+<% end %>

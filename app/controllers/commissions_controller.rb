@@ -42,6 +42,30 @@ class CommissionsController < ApplicationController
     @date = (Date.today - 7.days).beginning_of_week
   end
 
+  def calculation_of_inspector_commissions
+    inspector_commission
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def print
+    inspector_commission
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def inspector_commission
+    @start = params[:commission_period_date].to_date.beginning_of_week
+    @end = params[:commission_period_date].to_date.end_of_week(:saturday)
+    if params[:inspector].present?
+      @inspector = Inspector.find(params[:inspector])
+      @records = Contract.calculate_commissions(@start, @end, params[:inspector])
+    end
+  end
+
   private
     def set_commission
       @commission = Commission.find(params[:id])

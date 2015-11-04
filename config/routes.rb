@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :commissions do
     get :process_commissions, on: :collection
+    get :print, on: :collection
+    get :calculation_of_inspector_commissions, on: :collection
   end
 
   devise_for :users, :controllers => {:registrations => "registrations"}
@@ -25,9 +27,7 @@ Rails.application.routes.draw do
 
   resources :pmt_schedules
 
-  resources :contracts do
-    get :calculation_of_inspector_commissions, on: :collection
-  end
+  resources :contracts
 
   resources :comm_histories
 

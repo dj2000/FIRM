@@ -1,0 +1,5 @@
+var contents = ("<%= escape_javascript(render partial: 'commission_payment_details') %>");
+var oldPage = document.body.innerHTML;
+document.body.innerHTML = contents;
+window.print();
+document.body.innerHTML = oldPage;

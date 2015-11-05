@@ -1,6 +1,9 @@
 class Receipt < ActiveRecord::Base
   belongs_to :invoice
   validates :reference, :date, :invoice_id, :amount, presence: true
+  validate :check_invoice_amount
+
+  attr_accessor :invoice_amount
 
   after_save :update_invoice_balance, if: "self.amount_changed?"
 
@@ -17,5 +20,9 @@ class Receipt < ActiveRecord::Base
     end
     invoice = self.try(:invoice)
     invoice.update_attributes(amount: invoice_amount)
+  end
+
+  def check_invoice_amount
+    self.errors.add(:amount, "Amount can not be greater than Invoice Amount.") if (self.invoice_amount and self.invoice_amount.to_f < self.amount)
   end
 end

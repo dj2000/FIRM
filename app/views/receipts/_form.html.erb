@@ -24,7 +24,7 @@
     <div class="col-md-3">
       <div class="form-group invoice_info">
         <%= label_tag "Invoice Balance" %>
-        <%= text_field_tag "invoice[amount]", @invoice.try(:amount), class: "form-control", disabled: true %>
+        <%= text_field_tag "invoice[amount]", @invoice.try(:amount), class: "form-control", readonly: true %>
       </div>
     </div>
     <div class="col-md-6">

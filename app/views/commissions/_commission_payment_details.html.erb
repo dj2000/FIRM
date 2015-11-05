@@ -26,7 +26,7 @@
     </tr>
   </tbody>
 </table>
-<%= link_to_if (request.path != "/commissions/print" and @commission_payment_details.present?), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
+<%= link_to_if (request.path != "/commissions/print"), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
 
 <script type="text/javascript">
   var endDate = moment().subtract(1, 'weeks').endOf('week').format('YYYY-MM-DD');

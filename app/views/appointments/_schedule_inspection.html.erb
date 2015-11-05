@@ -64,8 +64,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <%= f.submit 'Submit', class: 'btn btn-primary schedule_inspection', name: 'appointment[scheduled_inspection]' %>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <% unless @block_out_period.new_record? %>
+            <%= link_to "Delete", block_out_period_path(@block_out_period), method: :delete, class: "btn btn-danger", remote: true %>
+          <% end %>
         </div>
       <% end %>
     </div>

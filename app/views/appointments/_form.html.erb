@@ -91,7 +91,8 @@
         <%= f.submit 'Save', class: 'btn btn-primary' %>
         <% unless @appointment.empty? %>
           <%= link_to "Print", print_appointment_path(@appointment), remote: true, class: 'btn btn-warning' %>
-          <%= link_to "Email", send_email_appointment_path(@appointment), remote: true, class: 'btn btn-info send_email', onclick: "loadingHide()" %>
+          <%= link_to "Inspector Email", send_email_appointment_path(@appointment), remote: true, class: 'btn btn-info send_email', onclick: "loadingHide()" %>
+          <%= link_to "Customer Email", "javascript:void(0)", class: "btn btn-success customer_send_email", onclick: "sendCustomerEmail()", data: { client_email: @insp_request.try(:client).try(:email), client_name:  @insp_request.try(:client).try(:name)} %>
         <% end %>
       </div>
     <% end %>
@@ -131,4 +132,19 @@
       $(".escrow_date").hide();
     <% end %>
   });
+  function sendCustomerEmail(){
+    var email = $(".customer_send_email").attr('data-client-email');
+    var name = $(".customer_send_email").attr('data-client-name');
+    var inspFee = $("#appointment_inspFee").val();
+    var startDate = $("#appointment_schedStart").val();
+    var contents = "Hi " + name + ",\n\n";
+    contents += "It was a pleasure speaking with you today.\n\n";
+    contents += "This email is to confirm your foundation inspection for the property listed above at " + startDate + ". The inspection fee is $" + inspFee + " and is payable by cash, check or credit card.\n\n";
+    contents += "If you need to cancel or postpone your inspection, we kindly ask that you give us at least 24-hours advance notice.\n\n";
+    contents += "Please let us know if you have any questions.\n\n";
+    contents += "Sincerely,\n\n";
+    contents += "Kathy Poole\nExecutive Assistant\nThe Foundation Works\n(323) 663-4841 office\n(323) 663-4844 fax\nwww.TheFoundationWorks.com";
+    var link = 'mailto:' + email + '?subject=' + "Inspection Appointment" + '&body=' + encodeURIComponent(contents);
+    window.location.href = link;
+  }
 </script>

@@ -3,25 +3,23 @@
     <tr>
       <th>Contract</th>
       <th>Project Cost</th>
+      <th>Date Paid</th>
       <th>Commission Rate</th>
       <th>Commission Amount</th>
-      <th>Date Paid</th>
-      <th>Payment Reference</th>
     </tr>
   </thead>
   <tbody>
     <% @commission_payment_details.each do |detail| %>
     	<tr>
       	<td><%= detail.contract.title %></td>
-      	<td><%= detail.project_cost %></td>
+				<td><%= detail.project_cost %></td>
+				<td><%= detail.try(:paid_date).try(:strftime, "%d %b %Y") %></td>
       	<td><%= detail.commission_rate %></td>
       	<td><%= detail.amount %></td>
-      	<td><%= detail.try(:paid_date).try(:strftime, "%d %b %Y") %></td>
-      	<td><%= detail.payment_reference %></td>
     	</tr>
     <% end %>
     <tr>
-    	<td colspan="5" align="right">Total</td>
+			<td colspan="4" align="right">Total</td>
     	<td><%= @total %></td>
     </tr>
   </tbody>

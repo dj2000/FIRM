@@ -2,7 +2,7 @@
 	<%= f.error_notification %>
 	<div class="row">
 	  <div class="col-md-6">
-	    <%= f.input :title %>
+	    <%= f.input :title, input_html: { readonly: true, value: f.object.default_title(@inspection) } %>
 	  </div>
 	  <div class="col-md-6">
 	    <%= f.input :costRepair, label: "Repair Cost", as: :string, input_html: { value: "$#{f.object.costRepair}" } %>

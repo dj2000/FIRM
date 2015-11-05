@@ -29,4 +29,10 @@ class Bid < ActiveRecord::Base
     bids = Contract.all.map(&:bid_id)
     self.where.not(id: bids)
   end
+
+  def default_title(inspection)
+    last_bid = Bid.last.id || 0
+    id_val = self.new_record? ? (last_bid + 1) : (self.id)
+    "#{inspection.try(:appointment).try(:insp_request).try(:property).try(:property_select_value)} -- (#{id_val})"
+  end
 end

@@ -43,7 +43,7 @@ class BlockOutPeriodsController < ApplicationController
   end
 
   def inspectors
-    @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
+    @inspectors = Inspector.active.map{|i| [i.firstName, i.id]}
   end
 
   def set_block_out_period

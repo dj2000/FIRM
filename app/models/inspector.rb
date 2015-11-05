@@ -13,6 +13,8 @@ class Inspector < ActiveRecord::Base
                 { is: 5,
                   allow_blank: true }
 
+  scope :active, -> { where(is_active: true) }
+
   def state_name
     state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]
   end
@@ -23,6 +25,10 @@ class Inspector < ActiveRecord::Base
 
   def senior_inspector
     self.try(:senior) ? "Yes" : "No"
+  end
+
+  def active?
+    self.try(:is_active) ? "Yes" : "No"
   end
 
   def self.assign_colors

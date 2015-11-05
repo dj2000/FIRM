@@ -1,2 +1,3 @@
 $(".modal").html("<%= escape_javascript(render partial: 'appointments/schedule_inspection') %>")
+$(".modal-footer").append("<%= j link_to "Delete", block_out_period_path(@block_out_period), method: :delete, class: "btn btn-danger", remote: true %>")
 $(".modal").modal('show');

@@ -28,6 +28,10 @@
           <td><%= @inspector.senior_inspector %></td>
         </tr>
         <tr>
+          <td>Active</td>
+          <td><%= @inspector.active? %></td>
+        </tr>
+        <tr>
           <td>Home Number</td>
           <td><%= number_to_phone(@inspector.phoneH) %></td>
         </tr>

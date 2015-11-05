@@ -134,7 +134,7 @@ class AppointmentsController < ApplicationController
     end
 
     def inspectors
-      @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
+      @inspectors = Inspector.active.map{|i| [i.firstName, i.id]}
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

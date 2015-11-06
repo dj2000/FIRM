@@ -60,15 +60,17 @@ class Contract < ActiveRecord::Base
     paid_off_contracts = paid_off_contracts(start_date, end_date, inspector_id)
     paid_off_contracts.each do |contract_id, record|
 			contract = record["contract"]
-			contract_hash = records[contract.id]
-      contract_hash["title"] = contract.title
-      total_sales_amount = contract.calculate_total_sales_of_inspector(inspector_id)
-      scale = contract.calculate_scale(total_sales_amount, inspector_id)
-      commission = contract.calculate_amount(total_sales_amount, scale)
-      contract_hash["commission"] = commission
-      contract_hash["total_sales_amount"] = total_sales_amount
-      contract_hash["rate"] = scale
-      contract_hash["paid_date"] = record["paid_date"]
+      if contract.accepted?
+        contract_hash = records[contract.id]
+        contract_hash["title"] = contract.title
+        total_sales_amount = contract.calculate_total_sales_of_inspector(inspector_id)
+        scale = contract.calculate_scale(total_sales_amount, inspector_id)
+        commission = contract.calculate_amount(total_sales_amount, scale)
+        contract_hash["commission"] = commission
+        contract_hash["total_sales_amount"] = total_sales_amount
+        contract_hash["rate"] = scale
+        contract_hash["paid_date"] = record["paid_date"]
+      end
     end
     records
   end
@@ -82,7 +84,7 @@ class Contract < ActiveRecord::Base
       project = Project.find(project_id)
       total_amount = receipts.map(&:amount).inject(:+)
       contract = project.contract
-      project_cost = contract.bid.total_cost
+      project_cost = contract.balance
       date = receipts.last.date
       if (project_cost == total_amount and date.between?(start_date, end_date))
 				paid_off_contracts[contract.id]["contract"] = contract
@@ -99,7 +101,7 @@ class Contract < ActiveRecord::Base
     end_date = accepted_date.end_of_week
     contracts = Contract.joins(:bid => [:inspection => :appointment]).
                           where("appointments.inspector_id = ? AND (accepted_date BETWEEN (?) AND (?))", inspector_id, start_date, end_date)
-    contracts.map(&:bid).map(&:total_cost).inject(:+)
+    contracts.map(&:balance).inject(:+)
   end
 
   private

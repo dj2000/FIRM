@@ -43,10 +43,12 @@ class CreditNotesController < ApplicationController
     end
 
     def credit_note_params
+      params[:credit_note][:invoice_amount] = params[:invoice][:amount]
       params.require(:credit_note).permit(:reference, :date, :invoice_id, :amount, :received_by)
     end
 
     def invoices
-      @invoices = Invoice.all
+      @invoices = Invoice.all.where.not(amount: 0.0)
+      @invoices << @credit_note.try(:invoice) if @credit_note and @invoices
     end
 end

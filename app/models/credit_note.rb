@@ -1,5 +1,5 @@
-class Receipt < ActiveRecord::Base
-  belongs_to :invoice
+class CreditNote < ActiveRecord::Base
+	belongs_to :invoice
   validates :reference, :date, :invoice_id, :amount, presence: true
   validate :check_invoice_amount
 

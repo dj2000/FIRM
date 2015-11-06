@@ -1,0 +1,38 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Credit Note</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-hover table-responsive'>
+      <thead>
+        <tr>
+          <th>Credit Note Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reference</td>
+          <td><%= @credit_note.reference %></td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td><%= @credit_note.try(:date).try(:strftime, "%d %b %Y") %></td>
+        </tr>
+        <tr>
+          <td>Invoice</td>
+          <td><%= @credit_note.try(:invoice).try(:invoice_select_dropdown) %></td>
+        </tr>
+        <tr>
+          <td>Amount Received</td>
+          <td><%= @credit_note.amount %></td>
+        </tr>
+        <tr>
+          <td>Received By</td>
+          <td><%= @credit_note.received_by %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to 'Back', credit_notes_path, class: "btn btn-info" %>

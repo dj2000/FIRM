@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :credit_notes
+
   resources :commissions do
     get :process_commissions, on: :collection
     get :print, on: :collection

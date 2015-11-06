@@ -18,9 +18,14 @@
         <%= f.input :middleInit, label: "Middle Initial" %>
       </div>
     </div>
-    <div class='col-sm-6'>
+    <div class='col-sm-3'>
       <div class="form-group">
         <%= f.input :senior, as: :boolean, checked_value: true, unchecked_value: false %>
+      </div>
+    </div>
+    <div class='col-sm-3'>
+      <div class="form-group">
+        <%= f.input :is_active, as: :boolean, checked_value: true, unchecked_value: false, label: "Active" %>
       </div>
     </div>
   </div>

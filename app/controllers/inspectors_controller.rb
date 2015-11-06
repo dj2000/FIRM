@@ -77,6 +77,6 @@ class InspectorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inspector_params
-      params.require(:inspector).permit(:firstName, :lastName, :middleInit, :senior, :phoneH, :phoneC, :address, :city, :state, :zip, :email, :notes)
+      params.require(:inspector).permit(:firstName, :lastName, :middleInit, :senior, :phoneH, :phoneC, :address, :city, :state, :zip, :email, :notes, :is_active)
     end
 end

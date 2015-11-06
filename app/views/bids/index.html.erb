@@ -8,7 +8,7 @@
       <th>Administration Fee</th>
       <th>Bid Total</th>
       <th>Payment Plan</th>
-      <% unless request.path == "/bids" %>
+      <% if (request.format == "js" || request.path != "/bids") %>
         <th colspan="2" class="text-center">Actions</th>
       <% end %>
     </tr>
@@ -23,7 +23,9 @@
         <td><%= number_to_currency(bid.total_cost) %></td>
         <td><%= bid.try(:payPlan).try(:payment_plan_select) %></td>
         <% if (request.format == "js" || request.path != "/bids") %>
-          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>
+          <% if bid.try(:contract).try(:accepted?) %>
+            <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>
+          <% end %>
           <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), bid, method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-danger' %></td>
         <% end %>
       </tr>

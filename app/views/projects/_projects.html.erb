@@ -1,0 +1,57 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Contract</th>
+      <th>Job Cost</th>
+      <th>Schedule By</th>
+      <th>Preferred Schedule Start</th>
+      <th>Preferred Schedule End</th>
+      <th>Est. Duration(d)</th>
+      <th>Schedule Start</th>
+      <th>Schedule End</th>
+      <th>Schedule Authorize By</th>
+      <th>Date</th>
+      <th>Crew</th>
+      <th>Interior Access Verified</th>
+      <th>Electricity and Water Verified</th>
+      <th>Notes</th>
+      <th colspan="3" class="text-center">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.try(:contract).try(:title) %></td>
+        <td><%= project.jobCost %></td>
+        <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.try(:schedule_pref_end).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.estDuration %></td>
+        <td><%= project.try(:scheduleStart).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.try(:scheduleEnd).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.authorizedBy %></td>
+        <td><%= project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
+        <td><%= project.try(:crew).try(:foreman) %></td>
+        <td><%= project.humanize("verifiedAccess") %></td>
+        <td><%= project.humanize("verifiedEW") %></td>
+        <td><%= project.notes %></td>
+        <td>
+          <%= link_to project, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_project_path(project), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to project, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,74 +1,90 @@
 class CommissionsController < ApplicationController
   before_action :set_commission, only: [:show, :edit, :update, :destroy]
+  before_action :inspectors_and_commission_rates
 
-  # GET /commissions
-  # GET /commissions.json
+  respond_to :html
+
   def index
     @commissions = Commission.all
+    respond_with(@commissions)
   end
 
-  # GET /commissions/1
-  # GET /commissions/1.json
   def show
+    respond_with(@commission)
   end
 
-  # GET /commissions/new
   def new
     @commission = Commission.new
+    respond_with(@commission)
   end
 
-  # GET /commissions/1/edit
   def edit
   end
 
-  # POST /commissions
-  # POST /commissions.json
   def create
     @commission = Commission.new(commission_params)
-
-    respond_to do |format|
-      if @commission.save
-        format.html { redirect_to @commission, notice: 'Commission was successfully created.' }
-        format.json { render :show, status: :created, location: @commission }
-      else
-        format.html { render :new }
-        format.json { render json: @commission.errors, status: :unprocessable_entity }
-      end
-    end
+    @commission.save
+    respond_with(@commission)
   end
 
-  # PATCH/PUT /commissions/1
-  # PATCH/PUT /commissions/1.json
   def update
-    respond_to do |format|
-      if @commission.update(commission_params)
-        format.html { redirect_to @commission, notice: 'Commission was successfully updated.' }
-        format.json { render :show, status: :ok, location: @commission }
-      else
-        format.html { render :edit }
-        format.json { render json: @commission.errors, status: :unprocessable_entity }
-      end
-    end
+    @commission.update(commission_params)
+    respond_with(@commission)
   end
 
-  # DELETE /commissions/1
-  # DELETE /commissions/1.json
   def destroy
     @commission.destroy
+    respond_with(@commission)
+  end
+
+  def process_commissions
+    @inspectors = @inspectors.map{|i| [i.name, i.id]}
+    @date = (Date.today - 7.days).beginning_of_week
+  end
+
+  def calculation_of_inspector_commissions
+    inspector_commission
     respond_to do |format|
-      format.html { redirect_to commissions_url, notice: 'Commission was successfully destroyed.' }
-      format.json { head :no_content }
+      format.js
+      format.html
+    end
+  end
+
+  def print
+    inspector_commission
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def inspector_commission
+    @start = params[:commission_period_date].to_date.beginning_of_week
+    @end = params[:commission_period_date].to_date.end_of_week(:saturday)
+    if params[:inspector].present?
+      @inspector = Inspector.find(params[:inspector])
+      @records = Contract.calculate_commissions(@start, @end, params[:inspector])
+      @total = 0
+      @commission_payment_details = Array.new
+      @records.each do |contract_id, record|
+        commission_payment_detail = CommissionPaymentDetail.where(contract_id: contract_id, inspector_id: params[:inspector]).first_or_create
+        commission_payment_detail.update(commission_rate: record["rate"], amount: record["commission"], project_cost: record["total_sales_amount"], paid_date: record["paid_date"])
+        @commission_payment_details << commission_payment_detail
+        @total += record["commission"]
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_commission
       @commission = Commission.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def commission_params
-      params.require(:commission).permit(:year, :weekNo, :rate)
+      params.require(:commission).permit(:inspector_id, :commission_rate_id, :percentage)
+    end
+
+    def inspectors_and_commission_rates
+      @inspectors = Inspector.all
+      @commission_rates = CommissionRate.all.order(:created_at)
     end
 end

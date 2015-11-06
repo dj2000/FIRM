@@ -1,6 +1,6 @@
 class BlockOutPeriodsController < ApplicationController
 	before_action :inspectors
-	before_action :set_block_out_period, only: [:edit, :update]
+	before_action :set_block_out_period, only: [:edit, :update, :destroy]
 
   def index
 		@block_out_periods = BlockOutPeriod.all
@@ -27,6 +27,13 @@ class BlockOutPeriodsController < ApplicationController
 		@block_out_period.update(block_out_period_params)
   end
 
+  def destroy
+    @block_out_period.destroy
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def block_out_period_params
@@ -36,7 +43,7 @@ class BlockOutPeriodsController < ApplicationController
   end
 
   def inspectors
-    @inspectors = Inspector.all.map{|i| [i.firstName, i.id]}
+    @inspectors = Inspector.active.map{|i| [i.firstName, i.id]}
   end
 
   def set_block_out_period

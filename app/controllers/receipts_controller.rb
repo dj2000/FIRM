@@ -4,7 +4,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   # GET /receipts.json
   def index
-    @receipts = Receipt.all
+    @receipts = Receipt.all.order(:created_at)
   end
 
   # GET /receipts/1
@@ -76,10 +76,12 @@ class ReceiptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:reference, :date, :invoice_id, :amount, :recBy)
+      params[:receipt][:invoice_amount] = params[:invoice][:amount]
+      params.require(:receipt).permit(:reference, :date, :invoice_id, :amount, :recBy, :invoice_amount)
     end
 
     def invoices
-      @invoices = Invoice.all
+      @invoices = Invoice.all.where.not(amount: 0.0)
+      @invoices << @receipt.try(:invoice) if @receipt and @invoices
     end
 end

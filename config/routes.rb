@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :credit_notes
+
+  resources :commissions do
+    get :process_commissions, on: :collection
+    get :print, on: :collection
+    get :calculation_of_inspector_commissions, on: :collection
+  end
+
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :insp_comm_scales
-
-  resources :commissions
 
   resources :proj_insps
 
@@ -12,6 +18,8 @@ Rails.application.routes.draw do
   resources :crew_skills
 
   resources :crews
+
+  resources :commission_rates
 
   resources :proj_scheds do
     get :scheduled_projects, on: :collection

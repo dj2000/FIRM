@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151028073004) do
+ActiveRecord::Schema.define(version: 20151106111427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,12 +120,32 @@ ActiveRecord::Schema.define(version: 20151028073004) do
     t.datetime "call_time"
   end
 
-  create_table "commissions", force: true do |t|
-    t.integer  "year"
-    t.integer  "weekNo"
-    t.decimal  "rate"
+  create_table "commission_payment_details", force: true do |t|
+    t.integer  "inspector_id"
+    t.integer  "contract_id"
+    t.decimal  "amount"
+    t.date     "paid_date"
+    t.string   "payment_reference"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "commission_rate"
+    t.decimal  "project_cost"
+  end
+
+  create_table "commission_rates", force: true do |t|
+    t.integer  "scale_start"
+    t.integer  "scale_end"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "commissions", force: true do |t|
+    t.integer  "inspector_id"
+    t.integer  "commission_rate_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "percentage"
   end
 
   create_table "contracts", force: true do |t|
@@ -141,6 +161,16 @@ ActiveRecord::Schema.define(version: 20151028073004) do
     t.string   "confirmed_by"
     t.date     "accepted_date"
     t.string   "title"
+    t.string   "status"
+  end
+
+  create_table "credit_notes", force: true do |t|
+    t.string   "reference"
+    t.date     "date"
+    t.integer  "invoice_id"
+    t.decimal  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "crew_skills", force: true do |t|
@@ -262,19 +292,20 @@ ActiveRecord::Schema.define(version: 20151028073004) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "notes"
+    t.boolean  "is_active",  default: true
   end
 
   create_table "invoices", force: true do |t|
     t.string   "reference"
     t.string   "invoice_type"
     t.string   "inspection_id"
-    t.string   "project_id"
     t.text     "description"
     t.date     "invoiceDate"
     t.decimal  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "due_date"
+    t.integer  "project_id"
   end
 
   create_table "pay_plans", force: true do |t|

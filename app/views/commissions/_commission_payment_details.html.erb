@@ -1,0 +1,36 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Contract</th>
+      <th>Project Cost</th>
+      <th>Date Paid</th>
+      <th>Commission Rate</th>
+      <th>Commission Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @commission_payment_details.each do |detail| %>
+    	<tr>
+      	<td><%= detail.contract.title %></td>
+				<td><%= detail.project_cost %></td>
+				<td><%= detail.try(:paid_date).try(:strftime, "%d %b %Y") %></td>
+      	<td><%= detail.commission_rate %></td>
+      	<td><%= detail.amount %></td>
+    	</tr>
+    <% end %>
+    <tr>
+			<td colspan="4" align="right">Total</td>
+    	<td><%= @total %></td>
+    </tr>
+  </tbody>
+</table>
+<%= link_to_if (request.path != "/commissions/print"), "Print", print_commissions_path(commission_period_date: params[:commission_period_date], inspector: params[:inspector]), remote: true, class: 'btn btn-warning pull-right' %>
+
+<script type="text/javascript">
+  var endDate = moment().subtract(1, 'weeks').endOf('week').format('YYYY-MM-DD');
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd',
+    endDate: endDate,
+    daysOfWeekDisabled: '0'
+  });
+</script>

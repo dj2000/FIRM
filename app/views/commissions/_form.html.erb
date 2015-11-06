@@ -1,29 +1,22 @@
-<%= form_for(@commission) do |f| %>
-  <% if @commission.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@commission.errors.count, "error") %> prohibited this commission from being saved:</h2>
+<%= simple_form_for(@commission) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @commission.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.association :inspector, as: :select, collection: @inspectors, label_method: :name, selected: f.object.inspector_id , label: "Select Inspector", include_blank: "Select Inspector" %>
     </div>
-  <% end %>
+    <div class="col-md-6">
+      <%= f.association :commission_rate, as: :select, collection: @commission_rates, label_method: :commission_rate_select, selected: f.object.commission_rate_id , label: "Select Scale", include_blank: "Select Scale" %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :year %><br>
-    <%= f.number_field :year %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :percentage %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :weekNo %><br>
-    <%= f.text_field :weekNo %>
-  </div>
-  <div class="field">
-    <%= f.label :rate %><br>
-    <%= f.text_field :rate %>
-  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

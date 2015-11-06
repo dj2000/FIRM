@@ -7,6 +7,7 @@
       <th>Last Name</th>
       <th>Middle Initial</th>
       <th>Senior</th>
+      <th>Active</th>
       <th>Home Number</th>
       <th>Cell Number</th>
       <th>Address</th>
@@ -24,7 +25,8 @@
         <td><%= inspector.firstName %></td>
         <td><%= inspector.lastName %></td>
         <td><%= inspector.middleInit %></td>
-        <td><%= inspector.senior %></td>
+        <td><%= inspector.senior_inspector %></td>
+        <td><%= inspector.active? %></td>
         <td><%= number_to_phone(inspector.phoneH) %></td>
         <td><%= number_to_phone(inspector.phoneC) %></td>
         <td><%= inspector.address %></td>

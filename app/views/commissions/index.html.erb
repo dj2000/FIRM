@@ -1,24 +1,36 @@
 <h1>Listing commissions</h1>
 
-<table>
+<table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Year</th>
-      <th>Weekno</th>
-      <th>Rate</th>
-      <th colspan="3"></th>
+      <th>Inspector</th>
+      <th>Scale</th>
+      <th>Percentage</th>
+      <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @commissions.each do |commission| %>
       <tr>
-        <td><%= commission.year %></td>
-        <td><%= commission.weekNo %></td>
-        <td><%= commission.rate %></td>
-        <td><%= link_to 'Show', commission %></td>
-        <td><%= link_to 'Edit', edit_commission_path(commission) %></td>
-        <td><%= link_to 'Destroy', commission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= commission.try(:inspector).try(:name) %></td>
+        <td><%= commission.try(:commission_rate).try(:commission_rate_select) %></td>
+        <td><%= number_to_percentage(commission.percentage, precision: 0) %></td>
+        <td>
+          <%= link_to commission, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Show
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_commission_path(commission), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to commission, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +38,4 @@
 
 <br>
 
-<%= link_to 'New Commission', new_commission_path %>
+<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Commission"), new_commission_path, :class => "btn btn-info" %>

@@ -8,7 +8,7 @@
       <%= label_tag "Receipt Date" %>
       <div class="form-group <%= 'has-error' if f.object.errors["date"].first %>">
         <div class='input-group date'>
-          <%= f.text_field :date, class: "form-control", value: f.object.try(:date) %>
+          <%= f.text_field :date, class: "form-control", value: f.object.try(:date) || Date.today %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -24,7 +24,7 @@
     <div class="col-md-3">
       <div class="form-group invoice_info">
         <%= label_tag "Invoice Balance" %>
-        <%= text_field_tag "invoice[amount]", @invoice.try(:amount), class: "form-control", disabled: true %>
+        <%= text_field_tag "invoice[amount]", @invoice.try(:amount), class: "form-control", readonly: true %>
       </div>
     </div>
     <div class="col-md-6">
@@ -49,7 +49,7 @@
   <% end %>
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
-  }).datepicker("setDate", new Date());
+  });
 
   $("#receipt_invoice_id").change(function(){
     var invoice_id = $(this).val();

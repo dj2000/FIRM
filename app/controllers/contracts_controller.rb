@@ -80,12 +80,15 @@ class ContractsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_contract
       @contract = Contract.find(params[:id])
+      @bid = @contract.try(:bid)
     end
 
     def bids
-      @bids = Bid.uncontracted_bids
+      @uncontracted_bids = Bid.uncontracted_bids
+      @accepted_bids = Bid.accepted_bids
+      @bids = @uncontracted_bids + @accepted_bids
       @bids << @contract.try(:bid) if @contract and @contract.bid_id
-      @bids = @bids.map{|b| [b.try(:title), b.id]}
+      @bids = @bids.map{|b| [b.try(:title), b.id]}.uniq
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

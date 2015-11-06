@@ -78,7 +78,7 @@ class PropertiesController < ApplicationController
     def validate_info
       @zip_codes = SvcArea.where(serviced: true).map{|z| [z.zip, z.zip]}
       @svc_criterium = SvcCriterium.where(propRes: true).first
-      @year = @svc_criterium.try(:yearBuilt)
+      @year = @svc_criterium.try(:yearBuilt) || Date.today.year
       @years = (1901..@year).map{|y| [y, y]}
       @foundation_type = @svc_criterium.try(:foundation)
     end

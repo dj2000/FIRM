@@ -24,12 +24,8 @@
           <td><%= @credit_note.try(:invoice).try(:invoice_select_dropdown) %></td>
         </tr>
         <tr>
-          <td>Amount Received</td>
+          <td>Amount</td>
           <td><%= @credit_note.amount %></td>
-        </tr>
-        <tr>
-          <td>Received By</td>
-          <td><%= @credit_note.received_by %></td>
         </tr>
       </tbody>
     </table>

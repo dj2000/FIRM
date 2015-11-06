@@ -36,6 +36,7 @@ class Bid < ActiveRecord::Base
     last_bid = Bid.last.id || 0
     id_val = self.new_record? ? (last_bid + 1) : (self.id)
     "#{inspection.try(:appointment).try(:insp_request).try(:property).try(:property_select_value)} -- (#{id_val})"
+  end
 
   def self.accepted_bids
     bids = Bid.where(status: "Accepted")

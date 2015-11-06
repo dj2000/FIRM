@@ -8,7 +8,6 @@
       <th>Invoice</th>
       <th>Invoice Balance</th>
       <th>Amount</th>
-      <th>Received by</th>
       <th colspan="3" class="text-center">Actions</th>
     </tr>
   </thead>
@@ -21,7 +20,6 @@
         <td><%= credit_note.try(:invoice).try(:invoice_select_dropdown) %></td>
         <td><%= credit_note.try(:invoice).try(:amount) %></td>
         <td><%= credit_note.amount %></td>
-        <td><%= credit_note.received_by %></td>
         <td>
           <%= link_to credit_note, class: 'btn btn-primary' do %>
             <i class='fa fa-eye'></i> Show

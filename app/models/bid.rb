@@ -3,6 +3,7 @@ class Bid < ActiveRecord::Base
   belongs_to :payPlan
   has_many :comm_histories
   has_one :contract
+  has_one :verbal_close_comm_history, -> { where(callOutcome: "Verbal Close") }, class_name: 'CommHistory', foreign_key: 'bid_id'
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, :title, :payPlan_id, presence: true
 
@@ -35,5 +36,8 @@ class Bid < ActiveRecord::Base
     last_bid = Bid.last.id || 0
     id_val = self.new_record? ? (last_bid + 1) : (self.id)
     "#{inspection.try(:appointment).try(:insp_request).try(:property).try(:property_select_value)} -- (#{id_val})"
+
+  def self.accepted_bids
+    bids = Bid.where(status: "Accepted")
   end
 end

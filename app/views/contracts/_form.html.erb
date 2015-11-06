@@ -16,14 +16,14 @@
   <div class="row">
     <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Verbal Close By" %>
-      <%= text_field_tag "verbal_close_by", f.object.try(:bid).try(:comm_history).try(:caller), class: "verbal_close_by form-control", disabled: true %>
+      <%= text_field_tag "verbal_close_by", f.object.try(:bid).try(:verbal_close_comm_history).try(:caller), class: "verbal_close_by form-control", disabled: true %>
     </div>
     <div class="col-md-4">
       <%= f.input :confirmed_by %>
     </div>
     <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Call Time" %>
-      <%= text_field_tag "call_time", f.object.try(:bid).try(:comm_history).try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S"), class: "call_time form-control", disabled: true %>
+      <%= text_field_tag "call_time", f.object.try(:bid).try(:verbal_close_comm_history).try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S"), class: "call_time form-control", disabled: true %>
     </div>
   </div>
   <br/>

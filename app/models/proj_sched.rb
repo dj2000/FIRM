@@ -40,7 +40,7 @@ class ProjSched < ActiveRecord::Base
       crews_availability = ProjSched.where('project_id != ? AND crew_id = ? AND (((schedule_start_date BETWEEN ? AND ?) AND ("startTime" BETWEEN ? AND ?)) OR ((schedule_end_date BETWEEN ? AND ?) AND ("endTime" BETWEEN ? AND ?)))', self.project_id, self.crew_id, self.schedule_start_date, self.schedule_end_date, start_time, end_time, self.schedule_start_date, self.schedule_end_date, start_time, end_time)
       invalid_record = crews_availability.present? ? true : false
     else
-      is_scheduled = ProjSched.where(crew_id: self.crew_id).first
+      is_scheduled = ProjSched.where(crew_id: self.crew_id).where.not(id: self.id).first
       invalid_record = is_scheduled ? true : false
     end
 		self.errors.add(:crew_id, "Crew is not available for this time slot.") if invalid_record

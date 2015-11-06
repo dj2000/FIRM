@@ -8,7 +8,7 @@
       <th>Administration Fee</th>
       <th>Bid Total</th>
       <th>Payment Plan</th>
-      <% unless request.path == "/bids" %>
+      <% if (request.format == "js" || request.path != "/bids") %>
         <th colspan="2" class="text-center">Actions</th>
       <% end %>
     </tr>

@@ -4,7 +4,7 @@ class ReceiptsController < ApplicationController
   # GET /receipts
   # GET /receipts.json
   def index
-    @receipts = Receipt.all
+    @receipts = Receipt.all.order(:created_at)
   end
 
   # GET /receipts/1
@@ -81,6 +81,7 @@ class ReceiptsController < ApplicationController
     end
 
     def invoices
-      @invoices = Invoice.all
+      @invoices = Invoice.all.where.not(amount: 0.0)
+      @invoices << @receipt.try(:invoice) if @receipt and @invoices
     end
 end

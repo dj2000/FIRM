@@ -33,7 +33,7 @@ class Bid < ActiveRecord::Base
   end
 
   def default_title(inspection)
-    last_bid = Bid.last.id || 0
+    last_bid = Bid.last.try(:id) || 0
     id_val = self.new_record? ? (last_bid + 1) : (self.id)
     "#{inspection.try(:appointment).try(:insp_request).try(:property).try(:property_select_value)} -- (#{id_val})"
   end

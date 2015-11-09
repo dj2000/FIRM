@@ -26,7 +26,9 @@
     </div>
   </div>
 <% end %>
-<div class="clients-report"></div>
+<div class="clients-report">
+  <%= render 'clients' if @clients.present? %>
+</div>
 <script>
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'

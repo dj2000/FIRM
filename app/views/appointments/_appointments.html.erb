@@ -1,0 +1,33 @@
+<table class="table table-bordered table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Appointment Start Date</th>
+      <th>Appointment End Date</th>
+      <th>Property Address</th>
+      <th>Inspector</th>
+      <th>Client</th>
+      <th>Agent</th>
+      <th>Contact</th>
+      <th>Inspection Fee</th>
+      <th>Prepaid</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @appointments.each do |appointment| %>
+      <tr>
+        <td><%= appointment.try(:schedStart).try(:strftime, "%d %b %Y") %></td>
+        <td><%= appointment.try(:schedEnd).try(:strftime, "%d %b %Y") %></td>
+        <td><%= appointment.try(:insp_request).try(:property).try(:property_select_value) %></td>
+        <td><%= appointment.try(:inspector).try(:name) %></td>
+        <td><%= appointment.try(:insp_request).try(:client).try(:name) %></td>
+        <td><%= appointment.try(:insp_request).try(:agent).try(:name) %></td>
+        <td><%= appointment.contact %></td>
+        <td><%= appointment.inspFee %></td>
+        <td><%= appointment.is_prepaid %></td>
+        <td><%= appointment.notes %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

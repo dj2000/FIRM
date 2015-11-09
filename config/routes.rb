@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     get :send_email, on: :member
     get :calculate_inspection_fee, on: :member
     get :background_events, on: :collection
+    get :report, on: :collection
   end
 
   resources :insp_requests do 

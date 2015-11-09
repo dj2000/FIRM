@@ -11,12 +11,13 @@ class AppointmentsController < ApplicationController
       @appointment.save(validate: false)
       @editable = true
     end
-    if params[:start] and params[:end]
+    if (params[:start] and params[:end]) || (params[:start_date] and params[:end_date])
       @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start], params[:end], params[:start], params[:end])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end
     respond_to do |format|
+      format.js
       format.html
       format.json{ render json: @appointments.as_json }
     end

@@ -5,6 +5,11 @@ class AgentsController < ApplicationController
   # GET /agents.json
   def index
     @agents = Agent.all
+    @agents = @agents.where(created_at: (params[:start_date]..params[:end_date])) if params[:start_date].present? and params[:end_date].present?
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /agents/1
@@ -69,6 +74,10 @@ class AgentsController < ApplicationController
       format.html { redirect_to agents_url, notice: 'Agent was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def report
+    @agents = Agent.where(created_at: (Date.today..Date.today))
   end
 
   private

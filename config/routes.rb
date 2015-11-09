@@ -90,7 +90,9 @@ Rails.application.routes.draw do
     get :get_map, on: :collection
   end
 
-  resources :agents
+  resources :agents do
+    get :report, on: :collection
+  end
 
   resources :clients do
     get :report, on: :collection

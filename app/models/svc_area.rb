@@ -1,6 +1,6 @@
 class SvcArea < ActiveRecord::Base
   has_many :appointments
-  validates :city, :state, :serviced, presence: true
+  validates :city, :state, presence: true
 
   validates :zip,
               presence: true,

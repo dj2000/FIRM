@@ -48,7 +48,7 @@
         <tr>
           <td>Property</td>
           <td>
-            <%= @insp_request.property.try(:street) %>
+            <%= @insp_request.property.try(:property_select_value) %>
             <% if @insp_request.property %>
               <%= link_to property_path(@insp_request.property), remote: true, class: 'link' do %>
                 <i class='fa fa-eye'></i> Details

@@ -88,7 +88,7 @@
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :occupied_by, as: :select, collection: Property::OCCUPIED_BY.map{|v| [v, v]}, label: "Occupied By", prompt: 'Please Select' %>
+        <%= f.input :occupied_by, label: "Occupied By" %>
       </div>
     </div>
   </div>

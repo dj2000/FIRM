@@ -1,50 +1,52 @@
+<%= form_tag('/insp_requests', method: 'get', id: 'search-insp-requests') do %>
+  <div class="row">
+    <div class="col-md-3">
+    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
+    </div>
+    <div class="col-md-3">
+      <%= select_tag "property_id", options_for_select(@properties), class: "form-control property hide", prompt: "Select Property" %>
+      <%= select_tag "client_id", options_for_select(@clients), class: "form-control client hide", prompt: "Select Client" %>
+    </div>
+    <div class="col-md-3">
+      <a href="javascript:void(0)" class='btn btn-primary searchInspRequest'>Search</a>
+    </div>
+  </div>
+<% end %>
 <h1>Inspection Requests</h1>
-
-<table class='table table-bordered table-striped table-responsive table-hover'>
-  <thead>
-    <tr>
-      <th>Call Time</th>
-      <th>Caller Type</th>
-      <th>Referral Source</th>
-      <th>Client</th>
-      <th>Agent</th>
-      <th>Property</th>
-      <th>Inspection Selection Criteria</th>
-      <th>Appointment</th>
-      <th colspan="3" style="text-align:center">Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @insp_requests.each do |insp_request| %>
-      <tr>
-        <td><%= insp_request.call_time %></td>
-        <td><%= insp_request.callerType %></td>
-        <td><%= insp_request.referalSource %></td>
-        <td><%= insp_request.client.try(:firstName) %></td>
-        <td><%= insp_request.agent.try(:firstName) %></td>
-        <td><%= insp_request.property.try(:street) %></td>
-        <td><%= insp_request.selectInsp %></td>
-        <td><%= insp_request.has_appointment? %></td>
-        <td>
-          <%= link_to insp_request, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Appointment
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_insp_request_path(insp_request), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to insp_request, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="insp-request-data">
+  <%= render partial: 'insp_requests' %>
+</div>
 <br>
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection Request"), new_insp_request_path, :class => "btn btn-info" -%>
 
+<script>
+$(".search_filter").change(function(){
+  var filter = $(this).val();
+  if(filter == "Property"){
+    $("select.property").removeClass("hide");
+    $("select.client").addClass("hide");
+    $(".property").chosen();
+    $(".client").chosen();
+    $('.client').chosen('destroy');
+    $('select.client').val('').trigger('chosen:updated');
+  }
+  else if (filter == "Client"){
+    $("select.client").removeClass("hide");
+    $("select.property").addClass("hide");
+    $(".client").chosen();
+    $('.property').chosen();
+    $('.property').chosen('destroy');
+    $('select.property').val('').trigger('chosen:updated');
+  }
+  else{
+    alert("Please select search criteria.")
+  }
+});
+
+$(".searchInspRequest").on('click', function(){
+  $.ajax({
+    url: '/insp_requests',
+    data: $("#search-insp-requests").serialize()
+  })
+});
+</script>

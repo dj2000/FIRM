@@ -2,7 +2,21 @@ class InspRequestsController < ApplicationController
   before_action :set_insp_request, only: [:show, :edit, :update, :destroy]
 
   def index
-    @insp_requests = InspRequest.all
+    if params[:client_id].present? || params[:property_id].present?
+      if params[:search_filter] == "Property"
+        @insp_requests = InspRequest.where("insp_requests.property_id = ? ", params[:property_id])
+      elsif params[:search_filter] == "Client"
+        @insp_requests = InspRequest.where("insp_requests.client_id = ? ", params[:client_id])
+      end
+    else
+      @insp_requests = InspRequest.all
+    end
+    @properties = Property.all.map{|p| [p.property_select_value, p.id]}
+    @clients = Client.all.map{|c| [c.name, c.id]}
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def show

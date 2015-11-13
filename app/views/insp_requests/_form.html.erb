@@ -38,8 +38,12 @@
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <%= f.label 'Referral Source' %>
-            <%= f.select :referalSource, InspRequest::REFERRAL_SOURCE.map{|v| [v, v]}, {:prompt => "Select Referral Source" }, {class: 'form-control'} %>
+            <%= f.input :referalSource, as: :select, collection: InspRequest::REFERRAL_SOURCE.map{|v| [v, v]}, selected: f.object.referral_source, prompt: "Select Referral Source" , input_html: { class: "referral_source" }, label: "Referral Source" %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group referral_source_other <%= f.object.referalSource == "Other" ? '' : 'hide' %>">
+            <%= f.input :referalSource, label: '&nbsp;'.html_safe%>
           </div>
         </div>
       </div>
@@ -77,4 +81,15 @@ $(".add-agent").hide();
 <% unless @properties.blank? %>
   $(".add-property").hide();
 <% end %>
+$(".referral_source").change(function(){
+  var selectedValue = $(this).val();
+  if(selectedValue == "Other"){
+    $(".referral_source_other").removeClass("hide");
+    $(".referral_source_other input").val("");
+  }
+  else{
+    $(".referral_source_other").addClass("hide");
+    $(".referral_source_other input").val(selectedValue);
+  }
+});
 </script>

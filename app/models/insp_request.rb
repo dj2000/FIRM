@@ -9,7 +9,6 @@ class InspRequest < ActiveRecord::Base
   SELECTION_CRITERIA = ['Specific Inspector', 'Senior Inspector', 'Next Available']
 
   validates :callTime, :client_id, :property_id, :selectInsp, presence: true
-  validates :client_id, uniqueness: { scope: :property_id, message: "Property has already been assigned for same customer." }
 
   def has_appointment?
   	self.appointment ? "Scheduled" : "Unscheduled"

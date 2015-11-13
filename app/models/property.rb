@@ -3,7 +3,7 @@ class Property < ActiveRecord::Base
   has_many :clients, through: :client_properties, dependent: :destroy
   has_many :insp_requests, dependent: :destroy
 
-  OCCUPIED_BY = %w(Rented Owner Vacant)
+  OCCUPIED_BY = %w(Rented Owner Vacant Other)
 
   LOT_TYPE = %w(Hill Flat Slope)
 
@@ -41,6 +41,11 @@ class Property < ActiveRecord::Base
 
   def address
     "#{street}, #{city}, #{state}, #{zip}"
+  end
+
+  def occupied
+    return nil if self.occupied_by.nil?
+    occupied_by = (Property::OCCUPIED_BY.first(3)).include?(self.occupied_by) ? self.occupied_by : "Other"
   end
 
   # For setting default year built

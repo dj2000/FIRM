@@ -39,19 +39,34 @@
     </div>
   </div>
   <div class="row">
-    <div class='col-sm-6'>
+    <div class='col-sm-4'>
       <div class="form-group">
         <%= f.input :email %>
       </div>
     </div>
-    <div class='col-sm-6'>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <%= f.input :client_type, as: :select, collection: Client::CLIENT_TYPE.map{|v| [v, v]} %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
       <div class="form-group">
         <%= f.input :is_opt_out_mailer, as: :boolean, checked_value: true, unchecked_value: false, label: "Opt Out of Mailing List" %>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class='col-sm-12'>
+    <div class='col-sm-4 of_type'>
+      <div class="form-group">
+        <%= f.input :of_type, as: :radio_buttons, collection: ['Individual', 'Company'], input_html: { name: 'client_of_type' }, checked: (f.object.of_type || "Individual") %>
+      </div>
+    </div>
+    <div class='col-sm-4 hide company_name'>
+      <div class="form-group">
+        <%= f.input :company_name %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
       <div class="form-group">
         <%= f.input :mailAddress, label: "Mailing Address" %>
       </div>
@@ -68,9 +83,23 @@
 <% end %>
 <script>
   $(document).ready(function(){
+    of_typeSelection();
     var property_id = $(".property_select").val();
     $(".property_id").val(property_id);
     var property_text = $(".property_select option:selected").text();
     $("#client_mailAddress").val(property_text);
+    $("input[name=client_of_type]").change(function () {
+      of_typeSelection();
+    });
+
+    function of_typeSelection(){
+      var checked = $("input[name=client_of_type]:checked").val();
+      if(checked == "Individual"){
+        $(".company_name").addClass("hide");
+      }
+      else if (checked == "Company" ){
+        $(".company_name").removeClass("hide");
+      }
+    }
   });
 </script>

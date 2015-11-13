@@ -81,6 +81,7 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer)
+      params[:client][:of_type] = params[:client_of_type]
+      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer, :client_type, :of_type, :company_name)
     end
 end

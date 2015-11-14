@@ -1,4 +1,5 @@
 class Inspection < ActiveRecord::Base
+  extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
   has_many :bids

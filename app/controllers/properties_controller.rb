@@ -4,6 +4,11 @@ class PropertiesController < ApplicationController
 
   def index
     @properties = Property.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data Property.to_csv }
+    end
   end
 
   def show
@@ -67,6 +72,13 @@ class PropertiesController < ApplicationController
   def get_map
 		@latitude, @longitude = Geocoder::Calculations.extract_coordinates(params[:address])
 		render json: { lat: @latitude, long: @longitude }
+  end
+
+  def print
+    @properties = Property.all
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

@@ -20,6 +20,8 @@
 <br>
 
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspection"), new_inspection_path, :class => "btn btn-info" %>
+<%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), inspections_path(format: :csv),class: "btn btn-info" %>
+<%= link_to raw("<i class='fa fa-print'></i> Print"), print_inspections_path, remote: true,class: "btn btn-info" %>
 <script>
 $(".search_filter").change(function(){
   var filter = $(this).val();

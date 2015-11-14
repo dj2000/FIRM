@@ -18,6 +18,7 @@ class InspectionsController < ApplicationController
     @clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
+      format.csv { send_data Inspection.to_csv }
       format.html
     end
   end
@@ -81,6 +82,13 @@ class InspectionsController < ApplicationController
   def appointment_info
     @appointment = Appointment.find(params[:id])
     @insp_request = @appointment.insp_request
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def print
+    @inspections = Inspection.all
     respond_to do |format|
       format.js
     end

@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
     @clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
+      format.csv { send_data Project.to_csv }
       format.html
     end
   end
@@ -72,6 +73,13 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @projects = Project.all
+    respond_to do |format|
+      format.js
     end
   end
 

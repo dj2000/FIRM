@@ -1,4 +1,5 @@
 class Property < ActiveRecord::Base
+  extend AsCSV
   has_many :client_properties, dependent: :destroy
   has_many :clients, through: :client_properties, dependent: :destroy
   has_many :insp_requests, dependent: :destroy
@@ -57,4 +58,5 @@ class Property < ActiveRecord::Base
     latitude, longitude = Geocoder::Calculations.extract_coordinates(self.try(:address))
     { lat: latitude, long: longitude }
   end
+
 end

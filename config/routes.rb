@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     get :scheduled_projects, on: :collection
   end
 
-  resources :projects
+  resources :projects do 
+    get :print, on: :collection
+  end
 
   resources :pmt_schedules
 
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
 
   resources :inspections do
     get :appointment_info, on: :member
+    get :print, on: :collection
   end
 
   resources :receipts do
@@ -88,6 +91,7 @@ Rails.application.routes.draw do
   resources :properties do
     get :map, on: :collection
     get :get_map, on: :collection
+    get :print, on: :collection
   end
 
   resources :agents do

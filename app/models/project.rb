@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 
+  extend AsCSV
 	## Non Model Attributes
   attr_accessor :crew_schedule
 

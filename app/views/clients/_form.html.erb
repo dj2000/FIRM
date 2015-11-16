@@ -18,7 +18,52 @@
       </div>
     </div>
   </div>
-  <%= render partial: 'associated_customers', locals: { f: f } %>
+  <div class="row">
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :firstName %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :lastName %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :middleInit %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneC, label: "Mobile Number" %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneH, label: "Home Number" %>
+      </div>
+    </div>
+    <div class='col-sm-4'>
+      <div class="form-group">
+        <%= f.input :phoneW, label: "Office Number" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class='col-sm-6'>
+      <div class="form-group">
+        <%= f.input :email %>
+      </div>
+    </div>
+    <div class='col-sm-6'>
+        <div class="form-group">
+          <%= f.input :mailAddress, label: "Mailing Address" %>
+        </div>
+      </div>
+  </div>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group">
@@ -36,23 +81,12 @@
       </div>
     </div>
   </div>
-  <h1 class="text-center">Associated Customers</h1>
-  <hr>
-  <div class="associated_customers">
-  <%= f.fields_for :associated_customers do |associated_customer| %>
-    <%= associated_customer.error_notification %>
-    <%= render partial: 'associated_customers', locals: { f: associated_customer } %>
-    <br/>
-    <%= associated_customer.link_to_remove "Remove Customer", class: "btn btn-danger" %>
-  <% end %>
-  </div>
   <div class="modal-footer">
     <% if @remote %>
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
     <% else %>
       <%= link_to "Back", clients_path, class: 'btn btn-info' %>
     <% end %>
-    <%= f.link_to_add "Add Customer", :associated_customers, class: "btn btn-primary", :data => { :target => ".associated_customers" }    %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>

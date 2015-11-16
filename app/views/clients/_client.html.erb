@@ -40,3 +40,24 @@
     </tr>
   </tbody>
 </table>
+<h4>Associated Customers:</h4>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <tr>
+    <th>Name</th>
+    <th>Home Number</th>
+    <th>Office Number</th>
+    <th>Cell Number</th>
+    <th>Email</th>
+    <th>Mail Address</th>
+  </tr>
+  <% @client.associated_customers.each do |associated_customer| %>
+    <tr>
+      <td><%= associated_customer.name %></td>
+      <td><%= number_to_phone(associated_customer.phoneH) %></td>
+      <td><%= number_to_phone(associated_customer.phoneW) %></td>
+      <td><%= number_to_phone(associated_customer.phoneC) %></td>
+      <td><%= associated_customer.email %></td>
+      <td><%= associated_customer.mailAddress %></td>
+    </tr>
+  <% end %>
+</table>

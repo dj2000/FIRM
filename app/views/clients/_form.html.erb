@@ -1,76 +1,48 @@
 <fieldset>
   <legend>New Client</legend>
 </fieldset>
-<%= simple_form_for @client, html: { remote: @remote } do |f| %>
+<%= simple_nested_form_for @client, html: { remote: @remote } do |f| %>
   <%= f.error_notification %>
-  <div class="row">
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.input :firstName %>
-      </div>
-    </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.input :lastName %>
-      </div>
-    </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.input :middleInit %>
-      </div>
-    </div>
-  </div>
   <%= hidden_field_tag :property_id, "", class: 'property_id' %>
   <div class="row">
-    <div class='col-sm-4'>
+    <div class='col-sm-6 of_type'>
       <div class="form-group">
-        <%= f.input :phoneC, label: "Mobile Number" %>
+        <%= f.input :of_type, as: :radio_buttons, collection: ['Individual', 'Company'], input_html: { name: 'client_of_type' }, checked: (f.object.of_type || "Individual") %>
       </div>
     </div>
-    <div class='col-sm-4'>
+    <div class='col-sm-6 hide company_name'>
       <div class="form-group">
-        <%= f.input :phoneH, label: "Home Number" %>
-      </div>
-    </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.input :phoneW, label: "Office Number" %>
+        <%= f.input :company_name %>
       </div>
     </div>
   </div>
+  <%= render partial: 'associated_customers', locals: { f: f } %>
   <div class="row">
-    <div class='col-sm-4'>
+    <div class="col-sm-3">
       <div class="form-group">
-        <%= f.input :email %>
+        <%= f.input :client_type, as: :select, collection: Client::CLIENT_TYPE.map{|v| [v, v]}, selected: f.object.clienttype, input_html: { class: "client_type" } %>
       </div>
     </div>
-    <div class="col-sm-4">
-      <div class="form-group">
-        <%= f.input :client_type, as: :select, collection: Client::CLIENT_TYPE.map{|v| [v, v]} %>
+    <div class='col-sm-3 '>
+      <div class="form-group <%= f.object.clienttype == "Other" ? '' : 'hide' %> client_type_other ">
+        <%= f.input :client_type, label: '&nbsp;'.html_safe %>
       </div>
     </div>
-    <div class='col-sm-4'>
+    <div class='col-sm-6'>
       <div class="form-group">
         <%= f.input :is_opt_out_mailer, as: :boolean, checked_value: true, unchecked_value: false, label: "Opt Out of Mailing List" %>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class='col-sm-4 of_type'>
-      <div class="form-group">
-        <%= f.input :of_type, as: :radio_buttons, collection: ['Individual', 'Company'], input_html: { name: 'client_of_type' }, checked: (f.object.of_type || "Individual") %>
-      </div>
-    </div>
-    <div class='col-sm-4 hide company_name'>
-      <div class="form-group">
-        <%= f.input :company_name %>
-      </div>
-    </div>
-    <div class='col-sm-4'>
-      <div class="form-group">
-        <%= f.input :mailAddress, label: "Mailing Address" %>
-      </div>
-    </div>
+  <h1 class="text-center">Associated Customers</h1>
+  <hr>
+  <div class="associated_customers">
+  <%= f.fields_for :associated_customers do |associated_customer| %>
+    <%= associated_customer.error_notification %>
+    <%= render partial: 'associated_customers', locals: { f: associated_customer } %>
+    <br/>
+    <%= associated_customer.link_to_remove "Remove Customer", class: "btn btn-danger" %>
+  <% end %>
   </div>
   <div class="modal-footer">
     <% if @remote %>
@@ -78,28 +50,47 @@
     <% else %>
       <%= link_to "Back", clients_path, class: 'btn btn-info' %>
     <% end %>
+    <%= f.link_to_add "Add Customer", :associated_customers, class: "btn btn-primary", :data => { :target => ".associated_customers" }    %>
     <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
 <script>
   $(document).ready(function(){
-    of_typeSelection();
+    ofTypeSelection();
     var property_id = $(".property_select").val();
     $(".property_id").val(property_id);
     var property_text = $(".property_select option:selected").text();
     $("#client_mailAddress").val(property_text);
     $("input[name=client_of_type]").change(function () {
-      of_typeSelection();
+      ofTypeSelection();
     });
 
-    function of_typeSelection(){
+    function ofTypeSelection(){
       var checked = $("input[name=client_of_type]:checked").val();
       if(checked == "Individual"){
         $(".company_name").addClass("hide");
+        $(".client_firstName").removeClass("hide");
+        $(".client_lastName").removeClass("hide");
+        $(".client_middleInit").removeClass("hide");
       }
       else if (checked == "Company" ){
         $(".company_name").removeClass("hide");
+        $(".client_firstName").addClass("hide");
+        $(".client_lastName").addClass("hide");
+        $(".client_middleInit").addClass("hide");
       }
     }
+
+    $(".client_type").change(function(){
+      var selectedValue = $(this).val();
+      if(selectedValue == "Other"){
+        $(".client_type_other").removeClass("hide");
+        $(".client_type_other input").val("");
+      }
+      else{
+        $(".client_type_other").addClass("hide");
+        $(".client_type_other input").val(selectedValue);
+      }
+    });
   });
 </script>

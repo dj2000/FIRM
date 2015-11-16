@@ -21,11 +21,13 @@ class ClientsController < ApplicationController
   def new
     @client = Client.new
     @client_property = ClientProperty.new
+    @associated_customers = @client.associated_customers.present? ? @client.associated_customers : @client.associated_customers.build
     @remote = request.format.symbol == :html ? false : true
   end
 
   def edit
     @remote = false
+    @associated_customers = @client.associated_customers.present? ? @client.associated_customers : @client.associated_customers.build
   end
 
   def create
@@ -82,6 +84,6 @@ class ClientsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
       params[:client][:of_type] = params[:client_of_type]
-      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer, :client_type, :of_type, :company_name)
+      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer, :client_type, :of_type, :company_name, associated_customers_attributes: [:id, :firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :_destroy])
     end
 end

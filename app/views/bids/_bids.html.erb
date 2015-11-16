@@ -1,0 +1,18 @@
+<h1>Bids</h1>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Bid</th>
+      <th>Property Address</th>
+      <th>Repair Cost</th>
+      <th>Seismic Upgrade Fee</th>
+      <th>Administration Fee</th>
+      <th>Bid Total</th>
+      <th> Payment Plan </th>
+      <th> Bid Status </th>
+      <th> Status Date </th>
+      <%# if (request.format == "js" || request.path != "/bids") %>
+        <!-- <th colspan="2" class="text-center">Actions</th> -->
+      <%# end %>
+    </tr>
+  </thead>

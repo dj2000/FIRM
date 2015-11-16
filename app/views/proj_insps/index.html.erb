@@ -9,7 +9,9 @@
       <th>Inspected By</th>
       <th>Completed Date</th>
       <th>Result</th>
-      <th colspan="3 text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3 text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -22,26 +24,31 @@
         <td><%= proj_insp.inspectBy %></td>
         <td><%= proj_insp.try(:completeDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= proj_insp.result %></td>
-        <td>
-          <%= link_to proj_insp, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_proj_insp_path(proj_insp), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to proj_insp, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to proj_insp, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_proj_insp_path(proj_insp), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to proj_insp, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Project Inspection"), new_proj_insp_path, :class => "btn btn-info" %>
+<% if request.format == 'text/html' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Project Inspection"), new_proj_insp_path, :class => "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), proj_insps_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_proj_insps_path, remote: true,class: "btn btn-info" %>
+<% end %>

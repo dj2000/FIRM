@@ -8,6 +8,7 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.js
       format.html
+      format.csv { send_data SvcArea.to_csv }
     end
   end
 
@@ -67,6 +68,13 @@ class ClientsController < ApplicationController
 
   def report
     @clients = Client.where(created_at: (Date.today..Date.today))
+  end
+
+  def print
+    @clients = Client.all
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

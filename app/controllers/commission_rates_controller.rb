@@ -5,6 +5,11 @@ class CommissionRatesController < ApplicationController
   # GET /commission_rates.json
   def index
     @commission_rates = CommissionRate.all.order(:created_at)
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data CommissionRate.to_csv }
+    end
   end
 
   # GET /commission_rates/1
@@ -58,6 +63,13 @@ class CommissionRatesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to commission_rates_url, notice: 'Commission rate was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @commission_rates = CommissionRate.all.order(:created_at)
+    respond_to do |format|
+      format.js
     end
   end
 

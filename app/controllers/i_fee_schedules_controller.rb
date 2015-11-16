@@ -5,6 +5,11 @@ class IFeeSchedulesController < ApplicationController
   # GET /i_fee_schedules.json
   def index
     @i_fee_schedules = IFeeSchedule.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data IFeeSchedule.to_csv }
+    end
   end
 
   # GET /i_fee_schedules/1
@@ -58,6 +63,13 @@ class IFeeSchedulesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to i_fee_schedules_url, notice: 'Fee Schedule was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @i_fee_schedules = IFeeSchedule.all
+    respond_to do |format|
+      format.js
     end
   end
 

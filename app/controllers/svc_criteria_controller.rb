@@ -5,6 +5,11 @@ class SvcCriteriaController < ApplicationController
   # GET /svc_criteria.json
   def index
     @svc_criteria = SvcCriterium.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data SvcCriterium.to_csv }
+    end
   end
 
   # GET /svc_criteria/1
@@ -57,6 +62,13 @@ class SvcCriteriaController < ApplicationController
     respond_to do |format|
       format.html { redirect_to svc_criteria_url, notice: 'Svc criterium was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @svc_criteria = SvcCriterium.all
+    respond_to do |format|
+      format.js
     end
   end
 

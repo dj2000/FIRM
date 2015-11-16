@@ -1,4 +1,6 @@
 class PayPlan < ActiveRecord::Base
+  extend AsCSV
+
   belongs_to :bid
 
   has_many :payments, dependent: :destroy

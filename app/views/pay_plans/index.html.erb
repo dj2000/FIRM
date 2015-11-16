@@ -7,7 +7,9 @@
       <th>Amount Range Start</th>
       <th>Amount Range End</th>
       <th>Deposit</th>
-      <th colspan="3" class="text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -18,26 +20,31 @@
         <td><%= number_to_currency(pay_plan.jobMinAmt) %></td>
         <td><%= number_to_currency(pay_plan.jobMaxAmt) %></td>
         <td><%= "#{pay_plan.deposit}%" %></td>
-        <td>
-          <%= link_to pay_plan, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_pay_plan_path(pay_plan), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to pay_plan, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to pay_plan, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_pay_plan_path(pay_plan), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to pay_plan, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Payment Plan"), new_pay_plan_path, :class => "btn btn-info" %>
+<% if request.format == 'text/html' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Payment Plan"), new_pay_plan_path, :class => "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), pay_plans_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_pay_plans_path, remote: true,class: "btn btn-info" %>
+<% end %>

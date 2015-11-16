@@ -5,6 +5,11 @@ class SvcAreasController < ApplicationController
   # GET /svc_areas.json
   def index
     @svc_areas = SvcArea.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data SvcArea.to_csv }
+    end
   end
 
   # GET /svc_areas/1
@@ -61,6 +66,13 @@ class SvcAreasController < ApplicationController
     respond_to do |format|
       format.html { redirect_to svc_areas_url, notice: 'Svc area was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @svc_areas = SvcArea.all
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -5,6 +5,11 @@ class PayPlansController < ApplicationController
   # GET /pay_plans.json
   def index
     @pay_plans = PayPlan.all
+    respond_to do |format|
+      format.js
+      format.csv { send_data PayPlan.to_csv }
+      format.html
+    end
   end
 
   # GET /pay_plans/1
@@ -66,6 +71,13 @@ class PayPlansController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pay_plans_url, notice: 'Payment plan was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @pay_plans = PayPlan.all
+    respond_to do |format|
+      format.js
     end
   end
 

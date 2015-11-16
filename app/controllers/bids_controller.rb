@@ -7,6 +7,14 @@ class BidsController < ApplicationController
   # GET /bids.json
   def index
     @bids = Bid.all
+    if params[:start_date].present? and params[:end_date].present?
+      Bid.joins(:inspection => [:appointment]).where("appointments.schedStart AND  appointments.schedEnd BETWEEN #{params[:start_date]} AND #{params[:end_date]} ")
+    end
+
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /bids/1

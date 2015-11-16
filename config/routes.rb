@@ -11,33 +11,47 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :insp_comm_scales
 
-  resources :proj_insps
+  resources :proj_insps do
+    get :print, on: :collection
+  end
 
-  resources :permits
+  resources :permits do
+    get :print, on: :collection
+  end
 
   resources :crew_skills
 
-  resources :crews
+  resources :crews do
+    get :print, on: :collection
+  end
 
-  resources :commission_rates
+  resources :commission_rates do
+    get :print, on: :collection
+  end
 
   resources :proj_scheds do
     get :scheduled_projects, on: :collection
   end
 
-  resources :projects do 
+  resources :projects do
     get :print, on: :collection
   end
 
-  resources :pmt_schedules
+  resources :pmt_schedules do
+    get :print, on: :collection
+  end
 
   resources :contracts
 
   resources :comm_histories
 
-  resources :pay_plans
+  resources :pay_plans do
+    get :print, on: :collection
+  end
 
-  resources :bids
+  resources :bids do
+    get :report, on: :collection
+  end
 
   match "/block_out_periods/new/:appointment_id" => "block_out_periods#new", via: :get
   resources :block_out_periods
@@ -56,17 +70,25 @@ Rails.application.routes.draw do
     get :info, on: :member
   end
 
-  resources :i_fee_schedules
+  resources :i_fee_schedules do
+    get :print, on: :collection
+  end
 
   resources :skills
 
   resources :insp_skills
 
-  resources :inspectors
+  resources :inspectors do
+    get :print, on: :collection
+  end
 
-  resources :svc_areas
+  resources :svc_areas do
+    get :print, on: :collection
+  end
 
-  resources :svc_criteria
+  resources :svc_criteria do
+    get :print, on: :collection
+  end
 
   resources :appointments do
     get :get_scheduled_appointments, on: :collection
@@ -77,7 +99,7 @@ Rails.application.routes.draw do
     get :report, on: :collection
   end
 
-  resources :insp_requests do 
+  resources :insp_requests do
     get :get_property_clients, on: :collection
     get :get_client_agents, on: :collection
     get :insp_request_info, on: :member
@@ -96,10 +118,12 @@ Rails.application.routes.draw do
 
   resources :agents do
     get :report, on: :collection
+    get :print, on: :collection
   end
 
   resources :clients do
     get :report, on: :collection
+    get :print, on: :collection
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

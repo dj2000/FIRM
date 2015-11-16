@@ -1,4 +1,6 @@
 class SvcCriterium < ActiveRecord::Base
+  extend AsCSV
+
   has_many :appointments
 
   DEFAULTS = { "True" => "1", "False" => "0", "Ignore" => "2" }

@@ -9,6 +9,12 @@ class Bid < ActiveRecord::Base
 
   before_create :default_status
 
+  # scope :created_between, lambda {|start_date, end_date| Bid.joins(:inspection => [:appointment]).
+  # where("appointments.schedStart >= ?" DateTime.now )}
+
+
+  # where(appointments: { schedStart: start_date })}
+
   # Set default status as pending
   def default_status
 		self.status = "Pending"
@@ -41,4 +47,8 @@ class Bid < ActiveRecord::Base
   def self.accepted_bids
     bids = Bid.where(status: "Accepted")
   end
+
+  # def get_bid_reports(schedStart, schedEnd)
+  #   Bid.joins(:inspection => [:appointment]).where(appointments: {"schedStart AND schedEnd BETWEEN })
+  # end
 end

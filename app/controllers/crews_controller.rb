@@ -5,6 +5,11 @@ class CrewsController < ApplicationController
   # GET /crews.json
   def index
     @crews = Crew.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data Crew.to_csv }
+    end
   end
 
   # GET /crews/1
@@ -58,6 +63,13 @@ class CrewsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to crews_url, notice: 'Crew was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @crews = Crew.all
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -1,6 +1,8 @@
+<% if @remote %>
 <fieldset>
   <legend>New Client</legend>
 </fieldset>
+<% end %>
 <%= simple_nested_form_for @client, html: { remote: @remote } do |f| %>
   <%= f.error_notification %>
   <%= hidden_field_tag :property_id, "", class: 'property_id' %>

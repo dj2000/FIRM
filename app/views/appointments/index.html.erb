@@ -15,10 +15,8 @@
 <script>
   $(document).ready(function(){
     $('.datepicker').datepicker({
-      daysOfWeekDisabled: [0],
-      todayHighlight: true
+      daysOfWeekDisabled: [0]
     });
-
     $('.datepicker').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
@@ -33,6 +31,7 @@
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'agendaWeek',
+    defaultDate: moment("<%= @appointment.try(:schedStart) || Date.today %>"),
     editable: <%= @editable %>,
     hiddenDays: [0],
     selectable: <%= @editable %>,

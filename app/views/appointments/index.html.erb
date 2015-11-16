@@ -13,10 +13,16 @@
 </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
+  var date = "<%= @appointment.try(:schedStart) || Time.now %>";
+  var dateValue = date.split(" ")[0].split("-");
+  var year = dateValue[0];
+  var month = dateValue[1] - 1;
+  var day = dateValue[2];
   $(document).ready(function(){
     $('.datepicker').datepicker({
       daysOfWeekDisabled: [0]
     });
+    $(".datepicker").datepicker("update", new Date(year, month, day));
     $('.datepicker').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
@@ -31,7 +37,7 @@
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'agendaWeek',
-    defaultDate: moment("<%= @appointment.try(:schedStart) || Date.today %>"),
+    defaultDate: moment(date),
     editable: <%= @editable %>,
     hiddenDays: [0],
     selectable: <%= @editable %>,

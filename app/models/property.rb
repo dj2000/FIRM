@@ -44,6 +44,7 @@ class Property < ActiveRecord::Base
     "#{street}, #{city}, #{state}, #{zip}"
   end
 
+  # To show Selected value of occupied by field on form
   def occupied
     return nil if self.occupied_by.nil?
     occupied_by = (Property::OCCUPIED_BY.first(3)).include?(self.occupied_by) ? self.occupied_by : "Other"

@@ -1,0 +1,36 @@
+<h1>Project Schedules Reports</h1>
+<%= form_tag('/proj_scheds', method: 'get', remote: true) do %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :start_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :end_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <%= submit_tag "Get Report", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<div class="proj_scheds-report">
+  <%= render 'proj_scheds' if @proj_scheds.present? %>
+</div>
+<script>
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

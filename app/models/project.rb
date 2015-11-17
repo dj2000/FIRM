@@ -27,6 +27,14 @@ class Project < ActiveRecord::Base
     self.where(permit: true)
   end
 
+  def preferred_by
+    "#{self.try(:schedule_pref_start).try(:strftime, '%d %b %Y')} to #{self.try(:schedule_pref_end).try(:strftime, '%d %b %Y') }"
+  end
+
+  def scheduled
+    "#{self.try(:sheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:sheduleEnd).try(:strftime, '%d %b %Y') }"
+  end
+
   private
 
   def check_preferred_schedule_end_datetime

@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   resources :bids do
     get :report, on: :collection
     get :print, on: :collection
+    get :csv_report, on: :collection
   end
 
   match "/block_out_periods/new/:appointment_id" => "block_out_periods#new", via: :get

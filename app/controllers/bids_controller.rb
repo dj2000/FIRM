@@ -8,9 +8,9 @@ class BidsController < ApplicationController
   def index
     @bids = Bid.all
     if params[:start_date].present? and params[:end_date].present?
-      @start_date = Date.parse(params[:start_date])
-      @end_date = Date.parse(params[:end_date])
-      @bids = Bid.created_between(@start_date, @end_date)
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      bids = Bid.created_between(@start_date, @end_date)
     end
     respond_to do |format|
       format.js
@@ -81,6 +81,15 @@ class BidsController < ApplicationController
     @bids = Bid.created_between(start_date, end_date)
     respond_to do |format|
       format.js
+    end
+  end
+
+  def csv_report
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @bids = Bid.created_between(start_date, end_date)
+    respond_to do |format|
+      format.csv { send_data @bids.to_csv }
     end
   end
 

@@ -30,12 +30,31 @@
 </table>
 <br>
 <% unless request.path == "/bids/print" %>
-  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), bids_path(format: :csv),class: "btn btn-info" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), { controller: 'bids',
-    action: 'print',
-    start_date: @start_date,
-    end_date: @end_date },
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), csv_report_bids_path(format: :csv), remote: true, class: "btn btn-info", id: 'csv-bid'%>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#",
     remote: true, class: "btn btn-info", id: 'print-bid'
   %>
 <% end %>
-
+<script type="text/javascript">
+  $("#print-bid").click(function(){
+    var startdate = $("#start_date").val();
+    var enddate = $("#end_date").val();
+    $.ajax({
+      url: '/bids/print',
+      type: 'get',
+      data: {start_date: startdate, end_date: enddate},
+      success: function() {}
+    });
+  });
+  $("#csv-bid").click(function(){
+    var startdate = $("#start_date").val();
+    var enddate = $("#end_date").val();
+    $.ajax({
+      // url: "/bids/csv_report",
+      // type: 'get',
+      // format: 'csv',
+      data: {start_date: startdate, end_date: enddate},
+      success: function() {}
+    });
+  });
+</script>

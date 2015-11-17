@@ -47,10 +47,8 @@ class Bid < ActiveRecord::Base
   end
 
   def self.created_between(start_date, end_date)
-    Bid.all.map { |bid| bid if
-      (bid.inspection.appointment.schedStart.to_date >= start_date &&
-      bid.inspection.appointment.schedStart.to_date <= end_date) &&
-      (bid.inspection.appointment.schedEnd.to_date >= start_date &&
-      bid.inspection.appointment.schedEnd.to_date >= end_date)}.compact
+    Bid.joins(:inspection => [:appointment => [:insp_request => [:property]]]).
+      where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)',
+      start_date, end_date, start_date, end_date)
   end
 end

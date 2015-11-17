@@ -33,7 +33,7 @@
   </tbody>
 </table>
 <br>
-<div id = "link-csv-print">
+<% unless request.path == "/bids/print" %>
   <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), bids_path(format: :csv),class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), { controller: 'bids',
     action: 'print',
@@ -41,5 +41,5 @@
     end_date: @end_date },
     remote: true, class: "btn btn-info", id: 'print-bid'
   %>
-</div>
+<% end %>
 

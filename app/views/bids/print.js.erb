@@ -1,6 +1,4 @@
 var contents = ("<%= escape_javascript(render partial: 'bids') %>");
-debugger;
-contents.find(".link_csv").remove();
 var oldPage = document.body.innerHTML;
 document.body.innerHTML = contents;
 window.print();

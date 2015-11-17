@@ -41,7 +41,11 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
-  resources :contracts
+  resources :contracts do
+    get :report, on: :collection
+    get :report_result, on: :collection
+    get :print, on: :collection
+  end
 
   resources :comm_histories
 

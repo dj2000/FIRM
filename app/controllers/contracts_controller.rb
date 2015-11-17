@@ -66,6 +66,16 @@ class ContractsController < ApplicationController
     end
   end
 
+  def report_result
+    contractdate = Date.parse(params[:contract_date])
+    @contracts = Contract.where("date >= ?", contractdate)
+  end
+
+  def print
+    contractdate = Date.parse(params[:contract_date])
+    @contracts = Contract.where("date >= ?", contractdate)
+  end
+
   # DELETE /contracts/1
   # DELETE /contracts/1.json
   def destroy

@@ -1,0 +1,26 @@
+<h1>Contract Reports</h1>
+<%= form_tag(report_result_contracts_path, method: 'get', remote: true) do %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :contract_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <%= submit_tag "Get Report", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<div class="contract-data">
+  <%= render 'contract' if @contracts.present? %>
+</div>
+<script>
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

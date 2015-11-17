@@ -61,4 +61,22 @@ class Bid < ActiveRecord::Base
     end
   end
 
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Bid", "Property Address", "Repair Cost", "Seismic Upgrade Fee", "Administration Fee", "Bid Total", "Payment Plan", "Bid Status", "Status Date"]
+      all.each do |bid|
+        row = [ bid.title,
+           bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value),
+           bid.costRepair,
+           bid.feeSeismicUpg,
+           bid.feeAdmin,
+           bid.total_cost,
+           bid.try(:payPlan).try(:payment_plan_select),
+           bid.status,
+           bid.status_date]
+        csv << row
+      end
+    end
+  end
+
 end

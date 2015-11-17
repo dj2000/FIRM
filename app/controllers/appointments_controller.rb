@@ -11,12 +11,13 @@ class AppointmentsController < ApplicationController
       @appointment.save(validate: false)
       @editable = true
     end
-    if params[:start] and params[:end]
+    if (params[:start] and params[:end])
       @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start], params[:end], params[:start], params[:end])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end
     respond_to do |format|
+      format.js
       format.html
       format.json{ render json: @appointments.as_json }
     end
@@ -139,7 +140,7 @@ class AppointmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def appointment_params
-      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection, :is_insurance)
+      params.require(:appointment).permit(:inspRequest_id, :schedStart, :schedEnd, :allDay, :inspector_id, :contact, :inspFee, :prepaid, :pmtMethod, :pmtRef, :notes, :amount_received, :scheduled_inspection, :is_insurance, :concerns)
     end
 
     def client_property_params

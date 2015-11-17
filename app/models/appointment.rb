@@ -40,7 +40,9 @@ class Appointment < ActiveRecord::Base
       color: COLORS["#{self.inspector_id}"],
       inspector_id: self.inspector_id,
       allDay: false,
-      type: 'appointment'
+      type: 'appointment',
+      client: self.try(:insp_request).try(:client).try(:name),
+      address: self.try(:insp_request).try(:property).try(:address)
     }
   end
 

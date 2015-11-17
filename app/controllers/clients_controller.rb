@@ -4,6 +4,11 @@ class ClientsController < ApplicationController
 
   def index
     @clients = Client.all
+    @clients = @clients.where(created_at: (params[:start_date]..params[:end_date])) if params[:start_date].present? and params[:end_date].present?
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def show
@@ -60,6 +65,10 @@ class ClientsController < ApplicationController
     end
   end
 
+  def report
+    @clients = Client.where(created_at: (Date.today..Date.today))
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
@@ -72,6 +81,7 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer)
+      params[:client][:of_type] = params[:client_of_type]
+      params.require(:client).permit(:firstName, :lastName, :middleInit, :phoneH, :phoneW, :phoneC, :email, :mailAddress, :is_opt_out_mailer, :client_type, :of_type, :company_name)
     end
 end

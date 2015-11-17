@@ -82,6 +82,11 @@
             <%= f.input :pmtMethod, as: :select, collection: Appointment::PAYMENT_METHOD.map{|v| [v, v]}, label: "Payment Method" %>
           </div>
         </div>
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <%= f.input :concerns %>
+          </div>
+        </div>
       </div>
       <div class="pull-left">
         <%= link_to "Back", insp_requests_path, class: 'btn btn-primary' %>

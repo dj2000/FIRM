@@ -1,0 +1,45 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Call Time</th>
+      <th>Caller Type</th>
+      <th>Referral Source</th>
+      <th>Client</th>
+      <th>Agent</th>
+      <th>Property</th>
+      <th>Inspection Selection Criteria</th>
+      <th>Appointment</th>
+      <th colspan="3" style="text-align:center">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @insp_requests.each do |insp_request| %>
+      <tr>
+        <td><%= insp_request.call_time %></td>
+        <td><%= insp_request.callerType %></td>
+        <td><%= insp_request.referalSource %></td>
+        <td><%= insp_request.client.try(:firstName) %></td>
+        <td><%= insp_request.agent.try(:firstName) %></td>
+        <td><%= insp_request.property.try(:street) %></td>
+        <td><%= insp_request.selectInsp %></td>
+        <td><%= insp_request.has_appointment? %></td>
+        <td>
+          <%= link_to insp_request, class: 'btn btn-primary' do %>
+            <i class='fa fa-eye'></i> Appointment
+          <% end %>
+        </td>
+        <td>
+          <%= link_to edit_insp_request_path(insp_request), class: 'btn btn-info' do %>
+            <i class='fa fa-pencil-square-o'></i> Edit
+          <% end %>
+        </td>
+        <td>
+          <%= link_to insp_request, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <i class='fa fa-trash-o'></i> Destroy
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

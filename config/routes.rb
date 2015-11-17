@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     get :send_email, on: :member
     get :calculate_inspection_fee, on: :member
     get :background_events, on: :collection
+    get :report, on: :collection
   end
 
   resources :insp_requests do 
@@ -89,9 +90,13 @@ Rails.application.routes.draw do
     get :get_map, on: :collection
   end
 
-  resources :agents
+  resources :agents do
+    get :report, on: :collection
+  end
 
-  resources :clients
+  resources :clients do
+    get :report, on: :collection
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

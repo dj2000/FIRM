@@ -4,12 +4,11 @@ class InspRequest < ActiveRecord::Base
   belongs_to :agent
   belongs_to :property
 
-  REFERRAL_SOURCE = ['Previous Agent', 'Agent', 'Previous Customer', 'Online', 'Google', 'Yelp', 'Angie’s List', 'Job Sign', 'Sign on Van/Truck', 'Miscellaneous']
+  REFERRAL_SOURCE = ['Previous Agent', 'Agent', 'Previous Customer', 'Online', 'Google', 'Yelp', 'Angie’s List', 'Job Sign', 'Sign on Van/Truck', 'Miscellaneous', 'Other']
 
   SELECTION_CRITERIA = ['Specific Inspector', 'Senior Inspector', 'Next Available']
 
   validates :callTime, :client_id, :property_id, :selectInsp, presence: true
-  validates :client_id, uniqueness: { scope: :property_id, message: "Property has already been assigned for same customer." }
 
   def has_appointment?
   	self.appointment ? "Scheduled" : "Unscheduled"
@@ -69,5 +68,11 @@ class InspRequest < ActiveRecord::Base
     amount = basic_amount(150)
     amount += basic_amount(250) if (is_insurance == "true" || is_insurance == true)
     appointment.inspFee = (format.nil? and appointment.inspFee) ? appointment.inspFee : amount
+  end
+
+  # To show Selected value of referral source by field on form
+  def referral_source
+    return nil if self.referalSource.nil?
+    referalSource = (InspRequest::REFERRAL_SOURCE[0...-1]).include?(self.referalSource) ? self.referalSource : "Other"
   end
 end

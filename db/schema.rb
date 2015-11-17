@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106111427) do
+ActiveRecord::Schema.define(version: 20151116091430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20151106111427) do
     t.integer  "svcArea_id"
     t.float    "amount_received"
     t.boolean  "is_insurance"
+    t.text     "concerns"
   end
 
   create_table "bids", force: true do |t|
@@ -104,6 +105,9 @@ ActiveRecord::Schema.define(version: 20151106111427) do
     t.datetime "updated_at"
     t.boolean  "mailingList"
     t.boolean  "is_opt_out_mailer"
+    t.string   "client_type"
+    t.string   "company_name"
+    t.string   "of_type"
   end
 
   create_table "comm_histories", force: true do |t|

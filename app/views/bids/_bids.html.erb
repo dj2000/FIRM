@@ -15,7 +15,7 @@
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
-        <td><%= bid.id %></td>
+        <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
         <td><%= bid.costRepair %></td>
         <td><%= bid.feeSeismicUpg %></td>
@@ -30,10 +30,8 @@
 </table>
 <br>
 <% unless request.path == "/bids/print" %>
-  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), csv_report_bids_path(format: :csv), remote: true, class: "btn btn-info", id: 'csv-bid'%>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#",
-    remote: true, class: "btn btn-info", id: 'print-bid'
-  %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), bids_path(format: :csv), class: "btn btn-info", id: 'csv-bid'%>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid' %>
 <% end %>
 <script type="text/javascript">
   $("#print-bid").click(function(){
@@ -42,17 +40,6 @@
     $.ajax({
       url: '/bids/print',
       type: 'get',
-      data: {start_date: startdate, end_date: enddate},
-      success: function() {}
-    });
-  });
-  $("#csv-bid").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      // url: "/bids/csv_report",
-      // type: 'get',
-      // format: 'csv',
       data: {start_date: startdate, end_date: enddate},
       success: function() {}
     });

@@ -6,6 +6,7 @@ class Bid < ActiveRecord::Base
   has_many :comm_histories
   has_one :contract
   has_one :verbal_close_comm_history, -> { where(callOutcome: "Verbal Close") }, class_name: 'CommHistory', foreign_key: 'bid_id'
+  has_many :callback_comm_histories, -> { where(callOutcome: "Follow-up") }, class_name: 'CommHistory', foreign_key: 'bid_id'
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, :title, :payPlan_id, presence: true
 
@@ -51,4 +52,13 @@ class Bid < ActiveRecord::Base
       where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)',
       start_date, end_date, start_date, end_date)
   end
+
+  def status_date
+    if self.status == "Accepted"
+      self.try(:verbal_close_comm_history).try(:call_time).try(:strftime, "%d %b %Y")
+    elsif self.status == "Follow-up"
+      self.try(:callback_comm_histories).try(:last).try(:callBackDate).try(:strftime, "%d %b %Y")
+    end
+  end
+
 end

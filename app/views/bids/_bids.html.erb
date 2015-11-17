@@ -1,4 +1,3 @@
-
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
@@ -8,26 +7,23 @@
       <th>Seismic Upgrade Fee</th>
       <th>Administration Fee</th>
       <th>Bid Total</th>
-      <th> Payment Plan </th>
-      <th> Bid Status </th>
-      <th> Status Date </th>
-      <%# if (request.format == "js" || request.path != "/bids") %>
-        <!-- <th colspan="2" class="text-center">Actions</th> -->
-      <%# end %>
+      <th>Payment Plan</th>
+      <th>Bid Status</th>
+      <th>Status Date</th>
     </tr>
   </thead>
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
         <td><%= bid.id %></td>
-        <td> <%= bid.inspection.appointment.insp_request.property.property_select_value %></td>
-        <td> <%= bid.costRepair %></td>
-        <td> <%= bid.feeSeismicUpg %></td>
-        <td> <%= bid.feeAdmin %> </td>
-        <td> <%= bid.total_cost %></td>
-        <td> <%= bid.payPlan.payment_plan_select %></td>
-        <td> <%= bid.status %></td>
-        <td> </td>
+        <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
+        <td><%= bid.costRepair %></td>
+        <td><%= bid.feeSeismicUpg %></td>
+        <td><%= bid.feeAdmin %> </td>
+        <td><%= bid.total_cost %></td>
+        <td><%= bid.try(:payPlan).try(:payment_plan_select) %></td>
+        <td><%= bid.status %></td>
+        <td><%= bid.status_date %></td>
       </tr>
     <% end%>
   </tbody>

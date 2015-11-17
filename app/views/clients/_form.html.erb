@@ -105,15 +105,9 @@
       var checked = $("input[name=client_of_type]:checked").val();
       if(checked == "Individual"){
         $(".company_name").addClass("hide");
-        $(".client_firstName").removeClass("hide");
-        $(".client_lastName").removeClass("hide");
-        $(".client_middleInit").removeClass("hide");
       }
       else if (checked == "Company" ){
         $(".company_name").removeClass("hide");
-        $(".client_firstName").addClass("hide");
-        $(".client_lastName").addClass("hide");
-        $(".client_middleInit").addClass("hide");
       }
     }
 

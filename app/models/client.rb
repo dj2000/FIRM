@@ -17,7 +17,7 @@ class Client < ActiveRecord::Base
   CLIENT_TYPE = %w(Buyer Owner Seller Contractor Other)
 
   def name
-    (self.of_type == "Individual" or self.of_type.nil?) ? "#{self.try(:firstName)} #{self.try(:middleInit)} #{self.try(:lastName)}" : self.company_name
+    (self.of_type == "Individual" or self.of_type.nil?) ? self.full_name : self.company_name
   end
 
   def opt_out_mailer?
@@ -27,5 +27,13 @@ class Client < ActiveRecord::Base
   def clienttype
     return nil if self.client_type.nil?
     client_type = (Client::CLIENT_TYPE.first(4)).include?(self.client_type) ? self.client_type : "Other"
+  end
+
+  def full_name
+    "#{self.try(:firstName)} #{self.try(:middleInit)} #{self.try(:lastName)}"
+  end
+
+  def contact
+    self.full_name
   end
 end

@@ -8,12 +8,14 @@ class BidsController < ApplicationController
   def index
     @bids = Bid.all
     if params[:start_date].present? and params[:end_date].present?
-      Bid.joins(:inspection => [:appointment]).where("appointments.schedStart AND  appointments.schedEnd BETWEEN #{params[:start_date]} AND #{params[:end_date]} ")
+      @start_date = Date.parse(params[:start_date])
+      @end_date = Date.parse(params[:end_date])
+      @bids = Bid.created_between(@start_date, @end_date)
     end
-
     respond_to do |format|
       format.js
       format.html
+      format.csv { send_data @bids.to_csv }
     end
   end
 
@@ -72,6 +74,16 @@ class BidsController < ApplicationController
       format.js
     end
   end
+
+  def print
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @bids = Bid.created_between(start_date, end_date)
+    respond_to do |format|
+      format.js
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -1,4 +1,6 @@
 class Bid < ActiveRecord::Base
+  extend AsCSV
+
   belongs_to :inspection
   belongs_to :payPlan
   has_many :comm_histories
@@ -8,10 +10,6 @@ class Bid < ActiveRecord::Base
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, :title, :payPlan_id, presence: true
 
   before_create :default_status
-
-  # scope :created_between, lambda {|start_date, end_date| Bid.joins(:inspection => [:appointment]).
-  # where("appointments.schedStart >= ?" DateTime.now )}
-
 
   # where(appointments: { schedStart: start_date })}
 
@@ -48,7 +46,11 @@ class Bid < ActiveRecord::Base
     bids = Bid.where(status: "Accepted")
   end
 
-  # def get_bid_reports(schedStart, schedEnd)
-  #   Bid.joins(:inspection => [:appointment]).where(appointments: {"schedStart AND schedEnd BETWEEN })
-  # end
+  def self.created_between(start_date, end_date)
+    Bid.all.map { |bid| bid if
+      (bid.inspection.appointment.schedStart.to_date >= start_date &&
+      bid.inspection.appointment.schedStart.to_date <= end_date) &&
+      (bid.inspection.appointment.schedEnd.to_date >= start_date &&
+      bid.inspection.appointment.schedEnd.to_date >= end_date)}.compact
+  end
 end

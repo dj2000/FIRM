@@ -1,4 +1,4 @@
-<h1>Bids</h1>
+
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
@@ -16,3 +16,30 @@
       <%# end %>
     </tr>
   </thead>
+  <tbody>
+    <% @bids.each do |bid| %>
+      <tr>
+        <td><%= bid.id %></td>
+        <td> <%= bid.inspection.appointment.insp_request.property.property_select_value %></td>
+        <td> <%= bid.costRepair %></td>
+        <td> <%= bid.feeSeismicUpg %></td>
+        <td> <%= bid.feeAdmin %> </td>
+        <td> <%= bid.total_cost %></td>
+        <td> <%= bid.payPlan.payment_plan_select %></td>
+        <td> <%= bid.status %></td>
+        <td> </td>
+      </tr>
+    <% end%>
+  </tbody>
+</table>
+<br>
+<div id = "link-csv-print">
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), bids_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), { controller: 'bids',
+    action: 'print',
+    start_date: @start_date,
+    end_date: @end_date },
+    remote: true, class: "btn btn-info", id: 'print-bid'
+  %>
+</div>
+

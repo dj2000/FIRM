@@ -30,7 +30,6 @@
 </table>
 <br>
 <% unless request.path == "/bids/print" %>
-  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), bids_path(format: :csv), class: "btn btn-info", id: 'csv-bid'%>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid' %>
 <% end %>
 <script type="text/javascript">

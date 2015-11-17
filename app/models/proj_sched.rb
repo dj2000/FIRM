@@ -30,6 +30,10 @@ class ProjSched < ActiveRecord::Base
 		"#{schedule_end_date.strftime("%Y-%m-%d")} #{endTime.strftime("%I:%M %p")}".to_datetime
   end
 
+  def schedule_date
+    "#{schedule_start_date.try(:strftime, "%d %b %Y")} to #{schedule_end_date.try(:strftime, "%d %b %Y")}"
+  end
+
   private
 
   def availability_of_crew

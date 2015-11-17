@@ -10,6 +10,12 @@
       <td>Name</td>
       <td><%= @client.name %></td>
     </tr>
+    <% if @client.of_type == "Company" %>
+      <tr>
+        <td>Contact</td>
+        <td><%= @client.contact %></td>
+      </tr>
+    <% end %>
     <tr>
       <td>Home Number</td>
       <td><%= number_to_phone(@client.phoneH) %></td>

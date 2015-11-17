@@ -1,13 +1,12 @@
 <table class="table table-bordered table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Middle Initial</th>
+      <th>Name</th>
       <th>Home Number</th>
       <th>Office Number</th>
       <th>Cell Number</th>
       <th>Email</th>
+      <th>Client Type</th>
       <th>Opt Out of Mailing List</th>
       <th>Mail Address</th>
       <% unless (request.format == :js || request.path == '/clients/report') %>
@@ -19,13 +18,12 @@
   <tbody>
     <% @clients.each do |client| %>
       <tr>
-        <td><%= client.firstName %></td>
-        <td><%= client.lastName %></td>
-        <td><%= client.middleInit %></td>
+        <td><%= client.name %></td>
         <td><%= number_to_phone(client.phoneH) %></td>
         <td><%= number_to_phone(client.phoneW) %></td>
         <td><%= number_to_phone(client.phoneC) %></td>
         <td><%= client.email %></td>
+        <td><%= client.client_type %></td>
         <td><%= client.opt_out_mailer? %></td>
         <td><%= client.mailAddress %></td>
         <% unless (request.format == :js || request.path == '/clients/report') %>

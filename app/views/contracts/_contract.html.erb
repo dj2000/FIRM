@@ -20,11 +20,11 @@
         <td><%= contract.try(:date).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %> </td>
         <td><%= contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
-        <td><%= contract.balance %></td>
+        <td></td>
         <td><%= contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.signedBy %></td>
         <td><%= contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
-        <td><%= contract.downPmtAmt %></td>
+        <td><%= contract.balance %></td>
       </tr>
     <% end %>
   </tbody>

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
 
   resources :crews do
     get :print, on: :collection
+    get :report, on: :collection
+    get :crew_report, on: :collection
+    get :crew_report_print, on: :collection
   end
 
   resources :commission_rates do
@@ -80,6 +83,9 @@ Rails.application.routes.draw do
   resources :invoices do
     get :update_collection, on: :member
     get :info, on: :member
+    get :report, on: :collection
+    get :get_report, on: :collection
+    get :print, on: :collection
   end
 
   resources :i_fee_schedules do

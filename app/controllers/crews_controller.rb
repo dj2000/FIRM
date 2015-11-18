@@ -73,6 +73,27 @@ class CrewsController < ApplicationController
     end
   end
 
+  def crew_report
+    get_crew_report
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def crew_report_print
+    get_crew_report
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_crew_report
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    @proj_scheds = ProjSched.joins(:project => [:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]]).
+                              where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_crew

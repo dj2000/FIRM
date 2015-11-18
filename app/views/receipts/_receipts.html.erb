@@ -18,7 +18,7 @@
       <tr>
         <td><%= receipt.id %></td>
         <td><%= receipt.reference %></td>
-        <td><%= receipt.try(:invoice).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
+        <td><%= receipt.try(:invoice).try(:client).try(:name) %></td>
         <td><%= receipt.date %></td>
         <td><%= receipt.amount %></td>
         <td><%= receipt.recBy %></td>

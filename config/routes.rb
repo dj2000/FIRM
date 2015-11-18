@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :proj_scheds do
     get :scheduled_projects, on: :collection
     get :report, on: :collection
+    get :print, on: :collection
   end
 
   resources :projects do

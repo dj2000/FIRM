@@ -11,7 +11,7 @@
       <th>Schedule authorized by</th>
       <th>Date schedule was authorized</th>
     </tr>
-    <tr style="background-color:#99ccff">
+    <tr style="background-color:#99ccff" class="blue">
       <th></th>
       <th>Schedule Date</th>
       <th>Crew</th>
@@ -54,3 +54,17 @@
   </tbody>
 </table>
 <br>
+<% if request.path != "/proj_scheds/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-proj_schedules", target: "_blank" %>
+<% end %>
+<script>
+  $(".print-proj_schedules").click(function(){
+    var startdate = $("#start_date").val();
+    var enddate = $("#end_date").val();
+    $.ajax({
+      url: '/proj_scheds/print',
+      type: 'get',
+      data: {start_date: startdate, end_date: enddate}
+    });
+  });
+</script>

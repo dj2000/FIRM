@@ -1,0 +1,6 @@
+var contents = ("<%= escape_javascript(render partial: 'proj_scheds') %>");
+var oldPage = document.body.innerHTML;
+document.body.innerHTML = contents;
+window.print();
+document.body.innerHTML = oldPage;
+window.close();

@@ -75,6 +75,9 @@ Rails.application.routes.draw do
 
   resources :receipts do
     get :invoice_info, on: :member
+    get :report, on: :collection
+    get :report_result, on: :collection
+    get :print, on: :collection
   end
 
   resources :invoices do

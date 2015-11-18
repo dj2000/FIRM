@@ -88,7 +88,13 @@ class InspectionsController < ApplicationController
   end
 
   def print
-    @inspections = Inspection.all
+    if URI(request.referer).path == "/inspections/report"
+      start_date = DateTime.parse(params[:start_date])
+      end_date = DateTime.parse(params[:end_date])
+      @inspections = Inspection.created_between(start_date, end_date)
+    else
+      @inspections = Inspection.all
+    end
     respond_to do |format|
       format.js
     end

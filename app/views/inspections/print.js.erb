@@ -1,4 +1,9 @@
-var contents = ("<%= escape_javascript(render 'inspections') %>");
+
+<% if URI(request.referer).path == "/inspections/report" %>
+  var contents = ("<%= escape_javascript(render 'inspections_report') %>");
+<% else %>
+  var contents = ("<%= escape_javascript(render 'inspections') %>");
+<% end %>
 var oldPage = document.body.innerHTML;
 document.body.innerHTML = contents;
 window.print();

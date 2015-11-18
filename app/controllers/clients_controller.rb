@@ -4,11 +4,10 @@ class ClientsController < ApplicationController
 
   def index
     @clients = Client.all
-    @clients = @clients.where(created_at: (params[:start_date]..params[:end_date])) if params[:start_date].present? and params[:end_date].present?
     respond_to do |format|
       format.js
       format.html
-      format.csv { send_data SvcArea.to_csv }
+      format.csv { send_data Client.to_csv }
     end
   end
 

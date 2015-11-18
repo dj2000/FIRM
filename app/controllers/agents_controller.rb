@@ -5,9 +5,7 @@ class AgentsController < ApplicationController
   # GET /agents.json
   def index
     @agents = Agent.all
-    @agents = @agents.where(created_at: (params[:start_date]..params[:end_date])) if params[:start_date].present? and params[:end_date].present?
     respond_to do |format|
-      format.js
       format.html
       format.csv { send_data Agent.to_csv }
     end

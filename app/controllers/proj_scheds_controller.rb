@@ -106,6 +106,16 @@ class ProjSchedsController < ApplicationController
     render json: @proj_scheds.as_json
   end
 
+  def print
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    @projects = Project.joins(:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]).
+                                where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+    respond_to do |format|
+      format.js
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -4,7 +4,17 @@
     <div class="col-md-3">
       <div class="form-group">
         <div class='input-group date'>
-          <%= text_field_tag :contract_date, Date.today, class: "form-control" %>
+          <%= text_field_tag :start_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :end_date, Date.today, class: "form-control" %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>

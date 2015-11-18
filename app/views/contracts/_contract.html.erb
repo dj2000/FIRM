@@ -36,11 +36,12 @@
 
 <script type="text/javascript">
   $("#print-contract").click(function(){
-    var contractdate = $("#contract_date").val();
+    var startdate = $("#start_date").val();
+    var enddate = $("#end_date").val();
     $.ajax({
       url: '/contracts/print',
       type: 'get',
-      data: {contract_date: contractdate},
+      data: {start_date: startdate, end_date: enddate},
       success: function() {}
     });
   });

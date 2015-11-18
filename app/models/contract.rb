@@ -104,6 +104,10 @@ class Contract < ActiveRecord::Base
     contracts.map(&:balance).inject(:+)
   end
 
+  def self.created_between(start_date, end_date)
+    Contract.where('("date" BETWEEN ? AND ?)', start_date, end_date)
+  end
+
   private
   def down_payment_amount
     bid = self.try(:bid)

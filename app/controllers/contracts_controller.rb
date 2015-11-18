@@ -67,13 +67,15 @@ class ContractsController < ApplicationController
   end
 
   def report_result
-    contractdate = Date.parse(params[:contract_date])
-    @contracts = Contract.where("date >= ?", contractdate)
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @contracts = Contract.created_between(start_date, end_date)
   end
 
   def print
-    contractdate = Date.parse(params[:contract_date])
-    @contracts = Contract.where("date >= ?", contractdate)
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @contracts = Contract.created_between(start_date, end_date)
   end
 
   # DELETE /contracts/1

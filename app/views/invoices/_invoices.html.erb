@@ -1,3 +1,4 @@
+<%= javascript_include_tag "invoices" %>
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
@@ -40,16 +41,3 @@
 <% unless request.path == "/invoices/print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-invoices' %>
 <% end %>
-<script type="text/javascript">
-  $("#print-invoices").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    var invoice_type = $("#invoice_type").val();
-    $.ajax({
-      url: '/invoices/print',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate, invoice_type: invoice_type},
-      success: function() {}
-    });
-  });
-</script>

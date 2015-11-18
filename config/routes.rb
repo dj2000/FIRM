@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     get :appointment_info, on: :member
     get :print, on: :collection
     get :report, on: :collection
+    get :report_result, on: :collection
   end
 
   resources :receipts do

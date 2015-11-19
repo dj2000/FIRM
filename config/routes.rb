@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     get :calculate_inspection_fee, on: :member
     get :background_events, on: :collection
     get :report, on: :collection
+    get :report_print, on: :collection
   end
 
   resources :insp_requests do

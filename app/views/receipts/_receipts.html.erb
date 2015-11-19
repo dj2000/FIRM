@@ -1,4 +1,3 @@
-<!-- <script src="/assets/common.js"></script> -->
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
@@ -30,18 +29,5 @@
 </table>
 <br>
 <% unless request.path == "/receipts/print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", remote: true, class: "btn btn-info", id: "print-receipts", :data => {:name => 'Stephen' } %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", onclick: "printReport('/receipts/print')" %>
 <% end %>
-<script type="text/javascript">
-  $("#print-receipts").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      url: '<%= print_receipts_path %>',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate},
-      success: function() {}
-    });
-  });
-</script>
-

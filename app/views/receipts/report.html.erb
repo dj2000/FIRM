@@ -1,3 +1,4 @@
+<%= javacript_include_tag "common" %>
 <h1>Receipts Reports</h1>
 <%= form_tag(report_result_receipts_path, method: 'get', remote: true) do %>
   <div class="row">
@@ -29,8 +30,3 @@
 <div class="receipts-data">
   <%= render 'receipts' if @receipts.present? %>
 </div>
-<script>
-  $('.input-group.date').datepicker({
-    format: 'yyyy-mm-dd'
-  });
-</script>

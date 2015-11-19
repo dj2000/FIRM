@@ -7,8 +7,7 @@ class ProjInspsController < ApplicationController
     @proj_insps = ProjInsp.all
     respond_to do |format|
       format.html
-      format.js
-      format.csv { send_data ProjInsp.to_csv }
+      format.csv { send_data ProjInsp.as_csv }
     end
   end
 

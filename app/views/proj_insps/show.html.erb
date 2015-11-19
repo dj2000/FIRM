@@ -28,8 +28,8 @@
           <td><%= @proj_insp.inspectBy %></td>
         </tr>
         <tr>
-          <td>Scheduled Date</td>
-          <td><%= @proj_insp.try(:scheduleDate).try(:strftime, "%d %b %Y") %></td>
+          <td>Completed Date</td>
+          <td><%= @proj_insp.try(:completeDate).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
           <td>Result</td>

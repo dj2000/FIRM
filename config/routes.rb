@@ -144,6 +144,11 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
+  match "/page/operating_statistics_report" => "page#operating_statistics_report", as: "operating_statistics_report", via: :get
+
+  match "/page/statistics" => "page#statistics", via: :get
+  match "/page/print" => "page#print", via: :get
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

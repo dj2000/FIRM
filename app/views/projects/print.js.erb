@@ -1,5 +1,2 @@
 var contents = ("<%= escape_javascript(render 'projects') %>");
-var oldPage = document.body.innerHTML;
-document.body.innerHTML = contents;
-window.print();
-document.body.innerHTML = oldPage;
+printData(contents);

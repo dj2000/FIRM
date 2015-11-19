@@ -24,16 +24,5 @@
 </table>
 <br>
 <% if request.path != "/crews/crew_report_print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/crews/crew_report_print')" %>
 <% end %>
-<script>
-  $(".print-crews").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      url: '/crews/crew_report_print',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate}
-    });
-  });
-</script>

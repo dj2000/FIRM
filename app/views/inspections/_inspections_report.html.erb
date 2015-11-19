@@ -75,17 +75,5 @@
 </table>
 <br>
 <% unless request.path == "/inspections/print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", remote: true, class: "btn btn-info", id: "print-inspection" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", remote: true, class: "btn btn-info", id: "print-inspection", onclick: "printReport('/inspections/print')" %>
 <% end %>
-<script type="text/javascript">
-  $("#print-inspection").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      url: '<%= print_inspections_path %>',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate},
-      success: function() {}
-    });
-  });
-</script>

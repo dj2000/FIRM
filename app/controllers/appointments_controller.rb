@@ -11,8 +11,8 @@ class AppointmentsController < ApplicationController
       @appointment.save(validate: false)
       @editable = true
     end
-    if (params[:start] and params[:end])
-      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start], params[:end], params[:start], params[:end])
+    if (params[:start_date] and params[:end_date])
+      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end
@@ -92,6 +92,10 @@ class AppointmentsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def report_print
+    @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
   end
 
   def send_email

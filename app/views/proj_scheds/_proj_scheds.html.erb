@@ -55,16 +55,5 @@
 </table>
 <br>
 <% if request.path != "/proj_scheds/print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-proj_schedules", target: "_blank" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-proj_schedules", target: "_blank", onclick: "printReport('/proj_scheds/print')" %>
 <% end %>
-<script>
-  $(".print-proj_schedules").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      url: '/proj_scheds/print',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate}
-    });
-  });
-</script>

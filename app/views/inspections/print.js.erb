@@ -1,10 +1,7 @@
-
 <% if URI(request.referer).path == "/inspections/report" %>
   var contents = ("<%= escape_javascript(render 'inspections_report') %>");
+  printData(contents, "<%= params[:start_date] %>", "<%= params[:end_date] %>");
 <% else %>
   var contents = ("<%= escape_javascript(render 'inspections') %>");
+  printData(contents);
 <% end %>
-var oldPage = document.body.innerHTML;
-document.body.innerHTML = contents;
-window.print();
-document.body.innerHTML = oldPage;

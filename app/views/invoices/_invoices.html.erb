@@ -39,5 +39,5 @@
   </tbody>
 </table>
 <% unless request.path == "/invoices/print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-invoices' %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-invoices', onclick: "printReport('/invoices/print', '#{@invoice_type}')" %>
 <% end %>

@@ -30,17 +30,5 @@
 </table>
 <br>
 <% unless request.path == "/bids/print" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid' %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid', onclick: "printReport('/bids/print')" %>
 <% end %>
-<script type="text/javascript">
-  $("#print-bid").click(function(){
-    var startdate = $("#start_date").val();
-    var enddate = $("#end_date").val();
-    $.ajax({
-      url: '/bids/print',
-      type: 'get',
-      data: {start_date: startdate, end_date: enddate},
-      success: function() {}
-    });
-  });
-</script>

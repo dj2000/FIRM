@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 
+  extend AsCSV
 	## Non Model Attributes
   attr_accessor :crew_schedule
 
@@ -24,6 +25,14 @@ class Project < ActiveRecord::Base
 
   def self.permitted_projects
     self.where(permit: true)
+  end
+
+  def preferred_by
+    "#{self.try(:schedule_pref_start).try(:strftime, '%d %b %Y')} to #{self.try(:schedule_pref_end).try(:strftime, '%d %b %Y') }"
+  end
+
+  def scheduled
+    "#{self.try(:sheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:sheduleEnd).try(:strftime, '%d %b %Y') }"
   end
 
   private

@@ -5,6 +5,11 @@ class PmtSchedulesController < ApplicationController
   # GET /pmt_schedules.json
   def index
     @pmt_schedules = PmtSchedule.all
+    respond_to do |format|
+      format.js
+      format.html
+      format.csv { send_data PmtSchedule.to_csv }
+    end
   end
 
   # GET /pmt_schedules/1
@@ -58,6 +63,13 @@ class PmtSchedulesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pmt_schedules_url, notice: 'Pmt schedule was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @pmt_schedules = PmtSchedule.all
+    respond_to do |format|
+      format.js
     end
   end
 

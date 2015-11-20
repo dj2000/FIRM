@@ -1,0 +1,78 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Appointment </th>
+      <th> Property Address </th>
+      <th> Client </th>
+      <th> Foundation Condition </th>
+      <th> Number Of Days </th>
+      <th> Number of Guys </th>
+      <th> Paid </th>
+      <th> Repairs Required </th>
+      <th> Interior Access Required</th>
+      <th> Verified Report</th>
+      <th> Verified Complete </th>
+      <th> Notes </th>
+    </tr>
+    <tr style = "background-color:#99ccff">
+      <th> </th>
+      <th> Bid </th>
+      <th> Repair Cost </th>
+      <th> Seismic Upgrade Fee </th>
+      <th> Administration Fee </th>
+      <th> Bid Total </th>
+      <th> Payment Plan </th>
+      <th> Bid Status </th>
+      <th> Status Date </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inspections.each do |inspection| %>
+      <tr>
+        <% insp_request = inspection.try(:appointment).try(:insp_request) %>
+        <td><%= inspection.name %></td>
+        <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
+        <td><%= insp_request.try(:property).try(:property_select_value) %></td>
+        <td><%= insp_request.try(:client).try(:name) %></td>
+        <td><%= inspection.fCondition %></td>
+        <td><%= inspection.nOD %></td>
+        <td><%= inspection.nOG %></td>
+        <td><%= inspection.try(:appointment).try(:is_prepaid) %></td>
+        <td><%= inspection.humanize("repairs") %></td>
+        <td><%= inspection.humanize("interiorAccess") %></td>
+        <td><%= inspection.humanize("verifiedReport") %></td>
+        <td><%= inspection.humanize("verifiedComp") %></td>
+        <td><%= inspection.notes %></td>
+      </tr>
+      <% inspection.bids.each do |bid| %>
+        <tr>
+          <td> </td>
+          <td> <%= bid.try(:title) %></td>
+          <td> <%= bid.try(:costRepair) %> </td>
+          <td> <%= bid.try(:feeSeismicUpg) %> </td>
+          <td> <%= bid.try(:feeAdmin) %> </td>
+          <td> <%= bid.try(:total_cost) %></td>
+          <td> <%= bid.try(:payPlan).try(:payment_plan_select) %> </td>
+          <td> <%= bid.try(:status) %></td>
+          <td> <%= bid.try(:status_date) %></td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% unless request.path == "/inspections/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", remote: true, class: "btn btn-info", id: "print-inspection", onclick: "printReport('/inspections/print')" %>
+<% end %>

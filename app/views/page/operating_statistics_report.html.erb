@@ -1,0 +1,31 @@
+<h1>Receipts Reports</h1>
+<%= form_tag(page_statistics_path, method: 'get', remote: true) do %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :start_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :end_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <%= submit_tag "Get Report", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<div class="statistics-data">
+  <%= render 'statistics' if @statistics.present? %>
+</div>

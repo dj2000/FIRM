@@ -6,6 +6,11 @@ class PermitsController < ApplicationController
   # GET /permits.json
   def index
     @permits = Permit.all
+    respond_to do |format|
+      format.html
+      format.js
+      format.csv { send_data Permit.to_csv }
+    end
   end
 
   # GET /permits/1
@@ -59,6 +64,13 @@ class PermitsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to permits_url, notice: 'Permit was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @permits = Permit.all
+    respond_to do |format|
+      format.js
     end
   end
 

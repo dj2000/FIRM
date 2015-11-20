@@ -1,0 +1,70 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr style="background-color:#ffeecc">
+      <th>Statistic</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>INSPECTIONS BOOKED</td>
+      <td><%= @statistics[:appointments] %></td>
+    </tr>
+    <tr>
+      <td>NUMBER OF INSPECTION REQUESTS</td>
+      <td><%= @statistics[:insp_requests_count] %></td>
+    </tr>
+    <tr>
+      <td>BIDS</td>
+      <td><%= @statistics[:bids_count] %></td>
+    </tr>
+    <tr>
+      <td>VALUE OF BIDS</td>
+      <td><%= number_to_currency(@statistics[:bids_total_cost]) %></td>
+    </tr>
+    <tr>
+      <td>VERBAL CLOSES</td>
+      <td><%= @statistics[:verbal_closed_bid_follow_ups_count] %></td>
+    </tr>
+    <tr>
+      <td>VALUE OF VERBAL CLOSES</td>
+      <td><%= number_to_currency(@statistics[:verbal_closed_bid_follow_ups_cost]) %></td>
+    </tr>
+    <tr>
+      <td>VERBAL CLOSES W/O CONTRACT </td>
+      <td><%= @statistics[:verbal_closed_bid_follow_ups_without_contract] %></td>
+    </tr>
+    <tr>
+      <td>OF SIGNED CONTRACTS</td>
+      <td><%= @statistics[:signed_contracts] %></td>
+    </tr>
+    <tr>
+      <td>VALUE OF SIGNED CONTRACTS</td>
+      <td><%= number_to_currency(@statistics[:signed_contracts_cost]) %></td>
+    </tr>
+    <tr>
+      <td>OF OUTGOING COMMUNICATIONS</td>
+      <td><%= @statistics[:outgoing_communications] %></td>
+    </tr>
+    <tr>
+      <td>INSPECTION GROSS INCOME</td>
+      <td><%= number_to_currency(@statistics[:inspection_gross_income]) %></td>
+    </tr>
+    <tr>
+      <td>INSPECTIONS SCHEDULED</td>
+      <td><%= @statistics[:scheduled_appointments] %></td>
+    </tr>
+    <tr>
+      <td>TOTAL GROSS INCOME</td>
+      <td><%= number_to_currency(@statistics[:total_gross_income]) %></td>
+    </tr>
+    <tr>
+      <td>TOTAL VALUE OF CONTRACTS CLOSED IN PERIOD</td>
+      <td><%= number_to_currency(@statistics[:contracts]) %></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<% unless request.path == "/page/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:voic(0)", class: "btn btn-info", onclick: "printReport('/page/print')" %>
+<% end %>

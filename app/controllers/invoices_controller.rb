@@ -72,6 +72,27 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def get_report
+    get_invoice_report
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_invoice_report
+    @invoice_type = params[:invoice_type].camelize
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    @invoices = Invoice.where(invoice_type: @invoice_type).where('"invoiceDate" BETWEEN ? AND ? ', start_date, end_date)
+  end
+
+  def print
+    get_invoice_report
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice

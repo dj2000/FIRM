@@ -10,10 +10,18 @@ class ProjSchedsController < ApplicationController
       @proj_sched = ProjSched.new
       @editable = true
     end
-    @proj_scheds = ProjSched.where.not(schedule_start_date: nil, schedule_end_date: nil)
+    if params[:start_date].present? and params[:end_date].present?
+      start_date = params[:start_date].to_date
+      end_date = params[:end_date].to_date
+      @projects = Project.joins(:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]).
+                                where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+    else
+      @proj_scheds = ProjSched.where.not(schedule_start_date: nil, schedule_end_date: nil)
+    end
     respond_to do |format|
       format.html
       format.json{ render json: @proj_scheds.as_json }
+      format.js
     end
   end
 
@@ -96,6 +104,16 @@ class ProjSchedsController < ApplicationController
     @proj_scheds =  ProjSched.where('(("schedule_start_date" BETWEEN ? AND ?) OR ("schedule_end_date" BETWEEN ? AND ?)) OR ("schedule_start_date" >= ? OR "schedule_end_date" <= ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
     @proj_scheds = @proj_scheds.where(crew_id: params[:crew_id]) if params[:crew_id].present?
     render json: @proj_scheds.as_json
+  end
+
+  def print
+    start_date = params[:start_date].to_date
+    end_date = params[:end_date].to_date
+    @projects = Project.joins(:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]).
+                                where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+    respond_to do |format|
+      format.js
+    end
   end
 
 

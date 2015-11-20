@@ -1,0 +1,33 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th> Receipt Number </th>
+      <th> Reference </th>
+      <th> Client </th>
+      <th> Receipt Date </th>
+      <th> Amount Received </th>
+      <th> Received By </th>
+      <th> Invoice </th>
+      <th> Invoice Balance </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipts.each do |receipt| %>
+      <tr>
+        <td><%= receipt.id %></td>
+        <td><%= receipt.reference %></td>
+        <td><%= receipt.try(:invoice).try(:client).try(:name) %></td>
+        <td><%= receipt.date %></td>
+        <td><%= receipt.amount %></td>
+        <td><%= receipt.recBy %></td>
+        <td><%= receipt.try(:invoice).try(:invoice_select_dropdown) %></td>
+        <td><%= receipt.try(:invoice).try(:amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% unless request.path == "/receipts/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", onclick: "printReport('/receipts/print')" %>
+<% end %>

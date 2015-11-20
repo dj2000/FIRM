@@ -31,3 +31,7 @@
     <% end %>
   </tbody>
 </table>
+<br>
+<% if request.path != "/appointments/report_print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/appointments/report_print')" %>
+<% end %>

@@ -1,0 +1,35 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Contract Title</th>
+      <th>Contract Date</th>
+      <th> Property </th>
+      <th> Client</th>
+      <th>Contract Amount</th>
+      <th>Date Signed</th>
+      <th>Signed By</th>
+      <th>Date Received</th>
+      <th>Amout Received</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @contracts.each do |contract| %>
+      <tr>
+        <td><%= contract.title %></td>
+        <td><%= contract.try(:date).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %> </td>
+        <td><%= contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
+        <td><%= contract.try(:bid).try(:total_cost) %></td>
+        <td><%= contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.signedBy %></td>
+        <td><%= contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
+        <td><%= contract.balance %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% unless request.path == "/contracts/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-contract', onclick: "printReport('/contracts/print')" %>
+<% end %>

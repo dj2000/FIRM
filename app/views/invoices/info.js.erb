@@ -13,5 +13,5 @@
 	$(".pay_plan_info").hide();
 	$(".pay_plan_details").hide();
 <% end %>
-$(".balance_due input#invoice_balanceDue").val("<%= @project ? @project.try(:contract).try(:balance) : @inspection.try(:appointment).try(:inspFee) %>")
+$(".balance_due input#invoice_balanceDue").val("<%= @project ? @project.try(:contract).try(:balance) : (@inspection.try(:appointment).try(:inspFee) || 0) %>")
 $(".invoice_amount #invoice_amount").val("<%= @bid.try(:total_cost) %>")

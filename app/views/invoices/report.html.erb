@@ -1,0 +1,38 @@
+<%= javascript_include_tag "common" %>
+<h1>Inspection Invoice Reports</h1>
+<%= form_tag('/invoices/get_report', method: 'get', remote: true) do %>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :start_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class='input-group date'>
+          <%= text_field_tag :end_date, Date.today, class: "form-control" %>
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <%= hidden_field_tag "invoice_type", params[:invoice_type] %>
+    <div class="col-md-3">
+      <%= submit_tag "Get Report", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+<div class="invoices-report">
+  <%= render 'invoices' if @invoices.present? %>
+</div>
+<script>
+  $('.input-group.date').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>

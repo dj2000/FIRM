@@ -1,0 +1,43 @@
+<%= javascript_include_tag "invoices" %>
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Invoice Number</th>
+      <th>Reference</th>
+      <% if @invoice_type == "Inspection" %>
+        <th>Inspection</th>
+      <% else %>
+        <th>Project</th>
+      <% end %>
+      <th>Client</th>
+      <th>Description</th>
+      <th>Invoice Date</th>
+      <th>Amount</th>
+      <th>Balance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.id %></td>
+        <td><%= invoice.reference %></td>
+        <td>
+          <% if @invoice_type == "Inspection" %>
+            <%= invoice.try(:inspection).try(:name) %>
+          <% else %>
+            <%= invoice.try(:project).try(:title) %>
+          <% end %>
+        </td>
+        <td><%= invoice.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
+        <td><%= invoice.description %></td>
+        <td><%= invoice.try(:invoiceDate).try(:strftime, "%d %b %Y") %></td>
+        <td><%= invoice.amount %></td>
+        <td><%= invoice.balance_due %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% unless request.path == "/invoices/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-invoices', onclick: "printReport('/invoices/print', '#{@invoice_type}')" %>
+<% end %>

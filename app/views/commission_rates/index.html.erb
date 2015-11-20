@@ -5,7 +5,9 @@
     <tr>
       <th>Level</th>
       <th>Scale</th>
-      <th colspan="2" class="text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="2" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -14,19 +16,25 @@
       <tr>
         <td><%= commission_rate.title %></td>
         <td><%= commission_rate.scale %></td>
-        <td>
-          <%= link_to commission_rate, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_commission_rate_path(commission_rate), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to commission_rate, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_commission_rate_path(commission_rate), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Commission Rate"), new_commission_rate_path, :class => "btn btn-info" %>
+<% if request.format == 'text/html' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Commission Rate"), new_commission_rate_path, :class => "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), commission_rates_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_commission_rates_path, remote: true,class: "btn btn-info" %>
+<% end %>

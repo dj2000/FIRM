@@ -1,4 +1,6 @@
 class Crew < ActiveRecord::Base
+  extend AsCSV
+
   has_many :projects
   has_many :crew_skills
 

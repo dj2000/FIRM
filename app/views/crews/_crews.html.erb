@@ -1,0 +1,28 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Crew</th>
+      <th>Schedule Date</th>
+      <th>Project</th>
+      <th>Property Address</th>
+      <th>Job start time</th>
+      <th>Job end time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @proj_scheds.each do |proj_sched| %>
+      <tr>
+        <td><%= proj_sched.try(:crew).try(:foreman) %></td>
+        <td><%= proj_sched.try(:schedule_date) %></td>
+        <td><%= proj_sched.try(:project).try(:title) %></td>
+        <td><%= proj_sched.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
+        <td><%= proj_sched.try(:startTime).try(:strftime, "%I:%M %p") %></td>
+        <td><%= proj_sched.try(:endTime).try(:strftime, "%I:%M %p") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% if request.path != "/crews/crew_report_print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/crews/crew_report_print')" %>
+<% end %>

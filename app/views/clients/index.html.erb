@@ -1,5 +1,8 @@
 <h1>Listing Clients</h1>
 <%= render 'clients' %>
 <br>
-
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Client"), new_client_path, class: 'btn btn-info' %>
+<% if request.format == 'text/html' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Client"), new_client_path, class: 'btn btn-info' %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), clients_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_clients_path, remote: true,class: "btn btn-info" %>
+<% end %>

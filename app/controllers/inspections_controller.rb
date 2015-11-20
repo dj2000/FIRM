@@ -18,6 +18,7 @@ class InspectionsController < ApplicationController
     @clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
+      format.csv { send_data Inspection.to_csv }
       format.html
     end
   end
@@ -84,6 +85,25 @@ class InspectionsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def print
+    if URI(request.referer).path == "/inspections/report"
+      start_date = DateTime.parse(params[:start_date])
+      end_date = DateTime.parse(params[:end_date])
+      @inspections = Inspection.created_between(start_date, end_date)
+    else
+      @inspections = Inspection.all
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def report_result
+    start_date = DateTime.parse(params[:start_date])
+    end_date = DateTime.parse(params[:end_date])
+    @inspections = Inspection.created_between(start_date, end_date)
   end
 
   private

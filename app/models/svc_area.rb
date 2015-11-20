@@ -1,4 +1,6 @@
 class SvcArea < ActiveRecord::Base
+  extend AsCSV
+
   has_many :appointments
   validates :city, :state, presence: true
 

@@ -15,7 +15,9 @@
       <th>Interior Access Verified</th>
       <th>Electricity and Water Verified</th>
       <th>Notes</th>
-      <th colspan="3" class="text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -36,21 +38,23 @@
         <td><%= project.humanize("verifiedAccess") %></td>
         <td><%= project.humanize("verifiedEW") %></td>
         <td><%= project.notes %></td>
-        <td>
-          <%= link_to project, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_project_path(project), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to project, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to project, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_project_path(project), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to project, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

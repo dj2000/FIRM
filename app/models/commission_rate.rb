@@ -1,4 +1,5 @@
 class CommissionRate < ActiveRecord::Base
+  extend AsCSV
 
 	validates :scale_start, :title, presence: true
 

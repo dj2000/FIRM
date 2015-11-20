@@ -1,4 +1,5 @@
 class Inspection < ActiveRecord::Base
+  extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
   has_many :bids
@@ -24,5 +25,11 @@ class Inspection < ActiveRecord::Base
 
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"
+  end
+
+  def self.created_between(start_date, end_date)
+    Inspection.joins(:appointment).
+      where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)',
+      start_date, end_date, start_date, end_date)
   end
 end

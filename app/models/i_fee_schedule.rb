@@ -1,8 +1,9 @@
 class IFeeSchedule < ActiveRecord::Base
+	extend AsCSV
 
 	validates :effectiveFrom, uniqueness: true, presence: true
 
-	validates :ownerOccRate, :sfrBaseRate, :sfrIncRate, :mfrBaseRate, :mfrIncRate, :insBaseRate, :insIncRate, presence: true	
+	validates :ownerOccRate, :sfrBaseRate, :sfrIncRate, :mfrBaseRate, :mfrIncRate, :insBaseRate, :insIncRate, presence: true
 
 	validate :update_status, if: "feeActive_changed? and feeActive?"
 

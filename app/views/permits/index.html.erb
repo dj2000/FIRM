@@ -2,45 +2,52 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Reference</th>
       <th>Project</th>
+      <th>Reference</th>
       <th>Issue Date</th>
       <th>Issued By</th>
       <th>Status</th>
       <th>Valuation</th>
-      <th colspan="3" class="text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @permits.each do |permit| %>
       <tr>
-        <td><%= permit.reference %></td>
         <td><%= permit.try(:project).try(:title) %></td>
+        <td><%= permit.reference %></td>
         <td><%= permit.try(:issueDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= permit.issuedBy %></td>
         <td><%= permit.status %></td>
         <td><%= permit.valuation %></td>
-        <td>
-          <%= link_to permit, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_permit_path(permit), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to permit, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to permit, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_permit_path(permit), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to permit, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to raw("<i class='fa fa-plus-square-o'></i> New Permit"), new_permit_path, :class => "btn btn-info" %>
+<% if request.format == 'text/html' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Permit"), new_permit_path, :class => "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), permits_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_permits_path, remote: true,class: "btn btn-info" %>
+<% end %>

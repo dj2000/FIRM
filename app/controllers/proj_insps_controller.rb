@@ -5,6 +5,10 @@ class ProjInspsController < ApplicationController
   # GET /proj_insps.json
   def index
     @proj_insps = ProjInsp.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data ProjInsp.as_csv }
+    end
   end
 
   # GET /proj_insps/1
@@ -58,6 +62,13 @@ class ProjInspsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to proj_insps_url, notice: 'Project inspection was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def print
+    @proj_insps = ProjInsp.all
+    respond_to do |format|
+      format.js
     end
   end
 

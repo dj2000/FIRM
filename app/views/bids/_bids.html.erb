@@ -1,0 +1,34 @@
+<table class='table table-bordered table-striped table-responsive table-hover'>
+  <thead>
+    <tr>
+      <th>Bid</th>
+      <th>Property Address</th>
+      <th>Repair Cost</th>
+      <th>Seismic Upgrade Fee</th>
+      <th>Administration Fee</th>
+      <th>Bid Total</th>
+      <th>Payment Plan</th>
+      <th>Bid Status</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bids.each do |bid| %>
+      <tr>
+        <td><%= bid.title %></td>
+        <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
+        <td><%= bid.costRepair %></td>
+        <td><%= bid.feeSeismicUpg %></td>
+        <td><%= bid.feeAdmin %> </td>
+        <td><%= bid.total_cost %></td>
+        <td><%= bid.try(:payPlan).try(:payment_plan_select) %></td>
+        <td><%= bid.status %></td>
+        <td><%= bid.status_date %></td>
+      </tr>
+    <% end%>
+  </tbody>
+</table>
+<br>
+<% unless request.path == "/bids/print" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid', onclick: "printReport('/bids/print')" %>
+<% end %>

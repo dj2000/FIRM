@@ -6,7 +6,17 @@ class BidsController < ApplicationController
   # GET /bids
   # GET /bids.json
   def index
-    @bids = Bid.all
+    if params[:start_date].present? and params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      @bids = Bid.created_between(start_date, end_date)
+    else
+      @bids = Bid.all
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /bids/1
@@ -61,6 +71,15 @@ class BidsController < ApplicationController
     @bid.destroy
     respond_to do |format|
       format.html { redirect_to bids_url, notice: 'Bid was successfully destroyed.' }
+      format.js
+    end
+  end
+
+  def print
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @bids = Bid.created_between(start_date, end_date)
+    respond_to do |format|
       format.js
     end
   end

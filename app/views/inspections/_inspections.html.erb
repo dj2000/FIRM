@@ -12,7 +12,9 @@
       <th>Verified Report</th>
       <th>Verified Complete</th>
       <th>Notes</th>
-      <th colspan="3" class="text-center">Actions</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -30,21 +32,23 @@
         <td><%= inspection.humanize("verifiedReport") %></td>
         <td><%= inspection.humanize("verifiedComp") %></td>
         <td><%= inspection.notes %></td>
-        <td>
-          <%= link_to inspection, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Bids
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_inspection_path(inspection), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to inspection, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% if request.format == 'text/html' %>
+          <td>
+            <%= link_to inspection, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Bids
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_inspection_path(inspection), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to inspection, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

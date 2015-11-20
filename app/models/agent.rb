@@ -1,4 +1,6 @@
 class Agent < ActiveRecord::Base
+  extend AsCSV
+
   has_many :agent_clients, dependent: :destroy
   has_many :clients, through: :agent_clients, dependent: :destroy
   has_many :insp_requests, dependent: :destroy

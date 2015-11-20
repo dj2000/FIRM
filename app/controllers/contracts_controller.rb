@@ -66,6 +66,18 @@ class ContractsController < ApplicationController
     end
   end
 
+  def report_result
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @contracts = Contract.created_between(start_date, end_date)
+  end
+
+  def print
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @contracts = Contract.created_between(start_date, end_date)
+  end
+
   # DELETE /contracts/1
   # DELETE /contracts/1.json
   def destroy

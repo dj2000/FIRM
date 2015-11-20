@@ -5,7 +5,6 @@
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   $(document).ready(function(){
-    $('#left-align').parent().removeClass( "container" ).addClass("container-fluid");
     $('.datepicker').datepicker({
       daysOfWeekDisabled: [0],
       todayHighlight: true
@@ -24,6 +23,8 @@
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
+    minTime: "08:00:00",
+    maxTime: "19:00:00",
     defaultView: 'agendaWeek',
     editable: false,
     hiddenDays: [0],

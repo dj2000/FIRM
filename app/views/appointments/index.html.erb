@@ -19,7 +19,6 @@
   var month = dateValue[1] - 1;
   var day = dateValue[2];
   $(document).ready(function(){
-    $('#left-align').parent().removeClass( "container" ).addClass("container-fluid");
     $('.datepicker').datepicker({
       daysOfWeekDisabled: [0]
     });
@@ -36,6 +35,8 @@
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
+    minTime: "08:00:00",
+    maxTime: "19:00:00",
     defaultView: 'agendaWeek',
     defaultDate: moment(date),
     editable: <%= @editable %>,

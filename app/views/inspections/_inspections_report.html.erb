@@ -10,7 +10,6 @@
       <th> Number of Guys </th>
       <th> Paid </th>
       <th> Repairs Required </th>
-      <th> Permit Required </th>
       <th> Interior Access Required</th>
       <th> Verified Report</th>
       <th> Verified Complete </th>
@@ -37,17 +36,17 @@
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
+        <% insp_request = inspection.try(:appointment).try(:insp_request) %>
         <td><%= inspection.name %></td>
         <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
-        <td><%= inspection.try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
-        <td> <%= inspection.try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
+        <td><%= insp_request.try(:property).try(:property_select_value) %></td>
+        <td><%= insp_request.try(:client).try(:name) %></td>
         <td><%= inspection.fCondition %></td>
         <td><%= inspection.nOD %></td>
         <td><%= inspection.nOG %></td>
-        <td></td>
+        <td><%= inspection.try(:appointment).try(:is_prepaid) %></td>
         <td><%= inspection.humanize("repairs") %></td>
-        <td> </td>
-        <td></td>
+        <td><%= inspection.humanize("interiorAccess") %></td>
         <td><%= inspection.humanize("verifiedReport") %></td>
         <td><%= inspection.humanize("verifiedComp") %></td>
         <td><%= inspection.notes %></td>

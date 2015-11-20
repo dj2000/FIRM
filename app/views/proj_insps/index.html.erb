@@ -18,7 +18,7 @@
   <tbody>
     <% @proj_insps.each do |proj_insp| %>
       <tr>
-        <td><%= proj_insp.project_id %></td>
+        <td><%= proj_insp.try(:project).try(:title) %></td>
         <td><%= proj_insp.reference %></td>
         <td><%= proj_insp.try(:scheduleDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= proj_insp.inspectBy %></td>

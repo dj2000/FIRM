@@ -1,7 +1,7 @@
 <div class="right">
   <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
 </div>
-<div class="left">
+<div class="left" id= "left-align">
   <span>
     <% if @appointment %>
       <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
@@ -19,6 +19,7 @@
   var month = dateValue[1] - 1;
   var day = dateValue[2];
   $(document).ready(function(){
+    $('#left-align').parent().removeClass( "container" ).addClass("container-fluid");
     $('.datepicker').datepicker({
       daysOfWeekDisabled: [0]
     });
@@ -29,7 +30,6 @@
       $('.full-calendar').fullCalendar("changeView", defaultView);
     });
   })
-    
   $('.full-calendar').fullCalendar({
     header: {
       left: '',

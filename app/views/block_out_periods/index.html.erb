@@ -1,10 +1,11 @@
-<div class="left">
+<div class="left" id = "left-align">
   <div class="datepicker datepicker-left"></div>
   <div class="full-calendar border"></div>
 </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   $(document).ready(function(){
+    $('#left-align').parent().removeClass( "container" ).addClass("container-fluid");
     $('.datepicker').datepicker({
       daysOfWeekDisabled: [0],
       todayHighlight: true

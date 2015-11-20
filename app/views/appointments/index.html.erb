@@ -68,7 +68,9 @@
       }
     ],
     eventRender: function(event, element, view) {
-      element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
+      if(editable && cal_event.type == "appointment" ){
+        element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
+      }
     },
     select: function(start, end, jsEvent, view) {
       <% if @editable %>

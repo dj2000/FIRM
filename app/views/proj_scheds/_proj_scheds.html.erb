@@ -4,6 +4,7 @@
       <th>Project Title</th>
       <th>Property Address</th>
       <th>Client</th>
+      <th>Permit Required</th>
       <th>Create Schedule by</th>
       <th>Preferred Schedule Start - End</th>
       <th>Estimated duration (days)</th>
@@ -21,6 +22,7 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -30,6 +32,7 @@
         <td><%= project.try(:title) %></td>
         <td><%= insp_request.try(:property).try(:property_select_value) %></td>
         <td><%= insp_request.try(:client).try(:name) %></td>
+        <td><%= project.humanize("permit") %></td>
         <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
         <td><%= project.try(:preferred_by) %></td>
         <td><%= project.try(:estDuration) %></td>
@@ -44,6 +47,7 @@
           <td><%= proj_sched.try(:crew).try(:foreman) %></td>
           <td><%= proj_sched.try(:startTime).try(:strftime, "%I:%M %p") %></td>
           <td><%= proj_sched.try(:endTime).try(:strftime, "%I:%M %p") %></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>

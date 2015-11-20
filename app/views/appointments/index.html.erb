@@ -14,6 +14,7 @@
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   var date = "<%= @appointment.try(:schedStart) || Time.now %>";
+  var editable = "<%= @editable %>"
   var dateValue = date.split(" ")[0].split("-");
   var year = dateValue[0];
   var month = dateValue[1] - 1;
@@ -48,9 +49,12 @@
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
     eventClick: function(cal_event, js_event, view){
-      <% if @editable %>
+      if(editable && cal_event.type == "appointment"){
         calendar_event_clicked(cal_event, js_event, view);
-      <% end %>
+      }
+      else{
+        alert("Block out periods can not be edited.")
+      }
     },
     eventSources: [
       {
@@ -58,10 +62,13 @@
       },
       {
         url: '/appointments/background_events.json'
-      }
+      },
+      {
+        url: '/block_out_periods.json'
+      },
     ],
     eventRender: function(event, element, view) {
-      if(editable && cal_event.type == "appointment" ){
+      if(editable && event.type == "appointment" ){
         element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
       }
     },

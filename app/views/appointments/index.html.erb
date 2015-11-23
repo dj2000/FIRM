@@ -68,7 +68,7 @@
       },
     ],
     eventRender: function(event, element, view) {
-      if(editable && event.type == "appointment" ){
+      if(event.type == "appointment" ){
         element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
       }
     },

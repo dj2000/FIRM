@@ -45,6 +45,11 @@
         url: '/appointments/background_events.json'
 	    }
 	  ],
+    eventRender: function(event, element, view) {
+      if(event.type == "appointment" ){
+        element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
+      }
+    },
 	  viewRender: function(view){
       $(".full-calendar").fullCalendar( 'removeEvents');
 			$(".full-calendar").fullCalendar( 'refetchEvents');

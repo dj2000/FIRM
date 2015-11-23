@@ -48,6 +48,7 @@
     eventStartEditable: false,
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
+    height: "auto",
     eventClick: function(cal_event, js_event, view){
       if(editable && cal_event.type == "appointment"){
         calendar_event_clicked(cal_event, js_event, view);
@@ -142,3 +143,10 @@
     });
   }
 </script>
+
+<style>
+  .fc-time-grid-container{
+  height: 444px !important;
+  overflow-y: scroll !important;
+}
+</style>

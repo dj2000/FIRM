@@ -83,7 +83,10 @@ class AppointmentsController < ApplicationController
     @end_day = @end_day.to_datetime
     @appointments =  Appointment.where('(("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)) OR ("schedStart" >= ? OR "schedEnd" <= ? )', @start_day, @end_day, @start_day, @end_day, @start_day, @end_day)
     @appointments = @appointments.where(inspector_id: params[:inspector_id]) if params[:inspector_id].present?
-    render json: @appointments.as_json
+    @block_out_periods = BlockOutPeriod.all
+    @block_out_periods = @block_out_periods.where(inspector_id: params[:inspector_id]) if params[:inspector_id].present?
+    response = { appointments: @appointments.as_json, block_out_periods: @block_out_periods.as_json }
+    render json: response
   end
 
   def print

@@ -136,7 +136,8 @@
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');
-        $('.full-calendar').fullCalendar('addEventSource', result );
+        $('.full-calendar').fullCalendar('addEventSource', result["appointments"] );
+        $('.full-calendar').fullCalendar('addEventSource', result["block_out_periods"] );
         $('.full-calendar').fullCalendar('addEventSource', events );
       }
     });

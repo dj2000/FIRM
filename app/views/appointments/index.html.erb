@@ -37,7 +37,7 @@
       right: 'month,agendaWeek,agendaDay'
     },
     minTime: "08:00:00",
-    maxTime: "19:00:00",
+    maxTime: "18:00:00",
     defaultView: 'agendaWeek',
     defaultDate: moment(date),
     editable: <%= @editable %>,
@@ -50,10 +50,10 @@
     timeFormat: 'hh:mm A',
     height: "auto",
     eventClick: function(cal_event, js_event, view){
-      if(editable && cal_event.type == "appointment"){
+      if(editable == true && cal_event.type == "appointment"){
         calendar_event_clicked(cal_event, js_event, view);
       }
-      else{
+      else if(editable == true && cal_event.type != "appointment"){
         alert("Block out periods can not be edited.")
       }
     },
@@ -144,10 +144,3 @@
     });
   }
 </script>
-
-<style>
-  .fc-time-grid-container{
-  height: 444px !important;
-  overflow-y: scroll !important;
-}
-</style>

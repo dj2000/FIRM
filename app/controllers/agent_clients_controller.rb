@@ -26,7 +26,7 @@ class AgentClientsController < ApplicationController
   def create
     params[:agent_client][:client_id] = params[:client_id]
     @agent_client = AgentClient.new(agent_client_params)
-    @agent = Agent.where(id: params[:agent_client][:agent_id]).first_or_initialize
+    @agent = Agent.new
     @remote = request.format.symbol == :html ? false : true
     respond_to do |format|
       if @agent_client.save

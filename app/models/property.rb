@@ -60,4 +60,28 @@ class Property < ActiveRecord::Base
     { lat: latitude, long: longitude }
   end
 
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Number", "City", "State", "Zip", "Year Built", "Size in Square Footage", "Number of floor levels", "Building Type","Number of Units", "Lot Type","Foundation Type","Occupied By"]
+      all.each do |property|
+        row = [
+                 property.number,
+                 property.city,
+                 property.state_name,
+                 property.zip,
+                 property.yearBuilt,
+                 property.size,
+                 property.stories,
+                 property.prop_type,
+                 property.units,
+                 property.lotType,
+                 property.foundation,
+                 property.occupied_by
+              ]
+        csv << row
+      end
+    end
+  end
+
 end

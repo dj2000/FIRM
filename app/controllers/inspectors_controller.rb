@@ -5,6 +5,11 @@ class InspectorsController < ApplicationController
   # GET /inspectors.json
   def index
     @inspectors = Inspector.all
+     respond_to do |format|
+      format.js
+      format.html
+      format.csv { send_data Inspector.as_csv }
+    end
   end
 
   # GET /inspectors/1
@@ -62,6 +67,10 @@ class InspectorsController < ApplicationController
       format.html { redirect_to inspectors_url, notice: 'Inspector was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def print
+    @inspectors = Inspector.all
   end
 
   private

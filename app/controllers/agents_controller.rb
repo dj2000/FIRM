@@ -7,7 +7,7 @@ class AgentsController < ApplicationController
     @agents = Agent.all
     respond_to do |format|
       format.html
-      format.csv { send_data Agent.to_csv }
+      format.csv { send_data Agent.as_csv }
     end
   end
 

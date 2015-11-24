@@ -15,7 +15,9 @@
       <th>State</th>
       <th>Zip</th>
       <th>Email</th>
-      <th colspan="3">Actions</th>
+      <% unless ( request.path == '/inspectors/print') %>
+        <th colspan="3">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -34,17 +36,21 @@
         <td><%= inspector.state_name %></td>
         <td><%= inspector.zip %></td>
         <td><%= inspector.email %></td>
-        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), inspector, class: 'btn btn-primary' %></td>
-        <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_inspector_path(inspector), class: 'btn btn-info' %></td>
-        <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), inspector, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <% unless ( request.path == '/inspectors/print') %>
+          <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), inspector, class: 'btn btn-primary' %></td>
+          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_inspector_path(inspector), class: 'btn btn-info' %></td>
+          <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), inspector, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-<% if request.format == 'text/html' %>
+
+<%#= binding.pry %>
+ <% unless ( request.path == '/inspectors/print') %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Inspector"), new_inspector_path, :class => "btn btn-info" -%>
-  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"),inspections_path(format: :csv),class: "btn btn-info" %>
-  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_inspections_path, remote: true, class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"),inspectors_path(format: :csv),class: "btn btn-info" %>
+  <%= link_to raw("<i class='fa fa-print'></i> Print"), print_inspectors_path, remote: true, class: "btn btn-info" %>
 <% end %>

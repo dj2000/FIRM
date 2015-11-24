@@ -39,4 +39,28 @@ class Inspector < ActiveRecord::Base
     end
     colors
   end
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["First Name", "Last Name", "Middle Initial", "Senior", "Active", "Home Number", "Cell Number", "Address", "City", "State", "Zip", "email"]
+      all.each do |inspector|
+        row = [
+                inspector.firstName,
+                inspector.lastName,
+                inspector.middleInit,
+                inspector.senior_inspector,
+                inspector.active?,
+                inspector.phoneH,
+                inspector.phoneC,
+                inspector.address,
+                inspector.city,
+                inspector.state_name,
+                inspector.zip,
+                inspector.email
+              ]
+        csv << row
+      end
+    end
+  end
 end
+

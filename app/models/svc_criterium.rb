@@ -20,4 +20,23 @@ class SvcCriterium < ActiveRecord::Base
   def humanize(attribute)
     SvcCriterium::DEFAULTS.key(self.send("#{attribute}").to_s)
   end
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Property Type", "Previously Inspected", "Historical Property Overlay Zone(HPOZ", "Community Design Overlay(CDO", "Owner Occupied", "Foundation Type", "Construction Year", "Notes"]
+      all.each do |svc_criterium|
+        row = [
+                svc_criterium.property_type,
+                svc_criterium.humanize("prevInsp"),
+                svc_criterium.humanize("hpoz"),
+                svc_criterium.humanize("cdo"),
+                svc_criterium.humanize("ownerOcc"),
+                svc_criterium.foundation,
+                svc_criterium.yearBuilt,
+                svc_criterium.notes
+              ]
+        csv << row
+      end
+    end
+  end
 end

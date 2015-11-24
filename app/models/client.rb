@@ -38,4 +38,23 @@ class Client < ActiveRecord::Base
   def contact
     self.full_name
   end
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Name", "Home Number", "Office Number", "Cell Number", "Email", "Client Type", "Opt Out of Mailing List", "Mail Address"]
+      all.each do |client|
+        row = [
+                client.name,
+                client.phoneH,
+                client.phoneW,
+                client.phoneC,
+                client.email,
+                client.client_type,
+                client.opt_out_mailer?,
+                client.mailAddress
+              ]
+        csv << row
+      end
+    end
+  end
 end

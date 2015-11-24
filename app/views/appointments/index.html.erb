@@ -14,7 +14,7 @@
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   var date = "<%= @appointment.try(:schedStart) || Time.now %>";
-  var editable = "<%= @editable %>"
+  var editable = "<%= @editable %>";
   var dateValue = date.split(" ")[0].split("-");
   var year = dateValue[0];
   var month = dateValue[1] - 1;
@@ -50,10 +50,10 @@
     timeFormat: 'hh:mm A',
     height: "auto",
     eventClick: function(cal_event, js_event, view){
-      if(editable == true && cal_event.type == "appointment"){
+      if(editable == "true" && cal_event.type == "appointment"){
         calendar_event_clicked(cal_event, js_event, view);
       }
-      else if(editable == true && cal_event.type != "appointment"){
+      else if(editable == "true" && cal_event.type != "appointment"){
         alert("Block out periods can not be edited.")
       }
     },
@@ -74,7 +74,7 @@
       }
     },
     select: function(start, end, jsEvent, view) {
-      <% if @editable %>
+      if(editable == "true"){
         $('.modal').html('<%= escape_javascript(render partial: "schedule_inspection") %>');
         $(".start_date").val(start.format("YYYY-MM-DD"));
         $(".end_date").val(start.format("YYYY-MM-DD"));
@@ -82,7 +82,7 @@
         var end_time = start.add(2, 'hours').add(30, 'minutes');
         $(".end_time").val(end_time.format("h:mm A"));
         $(".modal").modal('show');
-      <% end %>
+      }
     }
   });
 

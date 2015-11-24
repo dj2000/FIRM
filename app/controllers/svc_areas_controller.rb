@@ -8,7 +8,7 @@ class SvcAreasController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.csv { send_data SvcArea.to_csv }
+      format.csv { send_data SvcArea.as_csv }
     end
   end
 

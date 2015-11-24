@@ -7,7 +7,7 @@ class PayPlansController < ApplicationController
     @pay_plans = PayPlan.all
     respond_to do |format|
       format.js
-      format.csv { send_data PayPlan.to_csv }
+      format.csv { send_data PayPlan.as_csv }
       format.html
     end
   end

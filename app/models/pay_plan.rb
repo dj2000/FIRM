@@ -35,4 +35,19 @@ class PayPlan < ActiveRecord::Base
   def payment_plan_select
 		"#{self.title} ($#{self.jobMinAmt} - $#{self.jobMaxAmt})"
   end
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Title", "Amount Range Start", "Amount Range End", "Deposit"]
+      all.each do |pay_plan|
+        row = [
+                pay_plan.title ,
+                pay_plan.jobMinAmt,
+                pay_plan.jobMaxAmt,
+                pay_plan.deposit
+              ]
+        csv << row
+      end
+    end
+  end
 end

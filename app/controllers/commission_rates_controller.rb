@@ -8,7 +8,7 @@ class CommissionRatesController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.csv { send_data CommissionRate.to_csv }
+      format.csv { send_data CommissionRate.as_csv }
     end
   end
 

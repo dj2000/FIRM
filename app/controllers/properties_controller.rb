@@ -7,7 +7,7 @@ class PropertiesController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.csv { send_data Property.to_csv }
+      format.csv { send_data Property.as_csv }
     end
   end
 

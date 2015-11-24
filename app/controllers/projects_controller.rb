@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
     @clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
-      format.csv { send_data Project.to_csv }
+      format.csv { send_data Project.as_csv }
       format.html
     end
   end

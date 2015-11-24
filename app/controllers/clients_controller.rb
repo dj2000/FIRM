@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.js
       format.html
-      format.csv { send_data Client.to_csv }
+      format.csv { send_data Client.as_csv }
     end
   end
 

@@ -35,6 +35,31 @@ class Project < ActiveRecord::Base
     "#{self.try(:sheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:sheduleEnd).try(:strftime, '%d %b %Y') }"
   end
 
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Contract", "Job Cost", "Schedule By", "Preferred Schedule Start", "Preferred Schedule End", "Est. Duration(d)", "Schedule Start", "Schedule End", "Schedule Authorize By", "Date", "Crew", "Interior Access Verified", "Electricity and Water Verified", "Notes"]
+      all.each do |project|
+        row = [
+                project.try(:contract).try(:title),
+                project.jobCost,
+                project.try(:scheduleBy).try(:strftime, "%d %b %Y"),
+                project.try(:schedule_pref_start).try(:strftime, "%d %b %Y"),
+                project.try(:schedule_pref_end).try(:strftime, "%d %b %Y"),
+                project.estDuration,
+                project.try(:scheduleStart).try(:strftime, "%d %b %Y"),
+                project.try(:scheduleEnd).try(:strftime, "%d %b %Y"),
+                project.authorizedBy ,
+                project.try(:authorizedOn).try(:strftime, "%d %b %Y"),
+                project.try(:crew).try(:foreman),
+                project.humanize("verifiedAccess"),
+                project.humanize("verifiedEW"),
+                project.notes
+              ]
+        csv << row
+      end
+    end
+  end
+
   private
 
   def check_preferred_schedule_end_datetime
@@ -49,3 +74,6 @@ class Project < ActiveRecord::Base
     end
   end
 end
+
+
+

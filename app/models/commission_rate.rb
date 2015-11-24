@@ -41,4 +41,17 @@ class CommissionRate < ActiveRecord::Base
 		end
 		last_commission_rate.update(scale_end: self.scale_start - 1) if last_commission_rate
 	end
+
+	def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Level", "Scale"]
+      all.each do |commission_rate|
+        row = [
+                commission_rate.title,
+								commission_rate.scale
+              ]
+        csv << row
+      end
+    end
+  end
 end

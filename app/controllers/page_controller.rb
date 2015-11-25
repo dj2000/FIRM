@@ -1,5 +1,21 @@
 class PageController < ApplicationController
 
+	def index
+		@appointments = Appointment.all.count
+		@svc_criteria = SvcCriterium.all.count
+		@i_fee_schedules = IFeeSchedule.all.count
+		@commission_rates = CommissionRate.all.count
+		@commissions = Commission.all.count
+		@svc_areas = SvcArea.all.count
+		@inspectors = Inspector.all.count
+		@crews = Crew.all.count
+		@properties = Property.all.count
+		@clients = Client.all.count
+		@agents = Agent.all.count
+		@block_out_periods = BlockOutPeriod.all.count
+		@insp_requests = InspRequest.all.count
+	end
+
 	def operating_statistics_report
 	end
 

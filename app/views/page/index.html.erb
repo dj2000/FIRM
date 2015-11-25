@@ -1,32 +1,144 @@
-<div id="homescreen" class="text-center">
-<%=image_tag "home.png", width: 742, height: 786, id: "Home", usemap: "#m_Home", alt: "" %><map name="m_Home" id="m_Home">
-<area shape="rect" coords="574,314,693,408" href="<%= 'proj_scheds' %>" />
-<area shape="rect" coords="574,221,693,307" href="<%= 'projects' %>" />
-<area shape="rect" coords="574,126,693,215" href="<%= 'contracts' %>" />
-<area shape="rect" coords="574,35,693,118" href="<%= 'comm_histories' %>" />
-<area shape="rect" coords="380,693,528,775" href="<%= 'proj_insps' %>" />
-<area shape="rect" coords="380,618,528,681" href="<%= 'permits' %>" />
-<area shape="rect" coords="380,515,528,601" href="<%= '' %>" />
-<area shape="rect" coords="380,418,528,493" href="<%= 'bids' %>" />
-<area shape="rect" coords="380,314,528,408" href="<%= 'receipts' %>" />
-<area shape="rect" coords="380,221,528,307" href="<%= 'invoices' %>" />
-<area shape="rect" coords="380,126,528,215" href="<%= 'pay_plans' %>" />
-<area shape="rect" coords="380,35,528,118" href="<%= 'inspections' %>" />
-<area shape="rect" coords="190,418,340,515" href="<%= 'appointments' %>" />
-<area shape="rect" coords="190,314,340,408" href="<%= 'agents' %>" />
-<area shape="rect" coords="190,221,340,307" href="<%= 'clients' %>" />
-<area shape="rect" coords="190,126,340,207" href="<%= 'properties' %>" />
-<area shape="rect" coords="190,35,340,118" href="<%= 'insp_requests' %>" />
-<area shape="rect" coords="24,515,148,618" href="<%= 'crews' %>" />
-<area shape="rect" coords="24,418,148,505" href="<%= 'inspectors' %>" />
-<area shape="rect" coords="24,314,148,408" href="<%= 'svc_areas' %>" />
-<area shape="rect" coords="24,221,148,299" href="<%= 'insp_comm_scales' %>" />
-<area shape="rect" coords="24,126,148,207" href="<%= 'i_fee_schedules' %>" />
-<area shape="rect" coords="24,35,148,118" href="<%= 'svc_criteria' %>" />
-</map>
+<div class="row-fluid">
+    <div class="col-md-2">
+        <ul class="nav nav-list bs-docs-sidenav nav-collapse">
+            <li>
+                <a href="javascript:void(0)" data-toggle="collapse" data-target="#general">General<span class="fa fa-angle-right pull-right"></span></a>
+                <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="general">
+                  <li>
+                    <%= link_to svc_criteria_path, class: 'active' do %>
+                      <span class="badge progress-bar-success pull-right"><%= @svc_criteria %></span>Service Criteria
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to i_fee_schedules_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @i_fee_schedules %></span>Fee Schedule
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to commission_rates_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @commission_rates %></span>Commission Scales
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to commissions_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @commissions %></span>Inspector Commission
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to svc_areas_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @svc_areas %></span>Service Area
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to inspectors_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @inspectors %></span>Inspectors
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to crews_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @crews %></span>Crew
+                    <% end %>
+                  </li>
+                </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#inspection-co-ordinator">Inspection Co-ordinator<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="inspection-co-ordinator">
+                <li>
+                  <%= link_to insp_requests_path, class: 'active' do %>
+                    <span class="badge progress-bar-info pull-right"><%= @insp_requests %></span>Inspection Request
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to properties_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @properties %></span>Property
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to clients_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @clients %></span>Customer
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to agents_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @agents %></span>Agent
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to appointments_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @appointments %></span>Inspection Schedule
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to block_out_periods_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @block_out_periods %></span>Block Out Periods
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to "Process Commissions", process_commissions_commissions_path %>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#office-processing">Office Processing<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="office-processing">
+                <li><%= link_to "Inspection Entry", inspections_path, class: 'active' %></li>
+                <li><%= link_to "Payment Plan", pay_plans_path %></li>
+                <li><%= link_to "Invoice", invoices_path %></li>
+                <li><%= link_to "Receipt", receipts_path %></li>
+                <li><%= link_to "Credit Note", credit_notes_path %></li>
+                <li><%= link_to "BID", bids_path %></li>
+                <li><%= link_to "Upload Files", "/" %></li>
+                <li><%= link_to "Permits", permits_path %></li>
+                <li><%= link_to "Project Inspection", proj_insps_path %></li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#project-co-ordinator">Project Co-ordinator<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="project-co-ordinator">
+                <li><%= link_to "Bids Follow-Up", comm_histories_path, class: 'active' %></li>
+                <li><%= link_to "Create Contract", contracts_path %></li>
+                <li><%= link_to "Create Project", projects_path %></li>
+                <li><%= link_to "Project/Crew Schedule", proj_scheds_path %></li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#reports">Reports<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="reports">
+                <li><%= link_to "Inspection Appointments Report", report_appointments_path %></li>
+                <li><%= link_to "Bids", report_bids_path %></li>
+                <li><%= link_to "Contracts", report_contracts_path  %></li>
+                <li><%= link_to "Project Schedules", report_proj_scheds_path %></li>
+                <li><%= link_to "Inspections", report_inspections_path %></li>
+                <li><%= link_to "Receipts", report_receipts_path %></li>
+                <li><%= link_to "Crew Job Schedule", report_crews_path %></li>
+                <li><%= link_to "Inspection Invoices", report_invoices_path(invoice_type: "inspection") %></li>
+                <li><%= link_to "Project Invoices", report_invoices_path(invoice_type: "project") %></li>
+                <li><%= link_to "Operating Statistics Report", operating_statistics_report_path %></li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+      <div class="row-fluid">
+        <div class="col-md-5">
+          <%#= render partial: 'appointments/appointments' %>
+        </div>
+        <div class="col-md-5">
+          <%#= render partial: 'appointments/appointments' %>
+        </div>
+      </div>
+    </div>
 </div>
 <script type="text/javascript">
-  $(document).ready(function(){
-    $(".alert").fadeOut(5000);
+  $('.collapse').on('show', function (e) {
+    $('.collapse').each(function(){
+      if ($(this).hasClass('in')) {
+          $(this).collapse('toggle');
+      }
+    });
+  })
+  $('[data-toggle=collapse]').click(function(){
+    $(this).find("span").toggleClass("fa-angle-right fa-angle-down");
   });
 </script>

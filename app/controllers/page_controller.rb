@@ -1,9 +1,13 @@
 class PageController < ApplicationController
 
 	def index
+		today = Date.today
+		start_date = today.beginning_of_week
+		end_date = today.end_of_week
+		@appointments =  Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date).limit(5)
 		model_names = [:proj_sched, :project, :contract, :comm_history, :proj_insp, :permit, :bid, :credit_note, :receipt, :invoice, 
 										:pay_plan, :inspection, :insp_request, :block_out_period, :agent, :client, :property, :crew, :inspector, 
-										:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :appointment]
+										:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
 		model_names.each do |attribute|
 			instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
 		end

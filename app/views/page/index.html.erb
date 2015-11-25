@@ -82,24 +82,87 @@
             <li>
               <a href="javascript:void(0)" data-toggle="collapse" data-target="#office-processing">Office Processing<span class="fa fa-angle-right pull-right"></span></a>
               <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="office-processing">
-                <li><%= link_to "Inspection Entry", inspections_path, class: 'active' %></li>
-                <li><%= link_to "Payment Plan", pay_plans_path %></li>
-                <li><%= link_to "Invoice", invoices_path %></li>
-                <li><%= link_to "Receipt", receipts_path %></li>
-                <li><%= link_to "Credit Note", credit_notes_path %></li>
-                <li><%= link_to "BID", bids_path %></li>
-                <li><%= link_to "Upload Files", "/" %></li>
-                <li><%= link_to "Permits", permits_path %></li>
-                <li><%= link_to "Project Inspection", proj_insps_path %></li>
+                <li>
+                  <%= link_to inspections_path, class: 'active' do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @inspections %></span>Inspection Entry
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to pay_plans_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @pay_plans %></span>
+                    Payment Plan
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to invoices_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @invoices %></span>
+                    Invoice
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to receipts_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @receipts %></span>
+                    Receipt
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to credit_notes_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @credit_notes %></span>Credit Note
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to bids_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @bids %></span>
+                    BID
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to "/" do %>
+                    <span class="badge progress-bar-danger pull-right"><%= "0" %></span>
+                    Upload Files
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to permits_path do %>
+                      <span class="badge progress-bar-danger pull-right"><%= @permits %></span>
+                      Permits
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to proj_insps_path do %>
+                      <span class="badge progress-bar-danger pull-right"><%= @proj_insps %></span>
+                      Project Inspection
+                  <% end %>
+                </li>
               </ul>
             </li>
             <li>
               <a href="javascript:void(0)" data-toggle="collapse" data-target="#project-co-ordinator">Project Co-ordinator<span class="fa fa-angle-right pull-right"></span></a>
               <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="project-co-ordinator">
-                <li><%= link_to "Bids Follow-Up", comm_histories_path, class: 'active' %></li>
-                <li><%= link_to "Create Contract", contracts_path %></li>
-                <li><%= link_to "Create Project", projects_path %></li>
-                <li><%= link_to "Project/Crew Schedule", proj_scheds_path %></li>
+                <li>
+                  <%= link_to comm_histories_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @comm_histories %></span>
+                    Bids Follow-Up
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to contracts_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @contracts %></span>
+                    Create Contract
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to projects_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @projects %></span>
+                    Create Project
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to proj_scheds_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @proj_scheds %></span>
+                    Project/Crew Schedule
+                  <% end %>
+                </li>
               </ul>
             </li>
             <li>

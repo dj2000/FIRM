@@ -1,31 +1,12 @@
 class PageController < ApplicationController
 
 	def index
-		@appointments = Appointment.all.count
-		@svc_criteria = SvcCriterium.all.count
-		@i_fee_schedules = IFeeSchedule.all.count
-		@commission_rates = CommissionRate.all.count
-		@commissions = Commission.all.count
-		@svc_areas = SvcArea.all.count
-		@inspectors = Inspector.all.count
-		@crews = Crew.all.count
-		@properties = Property.all.count
-		@clients = Client.all.count
-		@agents = Agent.all.count
-		@block_out_periods = BlockOutPeriod.all.count
-		@insp_requests = InspRequest.all.count
-		@inspections = Inspection.all.count
-		@pay_plans = PayPlan.all.count
-		@invoices = Invoice.all.count
-		@receipts = Receipt.all.count
-		@credit_notes = CreditNote.all.count
-		@bids = Bid.all.count
-		@permits = Permit.all.count
-		@proj_insps = ProjInsp.all.count
-		@comm_histories = CommHistory.all.count
-		@contracts = Contract.all.count
-		@projects = Project.all.count
-		@proj_scheds = ProjSched.all.count
+		model_names = [:proj_sched, :project, :contract, :comm_history, :proj_insp, :permit, :bid, :credit_note, :receipt, :invoice, 
+										:pay_plan, :inspection, :insp_request, :block_out_period, :agent, :client, :property, :crew, :inspector, 
+										:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :appointment]
+		model_names.each do |attribute|
+			instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
+		end
 	end
 
 	def operating_statistics_report

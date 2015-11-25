@@ -15,7 +15,7 @@
       <th>Interior Access Verified</th>
       <th>Electricity and Water Verified</th>
       <th>Notes</th>
-      <% if request.format == 'text/html' %>
+      <% unless request.path == "/projects/print" || request.path == "/"  %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
     </tr>
@@ -38,7 +38,7 @@
         <td><%= project.humanize("verifiedAccess") %></td>
         <td><%= project.humanize("verifiedEW") %></td>
         <td><%= project.notes %></td>
-        <% if request.format == 'text/html' %>
+        <% unless request.path == "/projects/print" || request.path == "/"  %>
           <td>
             <%= link_to project, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Show

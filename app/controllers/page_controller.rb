@@ -5,7 +5,7 @@ class PageController < ApplicationController
 		start_date = today.beginning_of_week
 		end_date = today.end_of_week
 		@appointments =  Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date).limit(5)
-		@bids  = Bid.where(status: "Accepted").limit(5)
+		@bids  = Bid.where(status: "Pending").limit(5)
     @contracts = Contract.created_between(start_date, end_date).limit(5)
     @projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date).limit(5)
 		model_names = [:proj_sched, :comm_history, :proj_insp, :permit, :credit_note, :receipt, :invoice,

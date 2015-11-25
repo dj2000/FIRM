@@ -14,6 +14,18 @@ class PageController < ApplicationController
 		@agents = Agent.all.count
 		@block_out_periods = BlockOutPeriod.all.count
 		@insp_requests = InspRequest.all.count
+		@inspections = Inspection.all.count
+		@pay_plans = PayPlan.all.count
+		@invoices = Invoice.all.count
+		@receipts = Receipt.all.count
+		@credit_notes = CreditNote.all.count
+		@bids = Bid.all.count
+		@permits = Permit.all.count
+		@proj_insps = ProjInsp.all.count
+		@comm_histories = CommHistory.all.count
+		@contracts = Contract.all.count
+		@projects = Project.all.count
+		@proj_scheds = ProjSched.all.count
 	end
 
 	def operating_statistics_report

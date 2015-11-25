@@ -30,6 +30,6 @@
   </tbody>
 </table>
 <br>
-<% unless request.path == "/contracts/print" %>
+<% unless request.path == "/contracts/print" || request.path == '/'%>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-contract', onclick: "printReport('/contracts/print')" %>
 <% end %>

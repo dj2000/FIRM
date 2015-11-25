@@ -45,9 +45,9 @@ class Client < ActiveRecord::Base
       all.each do |client|
         row = [
                 client.name,
-                client.phoneH,
-                client.phoneW,
-                client.phoneC,
+                ActionController::Base.helpers.number_to_phone(client.phoneH),
+                ActionController::Base.helpers.number_to_phone(client.phoneW),
+                ActionController::Base.helpers.number_to_phone(client.phoneC),
                 client.email,
                 client.client_type,
                 client.opt_out_mailer?,

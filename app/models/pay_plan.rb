@@ -42,9 +42,9 @@ class PayPlan < ActiveRecord::Base
       all.each do |pay_plan|
         row = [
                 pay_plan.title ,
-                pay_plan.jobMinAmt,
-                pay_plan.jobMaxAmt,
-                pay_plan.deposit
+                "$#{pay_plan.jobMinAmt}",
+                "$#{pay_plan.jobMaxAmt}",
+                "#{pay_plan.deposit}%"
               ]
         csv << row
       end

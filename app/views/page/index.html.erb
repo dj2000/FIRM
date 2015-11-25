@@ -192,9 +192,9 @@
       <div class="row">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar-o"></i>&nbsp;Appointment
+            <h1 class="panel-title"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Appointment
             <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= @appointments.count %></span>
+              <span class="badge progress-bar-warning"><%= Appointment.count %></span>
             </div>
             </h1>
           </div>
@@ -203,18 +203,12 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="page-header">Bid</h1>
-        </div>
-      </div>
       <div class="row">
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar-o"></i>&nbsp;Bid
+            <h1 class="panel-title"><i class="fa fa-credit-card"></i>&nbsp;&nbsp;Bid
             <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= @bids.count %></span>
+              <span class="badge progress-bar-warning"><%= Bid.count %></span>
             </div>
             </h1>
           </div>
@@ -223,18 +217,12 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="page-header">Contract</h1>
-        </div>
-      </div>
       <div class="row">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar-o"></i>&nbsp;Contract
+            <h1 class="panel-title"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Contract
             <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= @contracts.count %></span>
+              <span class="badge progress-bar-warning"><%= Contract.count %></span>
             </div>
             </h1>
           </div>
@@ -243,22 +231,16 @@
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="page-header">Project</h1>
-        </div>
-      </div>
       <div class="row">
         <div class="panel panel-danger">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar-o"></i>&nbsp;Project
+            <h1 class="panel-title"><i class="fa fa-th"></i>&nbsp;&nbsp;Project
             <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= @projects.count %></span>
+              <span class="badge progress-bar-warning"><%= Project.count %></span>
             </div>
             </h1>
           </div>
-          <div class="panel-body">
+          <div class="panel-body pre-scrollable">
             <%= render partial: 'projects/projects' %>
           </div>
         </div>

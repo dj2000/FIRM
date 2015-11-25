@@ -63,11 +63,12 @@ class Property < ActiveRecord::Base
 
   def self.as_csv
     CSV.generate do |csv|
-      csv << ["Number", "City", "State", "Zip", "Year Built", "Size in Square Footage", "Number of floor levels", "Building Type","Number of Units", "Lot Type","Foundation Type","Occupied By"]
+      csv << ["Number", "street", "City", "State", "Zip", "Year Built", "Size in Square Footage", "Number of floor levels", "Building Type","Number of Units", "Lot Type","Foundation Type","Occupied By"]
       all.each do |property|
         row = [
                  property.number,
                  property.city,
+                 property.street,
                  property.state_name,
                  property.zip,
                  property.yearBuilt,

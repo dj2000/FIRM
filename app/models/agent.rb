@@ -25,9 +25,9 @@ class Agent < ActiveRecord::Base
                 agent.lastName,
                 agent.middleInit,
                 agent.company,
-                agent.phoneH,
-                agent.phoneW,
-                agent.phoneC,
+                ActionController::Base.helpers.number_to_phone(agent.phoneH),
+                ActionController::Base.helpers.number_to_phone(agent.phoneW),
+                ActionController::Base.helpers.number_to_phone(agent.phoneC),
                 agent.email,
                 agent.mailAddress
               ]

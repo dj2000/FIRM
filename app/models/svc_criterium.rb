@@ -23,7 +23,7 @@ class SvcCriterium < ActiveRecord::Base
 
   def self.as_csv
     CSV.generate do |csv|
-      csv << ["Property Type", "Previously Inspected", "Historical Property Overlay Zone(HPOZ", "Community Design Overlay(CDO", "Owner Occupied", "Foundation Type", "Construction Year", "Notes"]
+      csv << ["Property Type", "Previously Inspected", "Historical Property Overlay Zone(HPOZ)", "Community Design Overlay(CDO)", "Owner Occupied", "Foundation Type", "Construction Year", "Notes"]
       all.each do |svc_criterium|
         row = [
                 svc_criterium.property_type,

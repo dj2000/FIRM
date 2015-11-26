@@ -1,15 +1,16 @@
 <div class="right">
-  <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
+  <span>
+    <% if @appointment %>
+      <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
+    <% end %>
+  </span>
 </div>
- <div class="left row" id= "left-align">
-    <span>
-      <% if @appointment %>
-        <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
-      <% end %>
-    </span>
-    <br></br>
-    <div class="datepicker datepicker-left col-lg-2"></div>
-    <div class="full-calendar border col-lg-10"></div>
+ <div class="left" id= "left-align">
+    <div class="col-lg-2.5">
+      <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select calendar_select", prompt: "Select Inspector" %>
+      <div class="datepicker datepicker-left"></div>
+    </div>
+    <div class="full-calendar border col-lg-9.5"></div>
   </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
@@ -79,7 +80,7 @@
         $(".start_date").val(start.format("YYYY-MM-DD"));
         $(".end_date").val(start.format("YYYY-MM-DD"));
         $(".start_time").val(start.format("h:mm A"));
-        var end_time = start.add(2, 'hours').add(30, 'minutes');
+        var end_time = start.add(2, 'hours').add(29, 'minutes');
         $(".end_time").val(end_time.format("h:mm A"));
         $(".modal").modal('show');
       }

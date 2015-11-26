@@ -1,2 +1,7 @@
-var contents = ("<%= escape_javascript(render 'appointment') %>");
-printData(contents);
+<% if request.referer.include?("insp_requests") %>
+	var contents = ("<%= escape_javascript(render 'appointment') %>");
+	printData(contents);
+<% else %>
+	$('.modal').html('<%= escape_javascript(render "appointment") %>');
+	$(".modal").modal('show');
+<% end %>

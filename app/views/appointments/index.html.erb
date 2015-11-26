@@ -70,7 +70,10 @@
       },
     ],
     eventRender: function(event, element, view) {
-      if(event.type == "appointment" ){
+      if(event.type == "appointment"){
+        if(editable == "false"){
+          element.find('.fc-content').append("<a href='/appointments/"+ event.id +"/print' data-remote=true style='color:blue !important'><i class=\'fa fa-eye\'></i> Preview</a>");
+        }
         element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
       }
     },

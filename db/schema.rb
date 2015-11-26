@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116091430) do
+ActiveRecord::Schema.define(version: 20151126125058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20151116091430) do
     t.string   "client_type"
     t.string   "company_name"
     t.string   "of_type"
+    t.text     "notes"
   end
 
   create_table "comm_histories", force: true do |t|

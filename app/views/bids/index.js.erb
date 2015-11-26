@@ -1,1 +1,5 @@
-$(".bids-report").html("<%= j (render partial: 'bids') %>");
+<% if request.path == '/bids' and !request.referrer.include?("inspections") %>
+  $(".bids-report").html("<%= j (render partial: 'bids') %>");
+<% else %>
+  <%= render partial: 'bids/bids_data' %>
+<% end %>

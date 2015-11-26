@@ -1,16 +1,16 @@
 <div class="right">
   <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
 </div>
-<div class="left" id= "left-align">
-  <span>
-    <% if @appointment %>
-      <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
-    <% end %>
-  </span>
-  <br></br>
-  <div class="datepicker datepicker-left"></div>
-  <div class="full-calendar border" style="width:90%"></div>
-</div>
+ <div class="left row" id= "left-align">
+    <span>
+      <% if @appointment %>
+        <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
+      <% end %>
+    </span>
+    <br></br>
+    <div class="datepicker datepicker-left col-lg-2"></div>
+    <div class="full-calendar border col-lg-10"></div>
+  </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   var date = "<%= @appointment.try(:schedStart) || Time.now %>";

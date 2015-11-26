@@ -67,8 +67,8 @@ class Property < ActiveRecord::Base
       all.each do |property|
         row = [
                  property.number,
-                 property.city,
                  property.street,
+                 property.city,
                  property.state_name,
                  property.zip,
                  property.yearBuilt,

@@ -182,81 +182,111 @@
             </li>
         </ul>
     </div>
-    <div class="col-md-10">
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="page-header">Dashboard</h1>
+
+
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1>
+      </div>
+    </div>
+
+    <!-- <div class="row"> -->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <i class="fa fa-envelope-o"></i>
+              Inspection Request
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%= render partial: 'insp_requests/insp_requests' %>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Appointment
-            <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= Appointment.count %></span>
-            </div>
-            </h1>
+
+      <div class="panel panel-success">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @appointments.count %></span>
           </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <i class="fa fa-calendar"></i>
+              Appointment
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
           <div class="panel-body">
             <%= render partial: 'appointments/appointments' %>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-credit-card"></i>&nbsp;&nbsp;Bid
-            <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= Bid.count %></span>
-            </div>
-            </h1>
+
+      <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @open_appointments.count %></span>
           </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <i class="fa fa-calendar"></i>
+              Open Appointment
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            <%= render partial: 'appointments/appointments' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-danger">
+        <div class="panel-heading" role="tab" id="headingFour">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @bids.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <i class="fa fa-credit-card"></i>
+              Open Bid
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
           <div class="panel-body">
             <%= render partial: 'bids/bids' %>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Contract
-            <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= Contract.count %></span>
-            </div>
-            </h1>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @projects.count %></span>
           </div>
-          <div class="panel-body">
-            <%= render partial: 'contracts/contract' %>
-          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <i class="fa fa-th"></i>
+              Project
+            </a>
+          </h4>
         </div>
-      </div>
-      <div class="row">
-        <div class="panel panel-danger">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-th"></i>&nbsp;&nbsp;Project
-            <div class="pull-right">
-              <span class="badge progress-bar-warning"><%= Project.count %></span>
-            </div>
-            </h1>
-          </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
           <div class="panel-body pre-scrollable">
             <%= render partial: 'projects/projects' %>
           </div>
         </div>
       </div>
-
-
+      </div>
     </div>
-</div>
-<script type="text/javascript">
-  $('.collapse').on('show', function (e) {
-    $('.collapse').each(function(){
-      if ($(this).hasClass('in')) {
-          $(this).collapse('toggle');
-      }
-    });
-  })
-  $('[data-toggle=collapse]').click(function(){
-    $(this).find("span").toggleClass("fa-angle-right fa-angle-down");
-  });
-</script>
+  </div>

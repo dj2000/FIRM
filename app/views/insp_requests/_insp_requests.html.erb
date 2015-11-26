@@ -9,7 +9,9 @@
       <th>Property</th>
       <th>Inspection Selection Criteria</th>
       <th>Appointment</th>
-      <th colspan="3" style="text-align:center">Actions</th>
+      <% unless request.path == "/" %>
+        <th colspan="3" style="text-align:center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -24,21 +26,23 @@
         <td><%= insp_request.property.try(:street) %></td>
         <td><%= insp_request.selectInsp %></td>
         <td><%= insp_request.has_appointment? %></td>
-        <td>
-          <%= link_to insp_request, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Appointment
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_insp_request_path(insp_request), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to insp_request, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% unless request.path == "/" %>
+          <td>
+            <%= link_to insp_request, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Appointment
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_insp_request_path(insp_request), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to insp_request, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

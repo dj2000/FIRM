@@ -195,3 +195,9 @@ body {
 .sidebar .arrow {
     float: right;
 }
+.accordion-hover {
+  a:hover{
+    background: none;
+    text-decoration: none;
+  }
+}

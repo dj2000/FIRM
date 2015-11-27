@@ -1,55 +1,43 @@
 class PageController < ApplicationController
 
 	def index
-		@appointments = Appointment.all.count
-		@svc_criteria = SvcCriterium.all.count
-		@i_fee_schedules = IFeeSchedule.all.count
-		@commission_rates = CommissionRate.all.count
-		@commissions = Commission.all.count
-		@svc_areas = SvcArea.all.count
-		@inspectors = Inspector.all.count
-		@crews = Crew.all.count
-		@properties = Property.all.count
-		@clients = Client.all.count
-		@agents = Agent.all.count
-		@block_out_periods = BlockOutPeriod.all.count
-		@insp_requests = InspRequest.all.count
-		@inspections = Inspection.all.count
-		@pay_plans = PayPlan.all.count
-		@invoices = Invoice.all.count
-		@receipts = Receipt.all.count
-		@credit_notes = CreditNote.all.count
-		@bids = Bid.all.count
-		@permits = Permit.all.count
-		@proj_insps = ProjInsp.all.count
-		@comm_histories = CommHistory.all.count
-		@contracts = Contract.all.count
-		@projects = Project.all.count
-		@proj_scheds = ProjSched.all.count
-	end
+		today = Date.today
+		start_date = today.beginning_of_week
+		end_date = today.end_of_week
+		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
+		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
+		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
+		model_names = [:proj_sched, :comm_history, :proj_insp, :permit, :credit_note, :receipt, :invoice,
+			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
+			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
+			model_names.each do |attribute|
+				instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
+			end
+		end
 
-	def operating_statistics_report
-	end
+		def operating_statistics_report
+		end
 
-	def statistics
-		get_statistics
-	end
+		def statistics
+			get_statistics
+		end
 
-	def print
-		get_statistics
-	end
+		def print
+			get_statistics
+		end
 
-	def get_statistics
-		@statistics = {}
-		@appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
-		@bids = Bid.joins(inspection: [:appointment]).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
-		@bids_follow_ups = CommHistory.where('("call_time" BETWEEN ? AND ?)', params[:start_date], params[:end_date])
-		@verbal_closed_bid_follow_ups = @bids_follow_ups.where(callOutcome: 'Verbal Close')
-		@contracts = Contract.all
-		@contracts_bid_id = @contracts.map(&:bid_id).uniq
-		@uncontracted_bids_count = @verbal_closed_bid_follow_ups.where.not(bid_id: @contracts_bid_id).map(&:bid).count
-		@signed_contracts = Contract.signed_contracts(params[:start_date], params[:end_date])
-		@inspections = Inspection.where(appointment_id: @appointments.map(&:id))
+		def get_statistics
+			@statistics = {}
+			@appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+			@bids = Bid.joins(inspection: [:appointment]).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+			@bids_follow_ups = CommHistory.where('("call_time" BETWEEN ? AND ?)', params[:start_date], params[:end_date])
+			@verbal_closed_bid_follow_ups = @bids_follow_ups.where(callOutcome: 'Verbal Close')
+			@contracts = Contract.all
+			@contracts_bid_id = @contracts.map(&:bid_id).uniq
+			@uncontracted_bids_count = @verbal_closed_bid_follow_ups.where.not(bid_id: @contracts_bid_id).map(&:bid).count
+			@signed_contracts = Contract.signed_contracts(params[:start_date], params[:end_date])
+			@inspections = Inspection.where(appointment_id: @appointments.map(&:id))
 
 		## Prepare statistics data
 		@statistics[:appointments] = @appointments.count

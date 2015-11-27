@@ -196,3 +196,14 @@ body {
   width:16.5%;
   margin-top:1.2%
 }
+.accordion-hover {
+  a:hover{
+    background: none;
+  }
+  a{
+    text-decoration: none;
+  }
+}
+table.dashboard tr:hover {
+  cursor: pointer;
+}

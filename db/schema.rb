@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 20151127074641) do
     t.integer  "deposit"
     t.string   "title"
     t.string   "deposit_label"
+    t.float    "deposit_limit"
   end
 
   create_table "payments", force: true do |t|

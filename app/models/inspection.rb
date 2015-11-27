@@ -2,7 +2,7 @@ class Inspection < ActiveRecord::Base
   extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
-  has_many :bids
+  has_many :bids, -> { order 'bids.created_at' }
   has_many :comm_histories
   has_many :invoices
   has_many :documents, as: :attachable

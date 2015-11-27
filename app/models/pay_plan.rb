@@ -3,7 +3,7 @@ class PayPlan < ActiveRecord::Base
 
   belongs_to :bid
 
-  has_many :payments, dependent: :destroy
+  has_many :payments, -> { order 'payments.created_at' }, dependent: :destroy
 
   accepts_nested_attributes_for :payments, reject_if: proc { |attributes| attributes['title'].blank? || attributes['value'].to_i <= 0 }, allow_destroy: true
 
@@ -34,6 +34,29 @@ class PayPlan < ActiveRecord::Base
 
   def payment_plan_select
 		"#{self.title} ($#{self.jobMinAmt} - $#{self.jobMaxAmt})"
+  end
+
+  def deposit_limit_value(bid = nil)
+    return 0 unless bid
+    deposit_value = bid.try(:calculate_amount, self.deposit)
+    return 0 if deposit_value <= self.try(:deposit_limit)
+    (deposit_value - self.try(:deposit_limit))
+  end
+
+  def deposite_amount(bid)
+    deposit_value = bid.try(:calculate_amount, self.deposit)
+    amount = deposit_value <= self.try(:deposit_limit) ? deposit_value : self.try(:deposit_limit)
+    return amount
+  end
+
+  def calculate_first_payment(bid = nil)
+    first_payment = self.try(:payments).try(:first)
+    return 0 unless first_payment
+    deposit_limit_value = self.deposit_limit_value(bid)
+    if bid
+      first_payment_amount = bid.try(:calculate_amount, first_payment.try(:value))
+      amount = first_payment_amount + deposit_limit_value
+    end
   end
 
   def self.as_csv

@@ -103,9 +103,10 @@
         <%= f.input :cdo, label: "Community Design Overlay" %>
       </div>
     </div>
-    <div class='col-sm-6'>
+
+    <div class="col-md-6">
       <div class="form-group">
-        <%= f.input :hpoz, label: "Historical Property Overlay Zone" %>
+        <%= f.input :hpoz, label: "Historical Property Overlay Zone(HPOZ):", as: :radio_buttons, wrapper: :vertical_radio_and_checkboxes, collection: Property::DEFAULTS %>
       </div>
     </div>
   </div>

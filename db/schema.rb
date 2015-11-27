@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126125058) do
+ActiveRecord::Schema.define(version: 20151127074641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,7 +419,7 @@ ActiveRecord::Schema.define(version: 20151126125058) do
     t.string   "occupied_by"
     t.float    "latitude"
     t.float    "longitude"
-    t.boolean  "hpoz"
+    t.string   "hpoz"
   end
 
   create_table "receipts", force: true do |t|

@@ -12,6 +12,8 @@ class Property < ActiveRecord::Base
 
   PROPERTY_TYPE = %w(SFR MFR)
 
+  DEFAULTS = %w(Yes No Unknown)
+
   validates :street, :city, :state, presence: true
 
   validates :zip,

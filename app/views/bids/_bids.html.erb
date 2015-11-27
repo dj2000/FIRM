@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% @bids.each do |bid| %>
-      <tr onclick = "showInfo('/comm_histories/new','<%= request.path %>')">
+      <tr onclick = "showInfo('comm_histories/new','<%= request.path %>')">
         <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
         <td><%= bid.costRepair %></td>

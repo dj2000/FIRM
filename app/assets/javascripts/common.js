@@ -43,7 +43,7 @@ function printData(contents, startDate, endDate){
 }
 
 function showInfo(url,request_url){
-  // if (request_url == "/"){
-    window.location = url;
-  // }
+  if (request_url == "/"){
+    window.location = "/"+ url;
+  }
 }

@@ -413,13 +413,13 @@ ActiveRecord::Schema.define(version: 20151126125058) do
     t.integer  "gndUnits"
     t.string   "lotType"
     t.string   "foundation"
-    t.boolean  "hpoz"
     t.boolean  "cdo"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "occupied_by"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "hpoz"
   end
 
   create_table "receipts", force: true do |t|

@@ -21,7 +21,7 @@ class Inspection < ActiveRecord::Base
   validates_attachment_content_type :client_information_sheet, content_type: ["image/jpg", "image/png", "application/pdf"]
   validates_attachment_content_type :footprint_diagram, content_type: ["image/jpg", "image/png", "application/pdf"]
 
-  FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
+  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)"]
 
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"

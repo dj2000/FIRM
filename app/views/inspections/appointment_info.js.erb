@@ -2,3 +2,4 @@ $(".appointment.inspector").val("<%= @appointment.try(:inspector).try(:name) %>"
 $(".appointment_info").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
 $(".appointment_info").removeClass("hide");
 $(".appointment").removeClass("hide");
+$("#inspection_name").val("<%= @appointment.try(:insp_request).try(:property).try(:property_select_value)%>  -<%= (@appointment.try(:schedStart)).to_time.strftime('%d %b %Y')%>");

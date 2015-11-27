@@ -5,40 +5,39 @@ class PageController < ApplicationController
 		start_date = today.beginning_of_week
 		end_date = today.end_of_week
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
-		@appointments =  Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
-		@open_appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
+		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
 		@bids = Bid.where(status: ["Pending","Follow-up"])
-    @projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
+		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
 		model_names = [:proj_sched, :comm_history, :proj_insp, :permit, :credit_note, :receipt, :invoice,
-										:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
-										:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
-		model_names.each do |attribute|
-			instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
+			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
+			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
+			model_names.each do |attribute|
+				instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
+			end
 		end
-	end
 
-	def operating_statistics_report
-	end
+		def operating_statistics_report
+		end
 
-	def statistics
-		get_statistics
-	end
+		def statistics
+			get_statistics
+		end
 
-	def print
-		get_statistics
-	end
+		def print
+			get_statistics
+		end
 
-	def get_statistics
-		@statistics = {}
-		@appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
-		@bids = Bid.joins(inspection: [:appointment]).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
-		@bids_follow_ups = CommHistory.where('("call_time" BETWEEN ? AND ?)', params[:start_date], params[:end_date])
-		@verbal_closed_bid_follow_ups = @bids_follow_ups.where(callOutcome: 'Verbal Close')
-		@contracts = Contract.all
-		@contracts_bid_id = @contracts.map(&:bid_id).uniq
-		@uncontracted_bids_count = @verbal_closed_bid_follow_ups.where.not(bid_id: @contracts_bid_id).map(&:bid).count
-		@signed_contracts = Contract.signed_contracts(params[:start_date], params[:end_date])
-		@inspections = Inspection.where(appointment_id: @appointments.map(&:id))
+		def get_statistics
+			@statistics = {}
+			@appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+			@bids = Bid.joins(inspection: [:appointment]).where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+			@bids_follow_ups = CommHistory.where('("call_time" BETWEEN ? AND ?)', params[:start_date], params[:end_date])
+			@verbal_closed_bid_follow_ups = @bids_follow_ups.where(callOutcome: 'Verbal Close')
+			@contracts = Contract.all
+			@contracts_bid_id = @contracts.map(&:bid_id).uniq
+			@uncontracted_bids_count = @verbal_closed_bid_follow_ups.where.not(bid_id: @contracts_bid_id).map(&:bid).count
+			@signed_contracts = Contract.signed_contracts(params[:start_date], params[:end_date])
+			@inspections = Inspection.where(appointment_id: @appointments.map(&:id))
 
 		## Prepare statistics data
 		@statistics[:appointments] = @appointments.count

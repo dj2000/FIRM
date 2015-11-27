@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped table-hover table-responsive">
+<table class="table table-bordered table-striped table-hover table-responsive dashboard">
   <thead>
     <tr>
       <th>Appointment Start Date</th>
@@ -16,7 +16,7 @@
 
   <tbody>
     <% @appointments.each do |appointment| %>
-      <tr>
+      <tr onclick = "showInfo('/inspections/new','<%= request.path %>')">
         <td><%= appointment.try(:schedStart).try(:strftime, "%d %b %Y") %></td>
         <td><%= appointment.try(:schedEnd).try(:strftime, "%d %b %Y") %></td>
         <td><%= appointment.try(:insp_request).try(:property).try(:property_select_value) %></td>

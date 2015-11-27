@@ -201,32 +201,13 @@
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
               <i class="fa fa-envelope-o"></i>
-              Inspection Request
+              Unscheduled Inspection Requests
             </a>
           </h4>
         </div>
         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
             <%= render partial: 'insp_requests/insp_requests' %>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel panel-success">
-        <div class="panel-heading" role="tab" id="headingTwo">
-          <div class="pull-right">
-            <span class="badge progress-bar-warning"><%= @appointments.count %></span>
-          </div>
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <i class="fa fa-calendar"></i>
-              Appointment
-            </a>
-          </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            <%= render partial: 'appointments/appointments' %>
           </div>
         </div>
       </div>
@@ -239,7 +220,7 @@
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             <i class="fa fa-calendar"></i>
-              Open Appointment
+              Open appointments
             </a>
           </h4>
         </div>
@@ -258,7 +239,7 @@
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
             <i class="fa fa-credit-card"></i>
-              Open Bid
+              Open Bids
             </a>
           </h4>
         </div>
@@ -277,7 +258,7 @@
           <h4 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
             <i class="fa fa-th"></i>
-              Project
+              Active Projects
             </a>
           </h4>
         </div>

@@ -1,4 +1,4 @@
-<table class='table table-bordered table-striped table-responsive table-hover'>
+<table class='table table-bordered table-striped table-responsive table-hover dashboard'>
   <thead>
     <tr>
       <th>Call Time</th>
@@ -17,7 +17,7 @@
 
   <tbody>
     <% @insp_requests.each do |insp_request| %>
-      <tr>
+      <tr onclick = "showInfo('/insp_requests/<%=insp_request.id%>','<%= request.path %>')">
         <td><%= insp_request.call_time %></td>
         <td><%= insp_request.callerType %></td>
         <td><%= insp_request.referalSource %></td>

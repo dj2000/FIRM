@@ -1,4 +1,4 @@
-<table class='table table-bordered table-striped table-responsive table-hover'>
+<table class='table table-bordered table-striped table-responsive table-hover dashboard'>
   <thead>
     <tr>
       <th>Contract</th>
@@ -23,7 +23,7 @@
 
   <tbody>
     <% @projects.each do |project| %>
-      <tr>
+      <tr onclick = "showInfo('/projects/<%=project.id%>','<%= request.path %>')">
         <td><%= project.try(:contract).try(:title) %></td>
         <td><%= project.jobCost %></td>
         <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>

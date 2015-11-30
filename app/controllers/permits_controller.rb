@@ -9,7 +9,7 @@ class PermitsController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.csv { send_data Permit.to_csv }
+      format.csv { send_data Permit.as_csv }
     end
   end
 

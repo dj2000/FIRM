@@ -24,7 +24,7 @@
       right: 'month,agendaWeek,agendaDay'
     },
     minTime: "08:00:00",
-    maxTime: "19:00:00",
+    maxTime: "18:00:00",
     defaultView: 'agendaWeek',
     editable: false,
     hiddenDays: [0],
@@ -34,6 +34,7 @@
     selectHelper: true,
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
+    height: "auto",
     eventSources: [
 	    {
 	      url: '/appointments.json'
@@ -45,6 +46,11 @@
         url: '/appointments/background_events.json'
 	    }
 	  ],
+    eventRender: function(event, element, view) {
+      if(event.type == "appointment" ){
+        element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
+      }
+    },
 	  viewRender: function(view){
       $(".full-calendar").fullCalendar( 'removeEvents');
 			$(".full-calendar").fullCalendar( 'refetchEvents');

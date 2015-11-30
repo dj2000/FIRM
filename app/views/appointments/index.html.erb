@@ -1,19 +1,21 @@
 <div class="right">
-  <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select", prompt: "Select Inspector" %>
-</div>
-<div class="left" id= "left-align">
   <span>
     <% if @appointment %>
       <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
     <% end %>
   </span>
-  <br></br>
-  <div class="datepicker datepicker-left"></div>
-  <div class="full-calendar border"></div>
 </div>
+ <div class="left" id= "left-align">
+    <div class="col-lg-2.5">
+      <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select calendar_select", prompt: "Select Inspector" %>
+      <div class="datepicker datepicker-left"></div>
+    </div>
+    <div class="full-calendar border col-lg-9.5"></div>
+  </div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   var date = "<%= @appointment.try(:schedStart) || Time.now %>";
+  var editable = "<%= @editable %>";
   var dateValue = date.split(" ")[0].split("-");
   var year = dateValue[0];
   var month = dateValue[1] - 1;
@@ -29,7 +31,6 @@
       $('.full-calendar').fullCalendar("changeView", defaultView);
     });
   })
-  var editable = <%= @editable %>
   $('.full-calendar').fullCalendar({
     header: {
       left: '',
@@ -37,7 +38,7 @@
       right: 'month,agendaWeek,agendaDay'
     },
     minTime: "08:00:00",
-    maxTime: "19:00:00",
+    maxTime: "18:00:00",
     defaultView: 'agendaWeek',
     defaultDate: moment(date),
     editable: <%= @editable %>,
@@ -48,12 +49,13 @@
     eventStartEditable: false,
     slotEventOverlap: true,
     timeFormat: 'hh:mm A',
+    height: "auto",
     eventClick: function(cal_event, js_event, view){
-      if(editable && cal_event.type == "appointment" ){
+      if(editable == "true" && cal_event.type == "appointment"){
         calendar_event_clicked(cal_event, js_event, view);
       }
-      else if(editable && cal_event.type == "block_out_period"){
-        alert("Block Out Period can not be edited.");
+      else if(editable == "true" && cal_event.type != "appointment"){
+        alert("Block out periods can not be edited.")
       }
     },
     eventSources: [
@@ -65,23 +67,26 @@
       },
       {
         url: '/block_out_periods.json'
-      }
+      },
     ],
     eventRender: function(event, element, view) {
-      if(editable && event.type == "appointment" ){
+      if(event.type == "appointment"){
+        if(editable == "false"){
+          element.find('.fc-content').append("<a href='/appointments/"+ event.id +"/print' data-remote=true style='color:blue !important'><i class=\'fa fa-eye\'></i> Preview</a>");
+        }
         element.find('.fc-content').append("<div style='background: white;padding: 8px;color: black;'>" + event.client + "<br/>" + event.address +  "</div");
       }
     },
     select: function(start, end, jsEvent, view) {
-      <% if @editable %>
+      if(editable == "true"){
         $('.modal').html('<%= escape_javascript(render partial: "schedule_inspection") %>');
         $(".start_date").val(start.format("YYYY-MM-DD"));
         $(".end_date").val(start.format("YYYY-MM-DD"));
         $(".start_time").val(start.format("h:mm A"));
-        var end_time = start.add(2, 'hours').add(30, 'minutes');
+        var end_time = start.add(2, 'hours').add(29, 'minutes');
         $(".end_time").val(end_time.format("h:mm A"));
         $(".modal").modal('show');
-      <% end %>
+      }
     }
   });
 
@@ -136,7 +141,8 @@
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');
-        $('.full-calendar').fullCalendar('addEventSource', result );
+        $('.full-calendar').fullCalendar('addEventSource', result["appointments"] );
+        $('.full-calendar').fullCalendar('addEventSource', result["block_out_periods"] );
         $('.full-calendar').fullCalendar('addEventSource', events );
       }
     });

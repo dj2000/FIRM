@@ -67,7 +67,8 @@ class InspRequest < ActiveRecord::Base
   def calculate_inspection_fee(appointment, is_insurance, format = nil)
     amount = basic_amount(150)
     amount += basic_amount(250) if (is_insurance == "true" || is_insurance == true)
-    appointment.inspFee = (format.nil? and appointment.inspFee) ? appointment.inspFee : amount
+    return amount unless appointment
+    appointment.inspFee = (format.nil? and appointment.try(:inspFee)) ? appointment.try(:inspFee) : amount
   end
 
   # To show Selected value of referral source by field on form

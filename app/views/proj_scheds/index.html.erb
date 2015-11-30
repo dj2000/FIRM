@@ -1,7 +1,7 @@
 <div class="right">
   <%= select_tag "crew", options_for_select(@crews.map{|c| [c.foreman, c.id]}), class: "form-control crew_select", prompt: "Select Crew" %>
 </div>
-<div class="left">
+<div class="left" id= "left-align">
   <span>
     <% if @project %>
       <%= link_to "Back", @project, class: "btn btn-primary right" %>
@@ -15,7 +15,7 @@
 <script>
   $(document).ready(function(){
     $('.datepicker').datepicker({
-      daysOfWeekDisabled: [0,6],
+      daysOfWeekDisabled: [0],
       todayHighlight: true
     });
     $('.datepicker').on('changeDate', function (dateText) {
@@ -32,6 +32,8 @@
         center: 'title',
         right: 'month,agendaWeek,agendaDay'
     },
+    minTime: "08:00:00",
+    maxTime: "18:00:00",
     defaultView: 'agendaWeek',
     editable: <%= @editable %>,
     weekends: false,
@@ -40,10 +42,11 @@
     firstDay:1,
     eventStartEditable: false,
     timeFormat: 'hh:mm A',
+    height: "auto",
     eventSources: [{
       url: "/proj_scheds",
     }],
-    eventRender: function(event, element) {
+    eventRender: function(event, element, view) {
       $(element).tooltip({title:event.project, container: "body"});
     },
     eventClick: function(cal_event, js_event, view){
@@ -87,7 +90,7 @@
     $.ajax({
       type: "GET",
       url: "/proj_scheds/scheduled_projects",
-      data: { date: date, view_type: view, crew_id: crew_id},
+      data: { date: date || new Date(), view_type: view, crew_id: crew_id},
       dataType: 'JSON',
       success: function(result){
         $('.full-calendar').fullCalendar('removeEvents');

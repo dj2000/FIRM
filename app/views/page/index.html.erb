@@ -1,32 +1,273 @@
-<div id="homescreen" class="text-center">
-<%=image_tag "home.png", width: 742, height: 786, id: "Home", usemap: "#m_Home", alt: "" %><map name="m_Home" id="m_Home">
-<area shape="rect" coords="574,314,693,408" href="<%= 'proj_scheds' %>" />
-<area shape="rect" coords="574,221,693,307" href="<%= 'projects' %>" />
-<area shape="rect" coords="574,126,693,215" href="<%= 'contracts' %>" />
-<area shape="rect" coords="574,35,693,118" href="<%= 'comm_histories' %>" />
-<area shape="rect" coords="380,693,528,775" href="<%= 'proj_insps' %>" />
-<area shape="rect" coords="380,618,528,681" href="<%= 'permits' %>" />
-<area shape="rect" coords="380,515,528,601" href="<%= '' %>" />
-<area shape="rect" coords="380,418,528,493" href="<%= 'bids' %>" />
-<area shape="rect" coords="380,314,528,408" href="<%= 'receipts' %>" />
-<area shape="rect" coords="380,221,528,307" href="<%= 'invoices' %>" />
-<area shape="rect" coords="380,126,528,215" href="<%= 'pay_plans' %>" />
-<area shape="rect" coords="380,35,528,118" href="<%= 'inspections' %>" />
-<area shape="rect" coords="190,418,340,515" href="<%= 'appointments' %>" />
-<area shape="rect" coords="190,314,340,408" href="<%= 'agents' %>" />
-<area shape="rect" coords="190,221,340,307" href="<%= 'clients' %>" />
-<area shape="rect" coords="190,126,340,207" href="<%= 'properties' %>" />
-<area shape="rect" coords="190,35,340,118" href="<%= 'insp_requests' %>" />
-<area shape="rect" coords="24,515,148,618" href="<%= 'crews' %>" />
-<area shape="rect" coords="24,418,148,505" href="<%= 'inspectors' %>" />
-<area shape="rect" coords="24,314,148,408" href="<%= 'svc_areas' %>" />
-<area shape="rect" coords="24,221,148,299" href="<%= 'insp_comm_scales' %>" />
-<area shape="rect" coords="24,126,148,207" href="<%= 'i_fee_schedules' %>" />
-<area shape="rect" coords="24,35,148,118" href="<%= 'svc_criteria' %>" />
-</map>
-</div>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".alert").fadeOut(5000);
-  });
-</script>
+<div class="row-fluid">
+    <div class="col-md-2">
+        <ul class="nav nav-list bs-docs-sidenav nav-collapse">
+            <li>
+                <a href="javascript:void(0)" data-toggle="collapse" data-target="#general">General<span class="fa fa-angle-right pull-right"></span></a>
+                <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="general">
+                  <li>
+                    <%= link_to svc_criteria_path, class: 'active' do %>
+                      <span class="badge progress-bar-success pull-right"><%= @svc_criteria %></span>Service Criteria
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to i_fee_schedules_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @i_fee_schedules %></span>Fee Schedule
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to commission_rates_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @commission_rates %></span>Commission Scales
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to commissions_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @commissions %></span>Inspector Commission
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to svc_areas_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @svc_areas %></span>Service Area
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to inspectors_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @inspectors %></span>Inspectors
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to crews_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @crews %></span>Crew
+                    <% end %>
+                  </li>
+                </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#inspection-co-ordinator">Inspection Co-ordinator<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="inspection-co-ordinator">
+                <li>
+                  <%= link_to insp_requests_path, class: 'active' do %>
+                    <span class="badge progress-bar-info pull-right"><%= InspRequest.count %></span>Inspection Request
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to properties_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @properties %></span>Property
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to clients_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @clients %></span>Customer
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to agents_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @agents %></span>Agent
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to appointments_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= Appointment.all.count %></span>Inspection Schedule
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to block_out_periods_path do %>
+                    <span class="badge progress-bar-info pull-right"><%= @block_out_periods %></span>Block Out Periods
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to "Process Commissions", process_commissions_commissions_path %>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#office-processing">Office Processing<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="office-processing">
+                <li>
+                  <%= link_to inspections_path, class: 'active' do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @inspections %></span>Inspection Entry
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to pay_plans_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @pay_plans %></span>
+                    Payment Plan
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to invoices_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @invoices %></span>
+                    Invoice
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to receipts_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @receipts %></span>
+                    Receipt
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to credit_notes_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= @credit_notes %></span>Credit Note
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to bids_path do %>
+                    <span class="badge progress-bar-danger pull-right"><%= Bid.count %></span>
+                    BID
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to "/" do %>
+                    <span class="badge progress-bar-danger pull-right"><%= "0" %></span>
+                    Upload Files
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to permits_path do %>
+                      <span class="badge progress-bar-danger pull-right"><%= @permits %></span>
+                      Permits
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to proj_insps_path do %>
+                      <span class="badge progress-bar-danger pull-right"><%= @proj_insps %></span>
+                      Project Inspection
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#project-co-ordinator">Project Co-ordinator<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="project-co-ordinator">
+                <li>
+                  <%= link_to comm_histories_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @comm_histories %></span>
+                    Bids Follow-Up
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to contracts_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= Contract.count %></span>
+                    Create Contract
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to projects_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= Project.count %></span>
+                    Create Project
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to proj_scheds_path, class: 'active' do %>
+                    <span class="badge progress-bar-warning pull-right"><%= @proj_scheds %></span>
+                    Project/Crew Schedule
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0)" data-toggle="collapse" data-target="#reports">Reports<span class="fa fa-angle-right pull-right"></span></a>
+              <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="reports">
+                <li><%= link_to "Inspection Appointments Report", report_appointments_path %></li>
+                <li><%= link_to "Bids", report_bids_path %></li>
+                <li><%= link_to "Contracts", report_contracts_path  %></li>
+                <li><%= link_to "Project Schedules", report_proj_scheds_path %></li>
+                <li><%= link_to "Inspections", report_inspections_path %></li>
+                <li><%= link_to "Receipts", report_receipts_path %></li>
+                <li><%= link_to "Crew Job Schedule", report_crews_path %></li>
+                <li><%= link_to "Inspection Invoices", report_invoices_path(invoice_type: "inspection") %></li>
+                <li><%= link_to "Project Invoices", report_invoices_path(invoice_type: "project") %></li>
+                <li><%= link_to "Operating Statistics Report", operating_statistics_report_path %></li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+
+
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1>
+      </div>
+    </div>
+
+    <!-- <div class="row"> -->
+    <div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <i class="fa fa-envelope-o"></i>
+              Unscheduled Inspection Requests
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%= render partial: 'insp_requests/insp_requests' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @appointments.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <i class="fa fa-calendar"></i>
+              Open appointments
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            <%= render partial: 'appointments/appointments' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-danger">
+        <div class="panel-heading" role="tab" id="headingFour">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @bids.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <i class="fa fa-credit-card"></i>
+              Open Bids
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
+            <%= render partial: 'bids/bids' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @projects.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <i class="fa fa-th"></i>
+              Active Projects
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'projects/projects' %>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>

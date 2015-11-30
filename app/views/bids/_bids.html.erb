@@ -1,4 +1,4 @@
-<table class='table table-bordered table-striped table-responsive table-hover'>
+<table class='table table-bordered table-striped table-responsive table-hover dashboard'>
   <thead>
     <tr>
       <th>Bid</th>
@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% @bids.each do |bid| %>
-      <tr>
+      <tr onclick = "showInfo('comm_histories/new','<%= request.path %>')">
         <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
         <td><%= bid.costRepair %></td>
@@ -29,6 +29,6 @@
   </tbody>
 </table>
 <br>
-<% unless request.path == "/bids/print" %>
+<% unless request.path == "/bids/print" || request.path == "/"  %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid', onclick: "printReport('/bids/print')" %>
 <% end %>

@@ -16,12 +16,12 @@
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, prompt: 'Please Select' %>
+        <%= f.input :state, as: :select, collection: @states, label: 'Select State', input_html: { class: 'state' }, selected: f.object.state || "CA" %>
       </div>
     </div>
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.input :city, as: :select, collection: @cities, label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
+        <%= f.input :city, as: :select, collection: @cities.present? ?  @cities : CS.cities(:CA, :us), label: 'Select City', input_html: { class: 'city'}, prompt: 'Please Select' %>
       </div>
     </div>
   </div>
@@ -103,9 +103,10 @@
         <%= f.input :cdo, label: "Community Design Overlay" %>
       </div>
     </div>
-    <div class='col-sm-6'>
+
+    <div class="col-md-6">
       <div class="form-group">
-        <%= f.input :hpoz, label: "Historical Property Overlay Zone" %>
+        <%= f.input :hpoz, label: "Historical Property Overlay Zone(HPOZ):", as: :radio_buttons, wrapper: :vertical_radio_and_checkboxes, collection: Property::DEFAULTS %>
       </div>
     </div>
   </div>

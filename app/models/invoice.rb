@@ -2,6 +2,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :project
   has_many :receipts
+  has_many :credit_notes
 
   attr_accessor :balanceDue
 
@@ -25,7 +26,7 @@ class Invoice < ActiveRecord::Base
     contract = self.try(:project).try(:contract)
     inspection = (self.try(:inspection) || contract.try(:bid).try(:inspection))
     if self.invoice_type == "Inspection"
-      inspection.try(:appointment).try(:inspFee)
+      inspection.try(:amount)
     elsif self.invoice_type == "Project"
       contract.try(:balance)
     end

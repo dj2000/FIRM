@@ -8,7 +8,7 @@ class IFeeSchedulesController < ApplicationController
     respond_to do |format|
       format.html
       format.js
-      format.csv { send_data IFeeSchedule.to_csv }
+      format.csv { send_data IFeeSchedule.as_csv }
     end
   end
 

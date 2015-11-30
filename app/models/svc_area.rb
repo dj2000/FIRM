@@ -20,4 +20,20 @@ class SvcArea < ActiveRecord::Base
     self.serviced? ? "Yes" : "No"
   end
 
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["State", "City", "Zip", "Serviced", "Notes"]
+      all.each do |svc_area|
+        row = [
+                svc_area.state_name,
+                svc_area.city,
+                svc_area.zip,
+                svc_area.is_serviced,
+                svc_area.notes
+              ]
+        csv << row
+      end
+    end
+  end
 end
+

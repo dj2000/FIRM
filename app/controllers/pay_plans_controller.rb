@@ -7,7 +7,7 @@ class PayPlansController < ApplicationController
     @pay_plans = PayPlan.all
     respond_to do |format|
       format.js
-      format.csv { send_data PayPlan.to_csv }
+      format.csv { send_data PayPlan.as_csv }
       format.html
     end
   end
@@ -90,10 +90,11 @@ class PayPlansController < ApplicationController
     def format_amount
       params[:pay_plan][:jobMinAmt] = params[:pay_plan][:jobMinAmt].gsub("$","").to_i
       params[:pay_plan][:jobMaxAmt] = params[:pay_plan][:jobMaxAmt].gsub("$","").to_i
+      params[:pay_plan][:deposit_limit] = params[:pay_plan][:deposit_limit].gsub("$","").to_i
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pay_plan_params
-      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, :title, payments_attributes: [:id, :title, :value, :_destroy])
+      params.require(:pay_plan).permit(:jobMinAmt, :jobMaxAmt, :deposit, :title, :deposit_limit, payments_attributes: [:id, :title, :value, :_destroy])
     end
 end

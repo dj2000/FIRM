@@ -19,4 +19,19 @@ class Crew < ActiveRecord::Base
     end
     colors
   end
+
+  def self.as_csv
+    CSV.generate do |csv|
+      csv << ["Foreman", "Size", "Doublebook", "Notes"]
+      all.each do |crew|
+        row = [
+                crew.foreman,
+                crew.size,
+                crew.is_double_book,
+                crew.notes
+              ]
+        csv << row
+      end
+    end
+  end
 end

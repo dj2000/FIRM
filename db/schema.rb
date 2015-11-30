@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116091430) do
+ActiveRecord::Schema.define(version: 20151127074641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20151116091430) do
     t.string   "client_type"
     t.string   "company_name"
     t.string   "of_type"
+    t.text     "notes"
   end
 
   create_table "comm_histories", force: true do |t|
@@ -320,6 +321,7 @@ ActiveRecord::Schema.define(version: 20151116091430) do
     t.integer  "deposit"
     t.string   "title"
     t.string   "deposit_label"
+    t.float    "deposit_limit"
   end
 
   create_table "payments", force: true do |t|
@@ -412,13 +414,13 @@ ActiveRecord::Schema.define(version: 20151116091430) do
     t.integer  "gndUnits"
     t.string   "lotType"
     t.string   "foundation"
-    t.boolean  "hpoz"
     t.boolean  "cdo"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "occupied_by"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "hpoz"
   end
 
   create_table "receipts", force: true do |t|

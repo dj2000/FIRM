@@ -26,7 +26,7 @@ class ClientPropertiesController < ApplicationController
   def create
     params[:client_property][:property_id] = params[:property_id]
     @client_property = ClientProperty.new(client_property_params)
-    @client = Client.where(id: params[:client_property][:client_id]).first_or_initialize
+    @client = Client.new
     @remote = request.format.symbol == :html ? false : true
     respond_to do |format|
       if @client_property.save

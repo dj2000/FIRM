@@ -1,4 +1,4 @@
-<table class='table table-bordered table-striped table-responsive table-hover'>
+<table class='table table-bordered table-striped table-responsive table-hover dashboard'>
   <thead>
     <tr>
       <th>Contract</th>
@@ -15,7 +15,7 @@
       <th>Interior Access Verified</th>
       <th>Electricity and Water Verified</th>
       <th>Notes</th>
-      <% if request.format == 'text/html' %>
+      <% if request.path == projects_path %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
     </tr>
@@ -23,7 +23,7 @@
 
   <tbody>
     <% @projects.each do |project| %>
-      <tr>
+      <tr onclick = "showInfo('projects/<%=project.id%>','<%= request.path %>')">
         <td><%= project.try(:contract).try(:title) %></td>
         <td><%= project.jobCost %></td>
         <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
@@ -38,7 +38,7 @@
         <td><%= project.humanize("verifiedAccess") %></td>
         <td><%= project.humanize("verifiedEW") %></td>
         <td><%= project.notes %></td>
-        <% if request.format == 'text/html' %>
+        <% if request.path == projects_path %>
           <td>
             <%= link_to project, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Show

@@ -62,7 +62,7 @@ class Appointment < ActiveRecord::Base
 
   #To populate appointment dropdown
   def appointment_select
-    self.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") + " - " + self.try(:inspector).try(:firstName)
+    self.try(:insp_request).try(:property).try(:property_select_value) + " - " + self.try(:inspector).try(:firstName)
   end
 
   private

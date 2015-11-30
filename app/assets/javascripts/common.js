@@ -41,3 +41,9 @@ function printData(contents, startDate, endDate){
 	  format: 'yyyy-mm-dd'
 	});
 }
+
+function showInfo(url,request_url){
+  if (request_url == "/"){
+    window.location = "/"+ url;
+  }
+}

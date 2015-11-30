@@ -29,13 +29,14 @@ class CreditNote < ActiveRecord::Base
 
   def check_invoice_amount
     is_valid = true
+    invoice = self.try(:invoice)
     if self.new_record?
       is_valid = false if (self.invoice_amount and self.amount and self.invoice_amount.to_f < self.amount)
     else
-      total = 0
-      self.try(:invoice).try(:receipts).map{|r| total += r.amount if r.id != self.id }
-      total += self.amount
-      is_valid = false if total > self.try(:invoice).try(:project).try(:contract).try(:balance)
+      total = self.amount || 0
+      invoice.try(:receipts).map{|r| total += r.amount}
+      invoice.try(:credit_notes).map{|r| total += r.amount if self.id != r.id }
+      is_valid = false if total > invoice.try(:balance_due)
     end
     self.errors.add(:amount, "Amount can not be greater than Invoice Amount.") unless is_valid
   end

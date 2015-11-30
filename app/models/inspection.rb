@@ -2,7 +2,7 @@ class Inspection < ActiveRecord::Base
   extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
-  has_many :bids
+  has_many :bids, -> { order 'bids.created_at' }
   has_many :comm_histories
   has_many :invoices
   has_many :documents, as: :attachable
@@ -21,10 +21,15 @@ class Inspection < ActiveRecord::Base
   validates_attachment_content_type :client_information_sheet, content_type: ["image/jpg", "image/png", "application/pdf"]
   validates_attachment_content_type :footprint_diagram, content_type: ["image/jpg", "image/png", "application/pdf"]
 
-  FOUNDATION_CONDITION = ["Repair Needed", "No Repair Needed"]
+  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)"]
 
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"
+  end
+
+  def amount
+    invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
+    self.try(:appointment).try(:inspFee) - invoices_amount
   end
 
   def self.created_between(start_date, end_date)

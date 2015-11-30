@@ -81,8 +81,9 @@ class Contract < ActiveRecord::Base
     receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
                 where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
     receipts.each do |project_id, receipts|
+      invoice = receipts.first.invoice
       project = Project.find(project_id)
-      total_amount = receipts.map(&:amount).inject(:+)
+      total_amount = receipts.map(&:amount).inject(:+) + (invoice.try(:credit_notes).map(&:amount).inject(:+) || 0)
       contract = project.contract
       project_cost = contract.balance
       date = receipts.last.date

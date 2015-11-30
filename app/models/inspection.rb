@@ -27,6 +27,11 @@ class Inspection < ActiveRecord::Base
 		self.send("#{attribute}") ? "Yes" : "No"
   end
 
+  def amount
+    invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
+    self.try(:appointment).try(:inspFee) - invoices_amount
+  end
+
   def self.created_between(start_date, end_date)
     Inspection.joins(:appointment).
       where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)',

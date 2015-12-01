@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  TheRoleManagementPanel::Routes.mixin(self)
+
   resources :credit_notes
 
   resources :commissions do

@@ -1,6 +1,6 @@
 class InspectorsController < ApplicationController
   before_action :set_inspector, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /inspectors
   # GET /inspectors.json
   def index

@@ -17,7 +17,16 @@ namespace :role do
         new_role.name = role
         new_role.title = role
         new_role.description = desc
-        new_role.the_role = get_permission(role)
+        the_role = get_permission(role)
+        if role == "Inspection coordinator"
+          process_commission = { "commissions" => {"process_commissions" => true }}
+          new_role.the_role = the_role.merge(process_commission)
+        elsif ["Exec director","Project Coordinator"].include?(role)
+          the_role["commissions"] ["process_commissions"] = false
+          new_role.the_role = the_role
+        else
+          new_role.the_role = the_role
+        end
         new_role.save
       end
     end
@@ -28,10 +37,10 @@ namespace :role do
     denied_permission = {}
     roles = get_role(role)
     roles.each do |role|
-      hash,temp = {}, {}
+      temp = {}
       controller_action = eval(role.camelize + "Controller").action_methods
       actions = (controller_action - ApplicationController.action_methods).to_a
-      actions.map {|action| temp[action] = false }
+      actions.map {|action| temp[action] = true }
       denied_permission[role] = temp
     end
     denied_permission
@@ -45,17 +54,17 @@ namespace :role do
     the_role = []
     case role
       when "Inspection coordinator"
-        the_role = (general + office_processing + proj_coordinator) - ["svc_areas", "inspectors"]
+        the_role = insp_coordinator +  ["svc_areas", "inspectors"]
       when "Exec director"
-        the_role = insp_coordinator + proj_coordinator
+        the_role = office_processing + general
       when "Project Coordinator"
-        the_role = insp_coordinator
+        the_role = office_processing + general + proj_coordinator + ["crews"]
       when "Inspector"
-        the_role = (general + office_processing + proj_coordinator + proj_coordinator) - ["inspections", "appointments", "bids"]
+        the_role = ["inspections", "appointments", "bids"]
       when "Crew"
-        the_role = (general + office_processing + proj_coordinator + proj_coordinator) - ["proj_scheds"]
+        the_role = ["proj_scheds"]
       when "Executive Staff"
-        the_role = []
+        the_role = general + insp_coordinator + office_processing + proj_coordinator
       end
     the_role
   end

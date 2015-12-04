@@ -1,6 +1,7 @@
 class BlockOutPeriodsController < ApplicationController
 	before_action :inspectors
 	before_action :set_block_out_period, only: [:edit, :update, :destroy]
+  before_action :role_required
 
   def index
 		@block_out_periods = BlockOutPeriod.all

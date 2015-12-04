@@ -1,6 +1,7 @@
 class CommHistoriesController < ApplicationController
   before_action :set_comm_history, only: [:show, :edit, :update, :destroy]
   before_action :bids
+  before_action :role_required
 
   # GET /comm_histories
   # GET /comm_histories.json

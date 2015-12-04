@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :contracts
+  before_action :role_required
 
   # GET /projects
   # GET /projects.json

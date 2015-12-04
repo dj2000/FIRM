@@ -1,6 +1,7 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :validate_info
+  before_action :role_required
 
   def index
     @properties = Property.all

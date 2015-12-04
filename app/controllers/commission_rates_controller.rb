@@ -1,6 +1,6 @@
 class CommissionRatesController < ApplicationController
   before_action :set_commission_rate, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /commission_rates
   # GET /commission_rates.json
   def index

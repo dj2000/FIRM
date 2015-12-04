@@ -1,6 +1,6 @@
 class IFeeSchedulesController < ApplicationController
   before_action :set_i_fee_schedule, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /i_fee_schedules
   # GET /i_fee_schedules.json
   def index

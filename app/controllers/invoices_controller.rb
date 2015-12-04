@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
   before_action :projects_inspections
+  before_action :role_required, except: [:report]
 
   # GET /invoices
   # GET /invoices.json

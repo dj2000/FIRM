@@ -1,5 +1,6 @@
 class InspRequestsController < ApplicationController
   before_action :set_insp_request, only: [:show, :edit, :update, :destroy]
+  before_action :role_required
 
   def index
     if params[:client_id].present? || params[:property_id].present?

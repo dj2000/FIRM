@@ -1,6 +1,7 @@
 class ProjInspsController < ApplicationController
   before_action :set_proj_insp, only: [:show, :edit, :update, :destroy]
   before_action :permitted_projects
+  before_action :role_required
   # GET /proj_insps
   # GET /proj_insps.json
   def index

@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print, :send_email]
   before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit, :index ]
+  before_action :role_required, except: [:report]
   # GET /appointments
   # GET /appointments.json
   def index

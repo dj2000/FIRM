@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
   before_action :properties
+  before_action :role_required
 
   def index
     @clients = Client.all

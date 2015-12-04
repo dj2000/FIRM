@@ -1,6 +1,6 @@
 class PayPlansController < ApplicationController
   before_action :set_pay_plan, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /pay_plans
   # GET /pay_plans.json
   def index

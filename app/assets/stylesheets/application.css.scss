@@ -194,8 +194,8 @@ body {
   bottom: 270px;
 }
 .calendar_select{
-  width:16.5%;
-  margin-top:1.2%
+  width:15%;
+  margin-top:-1.8%
 }
 .accordion-hover {
   a:hover{
@@ -207,4 +207,8 @@ body {
 }
 table.dashboard tr:hover {
   cursor: pointer;
+}
+.datepicker-icon{
+  margin-left: 16%;
+  cursor: pointer
 }

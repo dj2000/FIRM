@@ -6,6 +6,7 @@ namespace :role do
 
   def create_role
     roles = {
+      "Super Admin" => "This User Access to Whole system",
       "Inspection coordinator" => "Access to insp cordinator menu and svcarea and inspectors under general menu.",
       "Exec director" => "Access to office processing and general menu." ,
       "Project Coordinator" => "Access to project coordinator and office processing menu and manage crew",
@@ -17,7 +18,7 @@ namespace :role do
         new_role.name = role
         new_role.title = role
         new_role.description = desc
-        the_role = get_permission(role)
+        the_role = role == "Super Admin" ? get_role(role) : get_permission(role)
         if role == "Inspection coordinator"
           process_commission = { "commissions" => {"process_commissions" => true }}
           new_role.the_role = the_role.merge(process_commission)
@@ -51,7 +52,7 @@ namespace :role do
     insp_coordinator = ["insp_requests", "properties", "clients", "agents", "appointments", "block_out_periods"]
     office_processing = ["inspections","pay_plans", "invoices","receipts","credit_notes","permits","bids","permits", "proj_insps"]
     proj_coordinator = ["comm_histories","contracts","projects","proj_scheds"]
-    the_role = []
+    super_admin = {:system => { :administrator => true }}
     case role
       when "Inspection coordinator"
         the_role = insp_coordinator +  ["svc_areas", "inspectors"]
@@ -65,6 +66,8 @@ namespace :role do
         the_role = ["proj_scheds"]
       when "Executive Staff"
         the_role = general + insp_coordinator + office_processing + proj_coordinator
+      when "Super Admin"
+        the_role = super_admin
       end
     the_role
   end

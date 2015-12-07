@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, presence: true
   after_create :send_admin_mail
 
+  USER_STATUS = ['Pending', 'Approved', 'Rejected']
+
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(self).deliver
   end
@@ -17,11 +19,11 @@ class User < ActiveRecord::Base
   end
 
   def active_for_authentication?
-    super && approved?
+    super && status == "Approved"
   end
 
   def inactive_message
-    if !approved?
+    if status == "Pending" || status == "Rejected"
       :not_approved
     else
       super # Use whatever other message

@@ -10,14 +10,13 @@ class UsersController < ApplicationController
   end
 
   def approve_reject
-    approved = params[:approved]
-    if @user.update(approved: approved)
+    approved = params[:status]
+    if @user.update(status: approved)
        # send confirmed account email to user
       AdminMailer.account_approval_email(@user).deliver
       redirect_to new_user_session_url
     end
   end
-
 
   private
   def set_user
@@ -25,6 +24,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:role_id, :approved)
+    params.require(:user).permit(:role_id, :status)
   end
 end

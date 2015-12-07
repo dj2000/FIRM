@@ -4,7 +4,7 @@
       <%= f.input :role_id, as: :select, label: false, collection: Role.all.map{|v| [v.name, v.id]}, select: user.try(:role).try(:name) %>
     </div>
     <div class = "col-md-4">
-      <%= f.input :approved, as: :boolean, :input_html => { :checked => user.approved } %>
+      <%= f.input :status, as: :select, label: false, collection: User::USER_STATUS, select: user.status %>
     </div>
     <div class = "col-md-4">
       <%= f.button :submit %>

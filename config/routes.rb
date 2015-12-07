@@ -147,7 +147,9 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
-  resources :users, only: [:index, :update]
+  resources :users, only: [:index, :update] do
+    get :change_status, on: :member
+  end
 
   match "/page/operating_statistics_report" => "page#operating_statistics_report", as: "operating_statistics_report", via: :get
 

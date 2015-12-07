@@ -14,10 +14,6 @@ class User < ActiveRecord::Base
     AdminMailer.new_user_waiting_for_approval(self).deliver
   end
 
-  def self.role
-    Role.where.not(name: ["admin", "super_admin"]).pluck(:title, :id)
-  end
-
   def name
   	"#{self.try(:first_name)} #{self.try(:last_name)}"
   end

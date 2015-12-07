@@ -1,7 +1,7 @@
 <h1> Welcome to FIRM Development </h1>
 Hello Admin, <br>
 
-You have new users registerd with you. These are the details of user
+You have new user registered with you. These are the details of user
 
 <p>
   <strong>Name : </strong>
@@ -15,8 +15,8 @@ You have new users registerd with you. These are the details of user
 
 Click confirm to Approve User registration.
 
-<%= link_to "confirm", user_url(@user, status: "Approved"), method: :put %>
-<%= link_to "Reject", user_url(@user, status: "Rejected") %>
+<%= link_to "confirm", change_status_user_url(@user, status: "Approved")%>
+<%= link_to "Reject", change_status_user_url(@user, status: "Rejected") %>
 
 <br> <br> <br>
 Thanks and regards, <br>

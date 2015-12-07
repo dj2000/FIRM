@@ -1,3 +1,23 @@
-<%= @user.inspect %>
-<%= link_to "confirm" , approve_reject_user_url(@user, status: "Approved")%>
-<%= link_to "Reject", approve_reject_user_url(@user, status: "Rejected") %>
+<h1> Welcome to FIRM Development </h1>
+Hello Admin, <br>
+
+You have new users registerd with you. These are the details of user
+
+<p>
+  <strong>Name : </strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email : </strong>
+  <%= @user.email %>
+</p>
+
+Click confirm to Approve User registration.
+
+<%= link_to "confirm", user_url(@user, status: "Approved"), method: :put %>
+<%= link_to "Reject", user_url(@user, status: "Rejected") %>
+
+<br> <br> <br>
+Thanks and regards, <br>
+FIRM Team.

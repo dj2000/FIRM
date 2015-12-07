@@ -7,6 +7,7 @@ namespace :role do
   def create_role
     roles = {
       "Super Admin" => "This User Access to Whole system",
+      "Admin" => "read-only access and resposible for changing user role",
       "Inspection coordinator" => "Access to insp cordinator menu and svcarea and inspectors under general menu.",
       "Exec director" => "Access to office processing and general menu." ,
       "Project Coordinator" => "Access to project coordinator and office processing menu and manage crew",
@@ -68,6 +69,8 @@ namespace :role do
         the_role = general + insp_coordinator + office_processing + proj_coordinator
       when "Super Admin"
         the_role = super_admin
+      when "Admin"
+        the_role = general + insp_coordinator + office_processing + proj_coordinator + ["users"]
       end
     the_role
   end

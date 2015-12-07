@@ -1,20 +1,17 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:approve_reject, :change_role]
+  before_action :set_user, only: [:update, :change_role]
   def index
-    @users = User.all
+    @users = User.where(role_id: Role.where.not(name: ["admin", "super_admin"]))
   end
 
-  def change_role
-    @users = User.all
-    @user.update(user_params)
-  end
-
-  def approve_reject
-    approved = params[:status]
-    if @user.update(status: approved)
-       # send confirmed account email to user
+  def update
+    status = params[:status]
+    if status.present?
+      @user.update(status: status)
       AdminMailer.account_approval_email(@user).deliver
       redirect_to new_user_session_url
+    else
+      @user.update(user_params)
     end
   end
 

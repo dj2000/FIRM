@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, presence: true
   after_create :send_admin_mail
 
-  USER_STATUS = ['Pending', 'Approved', 'Rejected']
+  USER_STATUS = ['Approved', 'Rejected']
 
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(self).deliver

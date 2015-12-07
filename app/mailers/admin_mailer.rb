@@ -3,7 +3,8 @@ class AdminMailer < ActionMailer::Base
 
   def new_user_waiting_for_approval(user)
     @user = user
-    mail(to: "admin@example.com", subject: 'New user waiting for Approval')
+    admin_email = User.where(role_id: Role.where(name: "super_admin")).first.email
+    mail(to: admin_email, subject: 'New user waiting for Approval')
   end
 
   def account_approval_email(user)

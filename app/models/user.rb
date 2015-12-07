@@ -6,8 +6,25 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :first_name, :last_name, presence: true
+  after_create :send_admin_mail
+
+  def send_admin_mail
+    AdminMailer.new_user_waiting_for_approval(self).deliver
+  end
 
   def name
   	"#{self.try(:first_name)} #{self.try(:last_name)}"
+  end
+
+  def active_for_authentication?
+    super && approved?
+  end
+
+  def inactive_message
+    if !approved?
+      :not_approved
+    else
+      super # Use whatever other message
+    end
   end
 end

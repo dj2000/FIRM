@@ -68,3 +68,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
 gem 'pg'
+gem "letter_opener", group: :development

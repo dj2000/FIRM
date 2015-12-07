@@ -147,6 +147,14 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
+  resources :users, only: [:index] do
+    member do
+      get :approve
+      get :reject
+      post :change_role
+    end
+  end
+
   match "/page/operating_statistics_report" => "page#operating_statistics_report", as: "operating_statistics_report", via: :get
 
   match "/page/statistics" => "page#statistics", via: :get

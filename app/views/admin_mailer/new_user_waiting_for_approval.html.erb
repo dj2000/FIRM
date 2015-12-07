@@ -1,3 +1,3 @@
 <%= @user.inspect %>
-<%= link_to "confirm" , approve_user_url(@user)%>
-<%= link_to "Reject", reject_user_url(@user)%>
+<%= link_to "confirm" , approve_reject_user_url(@user, approved: true)%>
+<%= link_to "Reject", approve_reject_user_url(@user, approved: false) %>

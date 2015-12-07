@@ -149,8 +149,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index] do
     member do
-      get :approve
-      get :reject
+      get :approve_reject
       post :change_role
     end
   end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:approve, :reject, :change_role]
+  before_action :set_user, only: [:approve_reject, :change_role]
   def index
     @users = User.all
   end
@@ -9,20 +9,15 @@ class UsersController < ApplicationController
     @user.update(user_params)
   end
 
-  def approve
-    binding.pry
-    if @user.update(approved: true)
+  def approve_reject
+    approved = params[:approved]
+    if @user.update(approved: approved)
        # send confirmed account email to user
       AdminMailer.account_approval_email(@user).deliver
       redirect_to new_user_session_url
     end
   end
 
-  def reject
-    if @user.update(approved: false)
-      redirect_to new_user_session_url
-    end
-  end
 
   private
   def set_user

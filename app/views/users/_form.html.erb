@@ -1,13 +1,15 @@
 <%= simple_form_for user, url: user_path(user), remote: true do |f| %>
-  <div class='row'>
-    <div class = "col-md-4">
-      <%= f.input :role_id, as: :select, label: false, collection:  Role.get_role, select: user.try(:role).try(:name) %>
-    </div>
-    <div class = "col-md-4" >
-      <%= f.input :status, as: :radio_buttons, label: false, collection: User::USER_STATUS, item_wrapper_class: 'inline' %>
-    </div>
-    <div class = "col-md-4">
-      <%= f.button :submit %>
-    </div>
-  </div>
+  <td>
+    <%= f.association :role, collection: Role.get_role, prompt: " Select Role ",
+      :label_method => lambda { |role| "#{role.name.try(:humanize)}" }, label: false  %>
+  </td>
+
+  <td>
+    <%= f.input :status, as: :radio_buttons, label: false, collection: User::USER_STATUS,
+      item_wrapper_class: 'inline' %>
+  </td>
+
+  <td>
+    <%= f.button :submit %>
+  </td>
 <% end %>

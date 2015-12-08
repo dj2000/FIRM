@@ -1,10 +1,12 @@
 <div class= "userlist">
-  <h1> UnApprove Users List </h1>
+  <h1> Users List </h1>
   <table class="table table-bordered table-striped table-hover table-responsive">
     <thead>
       <tr>
         <th> Name </th>
         <th> Email</th>
+        <th> Assign Role </th>
+        <th> Approve User </th>
         <th> Action </th>
       </tr>
     </thead>
@@ -12,9 +14,9 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= user.name %></td>
+          <td><%= user.name.try(:titleize) %></td>
           <td><%= user.email %></td>
-          <td><%=  render partial: 'form', :locals => {user: user} %></td>
+          <%=  render partial: 'form', :locals => {user: user} %>
         </tr>
       <% end %>
     </tbody>

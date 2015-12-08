@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :change_status]
   def index
-    @users = User.where(role_id: Role.where.not(name: ['admin','super_admin']).pluck(:id).push(nil))
+    @users = User.where(role_id: Role.get_role.pluck(:id).push(nil))
   end
 
   def update

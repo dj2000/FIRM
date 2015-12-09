@@ -1,24 +1,23 @@
-<div class= "userlist">
-  <h1> Users List </h1>
-  <table class="table table-bordered table-striped table-hover table-responsive">
-    <thead>
-      <tr>
-        <th> Name </th>
-        <th> Email</th>
-        <th> Assign Role </th>
-        <th> Approve User </th>
-        <th> Action </th>
-      </tr>
-    </thead>
 
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.name.try(:titleize) %></td>
-          <td><%= user.email %></td>
-          <%=  render partial: 'form', :locals => {user: user} %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<table class="table table-bordered table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Email</th>
+      <th> Assign Role </th>
+      <th> Approve User </th>
+      <th> Action </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class = "<%= user.try(:status).try(:downcase) %>">
+        <td><%= user.name.try(:titleize) %></td>
+        <td><%= user.email %></td>
+        <%=  render partial: 'form', :locals => {user: user} %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

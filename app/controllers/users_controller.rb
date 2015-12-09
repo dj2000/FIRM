@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :change_status]
   def index
-    @users = User.where(role_id: Role.get_role.pluck(:id).push(nil))
+    @users = User.where(" role_id IS ? or role_id IN (?) ", nil, Role.get_role.map(&:id))
   end
 
   def update
-    @user.update(user_params)
+    @users = User.where(" role_id IS ? or role_id IN (?) ", nil, Role.get_role.map(&:id))
+    @user = User.find_by_id(params[:id])
+    @user.update(role_id: params[:role_id], status: params[:status])
   end
 
   def change_status

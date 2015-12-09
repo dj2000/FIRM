@@ -10,6 +10,20 @@
   </td>
 
   <td>
-    <%= f.button :submit %>
+    <%= f.button :submit, onclick: "changeclass(this.form)"%>
   </td>
 <% end %>
+
+<script type="text/javascript">
+  function changeclass(f){
+    var role = $("#user_role_id option:selected" ).val();
+    var status = $("input[type='radio']:checked").val();
+    var id = $('<%= user.id %>');
+    $.ajax({
+    url: "users/update?id=<%= user.id %>",
+    type: 'patch',
+    data: { role_id: role, status: status, id: id },
+    success: function() {}
+  });
+  }
+</script>

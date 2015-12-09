@@ -24,7 +24,7 @@
   </p>
   <% end %>
   <!--Devise end    -->
-  <div class="container-fluid">
+  <div class="<%= action_name == 'index' ? 'container-fluid' : 'container' %>">
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>

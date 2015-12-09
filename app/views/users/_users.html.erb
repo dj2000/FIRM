@@ -1,4 +1,3 @@
-
 <table class="table table-bordered table-striped table-hover table-responsive">
   <thead>
     <tr>
@@ -10,11 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |user| %>
-      <tr class = "<%= user.try(:status).try(:downcase) %>">
+    <% type = type ? type : @user.status.downcase %>
+    <% instance_variable_get("@#{type}_users").each do |user| %>
+      <tr>
         <td><%= user.name.try(:titleize) %></td>
         <td><%= user.email %></td>
-        <%=  render partial: 'form', :locals => {user: user} %>
+        <%= render partial: 'form', :locals => {user: user} %>
       </tr>
     <% end %>
   </tbody>

@@ -10,6 +10,11 @@ class User < ActiveRecord::Base
 
   USER_STATUS = ['Approved', 'Rejected']
 
+  scope :pending, lambda { where(status: nil) }
+  scope :approved, lambda { where(status: 'Approved') }
+  scope :rejected, lambda { where(status: 'Rejected') }
+
+
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(self).deliver
   end

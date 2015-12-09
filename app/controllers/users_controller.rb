@@ -1,13 +1,16 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :change_status]
+  before_action :all_users
   def index
-    @users = User.where(" role_id IS ? or role_id IN (?) ", nil, Role.get_role.map(&:id))
   end
 
   def update
-    @users = User.where(" role_id IS ? or role_id IN (?) ", nil, Role.get_role.map(&:id))
     @user = User.find_by_id(params[:id])
-    @user.update(role_id: params[:role_id], status: params[:status])
+    @user.update(user_params)
+    all_users
+    respond_to do |format|
+      format.js
+    end
   end
 
   def change_status
@@ -22,6 +25,12 @@ class UsersController < ApplicationController
   private
   def set_user
     @user = User.find_by_id(params[:id])
+  end
+
+  def all_users
+    @pending_users = User.pending
+    @approved_users = User.approved
+    @rejected_users = User.rejected
   end
 
   def user_params

@@ -1,8 +1,4 @@
-// $('.userlist').innerHTML = "hi"
-$('.userlist').html("<%= escape_javascript(render 'users/index') %>");
-var active = $('.nav-tabs .active').text().toLowerCase();
-$('tr').hide();
-$('.' + active).show();
-
-// $('.userlist').prepend('<div class="alert alert-success"><a class="close" data-dismiss="alert" href="#">×</a>Updated Successfully</div>');
-// setTimeout(function(){ $('.alert-success').fadeOut() }, 5000)
+var type = "<%= @user.status.downcase %>";
+$('.userlist').html("<%= escape_javascript(render template: 'users/index') %>");
+$('#attached_deals_tab > .active').removeClass("active");
+$('#attached_deals_tab > .' + type).addClass("active");

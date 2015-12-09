@@ -1,4 +1,3 @@
 var type = "<%= @user.status.downcase %>";
 $('.userlist').html("<%= escape_javascript(render template: 'users/index') %>");
-$('#attached_deals_tab > .active').removeClass("active");
-$('#attached_deals_tab > .' + type).addClass("active");
+$( "#user_tabs" ).tabs( "refresh" );

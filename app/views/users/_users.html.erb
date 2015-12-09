@@ -3,9 +3,7 @@
     <tr>
       <th> Name </th>
       <th> Email</th>
-      <th> Assign Role </th>
-      <th> Approve User </th>
-      <th> Action </th>
+      <th class="text-center"> Update User </th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +12,7 @@
       <tr>
         <td><%= user.name.try(:titleize) %></td>
         <td><%= user.email %></td>
-        <%= render partial: 'form', :locals => {user: user} %>
+        <td><%= render partial: 'form', :locals => { user: user} %></td>
       </tr>
     <% end %>
   </tbody>

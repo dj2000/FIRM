@@ -10,9 +10,10 @@ class User < ActiveRecord::Base
 
   USER_STATUS = ['Approved', 'Rejected']
 
-  scope :pending, lambda { where(status: nil) }
-  scope :approved, lambda { where(status: 'Approved') }
-  scope :rejected, lambda { where(status: 'Rejected') }
+  default_scope { order('created_at asc') }
+  scope :pending, -> { where(status: 'Pending') }
+  scope :approved, -> { where(status: 'Approved') }
+  scope :rejected, -> { where(status: 'Rejected') }
 
 
   def send_admin_mail

@@ -34,6 +34,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
+    params[:user][:status] = params["user_#{params[:id]}"][:status]
     params.require(:user).permit(:role_id, :status)
   end
 end

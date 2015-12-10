@@ -29,7 +29,7 @@ class Inspection < ActiveRecord::Base
 
   def amount
     invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
-    self.try(:appointment).try(:inspFee) - invoices_amount
+    (self.try(:appointment).try(:inspFee) || 0) - (invoices_amount || 0)
   end
 
   def self.created_between(start_date, end_date)

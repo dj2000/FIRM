@@ -27,7 +27,6 @@
   <fieldset><legend></legend></fieldset>
   <div class="client_info <%= 'hide' unless f.object.appointment_id %> ">
     <% if f.object.appointment_id %>
-       Client info <br>
       <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
       <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
     <% end %>

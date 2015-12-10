@@ -1,5 +1,4 @@
-<% if URI(request.referer).path == "/inspections/new" %>
-  <%= label_tag "Clients" %>
+<%= label_tag "Clients" %>
   <div class = "clients">
     <% @insp_request.try(:property).try(:clients).each do |client| %>
       <div class="col-md-3">
@@ -11,6 +10,5 @@
     <% end %>
   </div>
   <br><br>
-  <%= link_to "Add new client" , new_client_property_path(property_id: @insp_request.try(:property) ), class: "btn btn-info"%>
-<% end %>
+  <%= link_to "Add new client" , new_client_path(property_id: @insp_request.try(:property)), class: "btn btn-info", remote: true %>
 <br><br>

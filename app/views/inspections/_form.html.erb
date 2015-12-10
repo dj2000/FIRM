@@ -25,6 +25,14 @@
     <% end %>
   </div>
   <fieldset><legend></legend></fieldset>
+  <div class="client_info <%= 'hide' unless f.object.appointment_id %> ">
+    <% if f.object.appointment_id %>
+       Client info <br>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
+  <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
       <%= f.input :fCondition, as: :select, label: "Foundation Condition", collection: Inspection::FOUNDATION_CONDITION.map{|v| [v, v]}, prompt: "Select Foundation Condition" %>

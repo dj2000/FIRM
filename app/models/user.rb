@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
   USER_STATUS = ['Approved', 'Rejected']
 
   default_scope { order('created_at asc') }
-  scope :pending, -> { where(status: 'Pending') }
-  scope :approved, -> { where(status: 'Approved') }
-  scope :rejected, -> { where(status: 'Rejected') }
+  scope :pending, -> { where(status: 'Pending').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
+  scope :approved, -> { where(status: 'Approved').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
+  scope :rejected, -> { where(status: 'Rejected').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
 
 
   def send_admin_mail

@@ -11,7 +11,7 @@
       <li><%= link_to "Service Area", svc_areas_path %></li>
       <li><%= link_to "Inspectors", inspectors_path %></li>
       <li><%= link_to "Crew", crews_path %></li>
-      <% if current_user.try(:role).try(:name) == "admin" %>
+      <% if ["admin", "super_admin"].include?(current_user.try(:role).try(:name))  %>
         <li><%= link_to "Users", users_path %></li>
       <% end %>
     </ul>

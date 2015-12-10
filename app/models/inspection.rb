@@ -9,7 +9,7 @@ class Inspection < ActiveRecord::Base
 
   accepts_nested_attributes_for :bids, allow_destroy: true, reject_if: proc { |attributes| attributes['costRepair'].blank? || attributes['feeSeismicUpg'].blank? || attributes['feeAdmin'].blank? }
 
-  validates :fCondition, :name, presence: true
+  validates :fCondition, :appointment_id, :name, presence: true
 
   has_attached_file :report
   has_attached_file :completed_appointment_sheet

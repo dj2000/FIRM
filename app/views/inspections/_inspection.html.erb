@@ -36,6 +36,8 @@
       Footprint diagram of property URL:
       <%= link_to_if @inspection.footprint_diagram_file_name, @inspection.footprint_diagram_file_name, @inspection.footprint_diagram.url, class: 'blue-link' %>
       <hr/>
+      Notes:
+      <br/>
         <%= @inspection.notes %>
       <hr/>
     </div>

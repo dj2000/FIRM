@@ -5,7 +5,7 @@
 <% end %>
 <%= simple_nested_form_for @client, html: { remote: @remote } do |f| %>
   <%= f.error_notification %>
-  <%= hidden_field_tag :property_id, "", class: 'property_id' %>
+  <%= hidden_field_tag(:property_id, params[:property_id]) %>
   <div class="row">
     <div class='col-sm-6 of_type'>
       <div class="form-group">

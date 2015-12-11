@@ -52,7 +52,9 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
-  resources :comm_histories
+  resources :comm_histories do
+    get :bid_info, on: :member
+  end
 
   resources :pay_plans do
     get :print, on: :collection

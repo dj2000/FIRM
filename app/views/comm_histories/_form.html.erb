@@ -128,10 +128,14 @@
     defaultDate: new Date()
   });
   $("input[name='comm_history[callOutcome]']").change(function(){
-    if ($(this).val() == "Follow-up")
+    if ($(this).val() == "Follow-up"){
       $(".call_back_date").removeClass('hide');
-    else
+      $("#comm_history_callSummary").val("Default Follow-up contents");
+    }
+    else{
       $(".call_back_date").addClass('hide');
+      $("#comm_history_callSummary").val("");
+    }
   });
 
   function sendEmail(){

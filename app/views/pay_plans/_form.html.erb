@@ -15,13 +15,16 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
+      <b> * Deposit Limit </b>
+    </div>
+    <div class="col-md-3">
       <%= f.input :deposit_label, label: false, input_html: { value: "Deposit (%)" } %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= f.input :deposit, label: false, placeholder: "Deposit Value" %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= f.input :deposit_limit, label: false, placeholder: "Deposit Limit", as: :string,  input_html: { value: f.object.deposit_limit.to_i || 1000 }  %>
     </div>
   </div>

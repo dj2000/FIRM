@@ -35,6 +35,15 @@
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
+
+  <fieldset><legend></legend></fieldset>
+  <div class="client_info <%= 'hide' unless f.object.bid_id %> ">
+    <% if f.object.bid_id %>
+      <% @insp_request = f.object.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
+
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
@@ -99,7 +108,7 @@
     var bid_id = $(this).val();
     if(bid_id != ""){
       $.ajax({
-        url: '/insp_requests/' + bid_id + '/insp_request_info',
+        url: '/comm_histories/' + bid_id + '/bid_info',
         type: 'GET'
       });
     }
@@ -107,10 +116,11 @@
       alert("Please select Bid.")
       $(".inspector_info").addClass("hide");
       $(".insp_request").addClass("hide");
+      $(".client_info").addClass("hide");
       $(".email").addClass("hide");
     }
   });
-  $('.input-group.date').datepicker({ 
+  $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   });
   $('.datetimepicker').datetimepicker({

@@ -1,0 +1,5 @@
+$(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
+$(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/client_info') %>")
+$(".client_info").removeClass("hide");
+$(".insp_request").removeClass("hide");
+

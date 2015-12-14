@@ -46,42 +46,54 @@
 
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-4">
-      <div>
-        <%= f.radio_button :callOutcome, "Verbal Close" %>
-        <%= f.label "Verbal Close" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Not Interested" %>
-        <%= f.label "Not Interested" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Follow-up" %>
-        <%= f.label "Follow-up" %>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
-        <%= f.label 'Call Backdate' %>
-        <div class='input-group date'>
-          <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <%= f.input :callSummary %>
-    </div>
-  </div>
-  <fieldset><legend></legend></fieldset>
-  <div class="row">
     <div class="col-md-8">
-      <%= f.input :notes %>
+      <div class="col-md-6 pad-0">
+        <div>
+          <%= f.radio_button :callOutcome, "Verbal Close" %>
+          <%= f.label "Verbal Close" %>
+        </div>
+        <div>
+          <%= f.radio_button :callOutcome, "Not Interested" %>
+          <%= f.label "Not Interested" %>
+        </div>
+        <div>
+          <%= f.radio_button :callOutcome, "Follow-up" %>
+          <%= f.label "Follow-up" %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
+          <%= f.label 'Call Backdate' %>
+          <div class='input-group date'>
+            <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
+        </div>
+      </div>
+      <div class = "clearfix"></div> <br>
+      <div class = "row">
+         <div class="col-md-9">
+           <%= f.input :notes %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <%= f.input :callSummary, :input_html => { rows: 7 } %>
     </div>
   </div>
+  <!-- <fieldset><legend></legend></fieldset> -->
+  <!-- <div class="row">
+    <div class="col-md-6">
+      <%#= f.input :notes %>
+    </div>
+  </div> -->
+  <fieldset><legend></legend></fieldset>
+
   <br/>
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>

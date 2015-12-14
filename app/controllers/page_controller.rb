@@ -7,8 +7,9 @@ class PageController < ApplicationController
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
 		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
 		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@comm_histories = CommHistory.where('"callBackDate" <= ? AND "callOutcome" != ?', DateTime.now, 'Completed')
 		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
-		model_names = [:proj_sched, :comm_history, :proj_insp, :permit, :credit_note, :receipt, :invoice,
+		model_names = [:proj_sched, :proj_insp, :permit, :credit_note, :receipt, :invoice,
 			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
 			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
 			model_names.each do |attribute|

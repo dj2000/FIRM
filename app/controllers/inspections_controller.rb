@@ -116,8 +116,7 @@ class InspectionsController < ApplicationController
     end
 
     def uninspected_appointments
-      # @appointments = Appointment.uninspected_appointments || []
-      @appointments = Appointment.all
+      @appointments = Appointment.uninspected_appointments || []
       @appointments << @inspection.try(:appointment) if @inspection
     end
 

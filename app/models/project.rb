@@ -28,7 +28,7 @@ class Project < ActiveRecord::Base
   end
 
   def scheduled
-    "#{self.try(:sheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:sheduleEnd).try(:strftime, '%d %b %Y') }"
+    "#{self.try(:scheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:scheduleEnd).try(:strftime, '%d %b %Y') }"
   end
 
   def self.as_csv

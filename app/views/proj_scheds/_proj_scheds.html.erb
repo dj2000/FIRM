@@ -5,7 +5,6 @@
       <th>Property Address</th>
       <th>Client</th>
       <th>Permit Required</th>
-      <th>Create Schedule by</th>
       <th>Estimated duration (days)</th>
       <th>Actual Scheduled Start - End</th>
       <th>Schedule authorized by</th>
@@ -17,8 +16,6 @@
       <th>Crew</th>
       <th>Job start time</th>
       <th>Job end time</th>
-      <th></th>
-      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -44,8 +41,6 @@
           <td><%= proj_sched.try(:crew).try(:foreman) %></td>
           <td><%= proj_sched.try(:startTime).try(:strftime, "%I:%M %p") %></td>
           <td><%= proj_sched.try(:endTime).try(:strftime, "%I:%M %p") %></td>
-          <td></td>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>

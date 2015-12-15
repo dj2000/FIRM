@@ -6,7 +6,6 @@
       <th>Client</th>
       <th>Permit Required</th>
       <th>Create Schedule by</th>
-      <th>Preferred Schedule Start - End</th>
       <th>Estimated duration (days)</th>
       <th>Actual Scheduled Start - End</th>
       <th>Schedule authorized by</th>
@@ -33,8 +32,6 @@
         <td><%= insp_request.try(:property).try(:property_select_value) %></td>
         <td><%= insp_request.try(:client).try(:name) %></td>
         <td><%= project.humanize("permit") %></td>
-        <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
-        <td><%= project.try(:preferred_by) %></td>
         <td><%= project.try(:estDuration) %></td>
         <td><%= project.try(:scheduled) %></td>
         <td><%= project.try(:authorizedBy) %></td>

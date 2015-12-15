@@ -26,6 +26,11 @@ class InspRequest < ActiveRecord::Base
     self.try(:agent) ? false : true
   end
 
+  #default title for project and contract
+  def default_title
+    "#{self.try(:client).try(:name)} - #{self.try(:property).try(:property_select_value)}"
+  end
+
   def check_conditions_for_appointment
     svc_criterium = SvcCriterium.where(propRes: true).first
     property = self.try(:property)

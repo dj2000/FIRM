@@ -20,20 +20,8 @@
           <td><%= @project.jobCost %></td>
         </tr>
         <tr>
-          <td>Schedule By</td>
-          <td><%= @project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
-        </tr>
-        <tr>
           <td>Permit Required</td>
           <td><%= @project.humanize("permit") %></td>
-        </tr>
-        <tr>
-          <td>Preferred Schedule Start</td>
-          <td><%= @project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
-        </tr>
-        <tr>
-          <td>Preferred Schedule End</td>
-          <td><%= @project.try(:schedule_pref_end).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
           <td>Est. Duration(d)</td>

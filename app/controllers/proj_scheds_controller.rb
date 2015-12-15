@@ -78,6 +78,7 @@ class ProjSchedsController < ApplicationController
   def destroy
     @proj_sched.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to proj_scheds_url, notice: 'Proj sched was successfully destroyed.' }
       format.json { head :no_content }
     end

@@ -1,5 +1,5 @@
 class CommHistoriesController < ApplicationController
-  before_action :set_comm_history, only: [:show, :edit, :update, :destroy]
+  before_action :set_comm_history, only: [:show, :edit, :update, :destroy, :create]
   before_action :bids
 
   # GET /comm_histories
@@ -88,9 +88,9 @@ class CommHistoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comm_history
-      @comm_history = CommHistory.find(params[:id])
-      @bid = @comm_history.try(:bid)
-      @clients = @comm_history.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:clients)
+      @comm_history = CommHistory.find(params[:id]) if params[:id]
+      @bid = @comm_history.try(:bid) || Bid.find_by_id(params[:comm_history][:bid_id])
+      @clients = @bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:clients)
     end
 
     def bids

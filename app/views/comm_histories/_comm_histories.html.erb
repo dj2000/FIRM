@@ -6,7 +6,9 @@
       <% end %>
       <th>Caller</th>
       <th>Recipient</th>
-      <th>Call Summary</th>
+      <% unless current_page?(root_path) %>
+        <th>Call Summary</th>
+      <% end %>
       <th>Call Time</th>
       <th>Call Outcome</th>
       <th>Call Back Date</th>
@@ -29,7 +31,9 @@
         <% end %>
         <td><%= comm_history.caller %></td>
         <td><%= comm_history.recipient %></td>
-        <td><%= comm_history.callSummary %></td>
+        <% unless current_page?(root_path) %>
+          <td><%= simple_format comm_history.callSummary %></td>
+        <% end %>
         <td><%= comm_history.try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S") %></td>
         <td><%= comm_history.callOutcome %></td>
         <td><%= comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>

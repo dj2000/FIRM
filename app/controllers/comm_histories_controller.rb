@@ -79,6 +79,7 @@ class CommHistoriesController < ApplicationController
   def bid_info
     @bid = Bid.find(params[:id])
     @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    @clients = @insp_request.try(:property).try(:clients)
     respond_to do |format|
       format.js
     end
@@ -89,6 +90,7 @@ class CommHistoriesController < ApplicationController
     def set_comm_history
       @comm_history = CommHistory.find(params[:id])
       @bid = @comm_history.try(:bid)
+      @clients = @comm_history.try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:clients)
     end
 
     def bids

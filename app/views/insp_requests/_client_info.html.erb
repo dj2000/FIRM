@@ -1,6 +1,6 @@
 <%= label_tag "Clients" %>
   <div class = "clients">
-    <% @insp_request.try(:property).try(:clients).each do |client| %>
+    <% @clients.each do |client| %>
       <div class="col-md-3">
         <%= client.try(:name) %>
         <%= link_to client_path(client), remote: true, class: 'link' do %>
@@ -10,5 +10,6 @@
     <% end %>
   </div>
   <br><br>
-  <%= link_to "Add new client" , new_client_path(property_id: @insp_request.try(:property)), class: "btn btn-info", remote: true %>
+
+  <%= link_to "Add new client" , new_client_path(property_id: @insp_request.try(:property) ||  params[:property_id]), class: "btn btn-info", remote: true %>
 <br><br>

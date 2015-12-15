@@ -82,6 +82,7 @@ class InspectionsController < ApplicationController
   def appointment_info
     @appointment = Appointment.find(params[:id])
     @insp_request = @appointment.insp_request
+    @clients = @insp_request.try(:property).try(:clients)
     respond_to do |format|
       format.js
     end
@@ -111,10 +112,12 @@ class InspectionsController < ApplicationController
     def set_inspection
       @inspection = Inspection.find(params[:id])
       @documents = @inspection.try(:documents)
+      @clients = @inspection.try(:appointment).try(:insp_request).try(:property).try(:clients)
     end
 
     def uninspected_appointments
-      @appointments = Appointment.uninspected_appointments || []
+      # @appointments = Appointment.uninspected_appointments || []
+      @appointments = Appointment.all
       @appointments << @inspection.try(:appointment) if @inspection
     end
 

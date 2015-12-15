@@ -28,6 +28,7 @@ class ClientPropertiesController < ApplicationController
     @client_property = ClientProperty.new(client_property_params)
     @client = Client.new
     @remote = request.format.symbol == :html ? false : true
+    @clients = Property.find(params[:property_id]).try(:clients)
     respond_to do |format|
       if @client_property.save
         format.html { redirect_to @client_property, notice: 'Client property was successfully created.' }

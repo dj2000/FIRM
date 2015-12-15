@@ -46,7 +46,7 @@
 
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <div class="col-md-6 pad-0">
         <div>
           <%= f.radio_button :callOutcome, "Verbal Close" %>
@@ -82,8 +82,8 @@
       </div>
     </div>
 
-    <div class="col-md-4">
-      <%= f.input :callSummary, :input_html => { rows: 7 } %>
+    <div class="col-md-6">
+      <%= f.input :callSummary, :input_html => { rows: 7, cols: 10 } %>
     </div>
   </div>
 

@@ -13,4 +13,5 @@
 	$(".insp_request_agent").removeClass("has-error");
 	$(".insp_request_agent").find("span.help-block").html("");
 	$(".modal").modal('hide');
+	$(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/client_info') %>")
 <% end %>

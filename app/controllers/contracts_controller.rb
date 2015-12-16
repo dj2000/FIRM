@@ -96,7 +96,9 @@ class ContractsController < ApplicationController
     end
 
     def bids
-      @bids = Bid.accepted_bids
+      @accepted_bids = Bid.accepted_bids
+      @uncontracted_bids = Bid.uncontracted_bids
+      @bids = @accepted_bids + @uncontracted_bids
       @bids << @contract.try(:bid) if @contract and @contract.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}.uniq
     end

@@ -28,7 +28,7 @@ class InspRequest < ActiveRecord::Base
 
   #default title for project and contract
   def default_title
-    "#{self.try(:client).try(:name)} - #{self.try(:property).try(:property_select_value)}"
+    "#{self.try(:client).try(:name)} - #{self.try(:property).try(:street)}"
   end
 
   def check_conditions_for_appointment

@@ -16,6 +16,16 @@
       <% if (request.format == :html || params[:search_filter].present?) && request.path == comm_histories_path  %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
+      <% if current_page?(root_path) %>
+        <th>
+          Completed
+          <br/>
+          <span>
+            <%= label_tag "Select All" %>
+            <%= check_box_tag "Select All", false, false, class: "select-all" %>
+          </span>
+        </th>
+      <% end %>
     </tr>
   </thead>
 
@@ -55,7 +65,34 @@
             <% end %>
           </td>
         <% end %>
+        <% if current_page?(root_path) %>
+          <td><%= check_box_tag "comm_histories_ids[]", comm_history.id, false, class: "checkbox" %><%= label_tag "Completed" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% if current_page?(root_path) %>
+  <%= link_to "Submit", "javascript:void(0)", class: "btn btn-success pull-right", onclick: "markComplete()" %>
+<% end %>
+<script>
+  $(document).ready(function(){
+    $(".select-all").change(function(){
+      $(".checkbox").prop('checked', $(this).prop("checked"));
+    });
+  });
+  function markComplete(){
+    var comm_histories_ids = [];
+    $("input[name='comm_histories_ids[]']:checked").each(function(){
+      comm_histories_ids.push($(this).val());
+    });
+    $.ajax({
+      type: 'POST',
+      url: '/comm_histories/mark_complete',
+      data: { comm_histories_ids: comm_histories_ids },
+      success: function(result){
+        window.location.reload();
+      }
+    })
+  }
+</script>

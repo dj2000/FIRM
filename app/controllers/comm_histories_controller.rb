@@ -85,6 +85,11 @@ class CommHistoriesController < ApplicationController
     end
   end
 
+  def mark_complete
+    @comm_histories = CommHistory.where(id: params["comm_histories_ids"]).update_all(is_completed: true)
+    render json: @comm_histories
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comm_history

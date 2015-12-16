@@ -54,6 +54,7 @@ Rails.application.routes.draw do
 
   resources :comm_histories do
     get :bid_info, on: :member
+    post :mark_complete, on: :collection
   end
 
   resources :pay_plans do

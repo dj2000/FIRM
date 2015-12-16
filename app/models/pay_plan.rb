@@ -12,7 +12,6 @@ class PayPlan < ActiveRecord::Base
   validates :jobMaxAmt,
 							presence: true,
 							numericality: {
-								less_than_or_equal_to: 10000,
 								allow_blank: true,
 								only_integer: false
 								}

@@ -245,7 +245,7 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
           <div class="panel-body">
-            <%= render partial: 'bids/bids' %>
+            <%= render partial: 'bids/bids', :locals => { status: false } %>
           </div>
         </div>
       </div>
@@ -268,6 +268,45 @@
           </div>
         </div>
       </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading" role="tab" id="headingSix">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @comm_histories.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            <i class="fa fa-hand-o-up"></i>
+              Bid Follow up
+            </a>
+          </h4>
+        </div>
+        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'comm_histories/comm_histories' %>
+          </div>
+        </div>
       </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingSeven">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @vc_bids.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            <i class="fa fa-suitcase"></i>
+              VC Bids Pending Contract
+            </a>
+          </h4>
+        </div>
+        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'bids/bids', :locals => {:status => true }  %>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+</div>

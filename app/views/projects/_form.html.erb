@@ -36,44 +36,6 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-4">
-      <%= label_tag "Preferred Schedule" %>
-      <div class="form-group <%= 'has-error' if f.object.errors["schedule_pref_start"].first %>">
-        <div class='input-group date'>
-          <%= f.text_field :schedule_pref_start, class: "form-control", value: f.object.try(:schedule_pref_start) %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="help-block"><%= f.object.errors["schedule_pref_start"].first %></span>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <%= label_tag "" %>
-      <div class="form-group <%= 'has-error' if f.object.errors["schedule_pref_end"].first %>">
-        <div class='input-group date'>
-          <%= f.text_field :schedule_pref_end, class: "form-control", value: f.object.try(:schedule_pref_end) %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="help-block"><%= f.object.errors["schedule_pref_end"].first %></span>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <%= label_tag "Schedule By" %>
-      <div class="form-group <%= 'has-error' if f.object.errors["scheduleBy"].first %>">
-        <div class='input-group date'>
-          <%= f.text_field :scheduleBy, class: "form-control", value: f.object.try(:scheduleBy) %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="help-block"><%= f.object.errors["scheduleBy"].first %></span>
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-md-6">
       <%= label_tag "Schedule Start Date" %>
       <div class="form-group <%= 'has-error' if f.object.errors["scheduleStart"].first %>">
@@ -109,15 +71,13 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-2">
       <%= f.input :permit, as: :boolean %>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.input :authorizedBy, label: "Schedule Authorized By" %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= label_tag "Date" %>
       <div class="form-group <%= 'has-error' if f.object.errors["authorizedOn"].first %>">
         <div class='input-group date'>

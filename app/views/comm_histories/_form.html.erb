@@ -35,44 +35,60 @@
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
+
+  <fieldset><legend></legend></fieldset>
+  <div class="client_info <%= 'hide' unless f.object.bid_id %> ">
+    <% if f.object.bid_id %>
+      <% @insp_request = f.object.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
+
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-4">
-      <div>
-        <%= f.radio_button :callOutcome, "Verbal Close" %>
-        <%= f.label "Verbal Close" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Not Interested" %>
-        <%= f.label "Not Interested" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Follow-up" %>
-        <%= f.label "Follow-up" %>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
-        <%= f.label 'Call Backdate' %>
-        <div class='input-group date'>
-          <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
+    <div class="col-md-6">
+      <div class="col-md-6 pad-0">
+        <div>
+          <%= f.radio_button :callOutcome, "Verbal Close" %>
+          <%= f.label "Verbal Close" %>
         </div>
-        <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
+        <div>
+          <%= f.radio_button :callOutcome, "Not Interested" %>
+          <%= f.label "Not Interested" %>
+        </div>
+        <div>
+          <%= f.radio_button :callOutcome, "Follow-up" %>
+          <%= f.label "Follow-up" %>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
+          <%= f.label 'Call Backdate' %>
+          <div class='input-group date'>
+            <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
+        </div>
+      </div>
+      <div class = "clearfix"></div> <br>
+      <div class = "row">
+         <div class="col-md-12">
+           <%= f.input :notes %>
+        </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <%= f.input :callSummary %>
+
+    <div class="col-md-6">
+      <%= f.input :callSummary, :input_html => { rows: 7, cols: 10 } %>
     </div>
   </div>
+
   <fieldset><legend></legend></fieldset>
-  <div class="row">
-    <div class="col-md-8">
-      <%= f.input :notes %>
-    </div>
-  </div>
+
   <br/>
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
@@ -99,30 +115,55 @@
     var bid_id = $(this).val();
     if(bid_id != ""){
       $.ajax({
-        url: '/insp_requests/' + bid_id + '/insp_request_info',
-        type: 'GET'
+        url: '/comm_histories/' + bid_id + '/bid_info',
+        type: 'GET',
+        success: function(){
+          loadCallSummaryText();
+        }
       });
     }
     else{
       alert("Please select Bid.")
       $(".inspector_info").addClass("hide");
       $(".insp_request").addClass("hide");
+      $(".client_info").addClass("hide");
       $(".email").addClass("hide");
+      $("#comm_history_callSummary").val("");
     }
   });
-  $('.input-group.date').datepicker({ 
+  $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   });
   $('.datetimepicker').datetimepicker({
     format: 'YYYY-MM-DD hh:mm:ss',
     defaultDate: new Date()
   });
+
   $("input[name='comm_history[callOutcome]']").change(function(){
-    if ($(this).val() == "Follow-up")
-      $(".call_back_date").removeClass('hide');
-    else
-      $(".call_back_date").addClass('hide');
+    loadCallSummaryText();
   });
+
+  function loadCallSummaryText(){
+    var name = $(".insp_request .client span:first").text();
+    var inspector = $("input.inspector_info").val();
+    var address = $(".insp_request .property span:first").text();
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    var contents = "Hi " + name + ",\n\n";
+    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
+    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
+    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
+    contents += "At your service,\n\n";
+    contents += "Luke Matthews\n(323) 663-4841 office\n(323) 512-4845  direct line\n(323) 663-4844 fax\nwww.TheFoundationWorks.com"
+    if (callSummaryContainer.val() == "Follow-up"){
+      $(".call_back_date").removeClass('hide');
+
+      $("#comm_history_callSummary").val(contents);
+    }
+    else{
+      $(".call_back_date").addClass('hide');
+      $("#comm_history_callSummary").val("");
+    }
+  }
 
   function sendEmail(){
     var email = $(".email").attr('data-client-email');

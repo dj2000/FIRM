@@ -1,0 +1,15 @@
+<%= label_tag "Clients" %>
+  <div class = "clients">
+    <% @clients.each do |client| %>
+      <div class="col-md-3">
+        <%= client.try(:name) %>
+        <%= link_to client_path(client), remote: true, class: 'link' do %>
+          <i class='fa fa-eye'></i> Details
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <br><br>
+
+  <%= link_to "Add new client" , new_client_path(property_id: @insp_request.try(:property) ||  params[:property_id]), class: "btn btn-info", remote: true %>
+<br><br>

@@ -34,7 +34,7 @@
     },
     minTime: "08:00:00",
     maxTime: "18:00:00",
-    defaultView: 'agendaWeek',
+    defaultView: 'month',
     editable: <%= @editable %>,
     weekends: false,
     selectable: <%= @editable %>,
@@ -48,6 +48,10 @@
     }],
     eventRender: function(event, element, view) {
       $(element).tooltip({title:event.project, container: "body"});
+    },
+    viewRender: function(view){
+      $(".full-calendar").fullCalendar( 'removeEvents');
+      $(".full-calendar").fullCalendar( 'refetchEvents');
     },
     eventClick: function(cal_event, js_event, view){
       <% if @editable %>

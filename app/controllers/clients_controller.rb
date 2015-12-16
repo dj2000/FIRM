@@ -33,6 +33,7 @@ class ClientsController < ApplicationController
     @remote = request.format.symbol == :html ? false : true
     @client = Client.new(client_params)
     @client_property = ClientProperty.new
+    @clients = @property.try(:clients)  if params[:property_id].present?
     respond_to do |format|
       if @client.save
         @property.clients << @client if params[:property_id].present?

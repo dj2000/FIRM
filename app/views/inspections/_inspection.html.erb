@@ -24,17 +24,21 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="inspection-files">
       <br/>
-      Inspection Report URL: 
+      Inspection Report URL:
       <%= link_to_if @inspection.report_file_name, @inspection.report_file_name, @inspection.report.url, class: 'blue-link' %>
       <hr/>
-      Completed Appointment Sheet URL: 
+      Completed Appointment Sheet URL:
       <%= link_to_if @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet.url, class: 'blue-link' %>
       <hr/>
-      Client Information Sheet URL: 
+      Client Information Sheet URL:
       <%= link_to_if @inspection.client_information_sheet_file_name, @inspection.client_information_sheet_file_name, @inspection.client_information_sheet.url, class: 'blue-link' %>
       <hr/>
-      Footprint diagram of property URL: 
+      Footprint diagram of property URL:
       <%= link_to_if @inspection.footprint_diagram_file_name, @inspection.footprint_diagram_file_name, @inspection.footprint_diagram.url, class: 'blue-link' %>
+      <hr/>
+      Notes:
+      <br/>
+        <%= @inspection.notes %>
       <hr/>
     </div>
     <div role="tabpanel" class="tab-pane" id="miscellaneous-files">

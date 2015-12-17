@@ -61,7 +61,7 @@
           <%= f.label "Follow-up" %>
         </div>
       </div>
-
+      <%= hidden_field_tag "inspection_id", f.object.try(:bid).try(:inspection).try(:id), class: 'inspection_id' %>
       <div class="col-md-6">
         <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
           <%= f.label 'Call Backdate' %>
@@ -93,12 +93,12 @@
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
-    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", onclick: "sendEmail()", data: { client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="width:110%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -107,10 +107,28 @@
       </div>
       <div class="modal-body">
       </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-email-preview" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style='width:110%'>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal-email-preview">&times;</button>
+        <h4 class="modal-title">Email Preview</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+$(document).ready(function(){
+  
   $("#comm_history_bid_id").on('change', function(){
     var bid_id = $(this).val();
     if(bid_id != ""){
@@ -138,22 +156,16 @@
     format: 'YYYY-MM-DD hh:mm:ss',
     defaultDate: new Date()
   });
-
   $("input[name='comm_history[callOutcome]']").change(function(){
     loadCallSummaryText();
   });
+})
+  
+  
 
   function loadCallSummaryText(){
-    var name = $(".insp_request .client span:first").text();
-    var inspector = $("input.inspector_info").val();
-    var address = $(".insp_request .property span:first").text();
     var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
-    var contents = "Hi " + name + ",\n\n";
-    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
-    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
-    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
-    contents += "At your service,\n\n";
-    contents += "Luke Matthews\n(323) 663-4841 office\n(323) 512-4845  direct line\n(323) 663-4844 fax\nwww.TheFoundationWorks.com"
+    contents = createContents(callSummaryContainer);
     if (callSummaryContainer.val() == "Follow-up"){
       $(".call_back_date").removeClass('hide');
 
@@ -162,6 +174,26 @@
     else{
       $(".call_back_date").addClass('hide');
       $("#comm_history_callSummary").val("");
+    }
+  }
+
+  function createContents(callSummaryContainer, fileUrls){
+    var name = $(".insp_request .client span:first").text();
+    var inspector = $("input.inspector_info").val();
+    var address = $(".insp_request .property span:first").text();
+    if(callSummaryContainer != undefined){
+    var contents = "Hi " + name + ",\n\n";
+    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
+    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
+    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
+    if(fileUrls){
+      contents += "<strong>Inspection Files :</strong>\n\n";
+      contents += $.unique(fileUrls.split("<br>")).join("<br>");
+      contents += "\n\n";
+    }
+    contents += "At your service,\n\n";
+    contents += "Luke Matthews\n(323) 663-4841 office\n(323) 512-4845  direct line\n(323) 663-4844 fax\n<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>"
+    return contents;
     }
   }
 
@@ -176,4 +208,25 @@
   <% if @comm_history.bid_id %>
     $(".email").removeClass('hide');
   <% end %>
+
+  $(".email").click(function(){
+    updatePreview();
+  });
+
+  function updatePreview(fileUrls){
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    var contents = createContents(callSummaryContainer, fileUrls);
+    if(fileUrls){
+      fileUrls = $.unique(fileUrls.split("<br>"));
+    }
+    contents = contents.replace(/\n/g,"<br>")
+    var inspection_id = $(".inspection_id").val();
+    $(".modal-email-preview").modal('show');
+    $(".modal-email-preview .modal-body").html(contents);
+    $(".modal-email-preview .modal-footer").html("")
+    $('.modal-title').html("Email Preview");
+    $(".modal-email-preview .modal-footer").append("<a data-dismiss=\"modal\" class=\"btn btn-primary\" data-remote=\"true\" href=\"/inspections/" + inspection_id + "?email_preview=true&file_urls=" + fileUrls + "\">Attach</a>")
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>");
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-info\">Send Email</button>")
+  }
 </script>

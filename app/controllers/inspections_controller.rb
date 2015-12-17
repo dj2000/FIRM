@@ -26,6 +26,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
+    @file_urls = params[:file_urls].split(",") if params[:file_urls].present?
     @bids = @inspection.bids
   end
 

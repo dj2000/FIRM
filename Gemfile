@@ -49,6 +49,7 @@ gem 'wkhtmltopdf-binary-edge'
 gem "paperclip"
 gem "nested_form"
 gem 'geocoder'
+gem "letter_opener", :group => :development
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

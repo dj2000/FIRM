@@ -1,8 +1,8 @@
 class Crew < ActiveRecord::Base
   extend AsCSV
 
-  has_many :projects
-  has_many :crew_skills
+  has_many :projects, dependent: :destroy
+  has_many :crew_skills, dependent: :destroy
 
   validates :foreman, :size, presence: true
 

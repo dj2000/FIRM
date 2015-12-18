@@ -2,10 +2,10 @@ class Inspection < ActiveRecord::Base
   extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
-  has_many :bids, -> { order 'bids.created_at' }
-  has_many :comm_histories
-  has_many :invoices
-  has_many :documents, as: :attachable
+  has_many :bids, -> { order 'bids.created_at' }, dependent: :destroy
+  has_many :comm_histories, dependent: :destroy
+  has_many :invoices, dependent: :destroy
+  has_many :documents, as: :attachable, dependent: :destroy
 
   accepts_nested_attributes_for :bids, allow_destroy: true, reject_if: proc { |attributes| attributes['costRepair'].blank? || attributes['feeSeismicUpg'].blank? || attributes['feeAdmin'].blank? }
 

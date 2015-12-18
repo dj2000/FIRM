@@ -1,7 +1,7 @@
 class SvcArea < ActiveRecord::Base
   extend AsCSV
 
-  has_many :appointments
+  has_many :appointments, dependent: :destroy
   validates :city, :state, presence: true
 
   validates :zip,

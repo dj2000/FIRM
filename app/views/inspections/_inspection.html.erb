@@ -28,25 +28,25 @@
       <br/>
       Inspection Report URL:
       <%= link_to_if @inspection.report_file_name, @inspection.report_file_name, @inspection.report.url, class: 'blue-link' %>
-      <% unless params[:email_preview].blank? %>
+      <% unless params[:email_preview].blank? or @inspection.report_file_name.blank? %>
         <%= check_box_tag "file_urls[]", @inspection.report.url, @file_urls.try(:include?, @inspection.report.url) || false, class: "checkbox pull-right" %>
       <% end %>
       <hr/>
       Completed Appointment Sheet URL:
       <%= link_to_if @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet_file_name, @inspection.completed_appointment_sheet.url, class: 'blue-link' %>
-      <% unless params[:email_preview].blank? %>
+      <% unless params[:email_preview].blank? or @inspection.completed_appointment_sheet_file_name.blank? %>
         <%= check_box_tag "file_urls[]", @inspection.completed_appointment_sheet.url, @file_urls.try(:include?, @inspection.completed_appointment_sheet.url) || false, class: "checkbox pull-right" %>
       <% end %>
       <hr/>
       Client Information Sheet URL:
       <%= link_to_if @inspection.client_information_sheet_file_name, @inspection.client_information_sheet_file_name, @inspection.client_information_sheet.url, class: 'blue-link' %>
-      <% unless params[:email_preview].blank? %>
-        <%= check_box_tag "file_urls[]", @inspection.client_information_sheet.url, @file_urls.try(:include?, @inspection.client_information_sheet.url) || false, class: "checkbox pull-right" %>
+      <% unless params[:email_preview].blank? or @inspection.client_information_sheet_file_name.blank? %>
+        <%= check_box_tag "file_urls[]", request.url,@inspection.client_information_sheet.url, @file_urls.try(:include?, @inspection.client_information_sheet.url) || false, class: "checkbox pull-right" %>
       <% end %>
       <hr/>
       Footprint diagram of property URL:
       <%= link_to_if @inspection.footprint_diagram_file_name, @inspection.footprint_diagram_file_name, @inspection.footprint_diagram.url, class: 'blue-link' %>
-      <% unless params[:email_preview].blank? %>
+      <% unless params[:email_preview].blank? or @inspection.footprint_diagram_file_name.blank? %>
         <%= check_box_tag "file_urls[]", @inspection.footprint_diagram.url, @file_urls.try(:include?, @inspection.footprint_diagram.url) || false, class: "checkbox pull-right" %>
       <% end %>
       <hr/>
@@ -61,8 +61,8 @@
       <br/>
       <% @documents.other_documents.each do |document| %>
         <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-        <% unless params[:email_preview].blank? %>
-          <%= check_box_tag "file_urls[]", document.attachment.url, @file_urls.try(:include?, document.attachment.url) || false, class: "checkbox pull-right" %>
+        <% unless params[:email_preview].blank? or document.attachment.url.blank? %>
+          <%= check_box_tag "file_urls[]", document.attachment.path, @file_urls.try(:include?, document.attachment.path) || false, class: "checkbox pull-right" %>
         <% end %>
         <hr/>
       <% end %>

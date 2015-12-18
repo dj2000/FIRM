@@ -108,6 +108,14 @@ class InspectionsController < ApplicationController
     @inspections = Inspection.created_between(start_date, end_date)
   end
 
+  def send_email
+    file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+    client = Client.find(params[:client_id])
+    call_summary = params[:call_summary].gsub("\n", "<br>")
+    UserMailer.send_call_summary_to_client(client, call_summary, file_urls).deliver
+    render json: "success"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection

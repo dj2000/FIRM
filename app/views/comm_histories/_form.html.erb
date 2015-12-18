@@ -93,7 +93,7 @@
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
-    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_id: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id) } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
@@ -181,6 +181,7 @@ $(document).ready(function(){
     var name = $(".insp_request .client span:first").text();
     var inspector = $("input.inspector_info").val();
     var address = $(".insp_request .property span:first").text();
+    var fileNames = [];
     if(callSummaryContainer != undefined){
     var contents = "Hi " + name + ",\n\n";
     contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
@@ -188,8 +189,14 @@ $(document).ready(function(){
     contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
     if(fileUrls){
       contents += "<strong>Inspection Files :</strong>\n\n";
-      contents += $.unique(fileUrls.split("<br>")).join("<br>");
-      contents += "\n\n";
+      var files = fileUrls.split(/,|<br>/);
+      console.log(fileUrls)
+      $.each(files, function(index, fileUrl){
+        fileUrl = fileUrl.replace(",", "")
+        fileNames.push(fileUrl.split("original/")[1] + "<br>");
+      })
+      contents += $.unique(fileNames);
+      contents += "\n\n"
     }
     contents += "At your service,\n\n";
     contents += "Luke Matthews\n(323) 663-4841 office\n(323) 512-4845  direct line\n(323) 663-4844 fax\n<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>"
@@ -198,11 +205,19 @@ $(document).ready(function(){
   }
 
   function sendEmail(){
-    var email = $(".email").attr('data-client-email');
-    var bidName = $("#comm_history_bid_id option:selected").text().replace('Select Bid\n', '')
-    var callSummaryText = $("#comm_history_callSummary").val();
-    var link = 'mailto:' + email + '?subject=' + bidName + '&body=' + callSummaryText;
-    window.location.href = link;
+    var client_id = $(".email").attr('data-client-id');
+    var fileUrls = $(".send-email").attr("data-fileurls");
+    console.log(fileUrls)
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    var contents = createContents(callSummaryContainer, fileUrls);
+    $.ajax({
+      type: "GET",
+      url: "/inspections/send_email",
+      data: {client_id: client_id, call_summary: contents, file_urls: fileUrls},
+      success: function(result){
+        $(".modal-email-preview").modal('hide');
+      }
+    })
   }
 
   <% if @comm_history.bid_id %>
@@ -227,6 +242,6 @@ $(document).ready(function(){
     $('.modal-title').html("Email Preview");
     $(".modal-email-preview .modal-footer").append("<a data-dismiss=\"modal\" class=\"btn btn-primary\" data-remote=\"true\" href=\"/inspections/" + inspection_id + "?email_preview=true&file_urls=" + fileUrls + "\">Attach</a>")
     $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>");
-    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-info\">Send Email</button>")
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-info send-email\" onclick='sendEmail()' data-fileUrls=" + fileUrls +">Send Email</button>")
   }
 </script>

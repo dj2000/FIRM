@@ -62,7 +62,7 @@
       <% @documents.other_documents.each do |document| %>
         <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
         <% unless params[:email_preview].blank? or document.attachment.url.blank? %>
-          <%= check_box_tag "file_urls[]", document.attachment.path, @file_urls.try(:include?, document.attachment.path) || false, class: "checkbox pull-right" %>
+          <%= check_box_tag "file_urls[]", document.attachment.path,(@file_urls.try(:include?, document.attachment.path) || false), class: "checkbox pull-right" %>
         <% end %>
         <hr/>
       <% end %>
@@ -70,7 +70,11 @@
     <div role="tabpanel" class="tab-pane" id="email-files">
       <br/>
       <% @documents.email_documents.each do |document| %>
-        <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %><hr/>
+        <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+        <% unless params[:email_preview].blank? or document.attachment.url.blank? %>
+          <%= check_box_tag "file_urls[]", document.attachment.path, (@file_urls.try(:include?, document.attachment.path) || false), class: "checkbox pull-right" %>
+        <% end %>
+        <hr/>
       <% end %>
     </div>
   </div>
@@ -78,7 +82,7 @@
 <script>
   function sendFiles(){
     var fileUrls = [];
-    $("input[name='file_urls[]']:checked").each(function(){
+    $("input[name='file_urls[]']").filter(':checked').each(function(){
       fileUrls.push($(this).val());
     });
     $(".modal-details").modal('hide');

@@ -190,12 +190,11 @@ $(document).ready(function(){
     if(fileUrls){
       contents += "<strong>Inspection Files :</strong>\n\n";
       var files = fileUrls.split(/,|<br>/);
-      console.log(fileUrls)
       $.each(files, function(index, fileUrl){
         fileUrl = fileUrl.replace(",", "")
-        fileNames.push(fileUrl.split("original/")[1] + "<br>");
-      })
-      contents += $.unique(fileNames);
+        fileNames.push(fileUrl.split("original/")[1]);
+      });
+      contents += $.unique(fileNames).join("<br>");
       contents += "\n\n"
     }
     contents += "At your service,\n\n";

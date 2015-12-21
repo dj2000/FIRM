@@ -12,13 +12,15 @@ class UserMailer < ActionMailer::Base
 	  end
   end
 
-  def send_call_summary_to_client(client, call_summary, file_urls)
+  def send_call_summary_to_client(client, call_summary, file_urls, subject)
     @client = client
     @call_summary = call_summary
     @file_urls = file_urls
-    file_urls.each do |file_url|
-      attachments[file_url] = File.read(file_url)
+    if @file_urls.present?
+      @file_urls.each do |file_url|
+        attachments[file_url] = File.read(file_url)
+      end
     end
-    mail(to: @client.email, subject: 'Call Summary')
+    mail(to: @client.email, subject: subject)
   end
 end

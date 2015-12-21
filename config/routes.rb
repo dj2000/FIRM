@@ -74,7 +74,7 @@ Rails.application.routes.draw do
     get :print, on: :collection
     get :report, on: :collection
     get :report_result, on: :collection
-    get :send_email, on: :collection
+    get :send_email, on: :member
   end
 
   resources :receipts do

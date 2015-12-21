@@ -113,9 +113,11 @@ class InspectionsController < ApplicationController
     file_urls = params[:file_urls].split(",") if params[:file_urls].present?
     client = Client.find(params[:client_id])
     call_summary = params[:call_summary].gsub("\n", "<br>")
-    directory = Rails.root.join("public", "pdfs", "#{@inspection.try(:id)}")
+    directory = Rails.root.join("public", "pdfs")
     Dir.mkdir(directory) unless File.directory?(directory)
-    save_path = Rails.root.join(directory, "#{file_name}.pdf")
+    pdf_directory = Rails.root.join(directory, "#{@inspection.try(:id)}" )
+    Dir.mkdir(pdf_directory) unless File.directory?(pdf_directory)
+    save_path = Rails.root.join(pdf_directory, "#{file_name}.pdf")
     pdf = WickedPdf.new.pdf_from_string(call_summary, formats: :html, encoding: 'utf8')
     File.open(save_path, 'wb') do |file|
       file << pdf

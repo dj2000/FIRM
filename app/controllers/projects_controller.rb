@@ -87,6 +87,9 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+      @contract = @project.try(:contract) || Contract.find(params[:project][:contract_id])
+      @bid = @contract.try(:bid)
+      @clients = @bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:clients)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

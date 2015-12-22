@@ -14,17 +14,20 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-4 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
       <%= label_tag "Accepted By" %>
       <%= text_field_tag "accepted_by", f.object.try(:contract).try(:acceptedBy), class: "accepted_by form-control", disabled: true %>
     </div>
-    <div class="col-md-4 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
       <%= label_tag "Signed By" %>
       <%= text_field_tag "signed_by", f.object.try(:contract).try(:signedBy), class: "signed_by form-control", disabled: true %>
     </div>
-    <div class="col-md-4 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
       <%= label_tag "Date Signed" %>
       <%= text_field_tag "date_signed", f.object.try(:contract).try(:date_signed), class: "date_signed form-control", disabled: true %>
+    </div>
+    <div class="col-md-3">
+      <%= f.association :primary_crew, as: :select, collection: Crew.all, label_method: :foreman, label: "Select Primary Crew", include_blank: "Select Primary Crew" %>
     </div>
   </div>
   <br/>

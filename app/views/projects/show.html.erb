@@ -16,6 +16,10 @@
           <td><%= @project.try(:contract).try(:title) %></td>
         </tr>
         <tr>
+          <td>Primary Crew</td>
+          <td><%= @project.try(:primary_crew).try(:foreman) %></td>
+        </tr>
+        <tr>
           <td>Job Cost</td>
           <td><%= @project.jobCost %></td>
         </tr>

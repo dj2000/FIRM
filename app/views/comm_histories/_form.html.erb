@@ -2,7 +2,7 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid" %>
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] %>
     </div>
     <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>

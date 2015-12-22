@@ -40,6 +40,10 @@
           <td><%= @contract.signedBy %></td>
         </tr>
         <tr>
+          <td>Payment Method</td>
+          <td><%= @contract.deposit_payment_method %></td>
+        </tr>
+        <tr>
           <td>Date Received</td>
           <td><%= @contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
         </tr>

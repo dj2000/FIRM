@@ -2,7 +2,7 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] %>
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] || (params[:comm_history] and params[:comm_history][:bid_id]) || f.object.bid_id %>
     </div>
     <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
@@ -47,7 +47,7 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
-      <div class="col-md-6 pad-0">
+      <div class="col-md-6 pad-0 <%= 'has-error' if f.object.errors["callOutcome"].first %>">
         <div>
           <%= f.radio_button :callOutcome, "Verbal Close" %>
           <%= f.label "Verbal Close" %>
@@ -60,6 +60,7 @@
           <%= f.radio_button :callOutcome, "Follow-up" %>
           <%= f.label "Follow-up" %>
         </div>
+        <span class="help-block"><%= f.object.errors["callOutcome"].first %></span>
       </div>
       <%= hidden_field_tag "inspection_id", f.object.try(:bid).try(:inspection).try(:id), class: 'inspection_id' %>
       <div class="col-md-6">
@@ -166,6 +167,7 @@ $(document).ready(function(){
   
 
   function loadCallSummaryText(){
+    var callSummaryText = "";
     var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
     contents = createContents(callSummaryContainer);
     if (callSummaryContainer.val() == "Follow-up"){
@@ -175,7 +177,10 @@ $(document).ready(function(){
     }
     else{
       $(".call_back_date").addClass('hide');
-      $("#comm_history_callSummary").val("");
+      <% if @comm_history.try(:callOutcome) != "Follow-up" %>
+        callSummaryText = "<%= @comm_history.try(:callSummary) %>";
+      <% end %>
+      $("#comm_history_callSummary").val(callSummaryText);
       $(".email").addClass('hide');
     }
   }

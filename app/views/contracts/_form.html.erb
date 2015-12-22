@@ -123,6 +123,11 @@
       <%= f.input :downPmtAmt, label: "Amount Paid", as: :string, input_html: { value: "$#{f.object.downPmtAmt}" } %>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :notes %>
+    </div>
+  </div>
   <br/>
   <div class="actions pull-right">
     <%= f.submit "Submit", class: "btn btn-info" %>

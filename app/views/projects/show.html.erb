@@ -48,10 +48,6 @@
           <td><%= @project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
-          <td>Crew</td>
-          <td><%= @project.try(:crew).try(:foreman) %></td>
-        </tr>
-        <tr>
           <td>Interior Access Verified</td>
           <td><%= @project.humanize("verifiedAccess") %></td>
         </tr>

@@ -24,4 +24,9 @@ class CommHistory < ActiveRecord::Base
       bid.update(status: "Follow-up")
     end
   end
+
+  def disabled?
+    return true if self.callOutcome == "Follow-up"
+    return false if (self.new_record? or (self.callOutcome != "Follow-up"))
+  end
 end

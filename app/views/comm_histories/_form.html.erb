@@ -43,21 +43,20 @@
       <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
-
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-6 pad-0 <%= 'has-error' if f.object.errors["callOutcome"].first %>">
         <div>
-          <%= f.radio_button :callOutcome, "Verbal Close" %>
+          <%= f.radio_button :callOutcome, "Verbal Close", disabled: f.object.disabled? %>
           <%= f.label "Verbal Close" %>
         </div>
         <div>
-          <%= f.radio_button :callOutcome, "Not Interested" %>
+          <%= f.radio_button :callOutcome, "Not Interested", disabled: f.object.disabled? %>
           <%= f.label "Not Interested" %>
         </div>
         <div>
-          <%= f.radio_button :callOutcome, "Follow-up" %>
+          <%= f.radio_button :callOutcome, "Follow-up", disabled: f.object.disabled? %>
           <%= f.label "Follow-up" %>
         </div>
         <span class="help-block"><%= f.object.errors["callOutcome"].first %></span>

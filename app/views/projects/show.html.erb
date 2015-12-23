@@ -48,6 +48,18 @@
           <td><%= @project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
+          <td>Plot Plans</td>
+          <td><%= @project.humanize("plot_plans") %></td>
+        </tr>
+        <tr>
+          <td>Drawings</td>
+          <td><%= @project.humanize("drawings") %></td>
+        </tr>
+        <tr>
+          <td>Option</td>
+          <td><%= @project.option %></td>
+        </tr>
+        <tr>
           <td>Interior Access Verified</td>
           <td><%= @project.humanize("verifiedAccess") %></td>
         </tr>

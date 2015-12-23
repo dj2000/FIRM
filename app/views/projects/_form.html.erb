@@ -95,6 +95,18 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <div class="col-md-3">
+      <%= f.input :plot_plans, as: :boolean %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :drawings, as: :boolean %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :option %>
+    </div>
+  </div>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
     <div class="col-md-3 interior-access-required <%= 'hide' if (f.object.contract_id.blank? or f.object.try(:contract).try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
       <%= f.input :verifiedAccess, label: "Interior Access Verified", as: :boolean %>
     </div>

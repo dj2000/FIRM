@@ -78,4 +78,7 @@
 <p class="pull-right">
   <%= link_to "Back", projects_path, class: "btn btn-info" %>
   <%= link_to "Schedule Project", proj_scheds_path(id: @project), class: "btn btn-success" %>
+  <% if @project.try(:primary_crew).try(:email) %>
+    <%= link_to "Email", send_email_to_crew_project_path(id: @project), class: "btn btn-primary" %>
+  <% end %>
 </p>

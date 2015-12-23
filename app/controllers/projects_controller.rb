@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :send_email_to_crew]
   before_action :contracts
 
   # GET /projects
@@ -80,6 +80,13 @@ class ProjectsController < ApplicationController
     @projects = Project.all
     respond_to do |format|
       format.js
+    end
+  end
+
+  def send_email_to_crew
+    UserMailer.send_email_to_crew(@project).deliver
+    respond_to do |format|
+      format.html{ redirect_to project_url(@project), notice: 'Email is sent successfully.' }
     end
   end
 

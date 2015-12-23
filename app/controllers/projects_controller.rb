@@ -41,6 +41,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    create_documents
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -55,6 +56,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    create_documents
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -107,5 +109,13 @@ class ProjectsController < ApplicationController
     def contracts
       @contracts = Contract.unprojected_contracts
       @contracts << @project.try(:contract) if @project and @project.contract_id
+    end
+
+    def create_documents
+      if params[:document_attributes].present?
+        params[:document_attributes].each do |file|
+          @project.documents << Document.new(attachment: file)
+        end
+      end
     end
 end

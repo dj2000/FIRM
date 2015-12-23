@@ -1,4 +1,4 @@
-<%= simple_form_for(@project) do |f| %>
+<%= simple_form_for(@project, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-4">
@@ -107,6 +107,25 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <%= label_tag "Miscellaneous documents" %>
+    <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
+    <div class="col-md-6 document_preview preview">
+      <div class="text-center">No Preview Available.</div>
+    </div>
+    <% if f.object.documents.present? %>
+      <div class="col-md-6">
+        <%= label_tag "Uploaded Miscellaneous Documents" %>
+        <br/>
+        <% f.object.documents.each do |document| %>
+          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+          <br/>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+  <br/>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
     <div class="col-md-3 interior-access-required <%= 'hide' if (f.object.contract_id.blank? or f.object.try(:contract).try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
       <%= f.input :verifiedAccess, label: "Interior Access Verified", as: :boolean %>
     </div>
@@ -137,6 +156,7 @@
   </div>
 </div>
 <script type="text/javascript">
+  loadPreview("documentFile", "document_preview");
   $("#project_contract_id").on('change', function(){
     var contract_id = $(this).val();
     if(contract_id != ""){
@@ -154,4 +174,43 @@
   $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   });
+
+  function getDocumentImages(type, target){
+    var imgName;
+    if (type == 'docx' || type == 'doc' || type == 'pdf'){
+      imgName = '/assets/' + type + '_icon.png'
+    }
+    else{
+      imgName =  target;
+    }
+    return imgName;
+  }
+
+  function loadPreview(divId, previewClass){
+    $("#" + divId).change(function () {
+      if (typeof (FileReader) != "undefined") {
+        var divPreview = $("." + previewClass);
+        divPreview.html("");
+        $($(this)[0].files).each(function () {
+          var file = $(this);
+          var file_name = file[0].name;
+          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var documentImage = getDocumentImages(file_ext, e.target.result)
+            var img = $("<img />");
+            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
+            if (documentImage){
+              img.attr('src', documentImage)
+            }
+            divPreview.append(img);
+          }
+          reader.readAsDataURL(file[0]);
+        });
+      }
+      else {
+        alert("This browser does not support HTML5 FileReader.");
+      }
+    });
+  }
 </script>

@@ -107,6 +107,18 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <div class="col-md-3 interior-access-required <%= 'hide' if (f.object.contract_id.blank? or f.object.try(:contract).try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
+      <%= f.input :verifiedAccess, label: "Interior Access Verified", as: :boolean %>
+    </div>
+    <div class="col-md-3">
+      <%= f.input :verifiedEW, label: "Electricity and Water Verified", as: :boolean %>
+    </div>
+    <div class="col-md-6">
+      <%= f.input :notes %>
+    </div>
+  </div>
+  <fieldset><legend></legend></fieldset>
+  <div class="row">
     <%= label_tag "Miscellaneous documents" %>
     <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
     <div class="col-md-6 document_preview preview">
@@ -124,18 +136,6 @@
     <% end %>
     </div>
   <br/>
-  <fieldset><legend></legend></fieldset>
-  <div class="row">
-    <div class="col-md-3 interior-access-required <%= 'hide' if (f.object.contract_id.blank? or f.object.try(:contract).try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
-      <%= f.input :verifiedAccess, label: "Interior Access Verified", as: :boolean %>
-    </div>
-    <div class="col-md-3">
-      <%= f.input :verifiedEW, label: "Electricity and Water Verified", as: :boolean %>
-    </div>
-    <div class="col-md-6">
-      <%= f.input :notes %>
-    </div>
-  </div>
   <div class="actions pull-right">
     <%= f.submit "Submit", class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>

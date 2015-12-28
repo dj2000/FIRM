@@ -1,4 +1,5 @@
-<%= simple_form_for(@project, html: {multipart: true}) do |f| %>
+<div class='project-form'>
+<%= simple_form_for(@project, html: {multipart: true, id: 'project_form'}) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-4">
@@ -137,10 +138,11 @@
     </div>
   <br/>
   <div class="actions pull-right">
-    <%= f.submit "Submit", class: "btn btn-primary" %>
+    <%= f.submit "Submit", class: "btn btn-primary submit-button" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
   </div>
 <% end %>
+</div>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -156,7 +158,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  loadPreview("documentFile", "document_preview");
   $("#project_contract_id").on('change', function(){
     var contract_id = $(this).val();
     if(contract_id != ""){
@@ -186,31 +187,52 @@
     return imgName;
   }
 
-  function loadPreview(divId, previewClass){
-    $("#" + divId).change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var divPreview = $("." + previewClass);
-        divPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var file_name = file[0].name;
-          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_ext, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            divPreview.append(img);
+  var filesList = new Array();
+  $('#documentFile').fileupload({
+      autoUpload: false,
+     }).on('fileuploadadd', function (e, data) {
+      $.each(data.files, function (index, file) {
+          filesList.push(data.files[index]);
+      });
+      var divPreview = $(".document_preview");
+      divPreview.html("");
+      $(filesList).each(function (index, file) {
+        var file = $(this);
+        var fileName = file[0].name;
+        var fileExt = fileName.toLowerCase().split(".").slice(-1)[0];
+        var documentImage = getDocumentImages(fileExt, e.target.result);
+        var previewContentDiv = $("<div/>");
+        var img = $("<img/>")
+        img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', fileName);
+        previewContentDiv.append(img);
+        previewContentDiv.append("<span>" + fileName + "</span>");
+        previewContentDiv.append("<a href='javascript:void(0)' class='fileDiv_" + index + "' onclick='removeImage($(this))'><span class='glyphicon glyphicon-trash pull-right delete-icon' style='margin-top:38px;color:red'></span></a>");
+        if (documentImage){
+          img.attr('src', documentImage)
+        }
+        divPreview.append(previewContentDiv);
+      });
+    });
+
+  function removeImage(container){
+    index = container.attr('class').split("fileDiv_")[1];
+    container.closest("div").hide();
+    filesList.splice(index, 1)
+  }
+
+  $("#project_form").submit(function(event) {
+    if (filesList.length > 0) {
+      event.preventDefault();
+      $('#documentFile').fileupload('send', {files: filesList})
+        .complete(function (result, textStatus, jqXHR) { 
+          if(textStatus == 'error'){
+
           }
-          reader.readAsDataURL(file[0]);
+          else{
+            var project_id = JSON.parse(result.responseText)['id'];
+            window.location.href = "/projects/" + project_id;
+          }
         });
       }
-      else {
-        alert("This browser does not support HTML5 FileReader.");
-      }
     });
-  }
 </script>

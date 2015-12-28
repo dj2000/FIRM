@@ -44,9 +44,11 @@ class ProjectsController < ApplicationController
     create_documents
     respond_to do |format|
       if @project.save
+        format.js{ render json: @project }
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
+        format.js{ render json: @project.errors, status: :unprocessable_entity }
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -59,9 +61,11 @@ class ProjectsController < ApplicationController
     create_documents
     respond_to do |format|
       if @project.update(project_params)
+        format.js{ render json: @project }
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
+        format.js{ render json: @project.errors, status: :unprocessable_entity }
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end

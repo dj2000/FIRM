@@ -21,5 +21,6 @@
 //= require bootstrap-datepicker
 //= require bootstrap-timepicker
 //= require fullcalendar
+//= require jquery-fileupload/basic
 //= require jquery_nested_form
 //= require_tree .

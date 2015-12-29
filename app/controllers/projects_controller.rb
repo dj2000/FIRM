@@ -41,14 +41,14 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-    create_documents
     respond_to do |format|
       if @project.save
-        format.js{ render json: @project }
+        create_documents
+        format.js
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
-        format.js{ render json: @project.errors, status: :unprocessable_entity }
+        format.js
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -58,14 +58,14 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    create_documents
     respond_to do |format|
       if @project.update(project_params)
-        format.js{ render json: @project }
+        create_documents
+        format.js
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
-        format.js{ render json: @project.errors, status: :unprocessable_entity }
+        format.js
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end

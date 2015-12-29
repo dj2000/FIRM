@@ -126,7 +126,7 @@
       <div class="text-center">No Preview Available.</div>
     </div>
     <div class='uploaded-documents'>
-      <%= render partial: "documents/documents", locals: { documents: @documents } unless f.object.documents.blank? %>
+      <%= render partial: "documents/documents", locals: { documents: @project.documents } unless f.object.documents.blank? %>
     </div>
   </div>
   <br/>
@@ -217,14 +217,7 @@
     if (filesList.length > 0) {
       event.preventDefault();
       $('#documentFile').fileupload('send', {files: filesList})
-        .complete(function (result, textStatus, jqXHR) { 
-          if(textStatus == 'error'){
-
-          }
-          else{
-            var project_id = JSON.parse(result.responseText)['id'];
-            window.location.href = "/projects/" + project_id;
-          }
+        .complete(function (result, textStatus, jqXHR) {
         });
       }
     });

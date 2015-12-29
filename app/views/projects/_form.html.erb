@@ -125,17 +125,10 @@
     <div class="col-md-6 document_preview preview">
       <div class="text-center">No Preview Available.</div>
     </div>
-    <% if f.object.documents.present? %>
-      <div class="col-md-6">
-        <%= label_tag "Uploaded Miscellaneous Documents" %>
-        <br/>
-        <% f.object.documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
-      </div>
-    <% end %>
+    <div class='uploaded-documents'>
+      <%= render partial: "documents/documents", locals: { documents: @documents } %>
     </div>
+  </div>
   <br/>
   <div class="actions pull-right">
     <%= f.submit "Submit", class: "btn btn-primary submit-button" %>

@@ -1,0 +1,13 @@
+<div class="col-md-6">
+  <%= label_tag "Uploaded Miscellaneous Documents" %>
+  <br/>
+  <% documents.each do |document| %>
+    <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+    <span class='pull-right'>
+      <%= link_to document_path(document), method: :delete, remote: true, data: {confirm: "Are you sure?"} do %>
+        <span class='glyphicon glyphicon-trash' style='color:red'></span>
+      <% end %>
+    </span>
+    <br/>
+  <% end %>
+</div>

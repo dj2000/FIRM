@@ -1,8 +1,8 @@
 class Invoice < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :project
-  has_many :receipts
-  has_many :credit_notes
+  has_many :receipts, dependent: :destroy
+  has_many :credit_notes, dependent: :destroy
 
   attr_accessor :balanceDue
 

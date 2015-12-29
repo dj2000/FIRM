@@ -28,11 +28,6 @@
       <% end %>
     </tr>
   </thead>
-
-    <% if request.path == projects_path %>
-        <th colspan="3" class="text-center">Actions</th>
-      <% end %>
-
   <tbody>
     <% @comm_histories.each do |comm_history| %>
       <tr onclick = "showInfo('comm_histories/new','<%= request.path %>')">

@@ -5,5 +5,5 @@ $(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/cli
 $(".client_info").removeClass("hide");
 $(".insp_request").removeClass("hide");
 $(".email").removeClass("hide");
-$(".email").attr('data-client-email', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) %>")
-
+$(".email").attr('data-client-id', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id) %>")
+$(".inspection_id").val("<%= @bid.try(:inspection).try(:id) %>")

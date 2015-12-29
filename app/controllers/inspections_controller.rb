@@ -1,5 +1,5 @@
 class InspectionsController < ApplicationController
-  before_action :set_inspection, only: [:show, :edit, :update, :destroy]
+  before_action :set_inspection, only: [:show, :edit, :update, :destroy, :send_email]
   before_action :uninspected_appointments, only: [:edit, :update, :new, :create]
 
   # GET /inspections
@@ -26,6 +26,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
+    @file_urls = params[:file_urls].split(",") if params[:file_urls].present?
     @bids = @inspection.bids
   end
 
@@ -105,6 +106,25 @@ class InspectionsController < ApplicationController
     start_date = DateTime.parse(params[:start_date])
     end_date = DateTime.parse(params[:end_date])
     @inspections = Inspection.created_between(start_date, end_date)
+  end
+
+  def send_email
+    file_name = params[:bid_name].gsub(",", "_").gsub(" ", "_")
+    file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+    client = Client.find(params[:client_id])
+    call_summary = params[:call_summary].gsub("\n", "<br>")
+    directory = Rails.root.join("public", "pdfs")
+    Dir.mkdir(directory) unless File.directory?(directory)
+    pdf_directory = Rails.root.join(directory, "#{@inspection.try(:id)}" )
+    Dir.mkdir(pdf_directory) unless File.directory?(pdf_directory)
+    save_path = Rails.root.join(pdf_directory, "#{file_name}.pdf")
+    pdf = WickedPdf.new.pdf_from_string(call_summary, formats: :html, encoding: 'utf8')
+    File.open(save_path, 'wb') do |file|
+      file << pdf
+      @inspection.documents << Document.create(document_type: "email", attachment: file)
+    end
+    UserMailer.send_call_summary_to_client(client, call_summary, file_urls, file_name).deliver
+    render json: @inspection
   end
 
   private

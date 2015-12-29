@@ -1,7 +1,7 @@
 class SvcCriterium < ActiveRecord::Base
   extend AsCSV
 
-  has_many :appointments
+  has_many :appointments, dependent: :destroy
 
   DEFAULTS = { "True" => "1", "False" => "0", "Ignore" => "2" }
 

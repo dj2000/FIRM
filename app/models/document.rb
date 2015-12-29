@@ -6,4 +6,9 @@ class Document < ActiveRecord::Base
 	scope :other_documents, -> { where( document_type: nil ) }
 
 	validates_attachment_content_type :attachment, content_type: %w( application/msword application/pdf )
+
+	def file_url
+		public_path = Rails.root.join("public", "pdfs", "#{self.attachable_id}", "#{self.attachment_file_name}.pdf")
+		File.exists?(public_path) ? public_path : self.attachment.url
+	end
 end

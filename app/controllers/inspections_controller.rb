@@ -43,14 +43,14 @@ class InspectionsController < ApplicationController
   # POST /inspections.json
   def create
     @inspection = Inspection.new(inspection_params)
-    create_documents
     respond_to do |format|
       if @inspection.save
+        create_documents
+        format.js
         format.html { redirect_to @inspection, notice: 'Inspection was successfully created.' }
-        format.json { render json: @inspection }
       else
         format.html { render :new }
-        format.json { render json: @inspection.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -58,14 +58,14 @@ class InspectionsController < ApplicationController
   # PATCH/PUT /inspections/1
   # PATCH/PUT /inspections/1.json
   def update
-    create_documents
     respond_to do |format|
       if @inspection.update(inspection_params)
+        create_documents
+        format.js
         format.html { redirect_to @inspection, notice: 'Inspection was successfully updated.' }
-        format.json { render :show, status: :ok, location: @inspection }
       else
         format.html { render :edit }
-        format.json { render json: @inspection.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

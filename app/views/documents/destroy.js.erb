@@ -1,1 +1,4 @@
-$(".uploaded-documents").html("<%= j (render partial: 'documents/documents', locals: { documents: @attachable.documents }) %>")
+<% @attachable.documents.map(&:document_type).uniq.each do |document_type| %>
+	<% document_type = document_type.nil? ? "other" : document_type %>
+	$(".uploaded-" + document_type +"documents").html('<%= j (render partial: "documents/documents", locals: { documents: @attachable.documents.send("#{document_type}_documents") }) %>')
+<% end %>

@@ -1,0 +1,5 @@
+<% if @inspection.errors.present? %>
+	$(".inspection-form").html("<%= j (render partial: 'inspections/form') %>")
+<% else %>
+	window.location.href = '<%= inspection_path(@inspection) %>';
+<% end %>

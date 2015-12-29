@@ -1,4 +1,5 @@
-<%= simple_form_for(@inspection, multipart: true, html: {id: "file-dropzone"}) do |f| %>
+<div class="inspection-form">
+<%= simple_form_for(@inspection, multipart: true, html: {id: "inspection-form"}) do |f| %>
   <%= f.error_notification %>
   <% if f.object.errors["documents"].present? %>
     <p class="alert alert-danger">
@@ -106,38 +107,24 @@
   <div class="row">
     <%= label_tag "Miscellaneous documents" %>
     <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
-    <div class="col-md-6 document_preview preview">
+    <div class="col-md-6 document_attributes preview">
       <div class="text-center">No Preview Available.</div>
     </div>
-    <% if f.object.documents.present? %>
-      <div class="col-md-6">
-        <%= label_tag "Uploaded Miscellaneous Documents" %>
-        <br/>
-        <% f.object.documents.other_documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
-      </div>
-    <% end %>
+    <div class='uploaded-other-documents'>
+      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.other_documents } unless f.object.documents.other_documents.blank? %>
+    </div>
     </div>
   <br/>
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <%= label_tag "Email documents" %>
     <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "emailDocumentFile",  accept: ".pdf"%>
-    <div class="col-md-6 email_preview preview">
+    <div class="col-md-6 email_document_attributes preview">
       <div class="text-center">No Preview Available.</div>
     </div>
-    <% if f.object.documents.present? %>
-      <div class="col-md-6">
-        <%= label_tag "Uploaded Email Documents" %>
-        <br/>
-        <% f.object.documents.email_documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
-      </div>
-    <% end %>
+    <div class='uploaded-email-documents'>
+      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.email_documents } unless f.object.documents.email_documents.blank? %>
+    </div>
     </div>
   <br/>
   <div class="actions">
@@ -145,6 +132,7 @@
     <%= link_to 'Back', inspections_path, class: 'btn btn-info' %>
   </div>
 <% end %>
+</div>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -175,9 +163,6 @@
     }
   });
 
-  loadPreview("documentFile", "document_preview");
-  loadPreview("emailDocumentFile", "email_preview");
-
   function getDocumentImages(type, target){
     var imgName;
     if (type == 'docx' || type == 'doc' || type == 'pdf'){
@@ -189,31 +174,58 @@
     return imgName;
   }
 
-  function loadPreview(divId, previewClass){
-    $("#" + divId).change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var divPreview = $("." + previewClass);
-        divPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var file_name = file[0].name;
-          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_ext, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            divPreview.append(img);
-          }
-          reader.readAsDataURL(file[0]);
-        });
+  var filesList = new Array();
+  var documentFilesList = []
+  var emailFilesList = new Array();
+  function loadPreview(divPreview, filesList, e){
+    divPreview.html("");
+    $(filesList).each(function (index, file) {
+      var file = $(this);
+      var fileName = file[0].name;
+      var fileExt = fileName.toLowerCase().split(".").slice(-1)[0];
+      var documentImage = getDocumentImages(fileExt, e.target.result);
+      var previewContentDiv = $("<div/>");
+      var img = $("<img/>")
+      img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', fileName);
+      previewContentDiv.append(img);
+      previewContentDiv.append("<span>" + fileName + "</span>");
+      previewContentDiv.append("<a href='javascript:void(0)' class='fileDiv_" + index + "' onclick='removeImage($(this))'><span class='glyphicon glyphicon-trash pull-right delete-icon' style='margin-top:38px;color:red'></span></a>");
+      if (documentImage){
+        img.attr('src', documentImage)
       }
-      else {
-        alert("This browser does not support HTML5 FileReader.");
-      }
+      divPreview.append(previewContentDiv);
     });
   }
+
+  function removeImage(container){
+    index = container.attr('class').split("fileDiv_")[1];
+    container.closest("div").hide();
+    filesList.splice(index, 1)
+  }
+
+  paramNames = [],
+  elem = $("#inspection-form");
+  file_upload = elem.fileupload({
+  autoUpload: false,
+  fileInput: $("#inspection-form input:file").filter("#documentFile,#emailDocumentFile"),
+    }).on("fileuploadadd", function(e, data){
+      var name = data.paramName
+      if( name == "document_attributes[]"){
+        documentFilesList.push(data.files[0]);
+        loadPreview($("." + name.split("[")[0]),documentFilesList, e)
+      }
+      else{
+        emailFilesList.push(data.files[0])
+        loadPreview($("." + name.split("[")[0]),emailFilesList, e)
+      }
+      filesList.push(data.files[0])
+      paramNames.push(e.delegatedEvent.target.name);
+    });
+
+  $("#inspection-form").submit(function(event) {
+    event.preventDefault();
+    file_upload.fileupload('send', {files:filesList, paramName: paramNames});
+  });
+
+ 
 </script>

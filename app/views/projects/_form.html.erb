@@ -126,7 +126,7 @@
       <div class="text-center">No Preview Available.</div>
     </div>
     <div class='uploaded-documents'>
-      <%= render partial: "documents/documents", locals: { documents: @documents } %>
+      <%= render partial: "documents/documents", locals: { documents: @documents } unless f.object.documents.blank? %>
     </div>
   </div>
   <br/>

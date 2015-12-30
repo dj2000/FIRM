@@ -1,5 +1,5 @@
 <div class="col-md-6">
-  <%= label_tag "Uploaded Miscellaneous Documents" %>
+  <%= label_tag "", "Uploaded #{document_type} Documents" %>
   <br/>
   <% documents.each do |document| %>
     <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>

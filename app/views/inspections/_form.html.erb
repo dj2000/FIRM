@@ -111,7 +111,7 @@
       <div class="text-center">No Preview Available.</div>
     </div>
     <div class='uploaded-other-documents'>
-      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.other_documents } unless f.object.documents.other_documents.blank? %>
+      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.other_documents, document_type: "Miscellaneous" } unless f.object.documents.other_documents.blank? %>
     </div>
     </div>
   <br/>
@@ -123,7 +123,7 @@
       <div class="text-center">No Preview Available.</div>
     </div>
     <div class='uploaded-email-documents'>
-      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.email_documents } unless f.object.documents.email_documents.blank? %>
+      <%= render partial: "documents/documents", locals: { documents: @inspection.documents.email_documents, document_type: "Email" } unless f.object.documents.email_documents.blank? %>
     </div>
     </div>
   <br/>

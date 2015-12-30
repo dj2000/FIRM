@@ -126,7 +126,7 @@
       <div class="text-center">No Preview Available.</div>
     </div>
     <div class='uploaded-other-documents'>
-      <%= render partial: "documents/documents", locals: { documents: @project.documents } unless f.object.documents.blank? %>
+      <%= render partial: "documents/documents", locals: { documents: @project.documents, document_type: "Miscellaneous" } unless f.object.documents.blank? %>
     </div>
   </div>
   <br/>
@@ -169,16 +169,6 @@
     format: 'yyyy-mm-dd'
   });
 
-  function getDocumentImages(type, target){
-    var imgName;
-    if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/' + type + '_icon.png'
-    }
-    else{
-      imgName =  target;
-    }
-    return imgName;
-  }
 
   var filesList = new Array();
   $('#documentFile').fileupload({

@@ -47,3 +47,15 @@ function showInfo(url,request_url){
     window.location = "/"+ url;
   }
 }
+
+/* Get document images for file uploads based on type*/
+function getDocumentImages(type, target){
+    var imgName;
+    if (type == 'docx' || type == 'doc' || type == 'pdf'){
+      imgName = '/assets/' + type + '_icon.png'
+    }
+    else{
+      imgName =  target;
+    }
+    return imgName;
+  }

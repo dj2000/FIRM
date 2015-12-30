@@ -148,6 +148,8 @@
   </div>
 </div>
 <script type="text/javascript">
+
+  
   $("#inspection_appointment_id").on('change', function(){
     var appointment_id = $(this).val();
     if(appointment_id != ""){
@@ -162,17 +164,6 @@
       $(".appointment").addClass("hide");
     }
   });
-
-  function getDocumentImages(type, target){
-    var imgName;
-    if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/' + type + '_icon.png'
-    }
-    else{
-      imgName =  target;
-    }
-    return imgName;
-  }
 
   var filesList = new Array();
   var documentFilesList = []

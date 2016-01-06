@@ -26,13 +26,14 @@ class AgentClientsController < ApplicationController
   def create
     params[:agent_client][:client_id] = params[:client_id]
     @agent_client = AgentClient.new(agent_client_params)
-    @agent = Agent.new
     @remote = request.format.symbol == :html ? false : true
     respond_to do |format|
       if @agent_client.save
+        @agent = @agent_client.try(:agent)
         format.html { redirect_to @agent_client, notice: 'Agent client was successfully created.' }
         format.js
       else
+        @agent = Agent.new
         format.html { render :new }
         format.js
       end

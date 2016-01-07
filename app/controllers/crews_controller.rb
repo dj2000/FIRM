@@ -102,6 +102,6 @@ class CrewsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def crew_params
-      params.require(:crew).permit(:foreman, :size, :double_book, :notes)
+      params.require(:crew).permit(:foreman, :size, :double_book, :notes, :email)
     end
 end

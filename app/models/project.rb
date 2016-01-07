@@ -11,6 +11,8 @@ class Project < ActiveRecord::Base
   has_many :invoices, dependent: :destroy
   has_many :proj_scheds, dependent: :destroy
   has_many :proj_insps, dependent: :destroy
+  belongs_to :primary_crew, class_name: "Crew", foreign_key: :primary_crew_id
+  has_many :documents, as: :attachable, dependent: :destroy
 
 	## Validations
   validates_presence_of :contract_id, :jobCost, :estDuration, :authorizedBy, :authorizedOn, :title, :scheduleStart, :scheduleEnd

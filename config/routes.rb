@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     get :print, on: :collection
+    get :send_email_to_crew, on: :member
   end
 
   resources :pmt_schedules do

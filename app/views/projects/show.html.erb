@@ -16,6 +16,10 @@
           <td><%= @project.try(:contract).try(:title) %></td>
         </tr>
         <tr>
+          <td>Primary Crew</td>
+          <td><%= @project.try(:primary_crew).try(:foreman) %></td>
+        </tr>
+        <tr>
           <td>Job Cost</td>
           <td><%= @project.jobCost %></td>
         </tr>
@@ -44,8 +48,16 @@
           <td><%= @project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
-          <td>Crew</td>
-          <td><%= @project.try(:crew).try(:foreman) %></td>
+          <td>Plot Plans</td>
+          <td><%= @project.humanize("plot_plans") %></td>
+        </tr>
+        <tr>
+          <td>Drawings</td>
+          <td><%= @project.humanize("drawings") %></td>
+        </tr>
+        <tr>
+          <td>Option</td>
+          <td><%= @project.option %></td>
         </tr>
         <tr>
           <td>Interior Access Verified</td>
@@ -59,6 +71,15 @@
           <td>Notes</td>
           <td><%= @project.notes %></td>
         </tr>
+        <tr>
+          <td>Uploaded Miscellaneous Documents</td>
+          <td>
+            <% @project.documents.each do |document| %>
+              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+              <br/>
+            <% end %>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -66,4 +87,7 @@
 <p class="pull-right">
   <%= link_to "Back", projects_path, class: "btn btn-info" %>
   <%= link_to "Schedule Project", proj_scheds_path(id: @project), class: "btn btn-success" %>
+  <% if @project.try(:primary_crew).try(:email) %>
+    <%= link_to "Email", send_email_to_crew_project_path(id: @project), class: "btn btn-primary" %>
+  <% end %>
 </p>

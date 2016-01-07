@@ -23,4 +23,10 @@ class UserMailer < ActionMailer::Base
     end
     mail(to: @client.email, subject: subject)
   end
+
+  def send_email_to_crew(project)
+    @project = project
+    @crew = @project.try(:primary_crew)
+    mail(to: @crew.try(:email), subject: "Crew Data Sheet")
+  end
 end

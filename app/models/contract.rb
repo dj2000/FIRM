@@ -11,9 +11,11 @@ class Contract < ActiveRecord::Base
 
 	validates :dateSigned, :signedBy, presence: true, if: Proc.new { |a| a.signed == "1" }
 
-	validates :downPmtDate, :downPmtAmt, presence: true, if: Proc.new { |a| a.down_payment == "1" }
+	validates :downPmtDate, :downPmtAmt, :deposit_payment_method, presence: true, if: Proc.new { |a| a.down_payment == "1" }
 
   validate :down_payment_amount, if: Proc.new { |a| a.down_payment == "1" }
+
+  PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Escrow", "Scan", "Fax", "On-Site"]
 
   def accepted?(params = nil)
     (params and params[:accepted] and params[:accepted] == "1") || (self.accepted_date and self.acceptedBy)

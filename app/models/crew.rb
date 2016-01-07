@@ -6,6 +6,8 @@ class Crew < ActiveRecord::Base
 
   validates :foreman, :size, presence: true
 
+  validates :email, email_format: { message: "Invalid Email Address" }
+
   def is_double_book
 		self.double_book? ? "Yes" : "No"
   end

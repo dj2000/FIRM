@@ -30,7 +30,12 @@ class CommHistoriesController < ApplicationController
 
   # GET /comm_histories/new
   def new
-    @comm_history = CommHistory.new
+    @comm_history = CommHistory.new(bid_id: params[:bid_id])
+    if params[:bid_id].present?
+      @bid = Bid.find(params[:bid_id])
+      @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+      @clients = @insp_request.try(:property).try(:clients)
+    end
   end
 
   # GET /comm_histories/1/edit

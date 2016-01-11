@@ -12,7 +12,7 @@ class PageController < ApplicationController
     @vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))
 		model_names = [:proj_sched, :proj_insp, :permit, :credit_note, :receipt, :invoice,
 			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
-			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
+			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :engineer, :draftsman]
 			model_names.each do |attribute|
 				instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
 			end

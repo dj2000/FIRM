@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :draftsmen
+
   resources :credit_notes
   resources :engineers
 

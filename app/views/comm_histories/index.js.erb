@@ -1,4 +1,4 @@
 $('.comm-histories-data').html("<%= j (render partial: 'comm_histories') %>");
-$('.modal-title').html("Call History Information for <%= @bid.try(:title) %>")
-$('.modal-body').html("<%= escape_javascript(render partial: 'comm_histories') %>");
-$(".modal").modal('show');
+$('.modal-details .modal-title').html("Call History Information for <%= @bid.try(:title) %>")
+$('.modal-details .modal-body').html("<%= escape_javascript(render partial: 'comm_histories') %>");
+$(".modal-details").modal('show');

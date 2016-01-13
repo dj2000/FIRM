@@ -141,25 +141,25 @@
     </div>
   <br/>
   <div class="modal permit-information" tabindex="-1" role="dialog" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Add Permit Information</h4>
-      </div>
-      <div class="modal-body">
-        <%= f.fields_for :permit_information do |permit_information| %>
-          <%= render partial: 'permit_informations/form', locals: { permit_information: permit_information} %>
-        <% end %>
-      </div>
-      <div class='modal-footer'>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add Permit Information</h4>
+        </div>
+        <div class="modal-body">
+          <%= f.fields_for :permit_information do |permit_information| %>
+            <%= render partial: 'permit_informations/form', locals: { permit_information: permit_information} %>
+          <% end %>
+        </div>
+        <div class='modal-footer'>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
   <div class="actions pull-right">
     <%= f.submit "Submit", class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
@@ -212,7 +212,7 @@
 
   $("input[name='project[permit]']").change(function(){
     if($(this).is(":checked")){
-      $(".permit-information").modal('show');
+      $(".modal.permit-information").modal('show');
     }
   });
 

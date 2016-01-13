@@ -1,6 +1,6 @@
-$('.modal-title').html("Inspection Information");
-$('.modal-body').html("<%= escape_javascript(render partial: 'inspection') %>");
+$('.modal-details .modal-title').html("Inspection Information");
+$('.modal-details .modal-body').html("<%= escape_javascript(render partial: 'inspection') %>");
 $(".modal-details").modal('show');
 <% if params[:email_preview].present? %>
-	$(".modal-footer").html("<a href='javascript:void(0)' class='btn btn-success email-preview' onclick='sendFiles()'>Submit</a>")
+	$(".modal-details .modal-footer").html("<a href='javascript:void(0)' class='btn btn-success email-preview' onclick='sendFiles()'>Submit</a>")
 <% end %>

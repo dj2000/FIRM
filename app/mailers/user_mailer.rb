@@ -29,4 +29,12 @@ class UserMailer < ActionMailer::Base
     @crew = @project.try(:primary_crew)
     mail(to: @crew.try(:email), subject: "Crew Data Sheet")
   end
+
+  def send_email_for_permit(draftsman, permit_information, ccs, notes, attachments=nil)
+    @draftsman = draftsman
+    @permit_information = permit_information
+    @project = @permit_information.project
+    @notes = notes
+    mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet")
+  end
 end

@@ -15,7 +15,7 @@
 
   <tbody>
     <% @permit_informations.each do |permit_information| %>
-      <tr>
+      <tr onclick="sendEmail(<%= permit_information.id %>)">
         <td><%= permit_information.try(:project).try(:status) %></td>
         <td><%= permit_information.valuation %></td>
         <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
@@ -29,3 +29,9 @@
     <% end %>
   </tbody>
 </table>
+<script>
+function sendEmail(permitInformationId){
+  $('.modal-details').modal('show');
+  $(".permit_information_id").val(permitInformationId)
+}
+</script>

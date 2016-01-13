@@ -1,0 +1,28 @@
+<%= form_tag('/permit_informations/send_email', method: :get) do %>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-md-6">
+				<%= label_tag "Select Draftsman" %>
+				<%= select_tag "draftsman_id", options_from_collection_for_select(Draftsman.all, "id", "name"), class: "select form-control" %>			
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-12">
+				<%= label_tag "Notes" %>
+				<%= text_area_tag :notes, nil, class: 'text form-control' %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<%= label_tag "Cc Emails" %>
+				<%= text_field_tag :cc_emails, nil, class: 'text form-control' %>
+			</div>
+		</div>
+	</div>
+	<%= hidden_field_tag :permit_information_id, "", class: "permit_information_id" %>
+	<div class='modal-footer'>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    <%= submit_tag "Send Email", class: "btn btn-success" %>
+  </div>
+<% end %>

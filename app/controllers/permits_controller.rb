@@ -86,6 +86,6 @@ class PermitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def permit_params
-      params.require(:permit).permit(:reference, :project_id, :issueDate, :issuedBy, :status, :valuation)
+      params.require(:permit).permit(:reference, :permit_information_id, :issueDate, :issuedBy, :status, :valuation, :attachment)
     end
 end

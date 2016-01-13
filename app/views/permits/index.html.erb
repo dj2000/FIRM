@@ -2,6 +2,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
+      <th>Permit Information</th>
       <th>Project</th>
       <th>Reference</th>
       <th>Issue Date</th>
@@ -17,7 +18,8 @@
   <tbody>
     <% @permits.each do |permit| %>
       <tr>
-        <td><%= permit.try(:project).try(:title) %></td>
+        <td><%= permit.try(:permit_information).try(:select_value) %></td>
+        <td><%= permit.try(:permit_information).try(:project).try(:title) %></td>
         <td><%= permit.reference %></td>
         <td><%= permit.try(:issueDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= permit.issuedBy %></td>

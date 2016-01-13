@@ -1,6 +1,7 @@
 class PermitInformation < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :engineer
+	has_many :permits, dependent: :destroy
 
 	TYPES_OF_REPLACEMENT = ["Full", "Partial"]
 
@@ -11,5 +12,9 @@ class PermitInformation < ActiveRecord::Base
 
 	def humanize(attribute)
     self.send("#{attribute}") ? "Yes" : "No"
+  end
+
+  def select_value
+	"#{self.try(:engineer).try(:name)} - #{self.valuation}"
   end
 end

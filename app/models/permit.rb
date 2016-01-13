@@ -1,18 +1,21 @@
 class Permit < ActiveRecord::Base
   extend AsCSV
 
-  belongs_to :project
+  belongs_to :permit_information
 
-  validates :reference, :status, :valuation, presence: true
+  has_attached_file :attachment
 
-  STATUS = %w(Pending Approved Declined)
+  validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/png", "image/jpeg"]
+  validates :reference, :status, :valuation, :permit_information_id, presence: true
+
+  STATUS = %w(Issued Pending Cancelled)
 
   def self.as_csv
     CSV.generate do |csv|
-      csv << ["Project", "Reference", "Issue Date", "Issued By", "Status", "Valuation"]
+      csv << ["Permit Information", "Reference", "Issue Date", "Issued By", "Status", "Valuation"]
       all.each do |permit|
         row = [
-                permit.try(:project).try(:title),
+                permit.try(:permit_information).try(:select_value),
                 permit.reference,
                 permit.try(:issueDate).try(:strftime, "%d %b %Y"),
                 permit.issuedBy,

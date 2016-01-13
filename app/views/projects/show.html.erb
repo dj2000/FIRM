@@ -88,7 +88,7 @@
     </table>
   </div>
 </div>
-<%= render template: "permit_informations/show" if @permit_information %>
+<%= render template: "permit_informations/show" if @project.try(:permit_information) %>
 <p class="pull-right">
   <%= link_to "Back", projects_path, class: "btn btn-info" %>
   <%= link_to "Schedule Project", proj_scheds_path(id: @project), class: "btn btn-success" %>

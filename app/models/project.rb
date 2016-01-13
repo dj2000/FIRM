@@ -59,6 +59,10 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def status
+    self.ready_to_process? ? "Ready" : "Pending"
+  end
+
   private
 
   def check_schedule_end_date

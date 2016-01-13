@@ -316,7 +316,24 @@
           </div>
         </div>
       </div>
-
+      <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="headingEight">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @permit_informations.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            <i class="fa fa-calendar"></i>
+              Permit Informations
+            </a>
+          </h4>
+        </div>
+        <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+          <div class="panel-body">
+            <%= render template: 'permit_informations/index' %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

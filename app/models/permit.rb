@@ -26,4 +26,8 @@ class Permit < ActiveRecord::Base
       end
     end
   end
+
+  def self.pending_permits
+    self.where(status: "Pending")
+  end
 end

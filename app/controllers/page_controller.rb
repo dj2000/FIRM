@@ -7,6 +7,7 @@ class PageController < ApplicationController
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
 		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
 		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@permit_informations = PermitInformation.joins(:permits).where("permits.id IN (?)", Permit.pending_permits.map(&:id))
 		@comm_histories = CommHistory.where('"callBackDate" <= ? AND bid_id not in (?) AND is_completed = ?', DateTime.now, Bid.accepted_bids.map(&:id), false)
 		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
     @vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))

@@ -31,10 +31,12 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @permit_information = @project.build_permit_information
   end
 
   # GET /projects/1/edit
   def edit
+    @permit_information = @project.permit_information || @project.build_permit_information
   end
 
   # POST /projects
@@ -47,6 +49,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
+        @permit_information = @project.permit_information || @project.build_permit_information
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -99,11 +102,13 @@ class ProjectsController < ApplicationController
       @contract = @project.try(:contract) || Contract.find(params[:project][:contract_id])
       @bid = @contract.try(:bid)
       @clients = @bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:clients)
+      @permit_information = @project.try(:permit_information)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option)
+      params[:project].delete :permit_information_attributes if params[:project][:permit] == "0"
+      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id ])
     end
 
     def contracts

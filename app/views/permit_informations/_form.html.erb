@@ -1,0 +1,57 @@
+<div class="row">
+	<div class='col-md-4'>
+		<%= permit_information.input :valuation %>
+	</div>
+	<div class='col-md-4'>
+		<%= permit_information.input :units, as: :boolean, label: "5 Units" %>
+	</div>
+	<div class='col-md-4'>
+		<%= label_tag "City" %>
+		<p class="city"><%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></p>
+	</div>
+</div>
+<div class="row">
+	<div class='col-md-4'>
+		<%= permit_information.input :replacement, as: :boolean %>
+	</div>
+	<div class="col-md-4 type_of_replacement <%= 'hide' unless permit_information.object.replacement? %> ">
+		<%= permit_information.input :type_of_replacement, as: :radio_buttons, collection: PermitInformation::TYPES_OF_REPLACEMENT, checked: (permit_information.object.type_of_replacement || "Full") %>
+	</div>
+	<div class='col-md-4 amount <%= 'hide' if (permit_information.object.type_of_replacement == "Full" || permit_information.object.type_of_replacement.blank?) %>'>
+		<%= permit_information.input :amount %>
+	</div>
+</div>
+<div class="row">
+	<div class='col-md-6'>
+		<%= permit_information.input :engineering, as: :boolean %>
+	</div>
+	<div class='col-md-6 <%= 'hide' unless permit_information.object.engineering? %> engineer-name'>
+		<%= permit_information.association :engineer, as: :select, collection: Engineer.all, label_method: :name, label: "Select Engineer", include_blank: "Select Engineer" %>
+	</div>
+</div>
+<script>
+	$("input[name='project[permit_information_attributes][replacement]']").change(function(){
+		if($(this).is(":checked")){
+			$(".type_of_replacement").removeClass("hide");
+		}
+		else{
+			$(".type_of_replacement").addClass("hide");
+		}
+	});
+	$("input[name='project[permit_information_attributes][engineering]']").change(function(){
+		if($(this).is(":checked")){
+			$(".engineer-name").removeClass("hide");
+		}
+		else{
+			$(".engineer-name").addClass("hide");
+		}
+	});
+	$("input[name='project[permit_information_attributes][type_of_replacement]']").change(function(){
+		if($(this).val() == "Partial"){
+			$(".amount").removeClass("hide");
+		}
+		else{
+			$(".amount").addClass("hide");
+		}
+	});
+</script>

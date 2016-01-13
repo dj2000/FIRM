@@ -1,0 +1,49 @@
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h1 class="panel-title">Permit Information</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+	  <thead>
+	    <tr>
+	      <th>Permit Information Attributes</th>
+	      <th>Values</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Valuation</td>
+	      <td><%= @permit_information.valuation %></td>
+	    </tr>
+	    <tr>
+	      <td>City</td>
+	      <td><%= @permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
+	    </tr>
+	    <tr>
+	      <td>Replacement</td>
+	      <td><%= @permit_information.humanize("replacement") %></td>
+    	</tr>
+    	<tr>
+	      <td>Type of Replacement</td>
+	      <td><%= @permit_information.try(:type_of_replacement) %></td>
+    	</tr>
+    	<tr>
+	      <td>Amount</td>
+	      <td><%= @permit_information.try(:amount) %></td>
+    	</tr>
+    	<tr>
+	      <td>Engineering</td>
+	      <td><%= @permit_information.humanize("engineering") %></td>
+    	</tr>
+    	<tr>
+	      <td>Engineer Name</td>
+	      <td><%= @permit_information.try(:engineer).try(:name) %></td>
+    	</tr>
+    	<tr>
+	      <td>5 Units</td>
+	      <td><%= @permit_information.humanize("units") %></td>
+    	</tr>
+   </tbody>
+   </table>
+  </div>
+</div>

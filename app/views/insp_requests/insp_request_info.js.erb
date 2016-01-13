@@ -17,6 +17,7 @@ $(".email").removeClass("hide");
 $(".email").attr('data-client-email', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) %>")
 $("#project_title").val("<%= @insp_request.try(:default_title) %>");
 $("#contract_title").val("<%= @insp_request.try(:default_title) %>");
+$(".city").html("<%= @insp_request.try(:property).try(:property_select_value) %>");
 <% if @bid.try(:inspection).try(:interiorAccess?) %>
 	$(".interior-access-required").removeClass("hide");
 <% end %>

@@ -78,7 +78,6 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.default_url_options[:host] = "http://firmprod.herokuapp.com/"
   ActionMailer::Base.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,

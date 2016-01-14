@@ -17,4 +17,9 @@ class PermitInformation < ActiveRecord::Base
   def select_value
 	"#{self.try(:engineer).try(:name)} - #{self.valuation}"
   end
+
+  def self.unpermitted_permit_informations
+    permit_information_ids = Permit.all.map(&:permit_information_id)
+    PermitInformation.where.not(id: permit_information_ids)
+  end
 end

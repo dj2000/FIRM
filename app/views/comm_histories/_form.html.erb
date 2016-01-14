@@ -48,15 +48,15 @@
     <div class="col-md-6">
       <div class="col-md-6 pad-0 <%= 'has-error' if f.object.errors["callOutcome"].first %>">
         <div>
-          <%= f.radio_button :callOutcome, "Verbal Close", disabled: f.object.disabled? %>
+          <%= f.radio_button :callOutcome, "Verbal Close" %>
           <%= f.label "Verbal Close" %>
         </div>
         <div>
-          <%= f.radio_button :callOutcome, "Not Interested", disabled: f.object.disabled? %>
+          <%= f.radio_button :callOutcome, "Not Interested" %>
           <%= f.label "Not Interested" %>
         </div>
         <div>
-          <%= f.radio_button :callOutcome, "Follow-up", disabled: f.object.disabled? %>
+          <%= f.radio_button :callOutcome, "Follow-up" %>
           <%= f.label "Follow-up" %>
         </div>
         <span class="help-block"><%= f.object.errors["callOutcome"].first %></span>

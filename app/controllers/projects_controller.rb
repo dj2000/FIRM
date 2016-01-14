@@ -90,7 +90,8 @@ class ProjectsController < ApplicationController
   end
 
   def send_email_to_crew
-    UserMailer.send_email_to_crew(@project).deliver
+    file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+    UserMailer.send_email_to_crew(@project, file_urls).deliver
     respond_to do |format|
       format.html{ redirect_to project_url(@project), notice: 'Email is sent successfully.' }
     end

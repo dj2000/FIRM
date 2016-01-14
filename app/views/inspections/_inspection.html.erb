@@ -78,6 +78,15 @@
   </div>
 </div>
 <script>
+var files = new Array();
+$(".modal-details input[name='file_urls[]']").change(function(){
+  var href = $(".crew-pis").attr("href");
+  if($(this).is(":checked")){
+    files.push($(this).val());
+    href += "," + $(this).val();
+  }
+  $(".crew-pis").attr("href", href)
+});
   function sendFiles(){
     var fileUrls = [];
     $(".modal-details input[name='file_urls[]']:checked").each(function(){

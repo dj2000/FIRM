@@ -133,6 +133,7 @@ class InspectionsController < ApplicationController
       @inspection = Inspection.find(params[:id])
       @documents = @inspection.try(:documents)
       @clients = @inspection.try(:appointment).try(:insp_request).try(:property).try(:clients)
+      @project = Project.find(params[:project_id]) if params[:project_id].present?
     end
 
     def uninspected_appointments

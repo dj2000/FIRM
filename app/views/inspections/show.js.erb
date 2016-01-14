@@ -4,6 +4,8 @@ $(".modal-details").modal('show');
 $(".permit-information-details").modal("hide");
 <% if params[:email_preview].present? and request.referer == root_url %>
 	$(".modal-details .modal-footer").html("<button class=\"btn btn-success\" data-toggle=\"modal\" onclick='sendPIS(<%= @inspection.id %>)' data-target=\".permit-information-details\" data-dismiss=\"modal\">Submit</button>")
-<% elsif params[:email_preview].present? and request.referrer.include?("comm_histories") %>
+<% elsif params[:email_preview].present? and (request.referrer.include?("comm_histories"))%>
 	$(".modal-details .modal-footer").html("<a href='javascript:void(0)' class='btn btn-success email-preview' onclick='sendFiles()'>Submit</a>")
+<% elsif params[:email_preview].present? and (request.referrer.include?("projects"))%>
+	$(".modal-details .modal-footer").html('<%= j link_to "Email", send_email_to_crew_project_path(id: @project, file_urls: ''), class: "btn btn-primary crew-pis" %>');
 <% end %>

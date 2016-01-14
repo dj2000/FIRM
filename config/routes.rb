@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :draftsmen
+
   resources :credit_notes
+  resources :engineers
+  resources :permit_informations do
+    get :send_email, on: :collection
+  end
 
   resources :commissions do
     get :process_commissions, on: :collection

@@ -21,6 +21,10 @@ class Project < ActiveRecord::Base
 
   validate :check_schedule_end_date
 
+  has_one :permit_information, dependent: :destroy
+
+  accepts_nested_attributes_for :permit_information
+
   def humanize(attribute)
     self.send("#{attribute}") ? "Yes" : "No"
   end
@@ -53,6 +57,10 @@ class Project < ActiveRecord::Base
         csv << row
       end
     end
+  end
+
+  def status
+    self.ready_to_process? ? "Ready" : "Pending"
   end
 
   private

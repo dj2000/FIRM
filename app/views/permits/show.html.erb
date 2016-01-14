@@ -16,8 +16,8 @@
           <td><%= @permit.reference %></td>
         </tr>
         <tr>
-          <td>Project</td>
-          <td><%= @permit.try(:project).try(:title) %></td>
+          <td>Permit Information</td>
+          <td><%= @permit.try(:permit_information).try(:select_value) %></td>
         </tr>
         <tr>
           <td>Issue Date</td>
@@ -34,6 +34,10 @@
         <tr>
           <td>Valuation</td>
           <td><%= @permit.valuation %></td>
+        </tr>
+         <tr>
+          <td>Uploaded Image</td>
+          <td><%= link_to_if @permit.attachment_file_name, @permit.attachment_file_name, @permit.attachment.url, class: 'blue-link' %></td>
         </tr>
       </tbody>
     </table>

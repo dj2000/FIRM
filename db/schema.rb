@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223065438) do
+ActiveRecord::Schema.define(version: 20160113112549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,24 @@ ActiveRecord::Schema.define(version: 20151223065438) do
     t.string   "document_type"
   end
 
+  create_table "draftsmen", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_initial"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "engineers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_initial"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "i_fee_schedules", force: true do |t|
     t.boolean  "feeActive"
     t.date     "effectiveFrom"
@@ -336,15 +354,32 @@ ActiveRecord::Schema.define(version: 20151223065438) do
     t.datetime "updated_at"
   end
 
+  create_table "permit_informations", force: true do |t|
+    t.integer  "valuation"
+    t.boolean  "replacement"
+    t.string   "type_of_replacement"
+    t.integer  "amount"
+    t.boolean  "engineering"
+    t.integer  "engineer_id"
+    t.boolean  "units"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "permits", force: true do |t|
     t.string   "reference"
-    t.integer  "project_id"
     t.date     "issueDate"
     t.string   "issuedBy"
     t.string   "status"
     t.decimal  "valuation"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "permit_information_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "pmt_schedules", force: true do |t|
@@ -404,6 +439,7 @@ ActiveRecord::Schema.define(version: 20151223065438) do
     t.boolean  "plot_plans",          default: false
     t.boolean  "drawings",            default: false
     t.string   "option"
+    t.boolean  "ready_to_process"
   end
 
   create_table "properties", force: true do |t|

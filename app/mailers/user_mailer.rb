@@ -18,15 +18,35 @@ class UserMailer < ActionMailer::Base
     @file_urls = file_urls
     if @file_urls.present?
       @file_urls.each do |file_url|
-        attachments[file_url] = File.read(file_url)
+        attachments[file_url] = File.read(file_url) if File.exist?(file_url)
       end
     end
     mail(to: @client.email, subject: subject)
   end
 
-  def send_email_to_crew(project)
+  def send_email_to_crew(project, file_urls=nil)
     @project = project
     @crew = @project.try(:primary_crew)
+    @file_urls = file_urls
+    if @file_urls.present?
+      @file_urls.each do |file_url|
+        attachments[file_url] = File.read(file_url) if File.exist?(file_url)
+      end
+    end
     mail(to: @crew.try(:email), subject: "Crew Data Sheet")
+  end
+
+  def send_email_for_permit(draftsman, permit_information, ccs, notes, file_urls=nil)
+    @draftsman = draftsman
+    @permit_information = permit_information
+    @project = @permit_information.project
+    @notes = notes
+    @file_urls = file_urls
+    if @file_urls.present?
+      @file_urls.each do |file_url|
+        attachments[file_url] = File.read(file_url) if File.exist?(file_url)
+      end
+    end
+    mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet")
   end
 end

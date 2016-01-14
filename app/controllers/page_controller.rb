@@ -7,12 +7,15 @@ class PageController < ApplicationController
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
 		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
 		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@unpermitted_permit_informations = PermitInformation.unpermitted_permit_informations
+		@permitted_permit_informations = PermitInformation.joins(:permits).where("permits.id IN (?)", Permit.pending_permits.map(&:id))
+		@permit_informations = (@unpermitted_permit_informations || [] ) + @permitted_permit_informations
 		@comm_histories = CommHistory.where('"callBackDate" <= ? AND bid_id not in (?) AND is_completed = ?', DateTime.now, Bid.accepted_bids.map(&:id), false)
 		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
     @vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))
 		model_names = [:proj_sched, :proj_insp, :permit, :credit_note, :receipt, :invoice,
 			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
-			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium]
+			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :engineer, :draftsman]
 			model_names.each do |attribute|
 				instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
 			end

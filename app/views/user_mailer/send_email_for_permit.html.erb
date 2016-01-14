@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Dear <%= @draftsman.try(:name) %>,
+    <br>
+    <br>
+    <b>Job Name:</b>&nbsp;&nbsp;<%= @project.title %>
+    <br>
+    <b>Job Address:</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %>
+    <br>
+    <b>Start date:</b>&nbsp;&nbsp;<%= @project.try(:scheduleStart).try(:strftime, '%d %b %Y') %>
+    <br>
+    <b>Permit Valuation:</b>&nbsp;&nbsp;<%= @permit_information.valuation %>
+    <br>
+    <b>Replacement:</b>&nbsp;&nbsp;<%= @permit_information.humanize("replacement") %>
+    <% if @permit_information.type_of_replacement == "Partial" %>
+      <br>
+      <b>Type of Replacement:</b>&nbsp;&nbsp;<%= @permit_information.type_of_replacement %>
+      <br>
+      <b>Amount:</b>&nbsp;&nbsp;<%= @permit_information.amount %>
+    <% end %>
+    <br>
+    <b>Plot Plans:</b>&nbsp;&nbsp;<%= @project.humanize("plot_plans") %>
+    <br>
+    <b>Drawings:</b>&nbsp;&nbsp;<%= @project.humanize("drawings") %>
+    <br>
+    <b>Is this is an HPOZ?</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).humanize("hpoz") %>
+    <br>
+    <b>Option:</b>&nbsp;&nbsp;<%= @project.option %>
+    <br>
+    <b>Notes:</b>&nbsp;&nbsp;<%= @notes %>
+    <br>
+    <br>
+    Thanks,
+    <br/>
+    Support Team
+  </body>
+</html>

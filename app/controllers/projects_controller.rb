@@ -26,15 +26,18 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @permit_information = @project.try(:permit_information)
   end
 
   # GET /projects/new
   def new
     @project = Project.new
+    @permit_information = @project.build_permit_information
   end
 
   # GET /projects/1/edit
   def edit
+    @permit_information = @project.permit_information.present? ? @project.permit_information : @project.build_permit_information
   end
 
   # POST /projects
@@ -47,6 +50,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
+        @permit_information = @project.permit_information.present? ? @project.permit_information : @project.build_permit_information
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -86,7 +90,8 @@ class ProjectsController < ApplicationController
   end
 
   def send_email_to_crew
-    UserMailer.send_email_to_crew(@project).deliver
+    file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+    UserMailer.send_email_to_crew(@project, file_urls).deliver
     respond_to do |format|
       format.html{ redirect_to project_url(@project), notice: 'Email is sent successfully.' }
     end
@@ -103,8 +108,8 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option)
-    end
+      params[:project].delete :permit_information_attributes if params[:project][:permit] == "0"
+      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ])    end
 
     def contracts
       @contracts = Contract.unprojected_contracts

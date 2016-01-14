@@ -3,11 +3,11 @@
 		<%= permit_information.input :valuation %>
 	</div>
 	<div class='col-md-4'>
-		<%= permit_information.input :units, as: :boolean, label: "5 Units" %>
+		<%= permit_information.input :units, as: :boolean, label: "5 Units+" %>
 	</div>
 	<div class='col-md-4'>
 		<%= label_tag "City" %>
-		<p class="city"><%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></p>
+		<p class="city"><%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:city_state) %></p>
 	</div>
 </div>
 <div class="row">

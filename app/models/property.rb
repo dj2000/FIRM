@@ -33,6 +33,10 @@ class Property < ActiveRecord::Base
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
   end
 
+  def city_state
+    "#{city}, #{state}"
+  end
+
   #For getting full name of state
   def state_name
     state_name = CS.states(:us)[ self.try(:state).try(:to_sym) ]

@@ -30,11 +30,17 @@ class UserMailer < ActionMailer::Base
     mail(to: @crew.try(:email), subject: "Crew Data Sheet")
   end
 
-  def send_email_for_permit(draftsman, permit_information, ccs, notes, attachments=nil)
+  def send_email_for_permit(draftsman, permit_information, ccs, notes, file_urls=nil)
     @draftsman = draftsman
     @permit_information = permit_information
     @project = @permit_information.project
     @notes = notes
+    @file_urls = file_urls
+    if @file_urls.present?
+      @file_urls.each do |file_url|
+        attachments[file_url] = File.read(file_url) if File.exist?(file_url)
+      end
+    end
     mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet")
   end
 end

@@ -1,6 +1,9 @@
 $('.modal-details .modal-title').html("Inspection Information");
 $('.modal-details .modal-body').html("<%= escape_javascript(render partial: 'inspection') %>");
 $(".modal-details").modal('show');
-<% if params[:email_preview].present? %>
+$(".permit-information-details").modal("hide");
+<% if params[:email_preview].present? and request.referer == root_url %>
+	$(".modal-details .modal-footer").html("<button class=\"btn btn-success\" data-toggle=\"modal\" onclick='sendPIS(<%= @inspection.id %>)' data-target=\".permit-information-details\" data-dismiss=\"modal\">Submit</button>")
+<% elsif params[:email_preview].present? and request.referrer.include?("comm_histories") %>
 	$(".modal-details .modal-footer").html("<a href='javascript:void(0)' class='btn btn-success email-preview' onclick='sendFiles()'>Submit</a>")
 <% end %>

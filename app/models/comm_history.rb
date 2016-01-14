@@ -12,7 +12,7 @@ class CommHistory < ActiveRecord::Base
 
   def call_back_date
 		if self.call_time and self.callBackDate
-			self.errors.add(:callBackDate, "Call Back Date should be greater than Call Date.") unless self.callBackDate >= self.call_time
+			self.errors.add(:callBackDate, "Call Back Date should be greater than Call Date.") unless self.callBackDate.try(:to_date) >= self.call_time.try(:to_date)
 		end
   end
 

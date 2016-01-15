@@ -14,15 +14,10 @@
   </thead>
   <tbody>
     <% status ||= false %>
-    <% if status %>
-      <% @bids = @vc_bids %>
-      <% onclick = "showInfo('contracts/new','#{request.path}')" %>
-    <% else %>
-      <% onclick = "showInfo('comm_histories/new','#{request.path}')" %>
-    <% end %>
-
+    <% @bids =  @vc_bids if status %>
     <% @bids.each do |bid| %>
-      <tr onclick = "<%= onclick %>">
+      <% link = status ?  new_polymorphic_path(Contract.new) : new_polymorphic_path(CommHistory.new, bid_id: bid.id) %>
+      <tr onclick='document.location = "<%= link %>" '>
         <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>
         <td><%= bid.costRepair %></td>

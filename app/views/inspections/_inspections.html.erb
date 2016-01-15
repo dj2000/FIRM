@@ -12,12 +12,12 @@
       <th>Verified Report</th>
       <th>Verified Complete</th>
       <th>Notes</th>
-      <% if request.format == 'text/html' %>
+      <% if request.format == 'text/html' and !current_page?(root_url) %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
     </tr>
   </thead>
-
+  <% @inspections = @unbided_inspections if current_page?(root_url) %>
   <tbody>
     <% @inspections.each do |inspection| %>
       <tr>
@@ -32,7 +32,7 @@
         <td><%= inspection.humanize("verifiedReport") %></td>
         <td><%= inspection.humanize("verifiedComp") %></td>
         <td><%= inspection.notes %></td>
-        <% if request.format == 'text/html' %>
+        <% if request.format == 'text/html' and !current_page?(root_url) %>
           <td>
             <%= link_to inspection, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Bids

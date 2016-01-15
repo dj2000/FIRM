@@ -27,6 +27,11 @@ class Inspection < ActiveRecord::Base
 		self.send("#{attribute}") ? "Yes" : "No"
   end
 
+  def self.unbided_inspections
+    @inspections = Inspection.where(fCondition: "Bid provided")
+    @inspections.where.not(id: Bid.all.map(&:inspection_id))
+  end
+
   def amount
     invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
     (self.try(:appointment).try(:inspFee) || 0) - (invoices_amount || 0)

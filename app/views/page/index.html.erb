@@ -228,7 +228,24 @@
           </div>
         </div>
       </div>
-
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headind-bids-to-be-provided">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @permit_informations.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#bid-to-be-entered" aria-expanded="false" aria-controls="bid-to-be-entered">
+            <i class="fa fa-check-square-o"></i>
+              Bids to be Entered
+            </a>
+          </h4>
+        </div>
+        <div id="bid-to-be-entered" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headind-bids-to-be-provided">
+          <div class="panel-body">
+            <%= render partial: 'inspections/inspections' %>
+          </div>
+        </div>
+      </div>
       <div class="panel panel-danger">
         <div class="panel-heading" role="tab" id="headingFour">
           <div class="pull-right">
@@ -319,24 +336,6 @@
         <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
           <div class="panel-body">
             <%= render template: 'permit_informations/index' %>
-          </div>
-        </div>
-      </div>
-      <div class="panel panel-danger">
-        <div class="panel-heading" role="tab" id="headind-bids-to-be-provided">
-          <div class="pull-right">
-            <span class="badge progress-bar-warning"><%= @permit_informations.count %></span>
-          </div>
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#bid-to-be-entered" aria-expanded="false" aria-controls="bid-to-be-entered">
-            <i class="fa fa-calendar"></i>
-              Bids to be Entered
-            </a>
-          </h4>
-        </div>
-        <div id="bid-to-be-entered" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headind-bids-to-be-provided">
-          <div class="panel-body">
-            <%= render partial: 'inspections/inspections' %>
           </div>
         </div>
       </div>

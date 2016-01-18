@@ -63,6 +63,7 @@ class ProjectsController < ApplicationController
     create_documents
     respond_to do |format|
       if @project.update(project_params)
+        @project.try(:permit_information).try(:destroy) if @project.try(:permit) == false
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -108,7 +109,11 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params[:project].delete :permit_information_attributes if params[:project][:permit] == "0"
+      if params[:project][:permit] == "0"
+        params[:project].delete :permit_information_attributes
+        params[:project][:plot_plans] = false
+        params[:project][:drawings] = false
+      end
       params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ])    end
 
     def contracts

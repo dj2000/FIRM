@@ -29,6 +29,14 @@
 		<%= permit_information.association :engineer, as: :select, collection: Engineer.all, label_method: :name, label: "Select Engineer", include_blank: "Select Engineer" %>
 	</div>
 </div>
+<div class="row plotPlanDrawing <%= 'hide' unless permit_information.object.engineering? %>">
+	<div class="col-md-3">
+		<%= f.input :plot_plans, as: :boolean, input_html: { checked: permit_information.object.engineering?, onclick: "return false" } %>		
+	</div>
+	<div class="col-md-3">
+		<%= f.input :drawings, as: :boolean, input_html: { checked: permit_information.object.engineering?, onclick: "return false" } %>
+	</div>
+</div>
 <script>
 	$("input[name='project[permit_information_attributes][replacement]']").change(function(){
 		if($(this).is(":checked")){
@@ -41,9 +49,15 @@
 	$("input[name='project[permit_information_attributes][engineering]']").change(function(){
 		if($(this).is(":checked")){
 			$(".engineer-name").removeClass("hide");
+			$(".plotPlanDrawing").removeClass("hide");
+			$("#project_plot_plans").prop("checked", true);
+			$("#project_drawings").prop("checked", true);
 		}
 		else{
 			$(".engineer-name").addClass("hide");
+			$(".plotPlanDrawing").addClass("hide");
+			$("#project_plot_plans").prop("checked", false);
+			$("#project_drawings").prop("checked", false);
 		}
 	});
 	$("input[name='project[permit_information_attributes][type_of_replacement]']").change(function(){

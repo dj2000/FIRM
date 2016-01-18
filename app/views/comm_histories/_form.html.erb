@@ -1,4 +1,5 @@
-<%= simple_form_for(@comm_history) do |f| %>
+<%= javascript_include_tag "common" %>
+<%= simple_form_for(@comm_history, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
@@ -86,6 +87,23 @@
       <%= f.input :callSummary, :input_html => { rows: 7, cols: 10 } %>
     </div>
   </div>
+  <div class="row">
+    <%= label_tag "Email documents" %>
+    <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "inspectionEmailDocumentFile",  accept: ".pdf"%>
+    <div class="col-md-6 email_preview preview">
+      <div class="text-center">No Preview Available.</div>
+    </div>
+    <% if f.object.try(:bid).try(:inspection).try(:documents).present? %>
+      <div class="col-md-6">
+        <%= label_tag "Uploaded Email Documents" %>
+        <br/>
+        <% f.object.try(:bid).try(:inspection).try(:documents).try(:email_documents).each do |document| %>
+          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+          <br/>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
   <fieldset><legend></legend></fieldset>
 
@@ -130,6 +148,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
+  loadPreview("inspectionEmailDocumentFile", "email_preview");
   
   $("#comm_history_bid_id").on('change', function(){
     var bid_id = $(this).val();

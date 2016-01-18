@@ -43,6 +43,7 @@ class InspectionsController < ApplicationController
   # POST /inspections.json
   def create
     @inspection = Inspection.new(inspection_params)
+    @clients = @inspection.try(:appointment).try(:insp_request).try(:property).try(:clients)
     create_documents
     respond_to do |format|
       if @inspection.save

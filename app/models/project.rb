@@ -13,6 +13,9 @@ class Project < ActiveRecord::Base
   has_many :proj_insps, dependent: :destroy
   belongs_to :primary_crew, class_name: "Crew", foreign_key: :primary_crew_id
   has_many :documents, as: :attachable, dependent: :destroy
+  has_many :project_payment_schedules, -> { order 'project_payment_schedules.created_at' } , dependent: :destroy
+
+  accepts_nested_attributes_for :project_payment_schedules, reject_if: proc { |attributes| attributes['payment_schedule'].blank? }, allow_destroy: true
 
 	## Validations
   validates_presence_of :contract_id, :jobCost, :estDuration, :authorizedBy, :authorizedOn, :title, :scheduleStart, :scheduleEnd
@@ -59,7 +62,7 @@ class Project < ActiveRecord::Base
     end
   end
 
-  def status
+  def ready_to_process_status
     self.ready_to_process? ? "Ready" : "Pending"
   end
 

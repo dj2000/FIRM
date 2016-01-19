@@ -61,12 +61,19 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1.json
   def update
     create_documents
+    @pay_plan = @project.try(:contract).try(:bid).try(:payPlan)
     respond_to do |format|
       if @project.update(project_params)
         @project.try(:permit_information).try(:destroy) if @project.try(:permit) == false
+        format.js
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
+        if @project.project_payment_schedules.present?
+          @project_payment_schedules = @project.project_payment_schedules
+          @payments = @pay_plan.try(:deposit_payments)
+        end
+        format.js
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -114,7 +121,8 @@ class ProjectsController < ApplicationController
         params[:project][:plot_plans] = false
         params[:project][:drawings] = false
       end
-      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ])    end
+      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ], project_payment_schedules_attributes: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id])
+    end
 
     def contracts
       @contracts = Contract.unprojected_contracts

@@ -79,10 +79,13 @@
     <div class="col-md-2">
       <%= f.input :permit, as: :boolean %>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-2">
+      <a href='javascript:void(0)' onclick="$('.modal.permit-information').modal('show');" class="link permit_information-link <%= 'hide' unless f.object.permit? %>">Permit Information</a>
+    </div>
+    <div class="col-md-4">
       <%= f.input :authorizedBy, label: "Schedule Authorized By" %>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <%= label_tag "Date" %>
       <div class="form-group <%= 'has-error' if f.object.errors["authorizedOn"].first %>">
         <div class='input-group date'>
@@ -197,6 +200,10 @@
   $("input[name='project[permit]']").change(function(){
     if($(this).is(":checked")){
       $(".modal.permit-information").modal('show');
+      $(".permit_information-link").removeClass('hide')
+    }
+    else{
+      $(".permit_information-link").addClass('hide')
     }
   });
 </script>

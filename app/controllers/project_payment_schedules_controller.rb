@@ -12,7 +12,7 @@ class ProjectPaymentSchedulesController < ApplicationController
 			@project_payment_schedules = @project.project_payment_schedules
 		else
 			@payments = Array.new
-			@payments << Payment.create(title: @pay_plan.try(:deposit_label) || "Deposit" , pay_plan_id: @pay_plan.id, value: @pay_plan.try(:deposit), payment_type: "Deposit")
+			@payments << Payment.find_or_create_by(title: @pay_plan.try(:deposit_label) || "Deposit" , pay_plan_id: @pay_plan.id, value: @pay_plan.try(:deposit), payment_type: "Deposit")
 			@payments = @payments + @pay_plan.try(:payments)
 			@project_payment_schedules = @project.project_payment_schedules.build
 		end

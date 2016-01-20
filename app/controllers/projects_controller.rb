@@ -62,6 +62,11 @@ class ProjectsController < ApplicationController
   def update
     create_documents
     @pay_plan = @project.try(:contract).try(:bid).try(:payPlan)
+    if params[:project][:project_payment_schedules_attributes].present?
+      params[:project][:project_payment_schedules_attributes].each do |k, v|
+        params[:project][:project_payment_schedules_attributes][k][:validation_payment_schedules] = params[:project][:project_payment_schedules_attributes]
+      end
+    end
     respond_to do |format|
       if @project.update(project_params)
         @project.try(:permit_information).try(:destroy) if @project.try(:permit) == false
@@ -121,7 +126,7 @@ class ProjectsController < ApplicationController
         params[:project][:plot_plans] = false
         params[:project][:drawings] = false
       end
-      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ], project_payment_schedules_attributes: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id])
+      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ], project_payment_schedules_attributes: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id, validation_payment_schedules: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id]])
     end
 
     def contracts

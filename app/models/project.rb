@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
 	## Non Model Attributes
   attr_accessor :crew_schedule
 
+  validates_associated :project_payment_schedules
+
 	## Associations
   belongs_to :contract
   belongs_to :crew

@@ -14,6 +14,7 @@
 		<tbody>
 			<% if action_name == "update" || !@project.project_payment_schedules.first.new_record? %>
 				<%= project.fields_for :project_payment_schedules do |project_payment_schedule| %>
+					<%= project_payment_schedule.hidden_field :payment_id, value: project_payment_schedule.object.try(:payment).try(:id) %>
 					<tr>
 						<%= render partial: "project_payment_schedules/project_payment_schedules_form", locals: { project_payment_schedule: project_payment_schedule, payment: project_payment_schedule.try(:payment), index: nil } %>
 					</tr>

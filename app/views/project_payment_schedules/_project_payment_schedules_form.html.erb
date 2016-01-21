@@ -9,13 +9,13 @@
 	<% if (index == 0 and project_payment_schedule.object.new_record?) %>
 		<%= project_payment_schedule.input :payment_type, collection: [["Deposit", "Deposit"]], selected: "Deposit", as: :select, label: false, input_html: { readonly: true} %>
 	<% else %>
-		<%= project_payment_schedule.input :payment_type, collection: project_payment_schedule.object.payment_types, as: :select, label: false, selected: project_payment_schedule.object.try(:payment_type) %>
+		<%= project_payment_schedule.input :payment_type, collection: project_payment_schedule.object.payment_types, as: :select, label: false, selected: project_payment_schedule.object.try(:payment_type), input_html: {class: "payment_type"}, :prompt => "Select Payment Type" %>
 	<% end %>
 </td>
 <td class="col-sm-2">
 	<div class="form-group <%= 'has-error' if project_payment_schedule.object.errors["invoice_date"].first %>">
 	  <div class='input-group date'>
-	    <%= project_payment_schedule.text_field :invoice_date, class: "form-control", value: project_payment_schedule.object.try(:invoice_date) %>
+	    <%= project_payment_schedule.text_field :invoice_date, class: "form-control invoice_date", value: project_payment_schedule.object.try(:invoice_date) %>
 	    <span class="input-group-addon">
 	      <span class="glyphicon glyphicon-calendar"></span>
 	    </span>
@@ -24,12 +24,12 @@
 	</div>
 </td>
 <td>
-	<%= project_payment_schedule.input :paid, as: :boolean, label: false, input_html: {class: "paid" } %>
+	<%= project_payment_schedule.input :paid, as: :boolean, label: false, input_html: { class: "paid" }, disabled: project_payment_schedule.object.invoice_date.blank? %>
 </td>
 <td class="col-sm-2">
 	<div class="form-group <%= 'has-error' if project_payment_schedule.object.errors["date_paid"].first %>">
 	  <div class='input-group date <%= 'hide' unless project_payment_schedule.object.paid? %>'>
-	    <%= project_payment_schedule.text_field :date_paid, class: "form-control", value: project_payment_schedule.object.try(:date_paid) %>
+	    <%= project_payment_schedule.text_field :date_paid, class: "form-control invoice_date", value: project_payment_schedule.object.try(:date_paid) %>
 	    <span class="input-group-addon">
 	      <span class="glyphicon glyphicon-calendar"></span>
 	    </span>
@@ -49,5 +49,18 @@
 		else{
 			nextTd.addClass("hide");
 		}
-	})
+	});
+
+	$(".input-group.date").on('changeDate', function() {
+    var paidCheckbox = $(this).closest('td').next('td').find('.paid');
+    paidCheckbox.attr("disabled", false);
+    paidCheckbox.removeClass("disabled");
+  });
+
+	$(".invoice_date").change(function(){
+		if($(this).val() == ""){
+			var paidCheckbox = $(this).closest('td').next('td').find('.paid');
+			paidCheckbox.attr("disabled", true);
+		}
+	});
 </script>

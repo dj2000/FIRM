@@ -22,11 +22,11 @@ class Contract < ActiveRecord::Base
   end
 
   def signed?(params = nil)
-		(params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
+		return true if (params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
   end
 
   def down_payment?(params = nil)
-		(params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
+		return true if (params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
   end
 
   ## Contracts doesn't have any project

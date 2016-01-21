@@ -6,6 +6,8 @@ class Project < ActiveRecord::Base
 
   validates_associated :project_payment_schedules
 
+  scope :unclosed_projects, -> { where( ready_to_process: true, status: "Open" ) } # which are ready to process and not closed projects
+
 	## Associations
   belongs_to :contract
   belongs_to :crew
@@ -36,6 +38,10 @@ class Project < ActiveRecord::Base
 
   def self.permitted_projects
     self.where(permit: true)
+  end
+
+  def total_amount
+    self.try(:project_payment_schedules).map(&:amount).inject(:+) || 0
   end
 
   def scheduled
@@ -72,6 +78,14 @@ class Project < ActiveRecord::Base
     return unless self.status == "Closed"
     is_paid = self.project_payment_schedules.where(payment_type: ["Completion Payment", "Final Sign Off"], paid: true )
     return is_paid.present?
+  end
+
+  def completed?
+    return true if self.project_payment_schedules.where(payment_type: "Completion Payment", paid: true ).present?
+  end
+
+  def permit_sign_off?
+    return true if self.project_payment_schedules.where(payment_type: "Final Sign Off", paid: true ).present?
   end
 
   private

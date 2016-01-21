@@ -33,7 +33,7 @@
 	</table>
 	<div class="row pull-right">
 		<div class="col-md-5 <%= 'hide' unless @project.is_closed? %> status">
-			<%= project.check_box :status, { class: "pull-left", disabled: @project.status == "Closed"}, "Closed", "Open" %>
+			<%= project.check_box :status, { class: "pull-left"}, "Closed", "Open" %>
 			<%= label_tag "Closed" %>
 		</div>
 		<div class="col-md-3">

@@ -1,3 +1,4 @@
+<%= javascript_include_tag "common" %>
 <%= simple_form_for(@inspection, multipart: true, html: {id: "file-dropzone"}) do |f| %>
   <%= f.error_notification %>
   <% if f.object.errors["documents"].present? %>
@@ -11,7 +12,7 @@
       <%= f.input :name %>
     </div>
     <div class="col-md-4">
-      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
+      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment", selected: params[:appointment_id] || (params[:inspection] and params[:inspection][:appointment_id]) || f.object.appointment_id %>
     </div>
     <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id %>">
       <%= label_tag "Inspector" %>
@@ -177,43 +178,4 @@
 
   loadPreview("documentFile", "document_preview");
   loadPreview("emailDocumentFile", "email_preview");
-
-  function getDocumentImages(type, target){
-    var imgName;
-    if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/' + type + '_icon.png'
-    }
-    else{
-      imgName =  target;
-    }
-    return imgName;
-  }
-
-  function loadPreview(divId, previewClass){
-    $("#" + divId).change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var divPreview = $("." + previewClass);
-        divPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var file_name = file[0].name;
-          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_ext, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            divPreview.append(img);
-          }
-          reader.readAsDataURL(file[0]);
-        });
-      }
-      else {
-        alert("This browser does not support HTML5 FileReader.");
-      }
-    });
-  }
 </script>

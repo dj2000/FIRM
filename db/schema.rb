@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113112549) do
+ActiveRecord::Schema.define(version: 20160121124920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,6 +352,7 @@ ActiveRecord::Schema.define(version: 20160113112549) do
     t.integer  "pay_plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "payment_type"
   end
 
   create_table "permit_informations", force: true do |t|
@@ -414,6 +415,20 @@ ActiveRecord::Schema.define(version: 20160113112549) do
     t.date     "schedule_end_date"
   end
 
+  create_table "project_payment_schedules", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "payment_id"
+    t.string   "payment_schedule"
+    t.float    "amount"
+    t.string   "payment_type"
+    t.date     "invoice_date"
+    t.boolean  "paid"
+    t.date     "date_paid"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
     t.date     "vcDate"
     t.integer  "contract_id"
@@ -440,6 +455,8 @@ ActiveRecord::Schema.define(version: 20160113112549) do
     t.boolean  "drawings",            default: false
     t.string   "option"
     t.boolean  "ready_to_process"
+    t.string   "status",              default: "Open"
+    t.boolean  "send_to_crew",        default: false
   end
 
   create_table "properties", force: true do |t|

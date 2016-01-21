@@ -1,0 +1,5 @@
+<% if @project.errors.present? %>
+	$(".project_payment_schedules").html("<%= j render partial: 'project_payment_schedules/form' %>")
+<% else %>
+	window.location.href = "<%= root_url %>";
+<% end %>

@@ -1,3 +1,4 @@
+<%= javascript_include_tag "common" %>
 <%= simple_form_for(@project, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
   <%= error_messages_for f.object.try(:permit_information) %>
@@ -75,13 +76,16 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-2">
-      <%= f.input :permit, as: :boolean %>
+    <div class="col-md-4">
+      <div class="col-md-3"><%= f.input :permit, as: :boolean %></div>
+      <div class="col-md-9 pull-right" style="margin-top:9px">
+        <a href='javascript:void(0)' onclick="$('.modal.permit-information').modal('show');" class="link permit_information-link <%= 'hide' unless f.object.permit? %>"><i class='fa fa-eye'></i> Permit Information</a>
+      </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <%= f.input :authorizedBy, label: "Schedule Authorized By" %>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <%= label_tag "Date" %>
       <div class="form-group <%= 'has-error' if f.object.errors["authorizedOn"].first %>">
         <div class='input-group date'>
@@ -96,13 +100,7 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-2">
-      <%= f.input :plot_plans, as: :boolean %>
-    </div>
-    <div class="col-md-2">
-      <%= f.input :drawings, as: :boolean %>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-6">
       <%= f.input :ready_to_process, as: :boolean %>
     </div>
     <div class="col-md-6">
@@ -151,7 +149,7 @@
         </div>
         <div class="modal-body">
           <%= f.fields_for :permit_information do |permit_information| %>
-            <%= render partial: 'permit_informations/form', locals: { permit_information: permit_information} %>
+            <%= render partial: 'permit_informations/form', locals: { permit_information: permit_information, f: f} %>
           <% end %>
         </div>
         <div class='modal-footer'>
@@ -199,48 +197,13 @@
     format: 'yyyy-mm-dd'
   });
 
-  function getDocumentImages(type, target){
-    var imgName;
-    if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/' + type + '_icon.png'
-    }
-    else{
-      imgName =  target;
-    }
-    return imgName;
-  }
-
   $("input[name='project[permit]']").change(function(){
     if($(this).is(":checked")){
       $(".modal.permit-information").modal('show');
+      $(".permit_information-link").removeClass('hide')
+    }
+    else{
+      $(".permit_information-link").addClass('hide')
     }
   });
-
-  function loadPreview(divId, previewClass){
-    $("#" + divId).change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var divPreview = $("." + previewClass);
-        divPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var file_name = file[0].name;
-          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_ext, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            divPreview.append(img);
-          }
-          reader.readAsDataURL(file[0]);
-        });
-      }
-      else {
-        alert("This browser does not support HTML5 FileReader.");
-      }
-    });
-  }
 </script>

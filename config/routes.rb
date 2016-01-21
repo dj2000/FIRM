@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   resources :draftsmen
+  resources :project_payment_schedules do
+    get :load_project_payment_schedules, on: :collection
+  end
 
   resources :credit_notes
   resources :engineers

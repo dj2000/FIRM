@@ -12,10 +12,12 @@ class PageController < ApplicationController
 		@permit_informations = (@unpermitted_permit_informations || [] ) + @permitted_permit_informations
 		@comm_histories = CommHistory.where('"callBackDate" <= ? AND bid_id not in (?) AND is_completed = ?', DateTime.now, Bid.accepted_bids.map(&:id), false)
 		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
-    @vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))
+		@vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))
+		@unbided_inspections = Inspection.unbided_inspections
+		@unclosed_projects = Project.unclosed_projects
 		model_names = [:proj_sched, :proj_insp, :permit, :credit_note, :receipt, :invoice,
 			:pay_plan, :inspection, :block_out_period, :agent, :client, :property, :crew, :inspector,
-			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :engineer, :draftsman]
+			:svc_area, :commission, :commission_rate, :i_fee_schedule, :svc_criterium, :engineer, :draftsman, :project_payment_schedule]
 			model_names.each do |attribute|
 				instance_variable_set("@#{attribute.to_s.pluralize}", attribute.to_s.camelize.constantize.all.count)
 			end

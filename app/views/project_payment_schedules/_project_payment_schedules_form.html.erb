@@ -1,0 +1,42 @@
+<td>
+	<%= project_payment_schedule.input :payment_schedule, input_html: { value: payment.try(:title) || project_payment_schedule.object.payment_schedule, readonly: true }, label: false %>
+</td>
+<td>
+	<% value = index == 0 ? @pay_plan.try(:deposite_amount, @bid) : (index == 1 ? @pay_plan.try(:calculate_first_payment, @bid) : @bid.try(:calculate_amount, payment.try(:value))) %>
+	<%= project_payment_schedule.input :amount, input_html: { value: (project_payment_schedule.object.try(:amount) || value), readonly: true }, label: false %>
+</td>
+<td>
+	<% if (index == 0 and project_payment_schedule.object.new_record?) || (project_payment_schedule.object.payment_schedule == "Deposit") %>
+		<%= project_payment_schedule.input :payment_type, collection: [["Deposit", "Deposit"]], selected: "Deposit", as: :select, label: false, input_html: { readonly: true} %>
+	<% else %>
+		<%= project_payment_schedule.input :payment_type, collection: project_payment_schedule.object.payment_types, input_html: {class: "payment_type"}, as: :select, label: false, selected: project_payment_schedule.object.try(:payment_type), :prompt => "Select Payment Type" %>
+	<% end %>
+</td>
+<td class="col-sm-2">
+	<div class="form-group <%= 'has-error' if project_payment_schedule.object.errors["invoice_date"].first %>">
+	  <div class='input-group date'>
+	    <%= project_payment_schedule.text_field :invoice_date, class: "form-control invoice_date", value: project_payment_schedule.object.try(:invoice_date) %>
+	    <span class="input-group-addon">
+	      <span class="glyphicon glyphicon-calendar"></span>
+	    </span>
+	  </div>
+	  <span class="help-block"><%= project_payment_schedule.object.errors["invoice_date"].first %></span>
+	</div>
+</td>
+<td>
+	<%= project_payment_schedule.input :paid, as: :boolean, label: false, input_html: { class: "paid" }, disabled: project_payment_schedule.object.invoice_date.blank? %>
+</td>
+<td class="col-sm-2">
+	<div class="form-group <%= 'has-error' if project_payment_schedule.object.errors["date_paid"].first %>">
+	  <div class='input-group date-paid date <%= 'hide' unless project_payment_schedule.object.paid? %>'>
+	    <%= project_payment_schedule.text_field :date_paid, class: "form-control invoice_date", value: project_payment_schedule.object.try(:date_paid) %>
+	    <span class="input-group-addon">
+	      <span class="glyphicon glyphicon-calendar"></span>
+	    </span>
+	  </div>
+	  <span class="help-block"><%= project_payment_schedule.object.errors["date_paid"].first %></span>
+	</div>
+</td>
+<td>
+	<%= project_payment_schedule.input :comments, label: false %>
+</td>

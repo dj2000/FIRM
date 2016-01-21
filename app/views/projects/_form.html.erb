@@ -76,11 +76,11 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-2">
-      <%= f.input :permit, as: :boolean %>
-    </div>
-    <div class="col-md-2">
-      <a href='javascript:void(0)' onclick="$('.modal.permit-information').modal('show');" class="link permit_information-link <%= 'hide' unless f.object.permit? %>">Permit Information</a>
+    <div class="col-md-4">
+      <div class="col-md-3"><%= f.input :permit, as: :boolean %></div>
+      <div class="col-md-9 pull-right" style="margin-top:9px">
+        <a href='javascript:void(0)' onclick="$('.modal.permit-information').modal('show');" class="link permit_information-link <%= 'hide' unless f.object.permit? %>"><i class='fa fa-eye'></i> Permit Information</a>
+      </div>
     </div>
     <div class="col-md-4">
       <%= f.input :authorizedBy, label: "Schedule Authorized By" %>

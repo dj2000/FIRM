@@ -20,7 +20,7 @@
   <% @inspections = @unbided_inspections if current_page?(root_url) %>
   <tbody>
     <% @inspections.each do |inspection| %>
-      <tr>
+      <tr onclick='document.location = "<%= new_bid_path(inspection_id: inspection.id) %>"'>
         <td><%= inspection.name %></td>
         <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
         <td><%= inspection.fCondition %></td>

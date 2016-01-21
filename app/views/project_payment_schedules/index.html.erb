@@ -1,10 +1,12 @@
 <div class="row form-group">
 	<div class="col-md-3">
 	<%= label_tag "Projects"%>
-		<%= select_tag "project_id", options_for_select(@projects), class: "form-control project_select", prompt: "Select Project" %>		
+		<%= select_tag "project_id", options_for_select(@projects, params[:project_id]), class: "form-control project_select", prompt: "Select Project" %>
 	</div>
 </div>
-<div class="project_payment_schedules"></div>
+<div class="project_payment_schedules">
+	<%= render partial: "project_payment_schedules/form" if params[:project_id] %>
+</div>
 <script type="text/javascript">
 	$(".project_select").change(function(){
 		var projectId = $(this).val();

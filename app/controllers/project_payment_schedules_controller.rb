@@ -2,10 +2,17 @@ class ProjectPaymentSchedulesController < ApplicationController
 	before_action :projects
 
 	def index
+		create_payment_schedules if params[:project_id].present?
 	end
 
 	def load_project_payment_schedules
-		@project = Project.find(params[:project_id])
+		create_payment_schedules
+		respond_to do |format|
+			format.js
+		end
+	end
+
+	def create_payment_schedules
 		@bid = @project.try(:contract).try(:bid)
 		@pay_plan = @bid.try(:payPlan)
 		@insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
@@ -18,14 +25,12 @@ class ProjectPaymentSchedulesController < ApplicationController
 			@payments = @payments + @pay_plan.try(:payments)
 			@project_payment_schedules = @project.project_payment_schedules.build
 		end
-		respond_to do |format|
-			format.js
-		end
 	end
 
 	private
 
 	def projects
+		@project = Project.find(params[:project_id]) if params[:project_id].present?
 		@projects = Project.all.map{|p| [p.title, p.id]}
 	end
 end

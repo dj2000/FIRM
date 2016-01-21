@@ -16,17 +16,19 @@
   </thead>
   <tbody>
     <% @unclosed_projects.each do |project| %>
-      <td><%= project.title %></td>
-      <td><%= project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:address) %></td>
-      <td><%= project.try(:scheduled) %></td>
-      <td><%= project.try(:primary_crew).try(:foreman) %></td>
-      <td><%= project.try(:contract).try(:signed?) ? "Yes" : "No" %></td>
-      <td><%= project.try(:contract).try(:down_payment?) ? "Yes" : "No" %></td>
-      <td><%= project.humanize("permit") %></td>
-      <td><%= project.humanize("send_to_crew") %></td>
-      <td><%= project.try(:total_amount) %></td>
-      <td><%= project.humanize(:completed?) %></td>
-      <td><%= project.humanize(:permit_sign_off?) %></td>
+      <tr onclick='document.location="<%= project_payment_schedules_path(project_id: project.id) %>"'>
+        <td><%= project.title %></td>
+        <td><%= project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:address) %></td>
+        <td><%= project.try(:scheduled) %></td>
+        <td><%= project.try(:primary_crew).try(:foreman) %></td>
+        <td><%= project.try(:contract).try(:signed?) ? "Yes" : "No" %></td>
+        <td><%= project.try(:contract).try(:down_payment?) ? "Yes" : "No" %></td>
+        <td><%= project.humanize("permit") %></td>
+        <td><%= project.humanize("send_to_crew") %></td>
+        <td><%= project.try(:total_amount) %></td>
+        <td><%= project.humanize(:completed?) %></td>
+        <td><%= project.humanize(:permit_sign_off?) %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

@@ -68,6 +68,12 @@ class Project < ActiveRecord::Base
     self.ready_to_process? ? "Ready" : "Pending"
   end
 
+  def is_closed?
+    return unless self.status == "Closed"
+    is_paid = self.project_payment_schedules.where(payment_type: ["Completion Payment", "Final Sign Off"], paid: true )
+    return is_paid.present?
+  end
+
   private
 
   def check_schedule_end_date

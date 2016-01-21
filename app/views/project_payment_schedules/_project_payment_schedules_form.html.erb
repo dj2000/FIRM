@@ -6,10 +6,10 @@
 	<%= project_payment_schedule.input :amount, input_html: { value: (project_payment_schedule.object.try(:amount) || value), readonly: true }, label: false %>
 </td>
 <td>
-	<% if (index == 0 and project_payment_schedule.object.new_record?) %>
+	<% if (index == 0 and project_payment_schedule.object.new_record?) || (project_payment_schedule.object.payment_schedule == "Deposit") %>
 		<%= project_payment_schedule.input :payment_type, collection: [["Deposit", "Deposit"]], selected: "Deposit", as: :select, label: false, input_html: { readonly: true} %>
 	<% else %>
-		<%= project_payment_schedule.input :payment_type, collection: project_payment_schedule.object.payment_types, as: :select, label: false, selected: project_payment_schedule.object.try(:payment_type), input_html: {class: "payment_type"}, :prompt => "Select Payment Type" %>
+		<%= project_payment_schedule.input :payment_type, collection: project_payment_schedule.object.payment_types, input_html: {class: "payment_type"}, as: :select, label: false, selected: project_payment_schedule.object.try(:payment_type), :prompt => "Select Payment Type" %>
 	<% end %>
 </td>
 <td class="col-sm-2">
@@ -28,7 +28,7 @@
 </td>
 <td class="col-sm-2">
 	<div class="form-group <%= 'has-error' if project_payment_schedule.object.errors["date_paid"].first %>">
-	  <div class='input-group date <%= 'hide' unless project_payment_schedule.object.paid? %>'>
+	  <div class='input-group date-paid date <%= 'hide' unless project_payment_schedule.object.paid? %>'>
 	    <%= project_payment_schedule.text_field :date_paid, class: "form-control invoice_date", value: project_payment_schedule.object.try(:date_paid) %>
 	    <span class="input-group-addon">
 	      <span class="glyphicon glyphicon-calendar"></span>
@@ -40,27 +40,3 @@
 <td>
 	<%= project_payment_schedule.input :comments, label: false %>
 </td>
-<script type="text/javascript">
-	$(".paid").change(function(){
-		var nextTd = $(this).closest('td').next('td').find("div .date");
-		if($(this).is(":checked")){
-			nextTd.removeClass("hide");	
-		}
-		else{
-			nextTd.addClass("hide");
-		}
-	});
-
-	$(".input-group.date").on('changeDate', function() {
-    var paidCheckbox = $(this).closest('td').next('td').find('.paid');
-    paidCheckbox.attr("disabled", false);
-    paidCheckbox.removeClass("disabled");
-  });
-
-	$(".invoice_date").change(function(){
-		if($(this).val() == ""){
-			var paidCheckbox = $(this).closest('td').next('td').find('.paid');
-			paidCheckbox.attr("disabled", true);
-		}
-	});
-</script>

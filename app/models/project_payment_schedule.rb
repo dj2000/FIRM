@@ -4,7 +4,7 @@ class ProjectPaymentSchedule < ActiveRecord::Base
 
 	attr_accessor :validation_payment_schedules
 
-	PAYMENT_TYPES = ["Down Payment", "Commencement Payment", "14 Day Prior Payment", "2nd Day Commencement Payment", "Ok to Pour Payment", "Completion Payment", "Final Payment", "Other Payment"]
+	PAYMENT_TYPES = ["Down Payment", "Commencement Payment", "14 Day Prior Payment", "2nd Day Commencement Payment", "Ok to Pour Payment", "Completion Payment", "Other Payment"]
 
 	validates :payment_type, :payment_schedule, :invoice_date, presence: true
 	validates :date_paid, presence: true, if: "paid?"

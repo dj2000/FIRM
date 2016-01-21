@@ -1,4 +1,4 @@
-<%= javascript_include_tag "common" %>
+<%= javascript_include_tag "common", "project_payment_schedule" %>
 <%= simple_form_for(@project, remote: true) do |project| %>
 	<%= project.error_notification %>
 	<table class='table table-bordered table-striped table-responsive table-hover'>
@@ -31,5 +31,16 @@
 			<% end %>
 		</tbody>
 	</table>
-	<%= project.submit "Submit", class: "btn btn-success pull-right" %>
+	<div class="row pull-right">
+		<div class="col-md-5 <%= 'hide' unless @project.is_closed? %> status">
+			<%= project.check_box :status, { class: "pull-left", disabled: @project.status == "Closed"}, "Closed", "Open" %>
+			<%= label_tag "Closed" %>
+		</div>
+		<div class="col-md-3">
+			<%= project.submit "Submit", class: "btn btn-success" %>
+		</div>
+		<div class="col-md-4 <%= 'hide' unless @project.is_closed? %> send-email-to-client">
+			<%= link_to "Email", "javascript:void(0)", class: "btn btn-primary email-to-client", data: { client_email: @insp_request.try(:client).try(:email), inspector_full_name: @appointment.try(:inspector).try(:name), inspector_name: @appointment.try(:inspector).try(:firstName), client_name: @insp_request.try(:client).try(:firstName)} %>
+		</div>
+	</div>
 <% end %>

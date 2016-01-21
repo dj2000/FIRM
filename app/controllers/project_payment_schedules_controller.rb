@@ -8,6 +8,8 @@ class ProjectPaymentSchedulesController < ApplicationController
 		@project = Project.find(params[:project_id])
 		@bid = @project.try(:contract).try(:bid)
 		@pay_plan = @bid.try(:payPlan)
+		@insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+		@appointment = @insp_request.try(:appointment)
 		if @project.project_payment_schedules.present?
 			@project_payment_schedules = @project.project_payment_schedules
 		else

@@ -126,7 +126,7 @@ class ProjectsController < ApplicationController
         params[:project][:plot_plans] = false
         params[:project][:drawings] = false
       end
-      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ], project_payment_schedules_attributes: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id, validation_payment_schedules: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id]])
+      params.require(:project).permit(:vcDate, :contract_id, :jobCost, :schedulePref, :estDuration, :scheduleStart, :scheduleEnd, :authorizedBy, :authorizedOn, :crew_id, :verifiedAccess, :verifiedEW, :notes, :title, :permit, :primary_crew_id, :plot_plans, :drawings, :option, :ready_to_process, :status, permit_information_attributes: [:valuation, :replacement, :units, :type_of_replacement, :amount, :engineering, :engineer_id, :id ], project_payment_schedules_attributes: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id, validation_payment_schedules: [:id, :payment_schedule, :amount, :payment_type, :invoice_date, :paid, :date_paid, :comments, :payment_id]])
     end
 
     def contracts

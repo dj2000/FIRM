@@ -9,26 +9,26 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :name %>
+      <%= f.input :name, input_html: { value: "#{@appointment.try(:insp_request).try(:property).try(:property_select_value)}" " - #{(@appointment.try(:schedStart)).try(:to_time).try(:strftime, '%d %b %Y')}" } %>
     </div>
     <div class="col-md-4">
       <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment", selected: params[:appointment_id] || (params[:inspection] and params[:inspection][:appointment_id]) || f.object.appointment_id %>
     </div>
-    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id %>">
+    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %>">
       <%= label_tag "Inspector" %>
-      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
+      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name) || @appointment.try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
     </div>
   </div>
-  <div class="appointment_info <%= 'hide' unless f.object.appointment_id %> ">
-    <% if f.object.appointment_id %>
-      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+  <div class="appointment_info <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %> ">
+    <% if f.object.appointment_id || params[:appointment_id].present? %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) || @appointment.try(:insp_request) %>
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
   <fieldset><legend></legend></fieldset>
-  <div class="client_info <%= 'hide' unless f.object.appointment_id %> ">
-    <% if f.object.appointment_id %>
-      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+  <div class="client_info <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %> ">
+    <% if f.object.appointment_id || params[:appointment_id].present? %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) || @appointment.try(:insp_request) %>
       <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>

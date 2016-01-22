@@ -2,7 +2,7 @@ class CommHistory < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :bid
 
-  validates :caller, :recipient, :callSummary, :notes, :bid_id, :callOutcome, presence: true
+  validates :caller, :recipient, :callSummary, :bid_id, :callOutcome, presence: true
 
   validates :callBackDate, presence: true, if: Proc.new{|c| c.callOutcome == "Follow-up" }
 

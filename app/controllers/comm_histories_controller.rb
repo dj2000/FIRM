@@ -114,8 +114,10 @@ class CommHistoriesController < ApplicationController
     end
 
     def create_documents
-      params[:email_document_attributes].each do |file|
-        @inspection.documents << Document.new(attachment: file, document_type: "email" )
+      if params[:email_document_attributes].present?
+        params[:email_document_attributes].each do |file|
+          @inspection.documents << Document.new(attachment: file, document_type: "email" )
+        end
       end
     end
 

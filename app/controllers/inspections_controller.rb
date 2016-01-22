@@ -33,6 +33,10 @@ class InspectionsController < ApplicationController
   # GET /inspections/new
   def new
     @inspection = Inspection.new
+    if params[:appointment_id].present?
+      @appointment = Appointment.find(params[:appointment_id]) if params[:appointment_id].present?
+      @clients = @appointment.try(:insp_request).try(:property).try(:clients)
+    end
   end
 
   # GET /inspections/1/edit

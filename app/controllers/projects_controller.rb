@@ -32,6 +32,11 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    if params[:contract_id].present?
+      @contract = Contract.find(params[:contract_id])
+      @bid = @contract.try(:bid)
+      @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    end
     @permit_information = @project.build_permit_information
   end
 

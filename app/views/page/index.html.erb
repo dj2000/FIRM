@@ -196,25 +196,6 @@
 
     <!-- <div class="row"> -->
     <div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-primary">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <div class="pull-right">
-            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
-          </div>
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              <i class="fa fa-envelope-o"></i>
-              Unscheduled Inspection Requests
-            </a>
-          </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            <%= render partial: 'insp_requests/insp_requests' %>
-          </div>
-        </div>
-      </div>
-
       <div class="panel panel-info">
         <div class="panel-heading" role="tab" id="headingThree">
           <div class="pull-right">
@@ -233,6 +214,7 @@
           </div>
         </div>
       </div>
+
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headind-bids-to-be-provided">
           <div class="pull-right">
@@ -251,6 +233,7 @@
           </div>
         </div>
       </div>
+
       <div class="panel panel-danger">
         <div class="panel-heading" role="tab" id="headingFour">
           <div class="pull-right">
@@ -266,25 +249,6 @@
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
           <div class="panel-body">
             <%= render partial: 'bids/bids', :locals => { status: false } %>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel panel-warning">
-        <div class="panel-heading" role="tab" id="headingFive">
-          <div class="pull-right">
-            <span class="badge progress-bar-warning"><%= @projects.count %></span>
-          </div>
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-            <i class="fa fa-th"></i>
-              Active Projects
-            </a>
-          </h4>
-        </div>
-        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-          <div class="panel-body pre-scrollable">
-            <%= render partial: 'projects/projects' %>
           </div>
         </div>
       </div>
@@ -326,6 +290,45 @@
           </div>
         </div>
       </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="pending-projects-label">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @contract_pending_projects.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pending-projects" aria-expanded="false" aria-controls="pending-projects">
+              <i class="fa fa-envelope-o"></i>
+              Contract Pending Projects
+            </a>
+          </h4>
+        </div>
+        <div id="pending-projects" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pending-projects-label">
+          <div class="panel-body">
+            <%= render partial: 'contracts/contracts' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @projects.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <i class="fa fa-th"></i>
+              Active Projects
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'projects/projects' %>
+          </div>
+        </div>
+      </div>
+
       <div class="panel panel-info">
         <div class="panel-heading" role="tab" id="headingEight">
           <div class="pull-right">
@@ -344,6 +347,7 @@
           </div>
         </div>
       </div>
+
       <div class="panel panel-success">
         <div class="panel-heading" role="tab" id="headingNine">
           <div class="pull-right">
@@ -362,6 +366,25 @@
           </div>
         </div>
       </div>
+
+      <!-- <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <i class="fa fa-envelope-o"></i>
+              Unscheduled Inspection Requests
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%#= render partial: 'insp_requests/insp_requests' %>
+          </div>
+        </div>
+      </div>-->
     </div>
   </div>
 </div>

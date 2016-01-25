@@ -16,7 +16,15 @@
     <% status ||= false %>
     <% @bids =  @vc_bids if status %>
     <% @bids.each do |bid| %>
-      <% link = status ?  new_polymorphic_path(Contract.new) : new_polymorphic_path(CommHistory.new, bid_id: bid.id) %>
+      <% if status %>
+        <% if bid.try(:contract).try(:signed?) %>
+          <% link = edit_contract_path(bid.contract) %>
+        <% else %>
+          <% link = new_contract_path(Contract.new) %>
+        <% end %>
+      <% else %>
+        <% link =  new_polymorphic_path(CommHistory.new, bid_id: bid.id) %>
+      <% end %>
       <tr onclick='document.location = "<%= link %>" '>
         <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>

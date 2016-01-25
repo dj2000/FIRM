@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Project Status</th>
-      <th>Valuation</th>
+      <th>Client Name</th>
       <th>City</th>
       <th>Replacement</th>
       <th>Type of Replacement</th>
@@ -17,7 +17,7 @@
     <% @permit_informations.each do |permit_information| %>
       <tr onclick="sendEmail(<%= permit_information.id %>, <%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:id) %>)">
         <td><%= permit_information.try(:project).try(:ready_to_process_status) %></td>
-        <td><%= permit_information.valuation %></td>
+        <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
         <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:city_state) %></td>
         <td><%= permit_information.humanize("replacement") %></td>
         <td><%= permit_information.try(:type_of_replacement) %></td>

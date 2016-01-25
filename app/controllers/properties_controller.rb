@@ -3,7 +3,12 @@ class PropertiesController < ApplicationController
   before_action :validate_info
 
   def index
-    @properties = Property.all
+    if params[:property_id].present?
+      @properties = Property.where(id: params[:property_id])
+    else
+      @properties = Property.all
+    end
+    @search_properties = Property.all.map{|p| [p.property_select_value, p.id]}
     respond_to do |format|
       format.html
       format.js

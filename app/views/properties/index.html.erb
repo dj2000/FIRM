@@ -1,3 +1,13 @@
+<%= form_tag('/properties', method: 'get') do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= select_tag "property_id", options_for_select(@search_properties, params[:property_id]), class: "form-control property", prompt: "Select Property" %>
+    </div>
+    <div class="col-md-3">
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
 <h1>Listing Properties</h1>
 
 <table class="table table-bordered table-striped table-hover table-responsive">
@@ -54,3 +64,6 @@
   <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), properties_path(format: :csv),class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), print_properties_path, remote: true,class: "btn btn-info" %>
 <% end %>
+<script>
+$(".property").chosen();
+</script>

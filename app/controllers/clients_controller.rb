@@ -3,7 +3,12 @@ class ClientsController < ApplicationController
   before_action :properties
 
   def index
-    @clients = Client.all
+    if params[:client_id].present?
+      @clients = Client.where(id: params[:client_id])
+    else
+      @clients = Client.all
+    end
+    @search_clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
       format.html

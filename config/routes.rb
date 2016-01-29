@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :engineers
   resources :permit_informations do
     get :send_email, on: :collection
+    get :load_email_template, on: :member
   end
 
   resources :commissions do

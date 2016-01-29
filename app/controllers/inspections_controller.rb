@@ -116,7 +116,7 @@ class InspectionsController < ApplicationController
   def send_email
     file_name = params[:bid_name].gsub(",", "_").gsub(" ", "_")
     file_urls = params[:file_urls].split(",") if params[:file_urls].present?
-    client = Client.find(params[:client_id])
+    @client = Client.find(params[:client_id])
     call_summary = params[:call_summary].gsub("\n", "<br>")
     directory = Rails.root.join("public", "pdfs")
     Dir.mkdir(directory) unless File.directory?(directory)
@@ -128,7 +128,7 @@ class InspectionsController < ApplicationController
       file << pdf
       @inspection.documents << Document.create(document_type: "email", attachment: file)
     end
-    UserMailer.send_call_summary_to_client(client, call_summary, file_urls, file_name).deliver
+    UserMailer.send_call_summary_to_client(@client, call_summary, file_urls, file_name, params[:cc_emails]).deliver
     render json: @inspection
   end
 

@@ -37,7 +37,7 @@
 			    <br>
 			    <b>Option:</b>&nbsp;&nbsp;<%= @project.try(:option) %>
 			    <br>
-			    <b>Notes:</b>&nbsp;&nbsp;<%= @notes %>
+			    <b>Notes:</b>&nbsp;&nbsp;<p id="email_preview_notes" style="display:inline;margin:0px;"></p>
 			    <span class='file-names'></span>
         </div>
       </div>
@@ -69,6 +69,18 @@
 	<div class='modal-footer'>
 			<%= link_to "Attach", inspection_path(@inspection, email_preview: true), class: "btn btn-info inspection", remote: true %>
 	    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	    <%= submit_tag "Send Email", class: "btn btn-success" %>
+	    <%= submit_tag "Send Email", class: "btn btn-success", id:"send_email_btn" %>
   </div>
 <% end %>
+
+<script>
+  
+  $( "#notes" ).keyup(function() {
+    $("#email_preview_notes").html($("#notes").val());
+  });
+
+  $( "#send_email_btn" ).click(function() {
+    $(".contents").val($(".email-preview").html());
+  });
+
+</script>

@@ -12,8 +12,8 @@ class UserMailer < ActionMailer::Base
 	  end
   end
 
-  def send_call_summary_to_client(client, call_summary, file_urls, subject, cc_emails = nil)
-    @client = client
+  def send_call_summary_to_client(client_email, call_summary, file_urls, subject, cc_emails = nil)
+    @client_email = client_email
     @call_summary = call_summary
     @file_urls = file_urls
     if @file_urls.present?
@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
         attachments[file_url] = File.read(file_url) if File.exist?(file_url)
       end
     end
-    mail(to: @client.try(:email), cc: cc_emails, subject: subject)
+    mail(to: @client_email, cc: cc_emails, subject: subject)
   end
 
   def send_email_to_crew(project, file_urls=nil)

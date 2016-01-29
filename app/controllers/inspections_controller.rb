@@ -114,22 +114,29 @@ class InspectionsController < ApplicationController
   end
 
   def send_email
-    file_name = params[:bid_name].gsub(",", "_").gsub(" ", "_")
-    file_urls = params[:file_urls].split(",") if params[:file_urls].present?
-    @client = Client.find(params[:client_id])
-    call_summary = params[:call_summary].gsub("\n", "<br>")
-    directory = Rails.root.join("public", "pdfs")
-    Dir.mkdir(directory) unless File.directory?(directory)
-    pdf_directory = Rails.root.join(directory, "#{@inspection.try(:id)}" )
-    Dir.mkdir(pdf_directory) unless File.directory?(pdf_directory)
-    save_path = Rails.root.join(pdf_directory, "#{file_name}.pdf")
-    pdf = WickedPdf.new.pdf_from_string(call_summary, formats: :html, encoding: 'utf8')
-    File.open(save_path, 'wb') do |file|
-      file << pdf
-      @inspection.documents << Document.create(document_type: "email", attachment: file)
+    if validate_email(params[:client_email])
+      file_name = params[:bid_name].gsub(",", "_").gsub(" ", "_")
+      file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+      if @client_email = Client.find_by(email: params[:client_email]).try(:email)
+      else
+        @client_email = params[:client_email]
+      end
+      call_summary = params[:call_summary].gsub("\n", "<br>")
+      directory = Rails.root.join("public", "pdfs")
+      Dir.mkdir(directory) unless File.directory?(directory)
+      pdf_directory = Rails.root.join(directory, "#{@inspection.try(:id)}" )
+      Dir.mkdir(pdf_directory) unless File.directory?(pdf_directory)
+      save_path = Rails.root.join(pdf_directory, "#{file_name}.pdf")
+      pdf = WickedPdf.new.pdf_from_string(call_summary, formats: :html, encoding: 'utf8')
+      File.open(save_path, 'wb') do |file|
+        file << pdf
+        @inspection.documents << Document.create(document_type: "email", attachment: file)
+      end
+      UserMailer.send_call_summary_to_client(@client_email, call_summary, file_urls, file_name, params[:cc_emails]).deliver
+      render json: @inspection
+    else
+      redirect_to :back
     end
-    UserMailer.send_call_summary_to_client(@client, call_summary, file_urls, file_name, params[:cc_emails]).deliver
-    render json: @inspection
   end
 
   private
@@ -161,5 +168,9 @@ class InspectionsController < ApplicationController
           end
         end
       end
+    end
+
+    def validate_email(email)
+      email.match(/\A([^@\s!@#$%\^&\[\]\*\(\){}\+="'\?\/<>,:;]+)+([^@\s!@#$%\^&\[\]\*\(\){}\+="'\?\/<>,:;_-]+){1,}@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
     end
 end

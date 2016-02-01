@@ -184,7 +184,9 @@ $(document).ready(function(){
     if (!pattern.test($("#client_email").val())) {
       $("#send_email_btn").prop('disabled', true);
       $("#client_email").addClass("alert_danger");
-      $("#client_email").parent().append("<p class=\"alert_invalid_email\">Make sure you are entering a valid email-id or single email-id.<\/p>");
+      if ($("#client_email").parent().children(".alert_invalid_email").length == 0) {
+        $("#client_email").parent().append("<p class=\"alert_invalid_email\">Make sure you are entering a valid email-id or single email-id.<\/p>");
+      }
     }
     else {
       $("#send_email_btn").prop('disabled', false);

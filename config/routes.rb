@@ -173,4 +173,6 @@ Rails.application.routes.draw do
 
   get '/cities' => 'application#cities'
 
+  resources :documents, only: [:destroy]
+
 end

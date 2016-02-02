@@ -133,12 +133,12 @@
         <br/>
         <% f.object.documents.each do |document| %>
           <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <%= link_to '', document_path(document, project_id: f.object), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
+          <%= link_to '', document_path(document, parent_id: f.object, attachable_type: f.object.class), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
           <br/>
         <% end %>
       </div>
     <% end %>
-    </div>
+  </div>
   <br/>
   <div class="modal permit-information" tabindex="-1" role="dialog" data-keyboard="false">
     <div class="modal-dialog" role="document">

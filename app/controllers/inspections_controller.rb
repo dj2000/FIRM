@@ -139,6 +139,13 @@ class InspectionsController < ApplicationController
     end
   end
 
+  def delete_attached_file
+    @inspection = Inspection.find(params[:id])
+    @inspection.check_document_type(params[:doc_type])
+    @inspection.save
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inspection

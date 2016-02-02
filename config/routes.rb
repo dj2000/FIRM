@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     get :report, on: :collection
     get :report_result, on: :collection
     get :send_email, on: :member
+    delete :delete_attached_file, on: :member
   end
 
   resources :receipts do

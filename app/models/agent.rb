@@ -11,7 +11,8 @@ class Agent < ActiveRecord::Base
 							length: { :minimum => 10, :maximum => 15, allow_blank: true },
               format: { with: /\A[0-9\-]+*\z/ }
 
-  validates :email, email_format: { message: "Invalid Email Address" }
+  validates :email, email_format: { message: "Invalid Email Address" },if: :email?
+  
   def name
     "#{self.try(:firstName)} #{self.try(:lastName)}"
   end

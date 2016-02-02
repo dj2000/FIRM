@@ -32,6 +32,22 @@ class Inspection < ActiveRecord::Base
     @inspections.where.not(id: Bid.all.map(&:inspection_id))
   end
 
+  def check_document_type(doc_type)
+    case doc_type
+    when "report"
+      self.report = nil
+    when "completed_appointment_sheet"
+      self.completed_appointment_sheet = nil
+    when "client_information_sheet"
+      self.client_information_sheet = nil
+    when "footprint_diagram"
+      self.footprint_diagram = nil
+    else
+      "Invalid document type."
+    end
+  end
+
+
   def amount
     invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
     (self.try(:appointment).try(:inspFee) || 0) - (invoices_amount || 0)

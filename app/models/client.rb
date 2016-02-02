@@ -12,7 +12,7 @@ class Client < ActiveRecord::Base
               length: { :minimum => 10, :maximum => 15, allow_blank: true },
               format: { with: /\A[0-9\-]*\z/ }
 
-  validates :email, email_format: { message: "Invalid Email Address" }
+  validates :email, email_format: { message: "Invalid Email Address" },if: :email?
 
   validates :company_name, presence: true, if: lambda { |o| o.of_type == "Company" }
 

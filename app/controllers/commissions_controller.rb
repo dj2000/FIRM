@@ -5,7 +5,7 @@ class CommissionsController < ApplicationController
   respond_to :html
 
   def index
-    @commissions = Commission.all
+    @commissions = Commission.all.paginate(page: params[:page])
     respond_with(@commissions)
   end
 

@@ -5,7 +5,7 @@ class CreditNotesController < ApplicationController
   respond_to :html
 
   def index
-    @credit_notes = CreditNote.all
+    @credit_notes = CreditNote.all.paginate(page: params[:page])
     respond_with(@credit_notes)
   end
 

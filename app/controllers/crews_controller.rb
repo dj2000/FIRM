@@ -4,7 +4,7 @@ class CrewsController < ApplicationController
   # GET /crews
   # GET /crews.json
   def index
-    @crews = Crew.all
+    @crews = Crew.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

@@ -4,7 +4,7 @@ class InspectorsController < ApplicationController
   # GET /inspectors
   # GET /inspectors.json
   def index
-    @inspectors = Inspector.all
+    @inspectors = Inspector.all.paginate(page: params[:page])
      respond_to do |format|
       format.js
       format.html

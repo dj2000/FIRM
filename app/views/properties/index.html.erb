@@ -58,6 +58,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @properties, renderer: BootstrapPagination::Rails %>
+
 <br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Property"), new_property_path, class: "btn btn-info" %>

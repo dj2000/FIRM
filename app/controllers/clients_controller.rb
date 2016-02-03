@@ -4,9 +4,9 @@ class ClientsController < ApplicationController
 
   def index
     if params[:client_id].present?
-      @clients = Client.where(id: params[:client_id])
+      @clients = Client.where(id: params[:client_id]).paginate(page: params[:page])
     else
-      @clients = Client.all
+      @clients = Client.all.paginate(page: params[:page])
     end
     @search_clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|

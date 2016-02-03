@@ -32,6 +32,9 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @commission_rates, renderer: BootstrapPagination::Rails %>
+
 <br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Commission Rate"), new_commission_rate_path, :class => "btn btn-info" %>

@@ -4,7 +4,7 @@ class SvcCriteriaController < ApplicationController
   # GET /svc_criteria
   # GET /svc_criteria.json
   def index
-    @svc_criteria = SvcCriterium.all
+    @svc_criteria = SvcCriterium.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

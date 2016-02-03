@@ -11,7 +11,7 @@ class BidsController < ApplicationController
       end_date = Date.parse(params[:end_date])
       @bids = Bid.created_between(start_date, end_date)
     else
-      @bids = Bid.all
+      @bids = Bid.all.paginate(page: params[:page])
     end
     respond_to do |format|
       format.js

@@ -42,6 +42,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @pay_plans, renderer: BootstrapPagination::Rails %>
+
 <br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Payment Plan"), new_pay_plan_path, :class => "btn btn-info" %>

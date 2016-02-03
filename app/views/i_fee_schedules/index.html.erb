@@ -47,6 +47,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @i_fee_schedules, renderer: BootstrapPagination::Rails %>
+
 <br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Fee Schedule"), new_i_fee_schedule_path, :class => "btn btn-info" -%>

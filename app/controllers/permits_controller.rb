@@ -5,7 +5,7 @@ class PermitsController < ApplicationController
   # GET /permits
   # GET /permits.json
   def index
-    @permits = Permit.all
+    @permits = Permit.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

@@ -5,15 +5,15 @@ class PageController < ApplicationController
 		start_date = today.beginning_of_week
 		end_date = today.end_of_week
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
-		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
-		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id)).paginate(page: params[:page])
+		@bids = Bid.where(status: ["Pending","Follow-up"]).paginate(page: params[:page])
 		@unpermitted_permit_informations = PermitInformation.unpermitted_permit_informations
 		@permitted_permit_informations = PermitInformation.joins(:permits).where("permits.id IN (?)", Permit.pending_permits.map(&:id))
 		@permit_informations = (@unpermitted_permit_informations || [] ) + @permitted_permit_informations
-		@comm_histories = CommHistory.where('"callBackDate" <= ? AND bid_id not in (?) AND is_completed = ?', DateTime.now, Bid.accepted_bids.map(&:id), false)
-		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date)
-		@vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id))
-		@unbided_inspections = Inspection.unbided_inspections
+		@comm_histories = CommHistory.where('"callBackDate" <= ? AND bid_id not in (?) AND is_completed = ?', DateTime.now, Bid.accepted_bids.map(&:id), false).paginate(page: params[:page])
+		@projects = Project.where('("scheduleStart" BETWEEN ? AND ?) OR ("scheduleEnd" BETWEEN ? AND ?)', start_date, end_date, start_date, end_date).paginate(page: params[:page])
+		@vc_bids = Bid.accepted_bids.where.not('id in (?)', Contract.where.not({signedBy: nil, dateSigned: nil}).map(&:bid_id)).paginate(page: params[:page])
+		@unbided_inspections = Inspection.unbided_inspections.paginate(page: params[:page])
 		@unclosed_projects = Project.unclosed_projects
 		@contract_pending_projects = Contract.pending_projects
 		model_names = [:proj_sched, :proj_insp, :permit, :credit_note, :receipt, :invoice,

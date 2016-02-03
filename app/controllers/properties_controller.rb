@@ -4,9 +4,9 @@ class PropertiesController < ApplicationController
 
   def index
     if params[:property_id].present?
-      @properties = Property.where(id: params[:property_id])
+      @properties = Property.where(id: params[:property_id]).paginate(page: params[:page])
     else
-      @properties = Property.all
+      @properties = Property.all.paginate(page: params[:page])
     end
     @search_properties = Property.all.map{|p| [p.property_select_value, p.id]}
     respond_to do |format|

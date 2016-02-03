@@ -97,11 +97,9 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Email Documents" %>
         <br/>
-        <% f.object.try(:bid).try(:inspection).try(:documents).try(:email_documents).each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <%= link_to '', document_path(document, parent_id: f.object.bid.inspection, attachable_type: f.object.bid.inspection.class), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
-          <br/>
-        <% end %>
+        <div class="email_document_div">
+        <%= render partial: 'shared/document_listing', locals: { f: f } %>
+        </div>
       </div>
     <% end %>
   </div>

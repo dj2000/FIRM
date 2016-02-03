@@ -75,7 +75,7 @@ class PayPlansController < ApplicationController
   end
 
   def print
-    @pay_plans = PayPlan.all
+    @pay_plans = PayPlan.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

@@ -27,7 +27,7 @@ class InspectionsController < ApplicationController
   # GET /inspections/1.json
   def show
     @file_urls = params[:file_urls].split(",") if params[:file_urls].present?
-    @bids = @inspection.bids
+    @bids = @inspection.bids.paginate(page: params[:page])
   end
 
   # GET /inspections/new
@@ -98,9 +98,9 @@ class InspectionsController < ApplicationController
     if URI(request.referer).path == "/inspections/report"
       start_date = DateTime.parse(params[:start_date])
       end_date = DateTime.parse(params[:end_date])
-      @inspections = Inspection.created_between(start_date, end_date)
+      @inspections = Inspection.created_between(start_date, end_date).paginate(page: params[:page]).paginate(page: params[:page])
     else
-      @inspections = Inspection.all
+      @inspections = Inspection.all.paginate(page: params[:page])
     end
     respond_to do |format|
       format.js

@@ -68,7 +68,7 @@ class PermitsController < ApplicationController
   end
 
   def print
-    @permits = Permit.all
+    @permits = Permit.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

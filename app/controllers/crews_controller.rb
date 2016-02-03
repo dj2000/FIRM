@@ -67,7 +67,7 @@ class CrewsController < ApplicationController
   end
 
   def print
-    @crews = Crew.all
+    @crews = Crew.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

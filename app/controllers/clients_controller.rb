@@ -76,7 +76,7 @@ class ClientsController < ApplicationController
   end
 
   def print
-    @clients = Client.all
+    @clients = Client.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

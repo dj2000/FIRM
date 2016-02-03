@@ -67,7 +67,7 @@ class IFeeSchedulesController < ApplicationController
   end
 
   def print
-    @i_fee_schedules = IFeeSchedule.all
+    @i_fee_schedules = IFeeSchedule.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

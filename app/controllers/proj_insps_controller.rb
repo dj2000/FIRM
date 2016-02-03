@@ -66,7 +66,7 @@ class ProjInspsController < ApplicationController
   end
 
   def print
-    @proj_insps = ProjInsp.all
+    @proj_insps = ProjInsp.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

@@ -80,7 +80,7 @@ class PropertiesController < ApplicationController
   end
 
   def print
-    @properties = Property.all
+    @properties = Property.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

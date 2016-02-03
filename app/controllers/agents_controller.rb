@@ -80,7 +80,7 @@ class AgentsController < ApplicationController
   end
 
   def print
-    @agents = Agent.all
+    @agents = Agent.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
     end

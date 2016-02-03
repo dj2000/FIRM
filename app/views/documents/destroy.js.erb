@@ -1,1 +1,5 @@
-$(".email_document_div").html("<%= escape_javascript(render partial: 'shared/document_listing', locals: { f: @f }) %>")
+<% if @doc_type == 'email_documents' %>
+  $(".email_documents_div").html("<%= escape_javascript(render partial: 'shared/document_listing', locals: { parent: @parent, doc_type: @doc_type } ) %>")
+<% else %>
+  $(".miscellaneous_documents_div").html("<%= escape_javascript(render partial: 'shared/document_listing', locals: { parent: @parent, doc_type: @doc_type } ) %>")
+<% end %>

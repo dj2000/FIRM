@@ -119,11 +119,7 @@
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
         <div class="miscellaneous_documents_div">
-          <% f.object.documents.other_documents.each do |document| %>
-            <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-            <%= link_to '', document_path(document, parent_id: f.object, attachable_type: f.object.class), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
-            <br/>
-          <% end %>
+          <%= render partial: 'shared/document_listing', locals: { parent: f.object, doc_type: "other_documents" } %>
         </div>
       </div>
     <% end %>
@@ -141,11 +137,7 @@
         <%= label_tag "Uploaded Email Documents" %>
         <br/>
         <div class="email_documents_div">
-          <% f.object.documents.email_documents.each do |document| %>
-            <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-            <%= link_to '', document_path(document, parent_id: f.object, attachable_type: f.object.class), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
-            <br/>
-          <% end %>
+          <%= render partial: 'shared/document_listing', locals: { parent: f.object, doc_type: "email_documents" } %>
         </div>
       </div>
     <% end %>

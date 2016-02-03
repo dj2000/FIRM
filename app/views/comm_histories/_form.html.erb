@@ -97,8 +97,8 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Email Documents" %>
         <br/>
-        <div class="email_document_div">
-        <%= render partial: 'shared/document_listing', locals: { f: f } %>
+        <div class="email_documents_div">
+        <%= render partial: 'shared/document_listing', locals: { parent: f.object.try(:bid).try(:inspection), doc_type: "email_documents" } %>
         </div>
       </div>
     <% end %>

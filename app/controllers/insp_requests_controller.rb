@@ -9,7 +9,7 @@ class InspRequestsController < ApplicationController
         @insp_requests = InspRequest.where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
       end
     else
-      @insp_requests = InspRequest.all.paginate(page: params[:page])
+      @insp_requests = InspRequest.all.order(callTime: :desc).paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}

@@ -41,7 +41,7 @@
         </tr>
         <tr>
           <td>Inspection Report URL</td>
-          <td><%= link_to_if @inspection.report_file_name, @inspection.report_file_name, @inspection.report.url, class: 'blue-link' %></td>
+          <td><%= link_to_if @inspection.report_file_name, @inspection.report_file_name, @inspection.report.url, class: 'blue-link', target: "_blank" %></td>
         </tr>
         <tr>
           <td>Completed Appointment Sheet URL</td>
@@ -79,7 +79,7 @@
           <td>Uploaded Miscellaneous Documents</td>
           <td>
             <% @documents.other_documents.each do |document| %>
-              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link', target: "_blank" %>
               <br/>
             <% end %>
           </td>
@@ -88,7 +88,7 @@
           <td>Uploaded Email Documents</td>
           <td>
             <% @documents.email_documents.each do |document| %>
-              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link', target: "_blank" %>
               <br/>
             <% end %>
           </td>

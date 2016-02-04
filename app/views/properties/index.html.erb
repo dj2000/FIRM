@@ -8,6 +8,7 @@
     </div>
   </div>
 <% end %>
+
 <h1>Listing Properties</h1>
 
 <table class="table table-bordered table-striped table-hover table-responsive">
@@ -58,7 +59,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @properties, renderer: BootstrapPagination::Rails %>
+<% if current_page?(properties_url) %>
+  <%= will_paginate @properties, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>
@@ -67,5 +70,5 @@
   <%= link_to raw("<i class='fa fa-print'></i> Print"), print_properties_path, remote: true,class: "btn btn-info" %>
 <% end %>
 <script>
-$(".property").chosen();
+  $(".property").chosen();
 </script>

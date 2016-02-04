@@ -46,7 +46,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @inspectors, renderer: BootstrapPagination::Rails %>
+<% if current_page?(inspectors_url) %>
+  <%= will_paginate @inspectors, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 

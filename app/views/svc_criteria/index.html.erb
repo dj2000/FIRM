@@ -49,8 +49,9 @@
     <% end %>
   </tbody>
 </table>
-
-<%= will_paginate @svc_criteria, renderer: BootstrapPagination::Rails %>
+<% if current_page?(svc_criteria_url)  %>
+  <%= will_paginate @svc_criteria, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>

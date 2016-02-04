@@ -33,7 +33,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @commission_rates, renderer: BootstrapPagination::Rails %>
+<% if current_page?(commission_rates_url) %>
+  <%= will_paginate @commission_rates, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>

@@ -39,6 +39,11 @@
     <% end%>
   </tbody>
 </table>
+
+<% if current_page?(bids_url) %>
+  <%= will_paginate @bids, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% unless request.path == "/bids/print" || request.path == "/"  %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-bid', onclick: "printReport('/bids/print')" %>

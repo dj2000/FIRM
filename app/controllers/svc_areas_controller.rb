@@ -70,7 +70,7 @@ class SvcAreasController < ApplicationController
   end
 
   def print
-    @svc_areas = SvcArea.all.paginate(page: params[:page])
+    @svc_areas = SvcArea.all
     respond_to do |format|
       format.js
     end

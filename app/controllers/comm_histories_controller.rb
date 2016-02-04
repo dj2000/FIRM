@@ -13,7 +13,7 @@ class CommHistoriesController < ApplicationController
         @comm_histories = CommHistory.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
       end
     else
-      @comm_histories = @bid ? @bid.comm_histories.paginate(page: params[:page]) : CommHistory.all.paginate(page: params[:page])
+      @comm_histories = @bid ? @bid.comm_histories : CommHistory.all.paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}

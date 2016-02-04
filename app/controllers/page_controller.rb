@@ -51,17 +51,17 @@ class PageController < ApplicationController
 			@statistics[:appointments] = @appointments.count
 			@statistics[:insp_requests_count] = InspRequest.where('"callTime" BETWEEN ? AND ?', params[:start_date], params[:end_date]).count
 			@statistics[:bids_count] = @bids.count
-			@statistics[:bids_total_cost] = @bids.map(&:total_cost).try(:inject, &:+) || 0
+			@statistics[:bids_total_cost] = @bids.map(&:total_cost).compact.try(:inject, &:+) || 0
 			@statistics[:verbal_closed_bid_follow_ups_count] = @verbal_closed_bid_follow_ups.count
-			@statistics[:verbal_closed_bid_follow_ups_cost] = @verbal_closed_bid_follow_ups.map(&:bid).map(&:total_cost).try(:inject, &:+) || 0
+			@statistics[:verbal_closed_bid_follow_ups_cost] = @verbal_closed_bid_follow_ups.map(&:bid).map(&:total_cost).compact.try(:inject, &:+) || 0
 			@statistics[:verbal_closed_bid_follow_ups_without_contract] = @uncontracted_bids_count
 			@statistics[:signed_contracts] = @signed_contracts.count
-			@statistics[:signed_contracts_cost] = @signed_contracts.map(&:bid).map(&:total_cost).try(:inject, &:+) || 0
+			@statistics[:signed_contracts_cost] = @signed_contracts.map(&:bid).map(&:total_cost).compact.try(:inject, &:+) || 0
 			@statistics[:outgoing_communications] = @bids_follow_ups.count
 			@statistics[:scheduled_appointments] = @inspections.count
-			@statistics[:inspection_gross_income] = @inspections.map(&:appointment).map(&:inspFee).try(:inject, &:+) || 0
+			@statistics[:inspection_gross_income] = @inspections.map(&:appointment).map(&:inspFee).compact.try(:inject, &:+) || 0
 			@statistics[:total_gross_income] = @statistics[:inspection_gross_income] + @statistics[:signed_contracts_cost]
-			@statistics[:contracts] = @contracts.map(&:bid).map(&:total_cost).try(:inject, &:+) || 0
+			@statistics[:contracts] = @contracts.map(&:bid).map(&:total_cost).compact.try(:inject, &:+) || 0
 	end
 
 end

@@ -98,9 +98,9 @@ class InspectionsController < ApplicationController
     if URI(request.referer).path == "/inspections/report"
       start_date = DateTime.parse(params[:start_date])
       end_date = DateTime.parse(params[:end_date])
-      @inspections = Inspection.created_between(start_date, end_date).paginate(page: params[:page]).paginate(page: params[:page])
+      @inspections = Inspection.created_between(start_date, end_date)
     else
-      @inspections = Inspection.all.paginate(page: params[:page])
+      @inspections = Inspection.all
     end
     respond_to do |format|
       format.js
@@ -110,7 +110,7 @@ class InspectionsController < ApplicationController
   def report_result
     start_date = DateTime.parse(params[:start_date])
     end_date = DateTime.parse(params[:end_date])
-    @inspections = Inspection.created_between(start_date, end_date)
+    @inspections = Inspection.created_between(start_date, end_date).paginate(page: params[:page])
   end
 
   def send_email

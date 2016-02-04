@@ -38,4 +38,6 @@
   </tbody>
 </table>
 
-<%= will_paginate @clients, renderer: BootstrapPagination::Rails %>
+<% if current_page?(clients_url) %>
+  <%= will_paginate @clients, renderer: BootstrapPagination::Rails %>
+<% end %>

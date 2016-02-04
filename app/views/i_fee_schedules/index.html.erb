@@ -47,7 +47,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @i_fee_schedules, renderer: BootstrapPagination::Rails %>
+<% if current_page?(i_fee_schedules_url) %>
+  <%= will_paginate @i_fee_schedules, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>

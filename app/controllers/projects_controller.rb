@@ -101,7 +101,7 @@ class ProjectsController < ApplicationController
   end
 
   def print
-    @projects = Project.all.paginate(page: params[:page])
+    @projects = Project.all
     respond_to do |format|
       format.js
     end

@@ -70,7 +70,7 @@ class InspectorsController < ApplicationController
   end
 
   def print
-    @inspectors = Inspector.all.paginate(page: params[:page])
+    @inspectors = Inspector.all
   end
 
   private

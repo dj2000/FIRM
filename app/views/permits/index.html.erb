@@ -47,7 +47,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @permits, renderer: BootstrapPagination::Rails %>
+<% if current_page?(permits_url) %>
+  <%= will_paginate @permits, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>

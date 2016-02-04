@@ -42,7 +42,9 @@
   </tbody>
 </table>
 
-<%= will_paginate @crews, renderer: BootstrapPagination::Rails %>
+<% if current_page?(crews_url) %>
+  <%= will_paginate @crews, renderer: BootstrapPagination::Rails %>
+<% end %>
 
 <br>
 <% if request.format == 'text/html' %>

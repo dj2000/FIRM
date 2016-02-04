@@ -67,7 +67,7 @@ class CommissionRatesController < ApplicationController
   end
 
   def print
-    @commission_rates = CommissionRate.all.order(:created_at).paginate(page: params[:page])
+    @commission_rates = CommissionRate.all.order(:created_at)
     respond_to do |format|
       format.js
     end

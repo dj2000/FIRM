@@ -50,3 +50,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(contracts_url) %>
+  <%= will_paginate @contracts, renderer: BootstrapPagination::Rails %>
+<% end %>

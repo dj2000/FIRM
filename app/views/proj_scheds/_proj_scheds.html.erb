@@ -49,6 +49,11 @@
     <% end%>
   </tbody>
 </table>
+
+<% if current_page?(proj_scheds_url) %>
+  <%= will_paginate @projects, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% if request.path != "/proj_scheds/print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-proj_schedules", target: "_blank", onclick: "printReport('/proj_scheds/print')" %>

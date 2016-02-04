@@ -1,0 +1,55 @@
+<h1>Listing Properties</h1>
+
+<table class="table table-bordered table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Year Built</th>
+      <th>Size in Square Footage</th>
+      <th>Number of floor levels</th>
+      <th>Building Type</th>
+      <th>Number of Units</th>
+      <th>Lot Type</th>
+      <th>Foundation Type</th>
+      <th>Occupied By</th>
+      <% if request.format == 'text/html' %>
+        <th colspan="3" style="text-align:center">Actions</th>
+      <% end %>  
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @properties.each do |property| %>
+      <tr>
+        <td><%= property.number %></td>
+        <td><%= property.street %></td>
+        <td><%= property.city %></td>
+        <td><%= property.state_name %></td>
+        <td><%= property.zip %></td>
+        <td><%= property.yearBuilt %></td>
+        <td><%= property.size %></td>
+        <td><%= property.stories %></td>
+        <td><%= property.prop_type %></td>
+        <td><%= property.units %></td>
+        <td><%= property.lotType %></td>
+        <td><%= property.foundation %></td>
+        <td><%= property.occupied_by %></td>
+        <% if request.format == 'text/html' %>
+          <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), property, class: 'btn btn-primary' %></td>
+          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_property_path(property), class: 'btn btn-info' %></td>
+          <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_page?(properties_url) %>
+  <%= will_paginate @properties, renderer: BootstrapPagination::Rails %>
+<% end %>
+
+<br>

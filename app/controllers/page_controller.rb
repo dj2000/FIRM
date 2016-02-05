@@ -6,7 +6,7 @@ class PageController < ApplicationController
 		end_date = today.end_of_week
 		@insp_requests = InspRequest.where.not(id: Appointment.all.map(&:inspRequest_id))
 		@appointments = Appointment.where.not(id: Inspection.all.map(&:appointment_id))
-		@bids = Bid.where(status: ["Pending","Follow-up"])
+		@bids = Bid.where(status: ["Pending","Follow-up"]).order(:status).reverse_order
 		@unpermitted_permit_informations = PermitInformation.unpermitted_permit_informations
 		@permitted_permit_informations = PermitInformation.joins(:permits).where("permits.id IN (?)", Permit.pending_permits.map(&:id))
 		@permit_informations = (@unpermitted_permit_informations || [] ) + @permitted_permit_informations

@@ -245,13 +245,13 @@
               <div class='col-xs-4'>
                 <div class="form-group">
                   HPOZ?
-                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes %>
-                  <%= label_tag(:yes, "No") %><%= check_box_tag :no %>
-                  <%= label_tag(:yes, "?") %><%= check_box_tag :other %>
+                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes, nil, (@appointment.try(:insp_request).try(:property).hpoz == "Yes") %>
+                  <%= label_tag(:yes, "No") %><%= check_box_tag :no, nil, (@appointment.try(:insp_request).try(:property).hpoz == "No") %>
+                  <%= label_tag(:yes, "?") %><%= check_box_tag :other, nil, (@appointment.try(:insp_request).try(:property).hpoz == "Unknown") %>
                   <br>
                   CDO?&nbsp;&nbsp;
-                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes %>
-                  <%= label_tag(:yes, "No") %><%= check_box_tag :no %>
+                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes, nil, @appointment.try(:insp_request).try(:property).cdo %>
+                  <%= label_tag(:yes, "No") %><%= check_box_tag :no, nil, !@appointment.try(:insp_request).try(:property).cdo %>
                   <%= label_tag(:yes, "?") %><%= check_box_tag :other %>
                 </div>
               </div>

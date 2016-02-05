@@ -23,3 +23,8 @@
 //= require fullcalendar
 //= require jquery_nested_form
 //= require_tree .
+
+
+$(document).ready(function(){
+  $('.pagination a').attr('data-remote', 'true');
+});

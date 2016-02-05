@@ -9,11 +9,8 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
-      <% if current_page?(new_inspection_url) %>
-        <%= f.input :name, input_html: { value: "#{@appointment.try(:insp_request).try(:property).try(:property_select_value)}" " - #{(@appointment.try(:schedStart)).try(:to_time).try(:strftime, '%d %b %Y')}" } %>
-      <% else %>
-        <%= f.input :name, input_html: { value: "#{@inspection.appointment.try(:insp_request).try(:property).try(:property_select_value)}" " - #{(@inspection.appointment.try(:schedStart)).try(:to_time).try(:strftime, '%d %b %Y')}" } %>
-      <% end %>
+      <% @appointment = @appointment || @inspection.try(:appointment) %>
+      <%= f.input :name, input_html: { value: "#{@appointment.try(:insp_request).try(:property).try(:property_select_value)}" " - #{(@appointment.try(:schedStart)).try(:to_time).try(:strftime, '%d %b %Y')}" } %>
     </div>
     <div class="col-md-4">
       <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment", selected: params[:appointment_id] || (params[:inspection] and params[:inspection][:appointment_id]) || f.object.appointment_id %>

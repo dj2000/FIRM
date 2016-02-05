@@ -23,8 +23,10 @@ class ProjectPaymentSchedulesController < ApplicationController
 			@payments = Array.new
 			@payments << Payment.find_or_create_by(title: @pay_plan.try(:deposit_label) || "Deposit" , pay_plan_id: @pay_plan.id, value: @pay_plan.try(:deposit), payment_type: "Deposit")
 			@payments = @payments + @pay_plan.try(:payments)
+			@payments << Payment.new(title: "Balance" , pay_plan_id: @pay_plan.id, value: @pay_plan.deposit_limit_value(@bid))
 			@project_payment_schedules = @project.project_payment_schedules.build
 		end
+		@payments = @payments || @pay_plan.try(:payments)
 	end
 
 	private

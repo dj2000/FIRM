@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205112946) do
+ActiveRecord::Schema.define(version: 20160205141711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160205112946) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.float    "balance"
   end
 
   create_table "block_out_periods", force: true do |t|

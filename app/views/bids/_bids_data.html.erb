@@ -36,4 +36,6 @@
   </tbody>
 </table>
 
-<%= will_paginate @bids, renderer: BootstrapPagination::Rails %>
+<% if request.format == :html && current_page?(bids_url) %>
+  <%= will_paginate @bids, renderer: BootstrapPagination::Rails %>
+<% end %>

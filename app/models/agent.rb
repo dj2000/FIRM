@@ -7,6 +7,7 @@ class Agent < ActiveRecord::Base
 
   validates :firstName, :lastName, presence: true
   validates :phoneH, :phoneW, :phoneC,
+              allow_blank:  true,
   						uniqueness: true,
 							length: { :minimum => 10, :maximum => 15, allow_blank: true },
               format: { with: /\A[0-9\-]+*\z/ }

@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
 	## Associations
   belongs_to :contract
   belongs_to :crew
-  has_many :permits, dependent: :destroy
+  # has_many :permits, dependent: :destroy
   has_many :invoices, dependent: :destroy
   has_many :proj_scheds, dependent: :destroy
   has_many :proj_insps, dependent: :destroy

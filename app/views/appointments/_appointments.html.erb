@@ -40,3 +40,9 @@
 <% if request.path == "/appointments" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/appointments/report_print')" %>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    $('.pagination a').attr('data-remote', 'true');
+  });
+</script>

@@ -33,18 +33,7 @@ class Inspection < ActiveRecord::Base
   end
 
   def check_document_type(doc_type)
-    case doc_type
-    when "report"
-      self.report = nil
-    when "completed_appointment_sheet"
-      self.completed_appointment_sheet = nil
-    when "client_information_sheet"
-      self.client_information_sheet = nil
-    when "footprint_diagram"
-      self.footprint_diagram = nil
-    else
-      "Invalid document type."
-    end
+    self.send("#{doc_type}=",nil)
   end
 
 

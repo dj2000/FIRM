@@ -89,7 +89,7 @@
   });
 
   function update(view){
-    var date = $(".datepicker").datepicker("getDate");
+    var date = $(".datepicker.datepicker-left").datepicker("getDate");
     var crew_id = $(".crew_select").val();
     $.ajax({
       type: "GET",

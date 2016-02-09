@@ -9,7 +9,7 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use SCSS for stylesheets, '~> 4.0.3'
 gem 'sass-rails'
 gem 'validates_email_format_of'

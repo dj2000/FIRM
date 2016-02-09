@@ -1,6 +1,6 @@
 class SvcAreasController < ApplicationController
   before_action :set_svc_area, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /svc_areas
   # GET /svc_areas.json
   def index

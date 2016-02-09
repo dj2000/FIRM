@@ -1,6 +1,6 @@
 class CrewsController < ApplicationController
   before_action :set_crew, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required, except: [:report]
   # GET /crews
   # GET /crews.json
   def index
@@ -98,6 +98,7 @@ class CrewsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_crew
       @crew = Crew.find(params[:id])
+      for_ownership_check(@crew)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  TheRoleManagementPanel::Routes.mixin(self)
   resources :draftsmen
   resources :project_payment_schedules do
     get :load_project_payment_schedules, on: :collection
@@ -159,6 +160,10 @@ Rails.application.routes.draw do
   resources :clients do
     get :report, on: :collection
     get :print, on: :collection
+  end
+
+  resources :users, only: [:index, :update] do
+    get :change_status, on: :member
   end
 
   match "/page/operating_statistics_report" => "page#operating_statistics_report", as: "operating_statistics_report", via: :get

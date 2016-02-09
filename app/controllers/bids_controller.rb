@@ -2,6 +2,7 @@ class BidsController < ApplicationController
 	before_action :payment_plans
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
   before_action :format_amount, only: [:create, :update]
+  before_action :role_required, except: [:report]
 
   # GET /bids
   # GET /bids.json

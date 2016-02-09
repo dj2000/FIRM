@@ -1,6 +1,6 @@
 class SvcCriteriaController < ApplicationController
   before_action :set_svc_criterium, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /svc_criteria
   # GET /svc_criteria.json
   def index

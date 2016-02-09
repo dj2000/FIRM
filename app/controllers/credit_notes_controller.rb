@@ -1,6 +1,7 @@
 class CreditNotesController < ApplicationController
   before_action :set_credit_note, only: [:show, :edit, :update, :destroy]
   before_action :invoices
+  before_action :role_required
 
   respond_to :html
 

@@ -1,6 +1,7 @@
 class ContractsController < ApplicationController
   before_action :set_contract, only: [:show, :edit, :update, :destroy]
   before_action :bids
+  before_action :role_required, except: [:report]
 
   # GET /contracts
   # GET /contracts.json

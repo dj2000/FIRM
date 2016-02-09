@@ -1,6 +1,7 @@
 class PermitsController < ApplicationController
   before_action :set_permit, only: [:show, :edit, :update, :destroy]
   before_action :permitted_projects
+  before_action :role_required
 
   # GET /permits
   # GET /permits.json

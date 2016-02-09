@@ -1,6 +1,7 @@
 class ProjSchedsController < ApplicationController
   before_action :set_proj_sched, only: [:show, :edit, :update, :destroy]
   before_action :crews
+  before_action :role_required, except: [:report]
   # GET /proj_scheds
   # GET /proj_scheds.json
   def index

@@ -1,6 +1,7 @@
 class InspectionsController < ApplicationController
   before_action :set_inspection, only: [:show, :edit, :update, :destroy, :send_email]
   before_action :uninspected_appointments, only: [:edit, :update, :new, :create]
+  before_action :role_required, except: [:report]
 
   # GET /inspections
   # GET /inspections.json

@@ -38,6 +38,11 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(get_report_invoices_url) %>
+  <%= will_paginate @invoices, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <% unless request.path == "/invoices/print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", id: 'print-invoices', onclick: "printReport('/invoices/print', '#{@invoice_type}')" %>
 <% end %>

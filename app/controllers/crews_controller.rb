@@ -4,7 +4,7 @@ class CrewsController < ApplicationController
   # GET /crews
   # GET /crews.json
   def index
-    @crews = Crew.all
+    @crews = Crew.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js
@@ -91,7 +91,7 @@ class CrewsController < ApplicationController
     start_date = params[:start_date].to_date
     end_date = params[:end_date].to_date
     @proj_scheds = ProjSched.joins(:project => [:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]]).
-                              where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+                              where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date).paginate(page: params[:page])
   end
 
   private

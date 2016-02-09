@@ -12,7 +12,12 @@ class Bid < ActiveRecord::Base
 
   before_create :default_status
 
-  # where(appointments: { schedStart: start_date })}
+  before_save :save_balance, if: "payPlan_id.present?"
+
+  def save_balance
+    pay_plan = self.try(:payPlan)
+    self.balance = pay_plan.deposit_limit_value(self)
+  end
 
   # Set default status as pending
   def default_status

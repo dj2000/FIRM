@@ -7,12 +7,12 @@ class ProjectsController < ApplicationController
   def index
     if params[:client_id].present? || params[:property_id].present?
       if params[:search_filter] == "Property"
-        @projects = Project.joins(:contract => [:bid => [:inspection => [:appointment => :insp_request]]]).where("insp_requests.property_id = ? ", params[:property_id])
+        @projects = Project.joins(:contract => [:bid => [:inspection => [:appointment => :insp_request]]]).where("insp_requests.property_id = ? ", params[:property_id]).paginate(page: params[:page])
       elsif params[:search_filter] == "Client"
-        @projects = Project.joins(:contract => [:bid => [:inspection => [:appointment => :insp_request]]]).where("insp_requests.client_id = ? ", params[:client_id])
+        @projects = Project.joins(:contract => [:bid => [:inspection => [:appointment => :insp_request]]]).where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
       end
     else
-      @projects = Project.all
+      @projects = Project.all.paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}
@@ -32,6 +32,11 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    if params[:contract_id].present?
+      @contract = Contract.find(params[:contract_id])
+      @bid = @contract.try(:bid)
+      @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    end
     @permit_information = @project.build_permit_information
   end
 

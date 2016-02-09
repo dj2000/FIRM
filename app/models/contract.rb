@@ -115,6 +115,12 @@ class Contract < ActiveRecord::Base
     @contracts = @contracts.map{|c| c if c.signed?}.compact
   end
 
+  def self.pending_projects
+    signed_contracts = Contract.signed_contracts
+    contracts = Contract.joins(:project).where("projects.ready_to_process = ?", false )
+    signed_contracts | contracts
+  end
+
   private
   def down_payment_amount
     bid = self.try(:bid)

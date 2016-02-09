@@ -67,6 +67,11 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(comm_histories_url) %>
+  <%= will_paginate @comm_histories, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <% if current_page?(root_path) %>
   <%= link_to "Submit", "javascript:void(0)", class: "btn btn-success pull-right", onclick: "markComplete()" %>
 <% end %>

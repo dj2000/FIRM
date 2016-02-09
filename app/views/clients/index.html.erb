@@ -1,3 +1,13 @@
+<%= form_tag('/clients', method: 'get', id: 'search-clients') do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= select_tag "client_id", options_for_select(@search_clients, params[:client_id]), class: "form-control client", prompt: "Select Client" %>
+    </div>
+    <div class="col-md-3">
+			<%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
 <h1>Listing Clients</h1>
 <%= render 'clients' %>
 <br>
@@ -6,3 +16,6 @@
   <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), clients_path(format: :csv),class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), print_clients_path, remote: true,class: "btn btn-info" %>
 <% end %>
+<script>
+$(".client").chosen();
+</script>

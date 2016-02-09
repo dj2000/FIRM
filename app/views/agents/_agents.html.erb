@@ -37,3 +37,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(agents_url) %>
+  <%= will_paginate @agents, renderer: BootstrapPagination::Rails %>
+<% end %>

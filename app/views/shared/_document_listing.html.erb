@@ -1,0 +1,13 @@
+<% if doc_type %>
+  <% parent.try(:documents).try(doc_type.to_sym).each do |document| %>
+    <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+    <%= link_to '', document_path(document, parent_id: parent, attachable_type: parent.class, doc_type: doc_type), data: {:confirm => 'Are you sure?'}, :method => :delete, remote: true, class: "glyphicon glyphicon-trash" %>
+    <br/>
+  <% end %>
+<% else %>
+  <% parent.documents.each do |document| %>
+    <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+    <%= link_to '', document_path(document, parent_id: parent, attachable_type: parent.class), data: {:confirm => 'Are you sure?'}, :method => :delete, remote: true, class: "glyphicon glyphicon-trash" %>
+    <br/>
+  <% end %>
+<% end %>

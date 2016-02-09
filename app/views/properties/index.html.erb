@@ -1,56 +1,21 @@
-<h1>Listing Properties</h1>
+<%= form_tag('/properties', method: 'get') do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= select_tag "property_id", options_for_select(@search_properties, params[:property_id]), class: "form-control property", prompt: "Select Property" %>
+    </div>
+    <div class="col-md-3">
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
 
-<table class="table table-bordered table-striped table-hover table-responsive">
-  <thead>
-    <tr>
-      <th>Number</th>
-      <th>Street</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Year Built</th>
-      <th>Size in Square Footage</th>
-      <th>Number of floor levels</th>
-      <th>Building Type</th>
-      <th>Number of Units</th>
-      <th>Lot Type</th>
-      <th>Foundation Type</th>
-      <th>Occupied By</th>
-      <% if request.format == 'text/html' %>
-        <th colspan="3" style="text-align:center">Actions</th>
-      <% end %>  
-    </tr>
-  </thead>
+<%= render partial: 'properties/properties', object: { properties: @properties } %>
 
-  <tbody>
-    <% @properties.each do |property| %>
-      <tr>
-        <td><%= property.number %></td>
-        <td><%= property.street %></td>
-        <td><%= property.city %></td>
-        <td><%= property.state_name %></td>
-        <td><%= property.zip %></td>
-        <td><%= property.yearBuilt %></td>
-        <td><%= property.size %></td>
-        <td><%= property.stories %></td>
-        <td><%= property.prop_type %></td>
-        <td><%= property.units %></td>
-        <td><%= property.lotType %></td>
-        <td><%= property.foundation %></td>
-        <td><%= property.occupied_by %></td>
-        <% if request.format == 'text/html' %>
-          <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), property, class: 'btn btn-primary' %></td>
-          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_property_path(property), class: 'btn btn-info' %></td>
-          <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Property"), new_property_path, class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), properties_path(format: :csv),class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), print_properties_path, remote: true,class: "btn btn-info" %>
 <% end %>
+<script>
+  $(".property").chosen();
+</script>

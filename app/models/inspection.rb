@@ -21,7 +21,7 @@ class Inspection < ActiveRecord::Base
   validates_attachment_content_type :client_information_sheet, content_type: ["image/jpg", "image/png", "application/pdf"]
   validates_attachment_content_type :footprint_diagram, content_type: ["image/jpg", "image/png", "application/pdf"]
 
-  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)"]
+  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)", "TBD Bid"]
 
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"
@@ -31,6 +31,11 @@ class Inspection < ActiveRecord::Base
     @inspections = Inspection.where(fCondition: "Bid provided")
     @inspections.where.not(id: Bid.all.map(&:inspection_id))
   end
+
+  def check_document_type(doc_type)
+    self.send("#{doc_type}=",nil)
+  end
+
 
   def amount
     invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)

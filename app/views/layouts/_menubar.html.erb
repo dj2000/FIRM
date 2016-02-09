@@ -40,7 +40,7 @@
       <li><%#= link_to "Receipt", receipts_path %></li>
       <li><%= link_to "Credit Note", credit_notes_path %></li>
       <li><%= link_to "BID", bids_path %></li>
-      <li><%= link_to "Upload Files", "/" %></li>
+      <li><%#= link_to "Upload Files", "/" %></li>
       <li><%= link_to "Permits", permits_path %></li>
       <li><%= link_to "Project Inspection", proj_insps_path %></li>
     </ul>
@@ -51,8 +51,8 @@
     <% end %>
     <ul class="dropdown-menu">
       <li><%= link_to "Bids Follow-Up", comm_histories_path, class: 'active' %></li>
-      <li><%= link_to "Create Contract", contracts_path %></li>
-      <li><%= link_to "Create Project", projects_path %></li>
+      <li><%= link_to "Contracts", contracts_path %></li>
+      <li><%= link_to "Projects", projects_path %></li>
       <li><%= link_to "Project/Crew Schedule", proj_scheds_path %></li>
       <li><%= link_to "Project Payment Schedules", project_payment_schedules_path %></li>
     </ul>

@@ -14,7 +14,10 @@
       <% if ["admin", "super_admin"].include?(current_user.try(:role).try(:name))  %>
         <li><%= link_to "Users", users_path %></li>
       <% end %>
-     <li><%= link_to "Engineer", engineers_path %></li>
+      <% if current_user.try(:role).try(:name) == "super_admin" %>
+        <li> <%= link_to "Super Admin", "/admin/roles" %></li>
+      <% end %>
+       <li><%= link_to "Engineer", engineers_path %></li>
       <li><%= link_to "Draftsman", draftsmen_path %></li>
     </ul>
   </li>

@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   USER_STATUS = ['Approved', 'Rejected']
 
   default_scope { order('created_at asc') }
-  scope :pending, -> { where(status: 'Pending').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
-  scope :approved, -> { where(status: 'Approved').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
-  scope :rejected, -> { where(status: 'Rejected').where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
-
+  scope :pending, -> { where(status: 'Pending').except_admin_role }
+  scope :approved, -> { where(status: 'Approved').except_admin_role }
+  scope :rejected, -> { where(status: 'Rejected').except_admin_role }
+  scope :except_admin_role, -> { where("role_id is ? OR role_id in (?)", nil, Role.get_role.map(&:id)) }
 
   def send_admin_mail
     AdminMailer.new_user_waiting_for_approval(self).deliver

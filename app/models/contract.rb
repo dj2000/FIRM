@@ -1,8 +1,7 @@
 class Contract < ActiveRecord::Base
   belongs_to :bid
-  has_one :commission
-  has_one :project
-  has_many :pmt_schedules
+  has_one :project, dependent: :destroy
+  has_many :pmt_schedules, dependent: :destroy
 
   attr_accessor :accepted, :signed, :down_payment
 
@@ -12,20 +11,22 @@ class Contract < ActiveRecord::Base
 
 	validates :dateSigned, :signedBy, presence: true, if: Proc.new { |a| a.signed == "1" }
 
-	validates :downPmtDate, :downPmtAmt, presence: true, if: Proc.new { |a| a.down_payment == "1" }
+	validates :downPmtDate, :downPmtAmt, :deposit_payment_method, presence: true, if: Proc.new { |a| a.down_payment == "1" }
 
   validate :down_payment_amount, if: Proc.new { |a| a.down_payment == "1" }
+
+  PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Escrow", "Scan", "Fax", "On-Site"]
 
   def accepted?(params = nil)
     (params and params[:accepted] and params[:accepted] == "1") || (self.accepted_date and self.acceptedBy)
   end
 
   def signed?(params = nil)
-		(params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
+		return true if (params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
   end
 
   def down_payment?(params = nil)
-		(params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
+		return true if (params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
   end
 
   ## Contracts doesn't have any project
@@ -112,6 +113,12 @@ class Contract < ActiveRecord::Base
   def self.signed_contracts(start_date = nil, end_date = nil)
     @contracts = (start_date and end_date) ? Contract.where('date BETWEEN ? AND ?', start_date, end_date) : Contract.all
     @contracts = @contracts.map{|c| c if c.signed?}.compact
+  end
+
+  def self.pending_projects
+    signed_contracts = Contract.signed_contracts
+    contracts = Contract.joins(:project).where("projects.ready_to_process = ?", false )
+    signed_contracts | contracts
   end
 
   private

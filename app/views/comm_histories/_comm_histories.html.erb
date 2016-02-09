@@ -1,4 +1,4 @@
-<table class='table table-bordered table-striped table-responsive table-hover'>
+<table class='table table-bordered table-striped table-responsive table-hover dashboard'>
   <thead>
     <tr>
       <% if request.format == :html || params[:search_filter].present? %>
@@ -6,31 +6,44 @@
       <% end %>
       <th>Caller</th>
       <th>Recipient</th>
-      <th>Call Summary</th>
+      <% unless current_page?(root_path) %>
+        <th>Call Summary</th>
+      <% end %>
       <th>Call Time</th>
       <th>Call Outcome</th>
       <th>Call Back Date</th>
       <th>Notes</th>
-      <% if request.format == :html || params[:search_filter].present? %>
+      <% if (request.format == :html || params[:search_filter].present?) && request.path == comm_histories_path  %>
         <th colspan="3" class="text-center">Actions</th>
+      <% end %>
+      <% if current_page?(root_path) %>
+        <th>
+          Completed
+          <br/>
+          <span>
+            <%= label_tag "Select All" %>
+            <%= check_box_tag "Select All", false, false, class: "select-all" %>
+          </span>
+        </th>
       <% end %>
     </tr>
   </thead>
-
   <tbody>
     <% @comm_histories.each do |comm_history| %>
-      <tr>
+      <tr onclick = "showInfo('comm_histories/new','<%= request.path %>')">
         <% if request.format == :html || params[:search_filter].present? %>
           <td><%= comm_history.try(:bid).try(:title) %></td>
         <% end %>
         <td><%= comm_history.caller %></td>
         <td><%= comm_history.recipient %></td>
-        <td><%= comm_history.callSummary %></td>
+        <% unless current_page?(root_path) %>
+          <td><%= simple_format comm_history.callSummary %></td>
+        <% end %>
         <td><%= comm_history.try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S") %></td>
         <td><%= comm_history.callOutcome %></td>
         <td><%= comm_history.try(:callBackDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= comm_history.notes %></td>
-        <% if request.format == :html || params[:search_filter].present? %>
+        <% if (request.format == :html || params[:search_filter].present?) && request.path == comm_histories_path %>
           <td>
             <%= link_to comm_history, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Show
@@ -47,7 +60,39 @@
             <% end %>
           </td>
         <% end %>
+        <% if current_page?(root_path) %>
+          <td><%= check_box_tag "comm_histories_ids[]", comm_history.id, false, class: "checkbox" %><%= label_tag "Completed" %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(comm_histories_url) %>
+  <%= will_paginate @comm_histories, renderer: BootstrapPagination::Rails %>
+<% end %>
+
+<% if current_page?(root_path) %>
+  <%= link_to "Submit", "javascript:void(0)", class: "btn btn-success pull-right", onclick: "markComplete()" %>
+<% end %>
+<script>
+  $(document).ready(function(){
+    $(".select-all").change(function(){
+      $(".checkbox").prop('checked', $(this).prop("checked"));
+    });
+  });
+  function markComplete(){
+    var comm_histories_ids = [];
+    $("input[name='comm_histories_ids[]']:checked").each(function(){
+      comm_histories_ids.push($(this).val());
+    });
+    $.ajax({
+      type: 'POST',
+      url: '/comm_histories/mark_complete',
+      data: { comm_histories_ids: comm_histories_ids },
+      success: function(result){
+        window.location.reload();
+      }
+    })
+  }
+</script>

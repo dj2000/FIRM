@@ -1,7 +1,7 @@
 class Inspector < ActiveRecord::Base
-  has_many :appointments
-  has_many :insp_skills
-  has_many :insp_comm_scales
+  has_many :appointments, dependent: :destroy
+  has_many :insp_skills, dependent: :destroy
+  has_many :insp_comm_scales, dependent: :destroy
   validates :firstName, :lastName, presence: true
   validates :phoneH, :phoneC,
 							length: { :minimum => 10, :maximum => 15 },

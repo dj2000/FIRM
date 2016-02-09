@@ -2,14 +2,14 @@ class Inspection < ActiveRecord::Base
   extend AsCSV
   belongs_to :appointment
   belongs_to :inspector
-  has_many :bids, -> { order 'bids.created_at' }
-  has_many :comm_histories
-  has_many :invoices
-  has_many :documents, as: :attachable
+  has_many :bids, -> { order 'bids.created_at' }, dependent: :destroy
+  has_many :comm_histories, dependent: :destroy
+  has_many :invoices, dependent: :destroy
+  has_many :documents, as: :attachable, dependent: :destroy
 
   accepts_nested_attributes_for :bids, allow_destroy: true, reject_if: proc { |attributes| attributes['costRepair'].blank? || attributes['feeSeismicUpg'].blank? || attributes['feeAdmin'].blank? }
 
-  validates :fCondition, :name, presence: true
+  validates :fCondition, :appointment_id, :name, presence: true
 
   has_attached_file :report
   has_attached_file :completed_appointment_sheet
@@ -21,15 +21,25 @@ class Inspection < ActiveRecord::Base
   validates_attachment_content_type :client_information_sheet, content_type: ["image/jpg", "image/png", "application/pdf"]
   validates_attachment_content_type :footprint_diagram, content_type: ["image/jpg", "image/png", "application/pdf"]
 
-  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)"]
+  FOUNDATION_CONDITION = ["No report wanted", "No bid, no work", "Bid provided", "Report ONLY (no bid)", "TBD Bid"]
 
   def humanize(attribute)
 		self.send("#{attribute}") ? "Yes" : "No"
   end
 
+  def self.unbided_inspections
+    @inspections = Inspection.where(fCondition: "Bid provided")
+    @inspections.where.not(id: Bid.all.map(&:inspection_id))
+  end
+
+  def check_document_type(doc_type)
+    self.send("#{doc_type}=",nil)
+  end
+
+
   def amount
     invoices_amount = self.try(:invoices).try(:map, &:amount).try(:inject, &:+)
-    self.try(:appointment).try(:inspFee) - invoices_amount
+    (self.try(:appointment).try(:inspFee) || 0) - (invoices_amount || 0)
   end
 
   def self.created_between(start_date, end_date)

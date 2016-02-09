@@ -39,6 +39,21 @@
                       <span class="badge progress-bar-success pull-right"><%= @crews %></span>Crew
                     <% end %>
                   </li>
+                  <li>
+                    <%= link_to engineers_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @engineers %></span>Engineer
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to draftsmen_path do %>
+                      <span class="badge progress-bar-success pull-right"><%= @draftsmen %></span>Draftsman
+                    <% end %>
+                  </li>
+                  <li>
+                    <%= link_to project_payment_schedules_path do %>
+                    <span class="badge progress-bar-success pull-right"><%= @project_payment_schedules %></span>Project Payment Schedules
+                    <% end %>
+                  </li>
                 </ul>
             </li>
             <li>
@@ -94,18 +109,6 @@
                   <% end %>
                 </li>
                 <li>
-                  <%= link_to invoices_path do %>
-                    <span class="badge progress-bar-danger pull-right"><%= @invoices %></span>
-                    Invoice
-                  <% end %>
-                </li>
-                <li>
-                  <%= link_to receipts_path do %>
-                    <span class="badge progress-bar-danger pull-right"><%= @receipts %></span>
-                    Receipt
-                  <% end %>
-                </li>
-                <li>
                   <%= link_to credit_notes_path do %>
                     <span class="badge progress-bar-danger pull-right"><%= @credit_notes %></span>Credit Note
                   <% end %>
@@ -141,7 +144,7 @@
               <ul style="list-style: none" class="collapse nav nav-list nav-collapse" id="project-co-ordinator">
                 <li>
                   <%= link_to comm_histories_path, class: 'active' do %>
-                    <span class="badge progress-bar-warning pull-right"><%= @comm_histories %></span>
+                    <span class="badge progress-bar-warning pull-right"><%= @comm_histories.count %></span>
                     Bids Follow-Up
                   <% end %>
                 </li>
@@ -193,25 +196,6 @@
 
     <!-- <div class="row"> -->
     <div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-primary">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <div class="pull-right">
-            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
-          </div>
-          <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              <i class="fa fa-envelope-o"></i>
-              Unscheduled Inspection Requests
-            </a>
-          </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            <%= render partial: 'insp_requests/insp_requests' %>
-          </div>
-        </div>
-      </div>
-
       <div class="panel panel-info">
         <div class="panel-heading" role="tab" id="headingThree">
           <div class="pull-right">
@@ -231,6 +215,25 @@
         </div>
       </div>
 
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headind-bids-to-be-provided">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @unbided_inspections.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#bid-to-be-entered" aria-expanded="false" aria-controls="bid-to-be-entered">
+            <i class="fa fa-check-square-o"></i>
+              Bids to be Entered
+            </a>
+          </h4>
+        </div>
+        <div id="bid-to-be-entered" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headind-bids-to-be-provided">
+          <div class="panel-body">
+            <%= render partial: 'inspections/inspections' %>
+          </div>
+        </div>
+      </div>
+
       <div class="panel panel-danger">
         <div class="panel-heading" role="tab" id="headingFour">
           <div class="pull-right">
@@ -245,7 +248,64 @@
         </div>
         <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
           <div class="panel-body">
-            <%= render partial: 'bids/bids' %>
+            <%= render partial: 'bids/bids', :locals => { status: false } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading" role="tab" id="headingSix">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @comm_histories.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+            <i class="fa fa-hand-o-up"></i>
+              Bid Follow up
+            </a>
+          </h4>
+        </div>
+        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'comm_histories/comm_histories' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingSeven">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @vc_bids.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+            <i class="fa fa-suitcase"></i>
+              VC Bids Pending Contract
+            </a>
+          </h4>
+        </div>
+        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+          <div class="panel-body pre-scrollable">
+            <%= render partial: 'bids/bids', :locals => {:status => true }  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="pending-projects-label">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @contract_pending_projects.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pending-projects" aria-expanded="false" aria-controls="pending-projects">
+              <i class="fa fa-envelope-o"></i>
+              Contract Pending Projects
+            </a>
+          </h4>
+        </div>
+        <div id="pending-projects" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pending-projects-label">
+          <div class="panel-body">
+            <%= render partial: 'contracts/contracts' %>
           </div>
         </div>
       </div>
@@ -268,6 +328,93 @@
           </div>
         </div>
       </div>
+
+      <div class="panel panel-info">
+        <div class="panel-heading" role="tab" id="headingEight">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @permit_informations.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+            <i class="fa fa-calendar"></i>
+              Permit Information
+            </a>
+          </h4>
+        </div>
+        <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
+          <div class="panel-body">
+            <%= render template: 'permit_informations/index' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading" role="tab" id="headingNine">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @unclosed_projects.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#project-progess" aria-expanded="false" aria-controls="project-progess">
+            <i class="fa fa-calendar"></i>
+              Project Progress
+            </a>
+          </h4>
+        </div>
+        <div id="project-progess" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
+          <div class="panel-body">
+            <%= render partial: 'projects/project_progress' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <div class="pull-right">
+            <span class="badge progress-bar-warning"><%= @insp_requests.count %></span>
+          </div>
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <i class="fa fa-envelope-o"></i>
+              Unscheduled Inspection Requests
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <%#= render partial: 'insp_requests/insp_requests' %>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </div>
+</div>
+<div class="modal permit-information-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Send Email</h4>
+      </div>
+      <div class="modal-body">
       </div>
     </div>
   </div>
+</div>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:110%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

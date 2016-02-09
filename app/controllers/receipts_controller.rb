@@ -72,7 +72,7 @@ class ReceiptsController < ApplicationController
   def report_result
     start_date = DateTime.parse(params[:start_date])
     end_date = DateTime.parse(params[:end_date])
-    @receipts = Receipt.where('("date" BETWEEN ? AND ?)',start_date, end_date)
+    @receipts = Receipt.where('("date" BETWEEN ? AND ?)',start_date, end_date).paginate(page: params[:page])
   end
 
   def print

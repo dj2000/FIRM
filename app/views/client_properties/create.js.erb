@@ -5,7 +5,7 @@
 <% else %>
 	$('.add-agent').show()
 	$('.add-client').hide()
-	$(".client_select").append("<option value='<%= @client.id %>' selected> <%= @client.name %></option>");
+	$(".client_select").append("<option value='<%= @client_property.id || @client.id %>' selected> <%= @client_property.client.name || @client.name %></option>");
 	$(".client_select").attr('disabled', false)
 	$(".client_select").trigger("chosen:updated");
 	$(".agent_select").html("<option>Select Agent</option><%= escape_javascript(options_for_select([])) %>");
@@ -14,4 +14,5 @@
 	$(".insp_request_agent").removeClass("has-error");
 	$(".insp_request_agent").find("span.help-block").html("");
 	$(".modal").modal('hide');
+	$(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/client_info') %>")
 <% end %>

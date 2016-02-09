@@ -16,7 +16,7 @@
 
   <tbody>
     <% @appointments.each do |appointment| %>
-      <tr onclick = "showInfo('inspections/new','<%= request.path %>')">
+      <tr onclick='document.location = "<%= new_inspection_path(appointment_id: appointment.id) %>" '>
         <td><%= appointment.try(:schedStart).try(:strftime, "%d %b %Y") %></td>
         <td><%= appointment.try(:schedEnd).try(:strftime, "%d %b %Y") %></td>
         <td><%= appointment.try(:insp_request).try(:property).try(:property_select_value) %></td>
@@ -31,7 +31,18 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(appointments_url) %>
+  <%= will_paginate @appointments, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% if request.path == "/appointments" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/appointments/report_print')" %>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    $('.pagination a').attr('data-remote', 'true');
+  });
+</script>

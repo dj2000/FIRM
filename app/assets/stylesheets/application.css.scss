@@ -98,6 +98,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  width: 100%;
 }
 .background{
   background: url('building.jpg');
@@ -193,8 +194,8 @@ body {
   bottom: 270px;
 }
 .calendar_select{
-  width:16.5%;
-  margin-top:1.2%
+  width:15%;
+  margin-top:-1.8%
 }
 .accordion-hover {
   a:hover{
@@ -207,7 +208,21 @@ body {
 table.dashboard tr:hover {
   cursor: pointer;
 }
-.inline{
-  display: inline;
-  padding-left: 15px;
+.datepicker-icon{
+  margin-left: 16%;
+  cursor: pointer
+}
+.pad-bottom5{
+padding-bottom: 5px;
+}
+.pad-0{
+  padding: 0px;
+}
+.alert_invalid_email {
+  color: Red;
+}
+.alert_danger {
+  border-color: #E96666;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(233,102,101,0.6);
 }

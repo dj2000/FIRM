@@ -36,6 +36,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @commissions, renderer: BootstrapPagination::Rails %>
+
 <br>
 
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Commission"), new_commission_path, :class => "btn btn-info" %>

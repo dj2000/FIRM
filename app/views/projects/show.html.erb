@@ -16,24 +16,20 @@
           <td><%= @project.try(:contract).try(:title) %></td>
         </tr>
         <tr>
-          <td>Job Cost</td>
-          <td><%= @project.jobCost %></td>
+          <td>Primary Crew</td>
+          <td><%= @project.try(:primary_crew).try(:foreman) %></td>
         </tr>
         <tr>
-          <td>Schedule By</td>
-          <td><%= @project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
+          <td>Job Cost</td>
+          <td><%= @project.jobCost %></td>
         </tr>
         <tr>
           <td>Permit Required</td>
           <td><%= @project.humanize("permit") %></td>
         </tr>
         <tr>
-          <td>Preferred Schedule Start</td>
-          <td><%= @project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
-        </tr>
-        <tr>
-          <td>Preferred Schedule End</td>
-          <td><%= @project.try(:schedule_pref_end).try(:strftime, "%d %b %Y") %></td>
+          <td>Ready To Process</td>
+          <td><%= @project.humanize("ready_to_process") %></td>
         </tr>
         <tr>
           <td>Est. Duration(d)</td>
@@ -56,8 +52,16 @@
           <td><%= @project.try(:authorizedOn).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
-          <td>Crew</td>
-          <td><%= @project.try(:crew).try(:foreman) %></td>
+          <td>Plot Plans</td>
+          <td><%= @project.humanize("plot_plans") %></td>
+        </tr>
+        <tr>
+          <td>Drawings</td>
+          <td><%= @project.humanize("drawings") %></td>
+        </tr>
+        <tr>
+          <td>Option</td>
+          <td><%= @project.option %></td>
         </tr>
         <tr>
           <td>Interior Access Verified</td>
@@ -71,11 +75,40 @@
           <td>Notes</td>
           <td><%= @project.notes %></td>
         </tr>
+        <tr>
+          <td>Uploaded Miscellaneous Documents</td>
+          <td>
+            <% @project.documents.each do |document| %>
+              <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
+              <br/>
+            <% end %>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </div>
+<%= render template: "permit_informations/show" if @project.try(:permit_information) %>
 <p class="pull-right">
   <%= link_to "Back", projects_path, class: "btn btn-info" %>
   <%= link_to "Schedule Project", proj_scheds_path(id: @project), class: "btn btn-success" %>
+  <% if @project.try(:primary_crew).try(:email) %>
+    <%= link_to "Email", inspection_path(id: @project.try(:contract).try(:bid).try(:inspection).try(:id), email_preview: true, project_id: @project.id), remote: true, class: "btn btn-primary" %>
+  <% end %>
 </p>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:110%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

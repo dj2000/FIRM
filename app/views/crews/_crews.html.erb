@@ -22,6 +22,11 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(crew_report_crews_url) %>
+  <%= will_paginate @proj_scheds, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% if request.path != "/crews/crew_report_print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "javascript:void(0)", class: "btn btn-info print-crews", target: "_blank", onclick: "printReport('/crews/crew_report_print')" %>

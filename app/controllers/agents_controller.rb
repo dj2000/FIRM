@@ -5,7 +5,7 @@ class AgentsController < ApplicationController
   # GET /agents
   # GET /agents.json
   def index
-    @agents = Agent.all
+    @agents = Agent.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.csv { send_data Agent.as_csv }

@@ -1,199 +1,264 @@
 <%= wicked_pdf_stylesheet_link_tag "application", media: :all %>
 <%= stylesheet_link_tag 'print', media: 'print' %>
-<div class="modal-dialog" role="document">
+<div class="modal-dialog appointment_print" role="document">
   <div class="modal-content">
     <div class="modal-body">
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h2 class="panel-title">Appointment Sheet</h2>
-    </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Inspector:</strong>
-            <%= @appointment.inspector.name %>
-          </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h2 class="panel-title">Appointment Sheet</h2>
         </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Senior Inspector:</strong>
-            <%= @appointment.inspector.senior_inspector %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Fee:</strong>
-            <%= @appointment.inspFee %>
-          </div>
-        </div>
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Prepaid:</strong>
-            <%= @appointment.is_prepaid %>
-          </div>
-        </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Payment Method:</strong>
-            <%= @appointment.pmtMethod %>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Start Date:</strong>
-            <%= @appointment.try(:schedStart).try(:strftime, "%d %b %Y %H:%M:%S") %>
-          </div>
-        </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>End Date:</strong>
-            <%= @appointment.try(:schedEnd).try(:strftime, "%d %b %Y %H:%M:%S") %>
-          </div>
-        </div>
-      </div>
-      <table class='table table-bordered table-striped table-responsive table-hover'>
-        <thead>
-          <tr>
-            <th>Client</th>
-            <th>Agent</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Name: <%= @appointment.try(:insp_request).try(:client).try(:name) %>
-            </td>
-            <td>
-              Name: <%= @appointment.try(:insp_request).try(:agent).try(:name) %><br/>
-              Company: <%= @appointment.try(:insp_request).try(:agent).try(:company) %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Cell Phone: <%= @appointment.try(:insp_request).try(:client).try(:phoneC) %>
-            </td>
-            <td>
-              Cell Phone: <%= @appointment.try(:insp_request).try(:agent).try(:phoneC) %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Email: <%= @appointment.try(:insp_request).try(:client).try(:email) %>
-            </td>
-            <td>
-              Email: <%= @appointment.try(:insp_request).try(:agent).try(:email) %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="row">
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Client Type:</strong>
-            <%= @client_property.clientType %>
-          </div>
-        </div>
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>In Escrow:</strong>
-            <%= @client_property.try(:is_escrow) %>
-          </div>
-        </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Agent Type:</strong>
-            <%= @agent_client.try(:agentType) %>
-          </div>
-        </div>
-      </div>
-      <div class="panel panel-default">
         <div class="panel-body">
-          <strong>Property Address:</strong> <%= @appointment.try(:insp_request).try(:property).try(:street) %>
-          <br/>
-          <strong>City:</strong> <%= @appointment.try(:insp_request).try(:property).try(:city) %>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <strong>Zip:</strong> <%= @appointment.try(:insp_request).try(:property).try(:zip) %>
-          <br/>
-          <strong>Cross Street:</strong> <%= @appointment.try(:insp_request).try(:property).try(:crossStreet) %>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <strong>Map Page:</strong> <%= @appointment.try(:insp_request).try(:property).try(:mapPage) %>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Year Built:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:yearBuilt) %>
+          <div class="row">
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Inspector:</strong>
+                <%= @appointment.inspector.name %>
+              </div>
+            </div>
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Senior Inspector:</strong>
+                <%= @appointment.inspector.senior_inspector %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Sq. Ft:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:size) %>
+          <div class="row">
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Fee:</strong>
+                <%= @appointment.inspFee %>
+              </div>
+            </div>
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Prepaid:</strong>
+                <%= @appointment.is_prepaid %>
+              </div>
+            </div>
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Payment Method:</strong>
+                <%= @appointment.pmtMethod %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-2'>
-          <div class="form-group">
-            <strong>Stories:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:stories) %>
+          <div class="row">
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Start Date:</strong>
+                <%= @appointment.try(:schedStart).try(:strftime, "%d %b %Y %H:%M%p") %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-4'>
-          <div class="form-group">
-            <strong>Building Type:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:prop_type) %>
+          <table class='table table-bordered table-striped table-responsive table-hover'>
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Agent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Name: <%= @appointment.try(:insp_request).try(:client).try(:name) %>
+                </td>
+                <td>
+                  Name: <%= @appointment.try(:insp_request).try(:agent).try(:name) %><br/>
+                  Company: <%= @appointment.try(:insp_request).try(:agent).try(:company) %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Cell Phone: <%= @appointment.try(:insp_request).try(:client).try(:phoneC) %>
+                </td>
+                <td>
+                  Cell Phone: <%= @appointment.try(:insp_request).try(:agent).try(:phoneC) %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Email: <%= @appointment.try(:insp_request).try(:client).try(:email) %>
+                </td>
+                <td>
+                  Email: <%= @appointment.try(:insp_request).try(:agent).try(:email) %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Client Type:</strong>
+                <%= @appointment.try(:insp_request).try(:client).try(:client_type) %>
+              </div>
+            </div>
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>In Escrow:</strong>
+                <%= @client_property.try(:is_escrow) %>
+              </div>
+            </div>
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Agent Type:</strong>
+                <%= @agent_client.try(:agentType) %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Lot Type:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:lotType) %>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <table class="appointment_print_address">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>Property Address:</strong>
+                      <%= @appointment.try(:insp_request).try(:property).try(:number).to_s + ", " + @appointment.try(:insp_request).try(:property).try(:street) %></td>
+                    <td>
+                      <strong>City:</strong>
+                      <%= @appointment.try(:insp_request).try(:property).try(:city) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>State:</strong>
+                      <%= @appointment.try(:insp_request).try(:property).try(:state) %>
+                    </td>
+                    <td>
+                      <strong>Zip:</strong>
+                      <%= @appointment.try(:insp_request).try(:property).try(:zip) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Map Page:</strong>
+                      <%= @appointment.try(:insp_request).try(:property).try(:mapPage) %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-3'>
-          <div class="form-group">
-            <strong>Foundation:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:foundation) %>
+          <div class="row">
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Year Built:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:yearBuilt) %>
+              </div>
+            </div>
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Sq. Ft:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:size) %>
+              </div>
+            </div>
+            <div class='col-xs-2'>
+              <div class="form-group">
+                <strong>Stories:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:stories) %>
+              </div>
+            </div>
+            <div class='col-xs-4'>
+              <div class="form-group">
+                <strong>Building Type:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:prop_type) %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Number of Units:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:units) %>
+          <div class="row">
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Lot Type:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:lotType) %>
+              </div>
+            </div>
+            <div class='col-xs-3'>
+              <div class="form-group">
+                <strong>Foundation:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:foundation) %>
+              </div>
+            </div>
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Number of Units:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:units) %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Occupied By:</strong>
-            <%= @appointment.try(:insp_request).try(:property).try(:occupied_by) %>
+          <div class="row">
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Occupied By:</strong>
+                <%= @appointment.try(:insp_request).try(:property).try(:occupied_by) %>
+              </div>
+            </div>
+            <div class='col-xs-6'>
+              <div class="form-group">
+                <strong>Escrow Close Date:</strong>
+                <%= @client_property.try(:escrowDate).try(:strftime, "%d %b %Y") %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class='col-xs-6'>
-          <div class="form-group">
-            <strong>Escrow Close Date:</strong>
-            <%= @client_property.try(:escrowDate).try(:strftime, "%d %b %Y") %>
+          <div class="row">
+            <div class='col-xs-12'>
+              <div class="form-group">
+                <strong>Notes:</strong>
+                <%= @appointment.notes %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class='col-xs-12'>
-          <div class="form-group">
-            <strong>Notes:</strong>
-            <%= @appointment.notes %>
+          <div>
+            <hr>
+            <div class="row">
+              <div class='col-xs-8'>
+                <div class="form-group">
+                  Bus Cards Handed Out: _________________
+                  <br>
+                  <table class="footer_form">
+                    <tbody>
+                      <tr>
+                        <td rowspan="3">
+                          NOD/NOG:
+                        </td>
+                        <td>
+                          A ____________/____________
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          B ____________/____________
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          C ____________/____________
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  Interior Acccess Required? 
+                  <%= label_tag(:yes, "Yes") %><%= check_box_tag(:yes) %>
+                  <%= label_tag(:no, "No") %><%= check_box_tag(:no) %>
+                  <br>
+                  Job Type: __________________
+                </div>
+              </div>
+              <div class='col-xs-4'>
+                <div class="form-group">
+                  HPOZ?
+                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes, nil, (@appointment.try(:insp_request).try(:property).hpoz == "Yes") %>
+                  <%= label_tag(:yes, "No") %><%= check_box_tag :no, nil, (@appointment.try(:insp_request).try(:property).hpoz == "No") %>
+                  <%= label_tag(:yes, "?") %><%= check_box_tag :other, nil, (@appointment.try(:insp_request).try(:property).hpoz == "Unknown") %>
+                  <br>
+                  CDO?&nbsp;&nbsp;
+                  <%= label_tag(:yes, "Yes") %><%= check_box_tag :yes, nil, @appointment.try(:insp_request).try(:property).cdo %>
+                  <%= label_tag(:yes, "No") %><%= check_box_tag :no, nil, !@appointment.try(:insp_request).try(:property).cdo %>
+                  <%= label_tag(:yes, "?") %><%= check_box_tag :other %>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>

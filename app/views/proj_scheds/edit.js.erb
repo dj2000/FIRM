@@ -1,2 +1,3 @@
 $(".modal").html("<%= escape_javascript(render partial: 'crew_inspection') %>")
+$(".modal-footer").append("<%= j link_to "Delete", proj_sched_path(@proj_sched), method: :delete, class: "btn btn-danger", remote: true %>")
 $(".modal").modal('show');

@@ -1,5 +1,5 @@
 class InspectionsController < ApplicationController
-  before_action :set_inspection, only: [:show, :edit, :update, :destroy]
+  before_action :set_inspection, only: [:show, :edit, :update, :destroy, :send_email]
   before_action :uninspected_appointments, only: [:edit, :update, :new, :create]
   before_action :role_required, except: [:report]
 
@@ -8,12 +8,12 @@ class InspectionsController < ApplicationController
   def index
     if params[:client_id].present? || params[:property_id].present?
       if params[:search_filter] == "Property"
-        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id])
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id]).paginate(page: params[:page])
       elsif params[:search_filter] == "Client"
-        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id])
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
       end
     else
-      @inspections = Inspection.all
+      @inspections = Inspection.all.paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}
@@ -27,12 +27,17 @@ class InspectionsController < ApplicationController
   # GET /inspections/1
   # GET /inspections/1.json
   def show
-    @bids = @inspection.bids
+    @file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+    @bids = @inspection.bids.paginate(page: params[:page])
   end
 
   # GET /inspections/new
   def new
     @inspection = Inspection.new
+    if params[:appointment_id].present?
+      @appointment = Appointment.find(params[:appointment_id]) if params[:appointment_id].present?
+      @clients = @appointment.try(:insp_request).try(:property).try(:clients)
+    end
   end
 
   # GET /inspections/1/edit
@@ -43,6 +48,7 @@ class InspectionsController < ApplicationController
   # POST /inspections.json
   def create
     @inspection = Inspection.new(inspection_params)
+    @clients = @inspection.try(:appointment).try(:insp_request).try(:property).try(:clients)
     create_documents
     respond_to do |format|
       if @inspection.save
@@ -83,6 +89,7 @@ class InspectionsController < ApplicationController
   def appointment_info
     @appointment = Appointment.find(params[:id])
     @insp_request = @appointment.insp_request
+    @clients = @insp_request.try(:property).try(:clients)
     respond_to do |format|
       format.js
     end
@@ -104,7 +111,40 @@ class InspectionsController < ApplicationController
   def report_result
     start_date = DateTime.parse(params[:start_date])
     end_date = DateTime.parse(params[:end_date])
-    @inspections = Inspection.created_between(start_date, end_date)
+    @inspections = Inspection.created_between(start_date, end_date).paginate(page: params[:page])
+  end
+
+  def send_email
+    if validate_email(params[:client_email])
+      file_name = params[:bid_name].gsub(",", "_").gsub(" ", "_")
+      file_urls = params[:file_urls].split(",") if params[:file_urls].present?
+      if @client_email = Client.find_by(email: params[:client_email]).try(:email)
+      else
+        @client_email = params[:client_email]
+      end
+      call_summary = params[:call_summary].gsub("\n", "<br>")
+      directory = Rails.root.join("public", "pdfs")
+      Dir.mkdir(directory) unless File.directory?(directory)
+      pdf_directory = Rails.root.join(directory, "#{@inspection.try(:id)}" )
+      Dir.mkdir(pdf_directory) unless File.directory?(pdf_directory)
+      save_path = Rails.root.join(pdf_directory, "#{file_name}.pdf")
+      pdf = WickedPdf.new.pdf_from_string(call_summary, formats: :html, encoding: 'utf8')
+      File.open(save_path, 'wb') do |file|
+        file << pdf
+        @inspection.documents << Document.create(document_type: "email", attachment: file)
+      end
+      UserMailer.send_call_summary_to_client(@client_email, call_summary, file_urls, file_name, params[:cc_emails]).deliver
+      render json: @inspection
+    else
+      redirect_to :back
+    end
+  end
+
+  def delete_attached_file
+    @inspection = Inspection.find(params[:id])
+    @inspection.check_document_type(params[:doc_type])
+    @inspection.save
+    redirect_to :back
   end
 
   private
@@ -112,6 +152,8 @@ class InspectionsController < ApplicationController
     def set_inspection
       @inspection = Inspection.find(params[:id])
       @documents = @inspection.try(:documents)
+      @clients = @inspection.try(:appointment).try(:insp_request).try(:property).try(:clients)
+      @project = Project.find(params[:project_id]) if params[:project_id].present?
     end
 
     def uninspected_appointments
@@ -134,5 +176,9 @@ class InspectionsController < ApplicationController
           end
         end
       end
+    end
+
+    def validate_email(email)
+      email.match(/\A([^@\s!@#$%\^&\[\]\*\(\){}\+="'\?\/<>,:;]+)+([^@\s!@#$%\^&\[\]\*\(\){}\+="'\?\/<>,:;_-]+){1,}@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i)
     end
 end

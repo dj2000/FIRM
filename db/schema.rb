@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207080511) do
+ActiveRecord::Schema.define(version: 20160205141711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.float    "balance"
   end
 
   create_table "block_out_periods", force: true do |t|
@@ -123,6 +124,7 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.datetime "updated_at"
     t.integer  "bid_id"
     t.datetime "call_time"
+    t.boolean  "is_completed",  default: false
   end
 
   create_table "commission_payment_details", force: true do |t|
@@ -167,6 +169,8 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.date     "accepted_date"
     t.string   "title"
     t.string   "status"
+    t.text     "notes"
+    t.string   "deposit_payment_method"
   end
 
   create_table "credit_notes", force: true do |t|
@@ -192,6 +196,7 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
   create_table "documents", force: true do |t|
@@ -204,6 +209,24 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "document_type"
+  end
+
+  create_table "draftsmen", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_initial"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "engineers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_initial"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "i_fee_schedules", force: true do |t|
@@ -330,17 +353,35 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.integer  "pay_plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "payment_type"
+  end
+
+  create_table "permit_informations", force: true do |t|
+    t.integer  "valuation"
+    t.boolean  "replacement"
+    t.string   "type_of_replacement"
+    t.integer  "amount"
+    t.boolean  "engineering"
+    t.integer  "engineer_id"
+    t.boolean  "units"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permits", force: true do |t|
     t.string   "reference"
-    t.integer  "project_id"
     t.date     "issueDate"
     t.string   "issuedBy"
     t.string   "status"
     t.decimal  "valuation"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "permit_information_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "pmt_schedules", force: true do |t|
@@ -375,6 +416,20 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.date     "schedule_end_date"
   end
 
+  create_table "project_payment_schedules", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "payment_id"
+    t.string   "payment_schedule"
+    t.float    "amount"
+    t.string   "payment_type"
+    t.date     "invoice_date"
+    t.boolean  "paid"
+    t.date     "date_paid"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "projects", force: true do |t|
     t.date     "vcDate"
     t.integer  "contract_id"
@@ -396,10 +451,17 @@ ActiveRecord::Schema.define(version: 20151207080511) do
     t.date     "schedule_pref_start"
     t.date     "schedule_pref_end"
     t.boolean  "permit"
+    t.integer  "primary_crew_id"
+    t.boolean  "plot_plans",          default: false
+    t.boolean  "drawings",            default: false
+    t.string   "option"
+    t.boolean  "ready_to_process"
+    t.string   "status",              default: "Open"
+    t.boolean  "send_to_crew",        default: false
   end
 
   create_table "properties", force: true do |t|
-    t.integer  "number"
+    t.string   "number"
     t.string   "street"
     t.string   "city"
     t.string   "state"
@@ -473,12 +535,12 @@ ActiveRecord::Schema.define(version: 20151207080511) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "",        null: false
-    t.string   "encrypted_password",     default: "",        null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,         null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

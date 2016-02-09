@@ -3,9 +3,6 @@
     <tr>
       <th>Contract</th>
       <th>Job Cost</th>
-      <th>Schedule By</th>
-      <th>Preferred Schedule Start</th>
-      <th>Preferred Schedule End</th>
       <th>Est. Duration(d)</th>
       <th>Schedule Start</th>
       <th>Schedule End</th>
@@ -26,9 +23,6 @@
       <tr onclick = "showInfo('projects/<%=project.id%>','<%= request.path %>')">
         <td><%= project.try(:contract).try(:title) %></td>
         <td><%= project.jobCost %></td>
-        <td><%= project.try(:scheduleBy).try(:strftime, "%d %b %Y") %></td>
-        <td><%= project.try(:schedule_pref_start).try(:strftime, "%d %b %Y") %></td>
-        <td><%= project.try(:schedule_pref_end).try(:strftime, "%d %b %Y") %></td>
         <td><%= project.estDuration %></td>
         <td><%= project.try(:scheduleStart).try(:strftime, "%d %b %Y") %></td>
         <td><%= project.try(:scheduleEnd).try(:strftime, "%d %b %Y") %></td>
@@ -59,3 +53,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(projects_url) %>
+  <%= will_paginate @projects, renderer: BootstrapPagination::Rails %>
+<% end %>

@@ -25,6 +25,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @engineers, renderer: BootstrapPagination::Rails %>
+
 <br>
 
 <%= link_to 'New Engineer', new_engineer_path, :class => "btn btn-info" %>

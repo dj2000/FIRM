@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print, :send_email]
   before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit, :index ]
+  before_action :role_required, except: [:report]
   # GET /appointments
   # GET /appointments.json
   def index
@@ -12,7 +13,7 @@ class AppointmentsController < ApplicationController
       @editable = true
     end
     if (params[:start_date] and params[:end_date])
-      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date]).paginate(page: params[:page])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end

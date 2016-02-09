@@ -1,9 +1,15 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :edit, :update, :destroy]
   before_action :validate_info
+  before_action :role_required
 
   def index
-    @properties = Property.all
+    if params[:property_id].present?
+      @properties = Property.where(id: params[:property_id]).paginate(page: params[:page])
+    else
+      @properties = Property.all.paginate(page: params[:page])
+    end
+    @search_properties = Property.all.map{|p| [p.property_select_value, p.id]}
     respond_to do |format|
       format.html
       format.js

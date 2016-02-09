@@ -1,41 +1,42 @@
 <%= javascript_include_tag "common" %>
 <%= simple_form_for(@project, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
+  <% @contract = f.object.contract || @contract %>
   <%= error_messages_for f.object.try(:permit_information) %>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :title %>
+      <%= f.input :title, input_html: { value: f.object.title || @insp_request.try(:default_title) } %>
     </div>
     <div class="col-md-4">
-      <%= f.association :contract, as: :select, collection: @contracts, label_method: :title, selected: f.object.contract_id , label: "Select Contract", include_blank: "Select Contract" %>
+      <%= f.association :contract, as: :select, collection: @contracts, label_method: :title, selected: @contract.try(:id) , label: "Select Contract", include_blank: "Select Contract" %>
     </div>
-    <div class="col-md-4 inspector_info <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-4 inspector_info <%= 'hide' unless @contract %>">
       <%= label_tag "Inspector" %>
-      <%= text_field_tag "inspector_name", f.object.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
+      <%= text_field_tag "inspector_name", @contract.try(:bid).try(:inspection).try(:appointment).try(:inspector).try(:name), class: "insp_request inspector_info form-control", disabled: true %>
     </div>
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless @contract %>">
       <%= label_tag "Accepted By" %>
-      <%= text_field_tag "accepted_by", f.object.try(:contract).try(:acceptedBy), class: "accepted_by form-control", disabled: true %>
+      <%= text_field_tag "accepted_by", @contract.try(:acceptedBy), class: "accepted_by form-control", disabled: true %>
     </div>
-    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless @contract %>">
       <%= label_tag "Signed By" %>
-      <%= text_field_tag "signed_by", f.object.try(:contract).try(:signedBy), class: "signed_by form-control", disabled: true %>
+      <%= text_field_tag "signed_by", @contract.try(:signedBy), class: "signed_by form-control", disabled: true %>
     </div>
-    <div class="col-md-3 contract <%= 'hide' unless f.object.contract_id %>">
+    <div class="col-md-3 contract <%= 'hide' unless @contract %>">
       <%= label_tag "Date Signed" %>
-      <%= text_field_tag "date_signed", f.object.try(:contract).try(:date_signed), class: "date_signed form-control", disabled: true %>
+      <%= text_field_tag "date_signed", @contract.try(:dateSigned).try(:strftime, '%d %b %Y'), class: "date_signed form-control", disabled: true %>
     </div>
     <div class="col-md-3">
       <%= f.association :primary_crew, as: :select, collection: Crew.all, label_method: :foreman, label: "Select Primary Crew", include_blank: "Select Primary Crew" %>
     </div>
   </div>
   <br/>
-  <div class="insp_request <%= 'hide' unless f.object.contract_id %> ">
-    <% if f.object.contract_id %>
-      <% @insp_request = f.object.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+  <div class="insp_request <%= 'hide' unless @contract %> ">
+    <% if f.object.contract_id || @contract %>
+      <% @insp_request = @contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request) || @contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
@@ -71,7 +72,7 @@
       <%= f.input :estDuration, label: "Est. Duration(d)" %>
     </div>
     <div class="col-md-6">
-      <%= f.input :jobCost, label: "Job Cost", input_html: { readonly: true } %>
+      <%= f.input :jobCost, label: "Job Cost", input_html: { readonly: true, value: @contract.try(:bid).try(:total_cost) } %>
     </div>
   </div>
   <fieldset><legend></legend></fieldset>
@@ -109,7 +110,7 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-3 interior-access-required <%= 'hide' if (f.object.contract_id.blank? or f.object.try(:contract).try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
+    <div class="col-md-3 interior-access-required <%= 'hide' if (@contract.blank? or @contract.try(:bid).try(:inspection).try(:interiorAccess) == false) %>">
       <%= f.input :verifiedAccess, label: "Interior Access Verified", as: :boolean %>
     </div>
     <div class="col-md-3">
@@ -130,13 +131,12 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
-        <% f.object.documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
+        <div class="miscellaneous_documents_div">
+          <%= render partial: 'shared/document_listing', locals: { parent: f.object, doc_type: nil } %>
+        </div>
       </div>
     <% end %>
-    </div>
+  </div>
   <br/>
   <div class="modal permit-information" tabindex="-1" role="dialog" data-keyboard="false">
     <div class="modal-dialog" role="document">

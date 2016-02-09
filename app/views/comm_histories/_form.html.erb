@@ -97,10 +97,9 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Email Documents" %>
         <br/>
-        <% f.object.try(:bid).try(:inspection).try(:documents).try(:email_documents).each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
+        <div class="email_documents_div">
+        <%= render partial: 'shared/document_listing', locals: { parent: f.object.try(:bid).try(:inspection), doc_type: "email_documents" } %>
+        </div>
       </div>
     <% end %>
   </div>
@@ -111,7 +110,7 @@
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
-    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_id: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id) } %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_id: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id), client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
@@ -140,6 +139,34 @@
         <h4 class="modal-title">Email Preview</h4>
       </div>
       <div class="modal-body">
+        <div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <i class="fa fa-eye"></i>
+                  Preview Contents
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+              <div class="panel-body email-preview">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= label_tag "Email to:" %>
+            <%= email_field_tag :client_email, nil, class: 'text form-control'  %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <%= label_tag "Cc Emails:" %>
+            <%= text_field_tag :cc_emails, nil, class: 'text form-control' %>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
       </div>
@@ -149,6 +176,23 @@
 <script type="text/javascript">
 $(document).ready(function(){
   loadPreview("inspectionEmailDocumentFile", "email_preview");
+
+  $("#client_email").val($("#req_client_email").val());
+  $("#client_email").focusout(function() { 
+    pattern = /^(([^!@`~#?${}+=%^&*<'>()[\]\/\.,;:\s@"]+(\.[^!@`~#?${}+=%^&*<'>()[\]\/\.,;:\s@"]+)*)|(".+"))([^!@`~#?${}+_\-=%^&*<'>()[\]\/\.,;:\s@"]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z]+\.)+[a-zA-Z]{2,}))$/;
+    if (!pattern.test($("#client_email").val())) {
+      $("#send_email_btn").prop('disabled', true);
+      $("#client_email").addClass("alert_danger");
+      if ($("#client_email").parent().children(".alert_invalid_email").length == 0) {
+        $("#client_email").parent().append("<p class=\"alert_invalid_email\">Make sure you are entering a valid email-id or single email-id.<\/p>");
+      }
+    }
+    else {
+      $("#send_email_btn").prop('disabled', false);
+      $("#client_email").removeClass("alert_danger");
+      $(".alert_invalid_email").remove();
+    }
+  });
   
   $("#comm_history_bid_id").on('change', function(){
     var bid_id = $(this).val();
@@ -209,10 +253,7 @@ $(document).ready(function(){
     var address = $(".insp_request .property span:first").text();
     var fileNames = [];
     if(callSummaryContainer != undefined){
-    var contents = "Hi " + name + ",\n\n";
-    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
-    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
-    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
+    var contents = $("#comm_history_callSummary").val();
     if(fileUrls){
       contents += "<strong>Inspection Files :</strong>\n\n";
       var files = fileUrls.split(/,|<br>/);
@@ -223,28 +264,27 @@ $(document).ready(function(){
       contents += $.unique(fileNames).join("<br>");
       contents += "\n\n"
     }
-    contents += "At your service,\n\n";
-    contents += "Luke Matthews\n(323) 663-4841 office\n(323) 512-4845  direct line\n(323) 663-4844 fax\n\n"
     return contents;
     }
   }
 
   function sendEmail(){
-    var client_id = $(".email").attr('data-client-id');
+    var client_email = $("#client_email").val();
     var fileUrls = $(".send-email").attr("data-fileurls");
     var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
     var inspection_id = $(".inspection_id").val();
     var contents = createContents(callSummaryContainer, fileUrls);
     contents += "<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>"
     var bidName = $("#comm_history_bid_id option:selected").text();
+    var cc_emails = $("#cc_emails").val();
     $.ajax({
       type: "GET",
       url: "/inspections/" + inspection_id + "/send_email",
-      data: {client_id: client_id, call_summary: contents, file_urls: fileUrls, bid_name: bidName},
+      data: {client_email: client_email, call_summary: contents, file_urls: fileUrls, bid_name: bidName, cc_emails: cc_emails},
       success: function(result){
         $(".modal-email-preview").modal('hide');
       }
-    })
+    });
   }
 
   <% if @comm_history.bid_id %>
@@ -256,6 +296,7 @@ $(document).ready(function(){
   });
 
   function updatePreview(fileUrls){
+    var client_id = $(".email").attr('data-client-id');
     var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
     var contents = createContents(callSummaryContainer, fileUrls);
     if(fileUrls){
@@ -264,15 +305,16 @@ $(document).ready(function(){
     else{
       fileUrls = []
     }
-    contents = contents.replace(/\n/g,"<br>")
+    contents = contents.replace(/\n/g,"<br>");
     var inspection_id = $(".inspection_id").val();
     $(".modal-email-preview").modal('show');
-    $(".modal-email-preview .modal-body").html(contents);
+    $(".modal-email-preview .modal-body .email-preview").html(contents);
     $(".modal-email-preview .modal-footer").html("")
     $('.modal-title').html("Email Preview");
-    $(".modal-email-preview .modal-body").append("<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>")
+    $("#client_id").val(client_id)
+    $(".modal-email-preview .modal-body .email-preview").append("<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>");
     $(".modal-email-preview .modal-footer").append("<a data-dismiss=\"modal\" class=\"btn btn-primary\" data-remote=\"true\" href=\"/inspections/" + inspection_id + "?email_preview=true&file_urls=" + fileUrls + "\">Attach</a>")
     $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>");
-    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-info send-email\" onclick='sendEmail()' data-fileUrls=" + fileUrls +">Send Email</button>")
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" id=\"send_email_btn\" class=\"btn btn-info send-email\" onclick='sendEmail()' data-fileUrls=" + fileUrls +">Send Email</button>")
   }
 </script>

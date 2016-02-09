@@ -21,3 +21,18 @@
 	float: right;
 	color:#fff !important;
 }
+.appointment_print {
+  font-size: 10px;
+}
+table.appointment_print_address {
+  width: 100%;
+}
+table.appointment_print_address td {
+  width: 50%;
+  font-size: 15px;
+  padding-right: 10px !important;
+  vertical-align: top;
+}
+table.footer_form td {
+  vertical-align: top;
+}

@@ -13,7 +13,8 @@
 	<div class="col-md-2 client">
 		<%= label_tag "Client" %>
 		<br/>
-		<span><%= @insp_request.client.try(:name) %></span>
+		<span><%= @insp_request.client.try(:name) %>
+		<%= hidden_field_tag 'req_client_email', @insp_request.client.try(:email) %></span>
 		<% if @insp_request.client %>
 		<%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
 		<i class='fa fa-eye'></i> Details

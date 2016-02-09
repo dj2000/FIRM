@@ -4,7 +4,7 @@ class EngineersController < ApplicationController
   # GET /engineers
   # GET /engineers.json
   def index
-    @engineers = Engineer.all
+    @engineers = Engineer.all.paginate(page: params[:page])
   end
 
   # GET /engineers/1

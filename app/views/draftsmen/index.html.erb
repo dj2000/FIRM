@@ -26,6 +26,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @draftsmen, renderer: BootstrapPagination::Rails %>
+
 <br>
 
 <%= link_to 'New Draftsman', new_draftsman_path, :class => "btn btn-info" %>

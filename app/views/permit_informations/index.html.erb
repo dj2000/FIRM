@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Project Status</th>
-      <th>Valuation</th>
+      <th>Client Name</th>
       <th>City</th>
       <th>Replacement</th>
       <th>Type of Replacement</th>
@@ -15,9 +15,9 @@
 
   <tbody>
     <% @permit_informations.each do |permit_information| %>
-      <tr onclick="sendEmail(<%= permit_information.id %>, <%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:id) %>)">
+      <tr onclick="sendEmail(<%= permit_information.id %>)">
         <td><%= permit_information.try(:project).try(:ready_to_process_status) %></td>
-        <td><%= permit_information.valuation %></td>
+        <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
         <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:city_state) %></td>
         <td><%= permit_information.humanize("replacement") %></td>
         <td><%= permit_information.try(:type_of_replacement) %></td>
@@ -30,22 +30,26 @@
   </tbody>
 </table>
 <script>
-function sendEmail(permitInformationId, inspectionId){
-  $('.permit-information-details').modal('show');
-  $(".permit_information_id").val(permitInformationId);
-  $(".inspection").attr("href", "/inspections/" + inspectionId + "?email_preview=true")
+function sendEmail(permitInformationId){
+  $.ajax({
+    url: "/permit_informations/" + permitInformationId + "/load_email_template",
+    type: "GET",
+    success: function(result){
+    }
+  });
 }
 function sendPIS(inspectionId){
   var fileUrls = new Array();
   $("input[name='file_urls[]']:checked").each(function(index, file){
     fileUrls.push(file.value);
   });
-  var fileNames = "<b> Inspection Files: </b>\n\n";
+  var fileNames = "<br/><strong> Inspection Files: </strong>\n\n";
   $(".file-urls").val(fileUrls);
   $.each(fileUrls, function(index, fileUrl){
     fileNames += "<br>" + fileUrl.split("original/")[1];
   });
   $(".file-names").html(fileNames);
   $(".inspection").attr("href", "/inspections/" + inspectionId + "?email_preview=true&file_urls=" + fileUrls)
+  $(".contents").val($(".email-preview").html());
 }
 </script>

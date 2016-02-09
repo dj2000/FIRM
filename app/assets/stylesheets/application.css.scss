@@ -218,3 +218,11 @@ padding-bottom: 5px;
 .pad-0{
   padding: 0px;
 }
+.alert_invalid_email {
+  color: Red;
+}
+.alert_danger {
+  border-color: #E96666;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(233,102,101,0.6);
+}

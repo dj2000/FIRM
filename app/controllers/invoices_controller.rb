@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
   before_action :projects_inspections
+  before_action :role_required, except: [:report]
 
   # GET /invoices
   # GET /invoices.json
@@ -83,7 +84,7 @@ class InvoicesController < ApplicationController
     @invoice_type = params[:invoice_type].camelize
     start_date = params[:start_date].to_date
     end_date = params[:end_date].to_date
-    @invoices = Invoice.where(invoice_type: @invoice_type).where('"invoiceDate" BETWEEN ? AND ? ', start_date, end_date)
+    @invoices = Invoice.where(invoice_type: @invoice_type).where('"invoiceDate" BETWEEN ? AND ? ', start_date, end_date).paginate(page: params[:page])
   end
 
   def print

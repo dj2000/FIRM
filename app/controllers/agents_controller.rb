@@ -1,10 +1,11 @@
 class AgentsController < ApplicationController
   before_action :set_agent, only: [:show, :edit, :update, :destroy]
+  before_action :role_required
 
   # GET /agents
   # GET /agents.json
   def index
-    @agents = Agent.all
+    @agents = Agent.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.csv { send_data Agent.as_csv }

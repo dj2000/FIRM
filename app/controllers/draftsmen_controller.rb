@@ -4,7 +4,7 @@ class DraftsmenController < ApplicationController
   respond_to :html
 
   def index
-    @draftsmen = Draftsman.all
+    @draftsmen = Draftsman.all.paginate(page: params[:page])
     respond_with(@draftsmen)
   end
 

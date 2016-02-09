@@ -1,9 +1,52 @@
 <%= form_tag('/permit_informations/send_email', method: :get) do %>
-	<div class="modal-body">
+	<div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-info">
+      <div class="panel-heading" role="tab" id="email-preview">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#email-preview-contents" aria-expanded="false" aria-controls="email-preview-contents">
+          <i class="fa fa-eye"></i>
+            Preview Contents
+          </a>
+        </h4>
+      </div>
+      <div id="email-preview-contents" class="panel-collapse collapse" role="tabpanel" aria-labelledby="email-preview">
+        <div class="panel-body email-preview">
+			    <b>Job Name:</b>&nbsp;&nbsp;<%= @project.try(:title) %>
+			    <br>
+			    <b>Job Address:</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %>
+			    <br>
+			    <b>Start date:</b>&nbsp;&nbsp;<%= @project.try(:scheduleStart).try(:strftime, '%d %b %Y') %>
+			    <br>
+			    <b>Permit Valuation:</b>&nbsp;&nbsp;<%= @permit_information.try(:valuation) %>
+			    <br>
+			    <b>Replacement:</b>&nbsp;&nbsp;<%= @permit_information.try(:humanize, :replacement) %>
+			    <% if @permit_information.try(:type_of_replacement) == "Partial" %>
+			      <br>
+			      <b>Type of Replacement:</b>&nbsp;&nbsp;<%= @permit_information.try(:type_of_replacement) %>
+			      <br>
+			      <b>Amount:</b>&nbsp;&nbsp;<%= @permit_information.try(:amount) %>
+			    <% end %>
+			    <% if @project.try(:permit?) %>
+			      <br>
+			      <b>Plot Plans:</b>&nbsp;&nbsp;<%= @project.try(:humanize, :plot_plans) %>
+			      <br>
+			      <b>Drawings:</b>&nbsp;&nbsp;<%= @project.try(:humanize, :drawings) %>
+			    <% end %>
+			    <br>
+			    <b>Is this is an HPOZ?</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:humanize, :hpoz) %>
+			    <br>
+			    <b>Option:</b>&nbsp;&nbsp;<%= @project.try(:option) %>
+			    <br>
+			    <b>Notes:</b>&nbsp;&nbsp;<p id="email_preview_notes" style="display:inline;margin:0px;"></p>
+			    <span class='file-names'></span>
+        </div>
+      </div>
+    </div>
+    <br/>
 		<div class="row">
 			<div class="col-md-6">
 				<%= label_tag "Select Draftsman" %>
-				<%= select_tag "draftsman_id", options_from_collection_for_select(Draftsman.all, "id", "name"), class: "select form-control" %>			
+				<%= select_tag "draftsman_id", options_from_collection_for_select(Draftsman.all, "id", "name"), class: "select form-control" %>
 			</div>
 		</div>
 		<br/>
@@ -20,14 +63,24 @@
 			</div>
 		</div>
 	</div>
-	<div class='row'>
-		<div class="col-md-12 file-names" style="margin-left:17px"></div>
-	</div>
 	<%= hidden_field_tag :file_urls, "", class: "file-urls" %>
-	<%= hidden_field_tag :permit_information_id, "", class: "permit_information_id" %>
+	<%= hidden_field_tag :permit_information_id, @permit_information.id, class: "permit_information_id" %>
+	<%= hidden_field_tag :contents, "", class: "contents" %>
 	<div class='modal-footer'>
-			<%= link_to "Attach", nil, class: "btn btn-info inspection", remote: true %>
+			<%= link_to "Attach", inspection_path(@inspection, email_preview: true), class: "btn btn-info inspection", remote: true %>
 	    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	    <%= submit_tag "Send Email", class: "btn btn-success" %>
+	    <%= submit_tag "Send Email", class: "btn btn-success", id:"send_email_btn" %>
   </div>
 <% end %>
+
+<script>
+  
+  $( "#notes" ).keyup(function() {
+    $("#email_preview_notes").html($("#notes").val());
+  });
+
+  $( "#send_email_btn" ).click(function() {
+    $(".contents").val($(".email-preview").html());
+  });
+
+</script>

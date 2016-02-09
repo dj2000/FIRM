@@ -2,7 +2,7 @@
 	<%= project_payment_schedule.input :payment_schedule, input_html: { value: payment.try(:title) || project_payment_schedule.object.payment_schedule, readonly: true }, label: false %>
 </td>
 <td>
-	<% value = index == 0 ? @pay_plan.try(:deposite_amount, @bid) : (index == 1 ? @pay_plan.try(:calculate_first_payment, @bid) : @bid.try(:calculate_amount, payment.try(:value))) %>
+	<% value = index == 0 ? @pay_plan.try(:deposite_amount, @bid) : (index == (@payments.size-1) ? @bid.balance : @bid.try(:calculate_amount, payment.try(:value))) %>
 	<%= project_payment_schedule.input :amount, input_html: { value: (project_payment_schedule.object.try(:amount) || value), readonly: true }, label: false %>
 </td>
 <td>

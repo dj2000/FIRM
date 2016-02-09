@@ -1,10 +1,10 @@
 class InspectorsController < ApplicationController
   before_action :set_inspector, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /inspectors
   # GET /inspectors.json
   def index
-    @inspectors = Inspector.all
+    @inspectors = Inspector.all.paginate(page: params[:page])
      respond_to do |format|
       format.js
       format.html

@@ -1,10 +1,10 @@
 class SvcAreasController < ApplicationController
   before_action :set_svc_area, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /svc_areas
   # GET /svc_areas.json
   def index
-    @svc_areas = SvcArea.all
+    @svc_areas = SvcArea.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

@@ -24,14 +24,6 @@
           <td><%= @contract.try(:date).try(:strftime, "%d %b %Y") %></td>
         </tr>
         <tr>
-          <td>Date Accepted</td>
-          <td><%= @contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
-        </tr>
-        <tr>
-          <td>Accepted By</td>
-          <td><%= @contract.acceptedBy %></td>
-        </tr>
-        <tr>
           <td>Date Signed</td>
           <td><%= @contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
         </tr>

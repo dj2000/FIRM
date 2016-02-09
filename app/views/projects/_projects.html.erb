@@ -53,3 +53,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(projects_url) %>
+  <%= will_paginate @projects, renderer: BootstrapPagination::Rails %>
+<% end %>

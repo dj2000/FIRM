@@ -232,17 +232,19 @@ $(document).ready(function(){
     var callSummaryText = "";
     var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
     contents = createContents(callSummaryContainer);
+      
     if (callSummaryContainer.val() == "Follow-up"){
       $(".call_back_date").removeClass('hide');
+      $("#comm_history_callSummary").prop('disabled', false)
       $("#comm_history_callSummary").val(contents);
+
       $(".email").removeClass('hide');
     }
     else{
       $(".call_back_date").addClass('hide');
-      <% if @comm_history.try(:callOutcome) != "Follow-up" %>
-        callSummaryText = "<%= @comm_history.try(:callSummary) %>";
-      <% end %>
-      $("#comm_history_callSummary").val(callSummaryText);
+      $("#comm_history_callSummary").prop('disabled', true)
+      // callSummaryText = $("#comm_history_callSummary").val();
+      // $("#comm_history_callSummary").val(callSummaryText);
       $(".email").addClass('hide');
     }
   }
@@ -254,6 +256,7 @@ $(document).ready(function(){
     var fileNames = [];
     if(callSummaryContainer != undefined){
     var contents = $("#comm_history_callSummary").val();
+    console.log("inside createContents")
     if(fileUrls){
       contents += "<strong>Inspection Files :</strong>\n\n";
       var files = fileUrls.split(/,|<br>/);

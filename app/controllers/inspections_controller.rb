@@ -132,7 +132,7 @@ class InspectionsController < ApplicationController
         file << pdf
         @inspection.documents << Document.create(document_type: "email", attachment: file)
       end
-      UserMailer.send_call_summary_to_client(@client_email, call_summary, file_urls, file_name, params[:cc_emails]).deliver
+      UserMailer.send_call_summary_to_client(@client_email, call_summary, file_urls, file_name, params[:cc_emails], current_user).deliver
       render json: @inspection
     else
       redirect_to :back

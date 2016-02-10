@@ -88,6 +88,14 @@ class Project < ActiveRecord::Base
     return true if self.project_payment_schedules.where(payment_type: "Final Sign Off", paid: true ).present?
   end
 
+  def permit_issued?
+    return true if self.try(:permit_information)
+  end
+
+  def down_payment?
+    return true if self.project_payment_schedules.where(payment_type: "Deposit", paid: true ).present?
+  end
+  
   private
 
   def check_schedule_end_date

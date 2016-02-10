@@ -5,7 +5,7 @@ class PermitInformation < ActiveRecord::Base
 
 	TYPES_OF_REPLACEMENT = ["Full", "Partial"]
 
-	validates :valuation, presence: true
+	#validates :valuation, presence: true
 	validates :type_of_replacement, presence: true, if: Proc.new { |p| p.replacement? }
 	validates :amount, presence: true, if: Proc.new { |p| p.type_of_replacement == "Partial" }
 	validates :engineer_id, presence: true, if: Proc.new { |p| p.engineering? }
@@ -15,7 +15,11 @@ class PermitInformation < ActiveRecord::Base
   end
 
   def select_value
-	"#{self.try(:engineer).try(:name)} - #{self.valuation}"
+	"#{self.try(:project).try(:title)}"
+  end
+
+  def replacment_type_value
+  	self.send(:replacement) ? self.type_of_replacement : ""
   end
 
   def self.unpermitted_permit_informations

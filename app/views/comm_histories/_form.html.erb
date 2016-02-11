@@ -235,14 +235,14 @@ $(document).ready(function(){
       
     if (callSummaryContainer.val() == "Follow-up"){
       $(".call_back_date").removeClass('hide');
-      $("#comm_history_callSummary").prop('disabled', false)
+      // $("#comm_history_callSummary").prop('disabled', false)
       $("#comm_history_callSummary").val(contents);
 
       $(".email").removeClass('hide');
     }
     else{
       $(".call_back_date").addClass('hide');
-      $("#comm_history_callSummary").prop('disabled', true)
+      // $("#comm_history_callSummary").prop('disabled', true)
       // callSummaryText = $("#comm_history_callSummary").val();
       // $("#comm_history_callSummary").val(callSummaryText);
       $(".email").addClass('hide');
@@ -255,8 +255,17 @@ $(document).ready(function(){
     var address = $(".insp_request .property span:first").text();
     var fileNames = [];
     if(callSummaryContainer != undefined){
-    var contents = $("#comm_history_callSummary").val();
-    console.log("inside createContents")
+      console.log(name)
+    var contents = "Hi " + name.trim() + ",\n\n";
+    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
+    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
+    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
+    contents += "At your service" + ",\n\n";
+    contents += "Luke Matthews\n"
+    contents += "(323) 663-4841 office\n"
+    contents += "(323) 512-4845  direct line\n"
+    contents += "(323) 663-4844 fax\n"
+
     if(fileUrls){
       contents += "<strong>Inspection Files :</strong>\n\n";
       var files = fileUrls.split(/,|<br>/);

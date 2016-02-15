@@ -24,7 +24,7 @@
   <div class="row">
     <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.input :phoneH, label: "Home Number" %>
+        <%= f.input :phoneH, label: "Primary Number" %>
       </div>
     </div>
     <div class='col-sm-4'>
@@ -34,7 +34,7 @@
     </div>
     <div class='col-sm-4'>
       <div class="form-group">
-        <%= f.input :phoneW, label: "Office Number" %>
+        <%= f.input :phoneW, label: "Fax Number" %>
       </div>
     </div>
   </div>
@@ -58,6 +58,13 @@
         <%= f.input :mailAddress, label: "Mailing Address" %>
       </div>
     </div>
+  </div>
+  <div class="row">
+     <div class='col-sm-6'>
+        <div class="form-group">
+          <%= f.input :notes,:input_html => { rows: 7, cols: 10 } %>
+        </div>
+     </div>
   </div>
   <div class="modal-footer">
     <% if @remote %>

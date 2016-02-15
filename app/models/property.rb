@@ -6,7 +6,7 @@ class Property < ActiveRecord::Base
 
   OCCUPIED_BY = %w(Rented Owner Vacant Other)
 
-  LOT_TYPE = %w(Hill Flat Slope)
+  LOT_TYPE = %w(Hillside Flat Slope)
 
   FOUNDATION = %w(Raised Slab)
 

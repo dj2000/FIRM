@@ -79,16 +79,14 @@ class Contract < ActiveRecord::Base
   ## Contracts which are paid off
   def self.paid_off_contracts(start_date, end_date, inspector_id)
     paid_off_contracts = Hash.new{ |h, k| h[k] = {} }
-    receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
-                where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
-    receipts.each do |project_id, receipts|
-      invoice = receipts.first.invoice
-      project = Project.find(project_id)
-      total_amount = receipts.map(&:amount).inject(:+) + (invoice.try(:credit_notes).map(&:amount).inject(:+) || 0)
+    project_payment_schedules = ProjectPaymentSchedule.joins(:project => [:contract => [ :bid => [inspection: :appointment]]]).
+                where(appointments: {inspector_id: inspector_id }, payment_type: "Completion Payment", paid: true).group_by{|r| r.project}
+    project_payment_schedules.each do |project, project_payment_schedules|
+      total_amount = project_payment_schedules.map(&:amount).inject(:+) || 0
       contract = project.contract
       project_cost = contract.balance
-      date = receipts.last.date
-      if (project_cost == total_amount and date.between?(start_date, end_date))
+      date = project_payment_schedules.last.date_paid
+      if (date.between?(start_date, end_date))
 				paid_off_contracts[contract.id]["contract"] = contract
 				paid_off_contracts[contract.id]["paid_date"] = date
       end

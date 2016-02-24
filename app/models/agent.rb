@@ -13,9 +13,16 @@ class Agent < ActiveRecord::Base
               format: { with: /\A[0-9\-]+*\z/ }
 
   validates :email, email_format: { message: "Invalid Email Address" },if: :email?
+
+  TYPE = ["Agent", "Contractor", "Property Manager", "Other"]
   
   def name
     "#{self.try(:firstName)} #{self.try(:lastName)}"
+  end
+
+  def agenttype
+    return nil if self.agent_type.nil?
+    return (Agent::TYPE.first(4)).include?(self.agent_type) ? self.agent_type : "Other"
   end
 
   def self.as_csv

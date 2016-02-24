@@ -4,6 +4,7 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Middle Initial</th>
+      <th>Type</th>
       <th>Company</th>
       <th>Primary Number</th>
       <th>Telephone Number</th>
@@ -23,6 +24,7 @@
         <td><%= agent.firstName %></td>
         <td><%= agent.lastName %></td>
         <td><%= agent.middleInit %></td>
+        <td><%= agent.agent_type %></td>
         <td><%= agent.company %></td>
         <td><%= number_to_phone(agent.phoneH) %></td>
         <td><%= number_to_phone(agent.phoneW) %></td>

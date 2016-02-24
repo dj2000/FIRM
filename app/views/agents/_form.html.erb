@@ -22,6 +22,18 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <%= f.input :agent_type, as: :select, collection: Agent::TYPE.map{|v| [v, v]}, selected: f.object.agenttype, input_html: { class: "agent_type" } %>
+      </div>
+    </div>
+    <div class='col-sm-3 '>
+      <div class="form-group <%= f.object.agenttype == "Other" ? '' : 'hide' %> agent_type_other ">
+        <%= f.input :agent_type, label: '&nbsp;'.html_safe %>
+      </div>
+    </div>
+  </div>
   <%= hidden_field_tag :client_id, "", class: 'client_id' %>
   <div class="row">
     <div class='col-sm-4'>
@@ -81,5 +93,16 @@
   $(document).ready(function(){
     var client_id = $(".client_select").val();
     $(".client_id").val(client_id);
+    $(".agent_type").change(function(){
+      var selectedValue = $(this).val();
+      if(selectedValue == "Other"){
+        $(".agent_type_other").removeClass("hide");
+        $(".agent_type_other input").val("");
+      }
+      else{
+        $(".agent_type_other").addClass("hide");
+        $(".agent_type_other input").val(selectedValue);
+      }
+    });
   });
 </script>

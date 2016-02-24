@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215132625) do
+ActiveRecord::Schema.define(version: 20160224142329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160215132625) do
     t.datetime "updated_at"
     t.boolean  "mailingList"
     t.text     "notes"
+    t.string   "agent_type"
   end
 
   create_table "appointments", force: true do |t|
@@ -493,15 +494,6 @@ ActiveRecord::Schema.define(version: 20160215132625) do
     t.integer  "invoice_id"
     t.decimal  "amount"
     t.string   "recBy"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "roles", force: true do |t|
-    t.string   "name",        null: false
-    t.string   "title",       null: false
-    t.text     "description", null: false
-    t.text     "the_role",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

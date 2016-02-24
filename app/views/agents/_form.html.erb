@@ -1,6 +1,8 @@
-<fieldset>
-  <legend>New Agent</legend>
-</fieldset>
+<% if @remote %>
+  <fieldset>
+    <legend>New Representative</legend>
+  </fieldset>
+<% end %>
 <%= simple_form_for @agent, html: { remote: @remote } do |f| %>
   <%= f.error_notification %>
   <div class="row">

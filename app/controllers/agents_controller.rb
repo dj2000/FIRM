@@ -7,7 +7,7 @@ class AgentsController < ApplicationController
     @agents = Agent.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
-      format.csv { send_data Agent.as_csv }
+      format.csv { send_data Agent.as_csv, filename: 'representatives.csv' }
     end
   end
 
@@ -42,7 +42,7 @@ class AgentsController < ApplicationController
     respond_to do |format|
       if @agent.save
         @client.agents << @agent if params[:client_id].present?
-        format.html { redirect_to @agent, notice: 'Agent was successfully created.' }
+        format.html { redirect_to @agent, notice: 'Representative was successfully created.' }
         format.js
       else
         format.html { render :new }
@@ -56,7 +56,7 @@ class AgentsController < ApplicationController
   def update
     respond_to do |format|
       if @agent.update(agent_params)
-        format.html { redirect_to @agent, notice: 'Agent was successfully updated.' }
+        format.html { redirect_to @agent, notice: 'Representative was successfully updated.' }
         format.json { render :show, status: :ok, location: @agent }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ class AgentsController < ApplicationController
   def destroy
     @agent.destroy
     respond_to do |format|
-      format.html { redirect_to agents_url, notice: 'Agent was successfully destroyed.' }
+      format.html { redirect_to agents_url, notice: 'Representative was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

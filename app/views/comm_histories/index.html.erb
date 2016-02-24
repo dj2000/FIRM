@@ -2,7 +2,7 @@
 <%= form_tag('/comm_histories', method: 'get', id: 'search-comm-histories') do %>
   <div class="row">
     <div class="col-md-3">
-    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
+    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control comm_histories_search_filter", prompt: "Select Search Criteria" %>
     </div>
     <div class="col-md-3">
       <%= select_tag "property_id", options_for_select(@properties), class: "form-control property hide", prompt: "Select Property" %>

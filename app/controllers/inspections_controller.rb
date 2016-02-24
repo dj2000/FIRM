@@ -5,17 +5,20 @@ class InspectionsController < ApplicationController
   # GET /inspections
   # GET /inspections.json
   def index
-    if params[:client_id].present? || params[:property_id].present?
+    if params[:client_id].present? || params[:property_id].present? || params[:agent_id].present?
       if params[:search_filter] == "Property"
         @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.property_id = ? ", params[:property_id]).paginate(page: params[:page])
       elsif params[:search_filter] == "Client"
         @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
+      elsif params[:search_filter] == "Agent"
+        @inspections = Inspection.joins(:appointment => :insp_request).where("insp_requests.agent_id = ? ", params[:agent_id]).paginate(page: params[:page])
       end
     else
       @inspections = Inspection.all.paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}
+    @agents = Agent.all.map{|a| [a.name, a.id]}
     respond_to do |format|
       format.js
       format.csv { send_data Inspection.to_csv }

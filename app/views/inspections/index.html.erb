@@ -1,11 +1,12 @@
 <%= form_tag('/inspections', method: 'get', id: 'search-inspection') do %>
   <div class="row">
     <div class="col-md-3">
-    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"]]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
+    <%= select_tag "search_filter", options_for_select([["Property", "Property"], ["Client", "Client"], ['Representative', 'Agent']]), class: "form-control search_filter", prompt: "Select Search Criteria" %>
     </div>
     <div class="col-md-3">
       <%= select_tag "property_id", options_for_select(@properties), class: "form-control property hide", prompt: "Select Property" %>
       <%= select_tag "client_id", options_for_select(@clients), class: "form-control client hide", prompt: "Select Client" %>
+      <%= select_tag "agent_id", options_for_select(@agents), class: "form-control agent hide", prompt: "Select Representative" %>
     </div>
     <div class="col-md-3">
       <a href="javascript:void(0)" class='btn btn-primary searchInspection'>Search</a>
@@ -28,20 +29,40 @@ $(".search_filter").change(function(){
   if(filter == "Property"){
     $("select.property").removeClass("hide");
     $("select.client").addClass("hide");
+    $("select.agent").addClass("hide");
     $(".property").chosen();
     $(".client").chosen();
     $('.client').chosen('destroy');
+    $(".agent").chosen();
+    $('.agent').chosen('destroy');
     $('select.client').val('').trigger('chosen:updated');
+    $('select.agent').val('').trigger('chosen:updated');
   }
   else if (filter == "Client"){
     $("select.client").removeClass("hide");
     $("select.property").addClass("hide");
+    $("select.agent").addClass("hide");
     $(".client").chosen();
     $('.property').chosen();
     $('.property').chosen('destroy');
+    $(".agent").chosen();
+    $('.agent').chosen('destroy');
+    $('select.property').val('').trigger('chosen:updated');
+    $('select.agent').val('').trigger('chosen:updated');
+  }
+  else if(filter == "Agent"){
+    $("select.agent").removeClass("hide");
+    $("select.property").addClass("hide");
+    $("select.client").addClass("hide");
+    $(".agent").chosen();
+    $(".client").chosen();
+    $('.client').chosen('destroy');
+    $('.property').chosen();
+    $('.property').chosen('destroy');
+    $('select.client').val('').trigger('chosen:updated');
     $('select.property').val('').trigger('chosen:updated');
   }
-  else{
+  else if(filter == ""){
     alert("Please select search criteria.")
   }
 });

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(".search_filter").change(function(){
+	$(".comm_histories_search_filter").change(function(){
 	  var filter = $(this).val();
 	  if(filter == "Property"){
 	    $("select.property").removeClass("hide");
@@ -17,7 +17,9 @@ $(document).ready(function(){
 	    $('.property').chosen('destroy');
 	    $('select.property').val('').trigger('chosen:updated');
 	  }
-	  else{
+	  else if(filter == ""){
+		$("select.property").addClass("hide");
+		$("select.client").addClass("hide");
 	    alert("Please select search criteria.")
 	  }
 	});

@@ -63,6 +63,15 @@ $(".search_filter").change(function(){
     $('select.property').val('').trigger('chosen:updated');
   }
   else if(filter == ""){
+    $('.property').chosen();
+    $(".agent").chosen();
+    $(".client").chosen();
+    $('.client').chosen('destroy');
+    $('.property').chosen('destroy');
+    $('.agent').chosen('destroy');
+    $("select.agent").addClass("hide");
+    $("select.property").addClass("hide");
+    $("select.client").addClass("hide");
     alert("Please select search criteria.")
   }
 });

@@ -20,6 +20,10 @@ $(document).ready(function(){
 	  else if(filter == ""){
 		$("select.property").addClass("hide");
 		$("select.client").addClass("hide");
+		$(".client").chosen();
+	    $('.property').chosen();
+	    $('.client').chosen('destroy');
+	    $('.property').chosen('destroy');
 	    alert("Please select search criteria.")
 	  }
 	});

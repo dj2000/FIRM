@@ -33,7 +33,7 @@
 			      <b>Drawings:</b>&nbsp;&nbsp;<%= @project.try(:humanize, :drawings) %>
 			    <% end %>
 			    <br>
-			    <b>Is this is an HPOZ?</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:humanize, :hpoz) %>
+			    <b>Is this is an HPOZ?</b>&nbsp;&nbsp;<%= @project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:hpoz) %>
 			    <br>
 			    <b>Option:</b>&nbsp;&nbsp;<%= @project.try(:option) %>
 			    <br>

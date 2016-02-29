@@ -112,7 +112,7 @@
                   <tr>
                     <td>
                       <strong>Property Address:</strong>
-                      <%= @appointment.try(:insp_request).try(:property).try(:number).to_s + ", " + @appointment.try(:insp_request).try(:property).try(:street) %></td>
+                      <%= @appointment.try(:insp_request).try(:property).try(:number).to_s + " " + @appointment.try(:insp_request).try(:property).try(:street) %></td>
                     <td>
                       <strong>City:</strong>
                       <%= @appointment.try(:insp_request).try(:property).try(:city) %>

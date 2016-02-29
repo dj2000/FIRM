@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-  TheRoleManagementPanel::Routes.mixin(self)
   resources :draftsmen
   resources :project_payment_schedules do
     get :load_project_payment_schedules, on: :collection
   end
+  TheRoleManagementPanel::Routes.mixin(self)
 
   resources :credit_notes
   resources :engineers

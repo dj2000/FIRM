@@ -30,7 +30,11 @@ class ContractsController < ApplicationController
 
   # GET /contracts/new
   def new
-    @contract = Contract.new
+    @contract = Contract.new(bid_id: params[:bid_id])
+    if params[:bid_id].present?
+      @bid = Bid.find(params[:bid_id]) if params[:bid_id].present?
+      @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    end
   end
 
   # GET /contracts/1/edit

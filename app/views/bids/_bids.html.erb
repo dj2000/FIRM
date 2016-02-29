@@ -20,11 +20,12 @@
         <% if bid.try(:contract).try(:signed?) %>
           <% link = edit_contract_path(bid.contract) %>
         <% else %>
-          <% link = new_contract_path(Contract.new) %>
+          <% link = new_contract_path(Contract.new, bid_id: bid.id) %>
         <% end %>
       <% else %>
         <% link =  new_polymorphic_path(CommHistory.new, bid_id: bid.id) %>
       <% end %>
+
       <tr onclick='document.location = "<%= link %>" '>
         <td><%= bid.title %></td>
         <td><%= bid.try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:property_select_value) %></td>

@@ -1,5 +1,5 @@
 class InspRequest < ActiveRecord::Base
-  has_one :appointment, class_name: 'Appointment', foreign_key: 'inspRequest_id'
+  has_one :appointment, class_name: 'Appointment', foreign_key: 'inspRequest_id', dependent: :destroy
   belongs_to :client
   belongs_to :agent
   belongs_to :property

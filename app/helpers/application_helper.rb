@@ -1,5 +1,5 @@
 module ApplicationHelper
-	# Generate error messages content
+ # Generate error messages content
   def error_messages_for object
     error_content = ''
     if object
@@ -15,4 +15,8 @@ module ApplicationHelper
 	  end
     error_content.html_safe
   end
+
+  def display_class
+		notice['error'] ? "alert-danger" : "alert-success"
+	end
 end

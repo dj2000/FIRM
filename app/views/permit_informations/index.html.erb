@@ -20,7 +20,7 @@
         <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:name) %></td>
         <td><%= permit_information.try(:project).try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:city_state) %></td>
         <td><%= permit_information.humanize("replacement") %></td>
-        <td><%= permit_information.try(:type_of_replacement) %></td>
+        <td><%= permit_information.try(:replacment_type_value) %></td>
         <td><%= permit_information.try(:amount) %></td>
         <td><%= permit_information.humanize("engineering") %></td>
         <td><%= permit_information.try(:engineer).try(:name) %></td>

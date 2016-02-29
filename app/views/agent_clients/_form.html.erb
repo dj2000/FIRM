@@ -1,12 +1,12 @@
 <fieldset>
-  <legend>Select Agent</legend>
+  <legend>Select Representative</legend>
 </fieldset>
 <%= simple_form_for(@agent_client, html: { remote: true }) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class='col-sm-6'>
       <div class="form-group">
-        <%= f.association :agent, collection: Agent.all, label_method: :name %>
+        <%= f.association :agent, collection: Agent.all, label_method: :name, label: "Representative" %>
       </div>
     </div>
     <div class='col-sm-6'>

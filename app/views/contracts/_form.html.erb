@@ -2,10 +2,13 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :title %>
+      <% @insp_request =  @insp_request || @contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+
+      <%= f.input :title, input_html: { value: "#{@insp_request.try(:default_title)}"} %>
     </div>
     <div class="col-md-4">
-      <%= f.association :bid, as: :select, collection: @bids, selected: f.object.bid_id , label: "Select Bid", include_blank: "Select Bid" %>
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] || (params[:contract] and params[:contract][:bid_id]) || f.object.bid_id %>
+
     </div>
     <div class="col-md-4 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
@@ -21,6 +24,7 @@
     <div class="col-md-4">
       <%= f.input :confirmed_by %>
     </div>
+
     <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Call Time" %>
       <%= text_field_tag "call_time", f.object.try(:bid).try(:verbal_close_comm_history).try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S"), class: "call_time form-control", disabled: true %>

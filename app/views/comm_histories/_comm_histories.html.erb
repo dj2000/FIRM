@@ -68,7 +68,7 @@
   </tbody>
 </table>
 
-<% if current_page?(comm_histories_url) %>
+<% if current_page?(comm_histories_url) and request.format == :html %>
   <%= will_paginate @comm_histories, renderer: BootstrapPagination::Rails %>
 <% end %>
 

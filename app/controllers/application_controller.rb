@@ -13,6 +13,14 @@ class ApplicationController < ActionController::Base
     render json: @cities
   end
 
+  def after_sign_in_path_for(resource)
+    if current_user.admin?
+      "/admin/roles"
+    else
+      root_path
+    end
+  end
+
   def the_role_default_access_denied_response
     access_denied_msg = t(:access_denied, scope: :the_role)
     if request.xhr?

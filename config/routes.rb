@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  match "/users/create_user" => "users#create", via: :post
+
   resources :draftsmen
   resources :project_payment_schedules do
     get :load_project_payment_schedules, on: :collection
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, :controllers => {:registrations => "registrations"}
+
   resources :insp_comm_scales
 
   resources :proj_insps do
@@ -161,8 +164,8 @@ Rails.application.routes.draw do
     get :report, on: :collection
     get :print, on: :collection
   end
-
-  resources :users, only: [:index, :update] do
+  
+  resources :users do
     get :change_status, on: :member
   end
 

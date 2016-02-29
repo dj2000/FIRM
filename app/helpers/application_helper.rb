@@ -1,5 +1,5 @@
 module ApplicationHelper
- # Generate error messages content
+	# Generate error messages content
   def error_messages_for object
     error_content = ''
     if object

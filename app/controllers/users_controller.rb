@@ -4,6 +4,19 @@ class UsersController < ApplicationController
   def index
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to users_path
+    else
+      render action: :new
+    end
+  end
+
   def update
     @user = User.find_by_id(params[:id])
     @user.update(user_params)
@@ -34,7 +47,12 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params[:user][:status] = params["user_#{params[:id]}"][:status]
-    params.require(:user).permit(:role_id, :status)
+    params[:user][:status] = params["user_#{params[:id]}"][:status] if params[:id].present?
+    unless params[:id].present?
+      params[:user][:skip_password_validation] = true
+      params[:user][:status] = "Approved"
+      params[:user][:current_user_mail] = current_user.email
+    end
+    params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation)
   end
 end

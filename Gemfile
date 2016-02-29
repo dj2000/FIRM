@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.8'
 
 #Use Bootstrap for stylesheets
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '>= 3.3.1'
 gem 'autoprefixer-rails'
 
 # Use sqlite3 as the database for Active Record

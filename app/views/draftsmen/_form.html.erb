@@ -1,0 +1,23 @@
+<%= simple_form_for(@draftsman) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.input :first_name %>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :middle_initial %>
+    </div>
+    <div class="col-md-4">
+      <%= f.input :last_name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :email %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit", class: 'btn btn-success' %>
+    <%= link_to 'Back', draftsmen_path, class: 'btn btn-info' %>
+  </div>
+<% end %>

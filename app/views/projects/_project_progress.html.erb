@@ -1,0 +1,36 @@
+<table class="table table-bordered table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Project Title</th>
+      <th>Street</th>
+      <th>Date</th>
+      <th>Crew</th>
+      <th>Signed Contract</th>
+      <th>Down Payment</th>
+      <th>Permit Required</th>
+      <th>Permit Issued</th>
+      <th>Email to Crew</th>
+      <th>Payments</th>
+      <th>Complete</th>
+      <th>Permit Sign Off</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @unclosed_projects.each do |project| %>
+      <tr onclick='document.location="<%= project_payment_schedules_path(project_id: project.id) %>"'>
+        <td><%= project.title %></td>
+        <td><%= project.try(:contract).try(:bid).try(:inspection).try(:appointment).try(:insp_request).try(:property).try(:address) %></td>
+        <td><%= project.try(:scheduled) %></td>
+        <td><%= project.try(:primary_crew).try(:foreman) %></td>
+        <td><%= project.try(:contract).try(:signed?) ? "Yes" : "No" %></td>
+        <td><%= project.humanize(:down_payment?) %></td>
+        <td><%= project.humanize("permit") %></td>
+        <td><%= project.humanize(:permit_issued?) %></td>
+        <td><%= project.humanize("send_to_crew") %></td>
+        <td><%= project.try(:total_amount) %></td>
+        <td><%= project.humanize(:completed?) %></td>
+        <td><%= project.humanize(:permit_sign_off?) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

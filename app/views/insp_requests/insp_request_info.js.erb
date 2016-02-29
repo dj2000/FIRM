@@ -15,3 +15,11 @@ $(".contract").removeClass("hide");
 $("#project_jobCost").val("<%= @bid.try(:total_cost) %>");
 $(".email").removeClass("hide");
 $(".email").attr('data-client-email', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) %>")
+$("#project_title").val("<%= @insp_request.try(:default_title) %>");
+$("#contract_title").val("<%= @insp_request.try(:default_title) %>");
+$(".city").html("<%= @insp_request.try(:property).try(:city_state) %>");
+<% if @bid.try(:inspection).try(:interiorAccess?) %>
+	$(".interior-access-required").removeClass("hide");
+<% else %>
+	$(".interior-access-required").addClass("hide");
+<% end %>

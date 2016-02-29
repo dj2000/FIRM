@@ -29,7 +29,6 @@
       <th> </th>
       <th> </th>
       <th> </th>
-      <th> </th>
     </tr>
   </thead>
 
@@ -66,13 +65,23 @@
           <td> </td>
           <td> </td>
           <td> </td>
-          <td> </td>
         </tr>
       <% end %>
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(report_result_inspections_url) %>
+  <%= will_paginate @inspections, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% unless request.path == "/inspections/print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", remote: true, class: "btn btn-info", id: "print-inspection", onclick: "printReport('/inspections/print')" %>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    $('.pagination a').attr('data-remote', 'true');
+  });
+</script>

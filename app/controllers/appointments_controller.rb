@@ -13,7 +13,7 @@ class AppointmentsController < ApplicationController
       @editable = true
     end
     if (params[:start_date] and params[:end_date])
-      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date]).paginate(page: params[:page])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end

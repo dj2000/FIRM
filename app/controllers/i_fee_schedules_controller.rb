@@ -4,7 +4,7 @@ class IFeeSchedulesController < ApplicationController
   # GET /i_fee_schedules
   # GET /i_fee_schedules.json
   def index
-    @i_fee_schedules = IFeeSchedule.all
+    @i_fee_schedules = IFeeSchedule.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

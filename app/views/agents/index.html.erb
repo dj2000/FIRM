@@ -1,8 +1,8 @@
-<h1>Listing Agents</h1>
+<h1>Listing Representatives</h1>
 <%= render 'agents' %>
 <br>
 <% if request.format == 'text/html' %>
-  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Agent"), new_agent_path, class: 'btn btn-info' %>
+  <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Representative"), new_agent_path, class: 'btn btn-info' %>
   <%= link_to raw("<i class='fa fa-file'></i> Export To CSV"), agents_path(format: :csv),class: "btn btn-info" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), print_agents_path, remote: true,class: "btn btn-info" %>
 <% end %>

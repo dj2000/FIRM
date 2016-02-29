@@ -38,13 +38,13 @@
         <td><%= payment.title %></td>
         <td>
           <%= number_to_percentage(payment.value, precision: 0) %>
-          <% if index == 0 %>
-            <%= " / " + number_to_currency(" #{@pay_plan.try(:calculate_first_payment, @bid)}") if @bid %>
-          <% else %>
-            <%= " / " + number_to_currency(" #{@bid.try(:calculate_amount, payment.value)}") if @bid %>
-          <% end %>
+          <%= " / " + number_to_currency(" #{@bid.try(:calculate_amount, payment.value)}") if @bid %>
         </td>
       </tr>
     <% end %>
+    <tr>
+      <td>Balance</td>
+      <td><%= number_to_currency(@bid.try(:balance)) %></td>
+    </tr>
   </tbody>
 </table>

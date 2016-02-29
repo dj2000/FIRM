@@ -42,6 +42,10 @@
   </tbody>
 </table>
 
+<% if current_page?(crews_url) %>
+  <%= will_paginate @crews, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% if request.format == 'text/html' %>
   <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Crew"), new_crew_path, :class => "btn btn-info" %>

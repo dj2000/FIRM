@@ -27,6 +27,11 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(report_result_receipts_url) %>
+  <%= will_paginate @receipts, renderer: BootstrapPagination::Rails %>
+<% end %>
+
 <br>
 <% unless request.path == "/receipts/print" %>
   <%= link_to raw("<i class='fa fa-print'></i> Print"), "#", class: "btn btn-info", onclick: "printReport('/receipts/print')" %>

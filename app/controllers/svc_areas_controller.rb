@@ -4,7 +4,7 @@ class SvcAreasController < ApplicationController
   # GET /svc_areas
   # GET /svc_areas.json
   def index
-    @svc_areas = SvcArea.all
+    @svc_areas = SvcArea.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

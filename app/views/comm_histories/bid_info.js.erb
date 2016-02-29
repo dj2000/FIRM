@@ -1,0 +1,10 @@
+$(".insp_request.inspector_info").val("<%= @bid.try(:inspection).try(:appointment).try(:inspector).try(:name) %>")
+$('.inspector_info').removeClass("hide");
+$(".insp_request").html("<%= escape_javascript(render partial: 'insp_requests/insp_request_info') %>")
+$(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/client_info') %>")
+$(".client_info").removeClass("hide");
+$(".insp_request").removeClass("hide");
+$(".email").removeClass("hide");
+$(".email").attr('data-client-id', "<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id) %>")
+$(".inspection_id").val("<%= @bid.try(:inspection).try(:id) %>")
+$("#email_to").val("<%= @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) %>")

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    Dear <%= @crew.foreman %>,
+    <br>
+    <br>
+    <b>Job Name:</b>&nbsp;&nbsp;<%= @project.title %>
+    <br>
+    <b>Start date:</b>&nbsp;&nbsp;<%= @project.try(:scheduleStart).try(:strftime, '%d %b %Y') %>
+    <br>
+    <b>End date:</b>&nbsp;&nbsp;<%= @project.try(:scheduleEnd).try(:strftime, '%d %b %Y') %>
+    <br>
+    <b>Permit:</b>&nbsp;&nbsp;<%= @project.humanize("permit") %>
+    <% if @project.permit? %>
+      <br>
+      <b>Plot Plans:</b>&nbsp;&nbsp;<%= @project.humanize("plot_plans") %>
+      <br>
+      <b>Drawings:</b>&nbsp;&nbsp;<%= @project.humanize("drawings") %>
+    <% end %>
+    <br>
+    <b>Option:</b>&nbsp;&nbsp;<%= @project.option %>
+    <br>
+    <br>
+    Thanks,
+    <br/>
+    Support Team
+  </body>
+</html>

@@ -42,7 +42,7 @@ class Appointment < ActiveRecord::Base
       allDay: false,
       type: 'appointment',
       client: self.try(:insp_request).try(:client).try(:name),
-      address: self.try(:insp_request).try(:property).try(:address)
+      address: self.try(:insp_request).try(:property).try(:property_select_value)
     }
   end
 
@@ -62,7 +62,7 @@ class Appointment < ActiveRecord::Base
 
   #To populate appointment dropdown
   def appointment_select
-    self.try(:insp_request).try(:property).try(:property_select_value) + " - " + self.try(:inspector).try(:firstName)
+    "#{self.try(:insp_request).try(:property).try(:property_select_value)} - #{self.try(:inspector).try(:firstName)}"
   end
 
   private

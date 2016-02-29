@@ -31,7 +31,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'devise'
 gem 'city-state'
 gem 'simple_form'
-gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem "populator"
 gem "faker"
 gem 'mysql2'
@@ -49,12 +49,15 @@ gem 'wkhtmltopdf-binary-edge'
 gem "paperclip"
 gem "nested_form"
 gem 'geocoder'
+gem "letter_opener", :group => :development
 gem 'the_role', '~> 3.0.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+group :production do
+  gem 'unicorn'
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -68,4 +71,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
 gem 'pg'
-gem "letter_opener", group: :development

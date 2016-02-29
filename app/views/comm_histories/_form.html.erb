@@ -1,8 +1,9 @@
-<%= simple_form_for(@comm_history) do |f| %>
+<%= javascript_include_tag "common" %>
+<%= simple_form_for(@comm_history, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
-      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid" %>
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] || (params[:comm_history] and params[:comm_history][:bid_id]) || f.object.bid_id %>
     </div>
     <div class="col-md-6 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
@@ -35,54 +36,86 @@
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
+
+  <fieldset><legend></legend></fieldset>
+  <div class="client_info <%= 'hide' unless f.object.bid_id %> ">
+    <% if f.object.bid_id %>
+      <% @insp_request = f.object.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+      <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-4">
-      <div>
-        <%= f.radio_button :callOutcome, "Verbal Close" %>
-        <%= f.label "Verbal Close" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Not Interested" %>
-        <%= f.label "Not Interested" %>
-      </div>
-      <div>
-        <%= f.radio_button :callOutcome, "Follow-up" %>
-        <%= f.label "Follow-up" %>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
-        <%= f.label 'Call Backdate' %>
-        <div class='input-group date'>
-          <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
+    <div class="col-md-6">
+      <div class="col-md-6 pad-0 <%= 'has-error' if f.object.errors["callOutcome"].first %>">
+        <div>
+          <%= f.radio_button :callOutcome, "Verbal Close" %>
+          <%= f.label "Verbal Close" %>
         </div>
-        <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
+        <div>
+          <%= f.radio_button :callOutcome, "Not Interested" %>
+          <%= f.label "Not Interested" %>
+        </div>
+        <div>
+          <%= f.radio_button :callOutcome, "Follow-up" %>
+          <%= f.label "Follow-up" %>
+        </div>
+        <span class="help-block"><%= f.object.errors["callOutcome"].first %></span>
+      </div>
+      <%= hidden_field_tag "inspection_id", f.object.try(:bid).try(:inspection).try(:id), class: 'inspection_id' %>
+      <div class="col-md-6">
+        <div class="form-group call_back_date <%= 'hide' unless f.object.callOutcome == "Follow-up" %> <%= 'has-error' if f.object.errors["callBackDate"].first %>">
+          <%= f.label 'Call Backdate' %>
+          <div class='input-group date'>
+            <%= f.text_field :callBackDate, class: "form-control", value: f.object.try(:callBackDate).try(:strftime, "%Y-%m-%d") %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <span class="help-block"><%= f.object.errors["callBackDate"].first %></span>
+        </div>
+      </div>
+      <div class = "clearfix"></div> <br>
+      <div class = "row">
+         <div class="col-md-12">
+           <%= f.input :notes %>
+        </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <%= f.input :callSummary %>
+
+    <div class="col-md-6">
+      <%= f.input :callSummary, :input_html => { rows: 7, cols: 10 } %>
     </div>
   </div>
-  <fieldset><legend></legend></fieldset>
   <div class="row">
-    <div class="col-md-8">
-      <%= f.input :notes %>
+    <%= label_tag "Email documents" %>
+    <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "inspectionEmailDocumentFile",  accept: ".pdf"%>
+    <div class="col-md-6 email_preview preview">
+      <div class="text-center">No Preview Available.</div>
     </div>
+    <% if f.object.try(:bid).try(:inspection).try(:documents).present? %>
+      <div class="col-md-6">
+        <%= label_tag "Uploaded Email Documents" %>
+        <br/>
+        <div class="email_documents_div">
+        <%= render partial: 'shared/document_listing', locals: { parent: f.object.try(:bid).try(:inspection), doc_type: "email_documents" } %>
+        </div>
+      </div>
+    <% end %>
   </div>
+
+  <fieldset><legend></legend></fieldset>
+
   <br/>
   <div class="actions pull-right">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
     <%= link_to "Back", comm_histories_path, class: "btn btn-info" %>
-    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", onclick: "sendEmail()", data: { client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
+    <%= link_to "Email", "javascript:void(0)", class: "btn btn-success email hide", data: { client_id: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:id), client_email: @bid.try(:inspection).try(:appointment).try(:insp_request).try(:client).try(:email) } %>
   </div>
 <% end %>
 <div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="width:110%">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -91,26 +124,97 @@
       </div>
       <div class="modal-body">
       </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-email-preview" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style='width:110%'>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Email Preview</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-group accordion-hover" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-info">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <i class="fa fa-eye"></i>
+                  Preview Contents
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+              <div class="panel-body email-preview">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <%= label_tag "Email to:" %>
+            <%= email_field_tag :client_email, nil, class: 'text form-control'  %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <%= label_tag "Cc Emails:" %>
+            <%= text_field_tag :cc_emails, nil, class: 'text form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+$(document).ready(function(){
+  loadPreview("inspectionEmailDocumentFile", "email_preview");
+
+  $("#client_email").val($("#req_client_email").val());
+  $("#client_email").focusout(function() { 
+    pattern = /^(([^!@`~#?${}+=%^&*<'>()[\]\/\.,;:\s@"]+(\.[^!@`~#?${}+=%^&*<'>()[\]\/\.,;:\s@"]+)*)|(".+"))([^!@`~#?${}+_\-=%^&*<'>()[\]\/\.,;:\s@"]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z]+\.)+[a-zA-Z]{2,}))$/;
+    if (!pattern.test($("#client_email").val())) {
+      $("#send_email_btn").prop('disabled', true);
+      $("#client_email").addClass("alert_danger");
+      if ($("#client_email").parent().children(".alert_invalid_email").length == 0) {
+        $("#client_email").parent().append("<p class=\"alert_invalid_email\">Make sure you are entering a valid email-id or single email-id.<\/p>");
+      }
+    }
+    else {
+      $("#send_email_btn").prop('disabled', false);
+      $("#client_email").removeClass("alert_danger");
+      $(".alert_invalid_email").remove();
+    }
+  });
+  
   $("#comm_history_bid_id").on('change', function(){
     var bid_id = $(this).val();
     if(bid_id != ""){
       $.ajax({
-        url: '/insp_requests/' + bid_id + '/insp_request_info',
-        type: 'GET'
+        url: '/comm_histories/' + bid_id + '/bid_info',
+        type: 'GET',
+        success: function(){
+          loadCallSummaryText();
+        }
       });
     }
     else{
       alert("Please select Bid.")
       $(".inspector_info").addClass("hide");
       $(".insp_request").addClass("hide");
+      $(".client_info").addClass("hide");
       $(".email").addClass("hide");
+      $("#comm_history_callSummary").val("");
     }
   });
-  $('.input-group.date').datepicker({ 
+  $('.input-group.date').datepicker({
     format: 'yyyy-mm-dd'
   });
   $('.datetimepicker').datetimepicker({
@@ -118,21 +222,111 @@
     defaultDate: new Date()
   });
   $("input[name='comm_history[callOutcome]']").change(function(){
-    if ($(this).val() == "Follow-up")
-      $(".call_back_date").removeClass('hide');
-    else
-      $(".call_back_date").addClass('hide');
+    loadCallSummaryText();
   });
+})
+  
+  
+
+  function loadCallSummaryText(){
+    var callSummaryText = "";
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    contents = createContents(callSummaryContainer);
+      
+    if (callSummaryContainer.val() == "Follow-up"){
+      $(".call_back_date").removeClass('hide');
+      // $("#comm_history_callSummary").prop('disabled', false)
+      $("#comm_history_callSummary").val(contents);
+
+      $(".email").removeClass('hide');
+    }
+    else{
+      $(".call_back_date").addClass('hide');
+      // $("#comm_history_callSummary").prop('disabled', true)
+      // callSummaryText = $("#comm_history_callSummary").val();
+      // $("#comm_history_callSummary").val(callSummaryText);
+      $(".email").addClass('hide');
+    }
+  }
+
+  function createContents(callSummaryContainer, fileUrls){
+    var name = $(".insp_request .client span:first").text();
+    var inspector = $("input.inspector_info").val();
+    var address = $(".insp_request .property span:first").text();
+    var fileNames = [];
+    if(callSummaryContainer != undefined){
+      console.log(name)
+    var contents = "Hi " + name.trim() + ",\n\n";
+    contents += "Just a quick follow-up, I wanted to be sure that you’d received the Summary of Findings that " + inspector + " sent over for the " + address + " property that he inspected for you. Did you receive that okay?.\n\n";
+    contents += "Be sure to let us know and of course if there are any questions-fire away. That’s why I’m here. I can also assist in scheduling the work should you like to move forward with the project..\n\n";
+    contents += "As a “by the way”, feel free to check us out on-line via Google, YELP, Angie’s List, etc.  We’re very proud of the reputation we’ve developed and would like the opportunity of providing A+ service for your foundation as well.\n\n";
+    contents += "At your service" + ",\n\n";
+    contents += "Luke Matthews\n"
+    contents += "(323) 663-4841 office\n"
+    contents += "(323) 512-4845  direct line\n"
+    contents += "(323) 663-4844 fax\n"
+
+    if(fileUrls){
+      contents += "<strong>Inspection Files :</strong>\n\n";
+      var files = fileUrls.split(/,|<br>/);
+      $.each(files, function(index, fileUrl){
+        fileUrl = fileUrl.replace(",", "")
+        fileNames.push(fileUrl.split("original/")[1]);
+      });
+      contents += $.unique(fileNames).join("<br>");
+      contents += "\n\n"
+    }
+    return contents;
+    }
+  }
 
   function sendEmail(){
-    var email = $(".email").attr('data-client-email');
-    var bidName = $("#comm_history_bid_id option:selected").text().replace('Select Bid\n', '')
-    var callSummaryText = $("#comm_history_callSummary").val();
-    var link = 'mailto:' + email + '?subject=' + bidName + '&body=' + callSummaryText;
-    window.location.href = link;
+    var client_email = $("#client_email").val();
+    var fileUrls = $(".send-email").attr("data-fileurls");
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    var inspection_id = $(".inspection_id").val();
+    var contents = createContents(callSummaryContainer, fileUrls);
+    contents += "<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>"
+    var bidName = $("#comm_history_bid_id option:selected").text();
+    var cc_emails = $("#cc_emails").val();
+    $.ajax({
+      type: "GET",
+      url: "/inspections/" + inspection_id + "/send_email",
+      data: {client_email: client_email, call_summary: contents, file_urls: fileUrls, bid_name: bidName, cc_emails: cc_emails},
+      success: function(result){
+        $(".modal-email-preview").modal('hide');
+      }
+    });
   }
 
   <% if @comm_history.bid_id %>
     $(".email").removeClass('hide');
   <% end %>
+
+  $(".email").click(function(){
+    updatePreview();
+  });
+
+  function updatePreview(fileUrls){
+    var client_id = $(".email").attr('data-client-id');
+    var callSummaryContainer = $("input[name='comm_history[callOutcome]']:checked");
+    var contents = createContents(callSummaryContainer, fileUrls);
+    if(fileUrls){
+      fileUrls = $.unique(fileUrls.split("<br>"));
+    }
+    else{
+      fileUrls = []
+    }
+    contents = contents.replace(/\n/g,"<br>");
+    var inspection_id = $(".inspection_id").val();
+    $(".modal-email-preview").modal('show');
+    $(".modal-email-preview .modal-body .email-preview").html(contents);
+    $(".modal-email-preview .modal-footer").html("")
+    $('.modal-title').html("Email Preview");
+    $("#client_id").val(client_id)
+    $(".modal-email-preview .modal-body .email-preview").append("<a href='www.TheFoundationWorks.com' style='text-decoration:underline'>www.TheFoundationWorks.com</a>");
+    $(".modal-email-preview .modal-footer").append("<a data-dismiss=\"modal\" class=\"btn btn-primary\" data-remote=\"true\" href=\"/inspections/" + inspection_id + "?email_preview=true&file_urls=" + fileUrls + "\">Attach</a>")
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>");
+    $(".modal-email-preview .modal-footer").append("<button type=\"button\" id=\"send_email_btn\" class=\"btn btn-info send-email\" onclick='sendEmail()' data-fileUrls=" + fileUrls +">Send Email</button>")
+  }
 </script>

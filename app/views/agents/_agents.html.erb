@@ -4,12 +4,14 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Middle Initial</th>
+      <th>Type</th>
       <th>Company</th>
-      <th>Home Number</th>
-      <th>Work Number</th>
-      <th>Cell Number</th>
+      <th>Primary Number</th>
+      <th>Telephone Number</th>
+      <th>Fax Number</th>
       <th>Email</th>
       <th>Mail Address</th>
+      <th>Notes</th>
       <% unless (request.format == :js || request.path == '/agents/report') %>
         <th colspan="3"> Actions</th>
       <% end %>
@@ -22,12 +24,14 @@
         <td><%= agent.firstName %></td>
         <td><%= agent.lastName %></td>
         <td><%= agent.middleInit %></td>
+        <td><%= agent.agent_type %></td>
         <td><%= agent.company %></td>
         <td><%= number_to_phone(agent.phoneH) %></td>
         <td><%= number_to_phone(agent.phoneW) %></td>
         <td><%= number_to_phone(agent.phoneC) %></td>
         <td><%= agent.email %></td>
         <td><%= agent.mailAddress %></td>
+        <td><%= agent.notes %></td>
         <% unless (request.format == :js || request.path == '/agents/report') %>
           <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), agent, class: 'btn btn-primary' %></td>
           <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_agent_path(agent), class: 'btn btn-info' %></td>
@@ -37,3 +41,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(agents_url) %>
+  <%= will_paginate @agents, renderer: BootstrapPagination::Rails %>
+<% end %>

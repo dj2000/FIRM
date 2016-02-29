@@ -12,15 +12,15 @@
       <th>Verified Report</th>
       <th>Verified Complete</th>
       <th>Notes</th>
-      <% if request.format == 'text/html' %>
+      <% unless current_page?(root_url) %>
         <th colspan="3" class="text-center">Actions</th>
       <% end %>
     </tr>
   </thead>
-
+  <% @inspections = @unbided_inspections if current_page?(root_url) %>
   <tbody>
     <% @inspections.each do |inspection| %>
-      <tr>
+      <tr onclick='document.location = "<%= inspection_path(inspection.id) %>"'>
         <td><%= inspection.name %></td>
         <td><%= inspection.try(:appointment).try(:appointment_select) %></td>
         <td><%= inspection.fCondition %></td>
@@ -32,7 +32,7 @@
         <td><%= inspection.humanize("verifiedReport") %></td>
         <td><%= inspection.humanize("verifiedComp") %></td>
         <td><%= inspection.notes %></td>
-        <% if request.format == 'text/html' %>
+        <% unless current_page?(root_url) %>
           <td>
             <%= link_to inspection, class: 'btn btn-primary' do %>
               <i class='fa fa-eye'></i> Bids
@@ -53,3 +53,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(inspections_url) %>
+  <%= will_paginate @inspections, renderer: BootstrapPagination::Rails %>
+<% end %>

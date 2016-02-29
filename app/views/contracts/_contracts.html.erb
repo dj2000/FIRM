@@ -4,44 +4,53 @@
       <th>Title</th>
       <th>Bid</th>
       <th>Contract Date</th>
-      <th>Date Accepted</th>
-      <th>Accepted By</th>
       <th>Date Signed</th>
       <th>Signed By</th>
+      <th>Payment Method</th>
       <th>Date Received</th>
       <th>Amout Received</th>
-      <th colspan="3" class="text-center">Actions</th>
+      <% unless current_page?(root_url) %>
+        <th colspan="3" class="text-center">Actions</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
+    <% @contracts = @contract_pending_projects if current_page?(root_url) %>
     <% @contracts.each do |contract| %>
-      <tr>
+      <% link = contract.project.present? ? edit_project_path(contract.project) : new_project_path(contract_id: contract)  %>
+      <tr onclick='document.location="<%= link %>"'>
         <td><%= contract.title %></td>
         <td><%= contract.try(:bid).try(:title) %></td>
         <td><%= contract.try(:date).try(:strftime, "%d %b %Y") %></td>
-        <td><%= contract.try(:accepted_date).try(:strftime, "%d %b %Y") %></td>
-        <td><%= contract.acceptedBy %></td>
         <td><%= contract.try(:dateSigned).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.signedBy %></td>
+        <td><%= contract.deposit_payment_method %></td>
         <td><%= contract.try(:downPmtDate).try(:strftime, "%d %b %Y") %></td>
         <td><%= contract.downPmtAmt %></td>
-        <td>
-          <%= link_to contract, class: 'btn btn-primary' do %>
-            <i class='fa fa-eye'></i> Show
-          <% end %>
-        </td>
-        <td>
-          <%= link_to edit_contract_path(contract), class: 'btn btn-info' do %>
-            <i class='fa fa-pencil-square-o'></i> Edit
-          <% end %>
-        </td>
-        <td>
-          <%= link_to contract, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class='fa fa-trash-o'></i> Destroy
-          <% end %>
-        </td>
+        <% unless current_page?(root_url) %>
+          <td>
+            <%= link_to contract, class: 'btn btn-primary' do %>
+              <i class='fa fa-eye'></i> Show
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_contract_path(contract), class: 'btn btn-info' do %>
+              <i class='fa fa-pencil-square-o'></i> Edit
+            <% end %>
+          </td>
+          <td>
+            <%= link_to contract, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <i class='fa fa-trash-o'></i> Destroy
+            <% end %>
+          </td>
+        <% end %>
+        </tr>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<% if current_page?(contracts_url) %>
+  <%= will_paginate @contracts, renderer: BootstrapPagination::Rails %>
+<% end %>

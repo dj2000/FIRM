@@ -110,6 +110,13 @@
       </div>
     </div>
   </div>
+  <div class="row">
+     <div class='col-sm-6'>
+        <div class="form-group">
+          <%= f.input :notes,:input_html => { rows: 7, cols: 10 } %>
+        </div>
+     </div>
+  </div>
   <div class="modal-footer">
     <% if @remote %>
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

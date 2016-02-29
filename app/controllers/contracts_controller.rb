@@ -8,12 +8,12 @@ class ContractsController < ApplicationController
   def index
     if params[:client_id].present? || params[:property_id].present?
       if params[:search_filter] == "Property"
-        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.property_id = ? ", params[:property_id])
+        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.property_id = ? ", params[:property_id]).paginate(page: params[:page])
       elsif params[:search_filter] == "Client"
-        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.client_id = ? ", params[:client_id])
+        @contracts = Contract.joins(:bid => [:inspection => [:appointment => :insp_request]]).where("insp_requests.client_id = ? ", params[:client_id]).paginate(page: params[:page])
       end
     else
-      @contracts = Contract.all
+      @contracts = Contract.all.paginate(page: params[:page])
     end
     @properties = Property.all.map{|p| [p.property_select_value, p.id]}
     @clients = Client.all.map{|c| [c.name, c.id]}
@@ -30,7 +30,11 @@ class ContractsController < ApplicationController
 
   # GET /contracts/new
   def new
-    @contract = Contract.new
+    @contract = Contract.new(bid_id: params[:bid_id])
+    if params[:bid_id].present?
+      @bid = Bid.find(params[:bid_id]) if params[:bid_id].present?
+      @insp_request = @bid.try(:inspection).try(:appointment).try(:insp_request)
+    end
   end
 
   # GET /contracts/1/edit
@@ -70,7 +74,7 @@ class ContractsController < ApplicationController
   def report_result
     start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
-    @contracts = Contract.created_between(start_date, end_date)
+    @contracts = Contract.created_between(start_date, end_date).paginate(page: params[:page])
   end
 
   def print
@@ -97,9 +101,9 @@ class ContractsController < ApplicationController
     end
 
     def bids
-      @uncontracted_bids = Bid.uncontracted_bids
       @accepted_bids = Bid.accepted_bids
-      @bids = @uncontracted_bids + @accepted_bids
+      @uncontracted_bids = Bid.uncontracted_bids
+      @bids = @accepted_bids + @uncontracted_bids
       @bids << @contract.try(:bid) if @contract and @contract.bid_id
       @bids = @bids.map{|b| [b.try(:title), b.id]}.uniq
     end
@@ -107,7 +111,7 @@ class ContractsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contract_params
       update_params
-      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate, :confirmed_by, :accepted, :accepted_date, :signed, :down_payment, :title)
+      params.require(:contract).permit(:bid_id, :payPlan_id, :date, :signedBy, :acceptedBy, :dateSigned, :downPmtAmt, :downPmtDate, :confirmed_by, :accepted, :accepted_date, :signed, :down_payment, :title, :notes, :deposit_payment_method)
     end
 
     def update_params

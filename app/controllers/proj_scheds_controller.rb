@@ -15,9 +15,9 @@ class ProjSchedsController < ApplicationController
       start_date = params[:start_date].to_date
       end_date = params[:end_date].to_date
       @projects = Project.joins(:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]).
-                                where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+                                where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date).paginate(page: params[:page])
     else
-      @proj_scheds = ProjSched.where.not(schedule_start_date: nil, schedule_end_date: nil)
+      @proj_scheds = ProjSched.where.not(schedule_start_date: nil, schedule_end_date: nil).paginate(page: params[:page])
     end
     respond_to do |format|
       format.html
@@ -79,6 +79,7 @@ class ProjSchedsController < ApplicationController
   def destroy
     @proj_sched.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to proj_scheds_url, notice: 'Proj sched was successfully destroyed.' }
       format.json { head :no_content }
     end

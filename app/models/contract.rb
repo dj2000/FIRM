@@ -1,8 +1,7 @@
 class Contract < ActiveRecord::Base
   belongs_to :bid
-  has_one :commission
-  has_one :project
-  has_many :pmt_schedules
+  has_one :project, dependent: :destroy
+  has_many :pmt_schedules, dependent: :destroy
 
   attr_accessor :accepted, :signed, :down_payment
 
@@ -12,20 +11,22 @@ class Contract < ActiveRecord::Base
 
 	validates :dateSigned, :signedBy, presence: true, if: Proc.new { |a| a.signed == "1" }
 
-	validates :downPmtDate, :downPmtAmt, presence: true, if: Proc.new { |a| a.down_payment == "1" }
+	validates :downPmtDate, :downPmtAmt, :deposit_payment_method, presence: true, if: Proc.new { |a| a.down_payment == "1" }
 
   validate :down_payment_amount, if: Proc.new { |a| a.down_payment == "1" }
+
+  PAYMENT_METHOD = ["Cash", "Check", "Credit Card", "Escrow", "Scan", "Fax", "On-Site"]
 
   def accepted?(params = nil)
     (params and params[:accepted] and params[:accepted] == "1") || (self.accepted_date and self.acceptedBy)
   end
 
   def signed?(params = nil)
-		(params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
+		return true if (params and params[:signed] and params[:signed] == "1") || (self.dateSigned and self.signedBy)
   end
 
   def down_payment?(params = nil)
-		(params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
+		return true if (params and params[:down_payment] and params[:down_payment] == "1") || (self.downPmtAmt and self.downPmtDate)
   end
 
   ## Contracts doesn't have any project
@@ -78,16 +79,14 @@ class Contract < ActiveRecord::Base
   ## Contracts which are paid off
   def self.paid_off_contracts(start_date, end_date, inspector_id)
     paid_off_contracts = Hash.new{ |h, k| h[k] = {} }
-    receipts = Receipt.joins(:invoice => [:project => [:contract => [ :bid => [inspection: :appointment]]]]).
-                where(appointments: {inspector_id: inspector_id }).group_by{|r| r.invoice.project_id}
-    receipts.each do |project_id, receipts|
-      invoice = receipts.first.invoice
-      project = Project.find(project_id)
-      total_amount = receipts.map(&:amount).inject(:+) + (invoice.try(:credit_notes).map(&:amount).inject(:+) || 0)
+    project_payment_schedules = ProjectPaymentSchedule.joins(:project => [:contract => [ :bid => [inspection: :appointment]]]).
+                where(appointments: {inspector_id: inspector_id }, payment_type: "Completion Payment", paid: true).group_by{|r| r.project}
+    project_payment_schedules.each do |project, project_payment_schedules|
+      total_amount = project_payment_schedules.map(&:amount).inject(:+) || 0
       contract = project.contract
       project_cost = contract.balance
-      date = receipts.last.date
-      if (project_cost == total_amount and date.between?(start_date, end_date))
+      date = project_payment_schedules.last.date_paid
+      if (date.between?(start_date, end_date))
 				paid_off_contracts[contract.id]["contract"] = contract
 				paid_off_contracts[contract.id]["paid_date"] = date
       end
@@ -112,6 +111,12 @@ class Contract < ActiveRecord::Base
   def self.signed_contracts(start_date = nil, end_date = nil)
     @contracts = (start_date and end_date) ? Contract.where('date BETWEEN ? AND ?', start_date, end_date) : Contract.all
     @contracts = @contracts.map{|c| c if c.signed?}.compact
+  end
+
+  def self.pending_projects
+    signed_contracts = Contract.signed_contracts
+    contracts = Contract.joins(:project).where("projects.ready_to_process = ?", false )
+    signed_contracts | contracts
   end
 
   private

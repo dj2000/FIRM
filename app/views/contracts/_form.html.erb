@@ -2,10 +2,13 @@
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :title %>
+      <% @insp_request =  @insp_request || @contract.try(:bid).try(:inspection).try(:appointment).try(:insp_request) %>
+
+      <%= f.input :title, input_html: { value: "#{@insp_request.try(:default_title)}"} %>
     </div>
     <div class="col-md-4">
-      <%= f.association :bid, as: :select, collection: @bids, selected: f.object.bid_id , label: "Select Bid", include_blank: "Select Bid" %>
+      <%= f.association :bid, as: :select, collection: @bids, label: "Select Bid", include_blank: "Select Bid", selected: params[:bid_id] || (params[:contract] and params[:contract][:bid_id]) || f.object.bid_id %>
+
     </div>
     <div class="col-md-4 inspector_info <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Inspector" %>
@@ -21,6 +24,7 @@
     <div class="col-md-4">
       <%= f.input :confirmed_by %>
     </div>
+
     <div class="col-md-4 payment_plan <%= 'hide' unless f.object.bid_id %>">
       <%= label_tag "Call Time" %>
       <%= text_field_tag "call_time", f.object.try(:bid).try(:verbal_close_comm_history).try(:call_time).try(:strftime, "%d %b %Y %H:%M:%S"), class: "call_time form-control", disabled: true %>
@@ -62,27 +66,6 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-2 margin-top-25">
-      <%= f.check_box :accepted, { checked: f.object.accepted?(params[:contract]) ? true : false } %>
-      <%= f.label "Accepted" %>
-    </div>
-    <div class="col-md-5 accepted <%= 'hide' unless f.object.accepted?(params[:contract]) %> <%= 'has-error' if f.object.errors["accepted_date"].first %>">
-       <div class="form-group">
-        <%= f.label 'Date Accepted', class: "control-label" %>
-        <div class='input-group date'>
-          <%= f.text_field :accepted_date, class: "form-control", value: f.object.try(:accepted_date).try(:strftime, "%Y-%m-%d") %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-        <span class="help-block"><%= f.object.errors["accepted_date"].first %></span>
-      </div>
-    </div>
-    <div class="col-md-5 accepted <%= 'hide' unless f.object.accepted?(params[:contract]) %>">
-      <%= f.input :acceptedBy, label: "Accepted By" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2 margin-top-25">
       <%= f.check_box :signed?, { checked: f.object.signed?(params[:contract]) ? true : false } %>
       <%= f.label "Signed" %>
     </div>
@@ -103,11 +86,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2 margin-top-25">
+    <div class="col-md-3 margin-top-25">
       <%= f.check_box :down_payment?, { checked: f.object.down_payment?(params[:contract]) ? true : false } %>
       <%= f.label "Down Payment" %>
     </div>
-    <div class="col-md-5 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %> <%= 'has-error' if f.object.errors["downPmtDate"].first %>">
+    <div class="col-md-3 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %>">
+      <%= f.input :deposit_payment_method, as: :select, collection: Contract::PAYMENT_METHOD.map{|v| [v, v]}, label: 'Select Payment Method', prompt: 'Please Select' %>
+    </div>
+    <div class="col-md-3 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %> <%= 'has-error' if f.object.errors["downPmtDate"].first %>">
        <div class="form-group">
         <%= f.label 'Date Received', class: "control-label" %>
         <div class='input-group date'>
@@ -119,8 +105,13 @@
         <span class="help-block"><%= f.object.errors["downPmtDate"].first %></span>
       </div>
     </div>
-    <div class="col-md-5 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %>">
+    <div class="col-md-3 down_payment <%= 'hide' unless f.object.down_payment?(params[:contract]) %>">
       <%= f.input :downPmtAmt, label: "Amount Paid", as: :string, input_html: { value: "$#{f.object.downPmtAmt}" } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <%= f.input :notes %>
     </div>
   </div>
   <br/>
@@ -164,7 +155,7 @@
     format: 'yyyy-mm-dd'
   });
 
-  $.each(["accepted", "signed", "down_payment"], function(index, value) { 
+  $.each(["signed", "down_payment"], function(index, value) {
     $('#contract_' + value).change(function(){
       show_hide(value, $(this));
     });

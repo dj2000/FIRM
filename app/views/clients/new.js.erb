@@ -1,3 +1,4 @@
-$(".modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
-$(".modal-body").append("<%= escape_javascript(render partial: 'form') %>");
-$(".modal").modal('show');
+$(".modal-details .modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
+$(".modal-details .modal-body").append("<%= escape_javascript(render partial: 'form') %>");
+$(".modal-details .modal-title").html("")
+$(".modal-details").modal('show');

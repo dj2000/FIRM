@@ -4,7 +4,7 @@ class PayPlansController < ApplicationController
   # GET /pay_plans
   # GET /pay_plans.json
   def index
-    @pay_plans = PayPlan.all
+    @pay_plans = PayPlan.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
       format.csv { send_data PayPlan.as_csv }

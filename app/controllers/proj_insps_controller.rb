@@ -5,7 +5,7 @@ class ProjInspsController < ApplicationController
   # GET /proj_insps
   # GET /proj_insps.json
   def index
-    @proj_insps = ProjInsp.all
+    @proj_insps = ProjInsp.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.csv { send_data ProjInsp.as_csv }

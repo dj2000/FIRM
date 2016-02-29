@@ -1,6 +1,7 @@
 <fieldset>
     <legend>Select Client</legend>
 </fieldset>
+
 <%= simple_form_for @client_property, html: { remote: true } do |f| %>
   <%= f.error_notification %>
   <div class="row">
@@ -12,7 +13,7 @@
     <div class='col-sm-6'>
       <div class="form-group">
         <%= f.submit 'Update', class: 'btn btn-info' %>
-        <%= hidden_field_tag :property_id, "", class: 'property_id' %>
+        <%= hidden_field_tag(:property_id, params[:property_id], class: 'property_id') %>
       </div>
     </div>
   </div>

@@ -52,7 +52,8 @@ class UsersController < ApplicationController
       params[:user][:skip_password_validation] = true
       params[:user][:status] = "Approved"
       params[:user][:current_user_mail] = current_user.email
+      params[:user][:is_active] = false
     end
-    params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation)
+    params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation, :is_active)
   end
 end

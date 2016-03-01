@@ -1,5 +1,5 @@
 class PageController < ApplicationController
-
+	before_filter :check_if_active_user ,only: :index
 	def index
 		today = Date.today
 		start_date = today.beginning_of_week
@@ -62,6 +62,11 @@ class PageController < ApplicationController
 			@statistics[:inspection_gross_income] = @inspections.map(&:appointment).map(&:inspFee).compact.try(:inject, &:+) || 0
 			@statistics[:total_gross_income] = @statistics[:inspection_gross_income] + @statistics[:signed_contracts_cost]
 			@statistics[:contracts] = @contracts.map(&:bid).map(&:total_cost).compact.try(:inject, &:+) || 0
+	end
+
+	private
+	def check_if_active_user
+		redirect_to edit_user_registration_url unless current_user.is_active?
 	end
 
 end

@@ -6,4 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)}
   end
 
+  protected
+    def after_update_path_for(resource)
+			resource.update(is_active: true)
+			root_path
+    end
+
 end

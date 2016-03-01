@@ -66,7 +66,7 @@ class PageController < ApplicationController
 
 	private
 	def check_if_active_user
-		redirect_to edit_user_registration_url if !current_user.is_active?
+		redirect_to edit_user_registration_url unless current_user.is_active?
 	end
 
 end

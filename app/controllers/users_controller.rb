@@ -19,9 +19,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by_id(params[:id])
-    if (@user == current_user)
-      @user.is_active = true
-    end
     @user.update(user_params)
     all_users
     respond_to do |format|
@@ -55,6 +52,7 @@ class UsersController < ApplicationController
       params[:user][:skip_password_validation] = true
       params[:user][:status] = "Approved"
       params[:user][:current_user_mail] = current_user.email
+      params[:user][:is_active] = false
     end
     params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation, :is_active)
   end

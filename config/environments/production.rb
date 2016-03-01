@@ -79,11 +79,11 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    :address              => "smtp.gmail.com",
+    :address              => "smtp.mandrillapp.com",
     :port                 => 587,
-    :domain               => "http://firmprod.herokuapp.com/",
-    :user_name            => "firm.inspection@gmail.com",
-    :password             => "firmi123",
+    :domain               => "",
+    :user_name            => "himesh@pixelcrayons.com",
+    :password             => "L0PWcTQfpDq5glzJq17wcg",
     :authentication       => "plain",
     :enable_starttls_auto => true,
     :openssl_verify_mode  => 'none'

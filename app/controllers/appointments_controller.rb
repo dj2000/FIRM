@@ -105,7 +105,7 @@ class AppointmentsController < ApplicationController
   def send_email
     @client_property = ClientProperty.where(property_id: @appointment.try(:insp_request).property_id, client_id: @appointment.try(:insp_request).client_id).first
     @agent_client = AgentClient.where(agent_id: @appointment.try(:insp_request).agent_id, client_id: @appointment.try(:insp_request).client_id).first
-    UserMailer.send_appointment(@appointment, @client_property, @agent_client).deliver
+    UserMailer.send_appointment(@appointment, @client_property, @agent_client, current_user.email).deliver
     respond_to do |format|
       format.js
     end

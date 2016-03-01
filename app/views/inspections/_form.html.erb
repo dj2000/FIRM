@@ -102,7 +102,7 @@
       <%= f.input :repairs, label: "Repairs Needed" %>
     </div>
     <div class="col-md-6">
-      <%= f.input :interiorAccess, label: "Interior Access Required" %>
+      <%= f.input :interiorAccess, label: "Interior Access Required", as: :select, collection: ([['Yes', true], ['No', false]]), selected: f.object.interiorAccess || false %>
     </div>
     <div class="col-md-6">
       <%= f.input :notes %>

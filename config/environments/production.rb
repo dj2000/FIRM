@@ -79,11 +79,11 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    :address              => "smtp.mandrillapp.com",
+    :address              => "smtp.sendgrid.net",
     :port                 => 587,
-    :domain               => "mandrillapp.com",
-    :user_name            => "himesh@pixelcrayons.com",
-    :password             => "L0PWcTQfpDq5glzJq17wcg",
+    :domain               => "",
+    :user_name            => "himeshpixelcrayons",
+    :password             => "himeshr123",
     :authentication       => "plain",
     :enable_starttls_auto => true,
     :openssl_verify_mode  => 'none'

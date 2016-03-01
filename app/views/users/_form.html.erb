@@ -1,6 +1,6 @@
 <%= simple_form_for user, url: user_path(user), remote: true do |f| %>
-  <%= f.association :role, collection: Role.get_role, prompt: " Select Role ",
-    :label_method => lambda { |role| "#{role.name.try(:humanize)}" }, label: "Select Role"  %>
+  <%= f.association :role, collection: Role.all.map{|r| [r.name.humanize, r.id]}.uniq, prompt: " Select Role ",
+    label: "Select Role", input_html: { selected: f.object.role_id } %>
   <%= f.input :status, as: :radio_buttons, collection: User::USER_STATUS, checked: f.object.status, label: false, input_html: {name: "user_#{f.object.id}[status]"}  %>
   <%= f.button :submit, class: 'btn btn-info pull-right' %>
 <% end %>

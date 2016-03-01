@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
   default from: "support@support.com"
-  def send_appointment(appointment, client_property, agent_client)
+  def send_appointment(appointment, client_property, agent_client, current_user_email)
   	@appointment = appointment
   	@client_property = client_property
   	@agent_client = agent_client
-    mail(to: @appointment.inspector.try(:email), subject: 'Appointment Sheet') do |format|
+    mail(to: @appointment.inspector.try(:email), subject: 'Appointment Sheet', from: current_user_email) do |format|
 			format.html
       attachments["appointment_sheet.pdf"] = WickedPdf.new.pdf_from_string(
         render_to_string(pdf: 'appointment_sheet', template: 'appointments/_appointment.html.erb')
@@ -25,7 +25,7 @@ class UserMailer < ActionMailer::Base
     mail(to: @client_email, cc: cc_emails, subject: subject, from: @current_user.try(:email))
   end
 
-  def send_email_to_crew(project, file_urls=nil)
+  def send_email_to_crew(project, current_user_email, file_urls=nil)
     @project = project
     @crew = @project.try(:primary_crew)
     @file_urls = file_urls
@@ -34,10 +34,10 @@ class UserMailer < ActionMailer::Base
         attachments[file_url] = File.read(file_url) if File.exist?(file_url)
       end
     end
-    mail(to: @crew.try(:email), subject: "Crew Data Sheet")
+    mail(to: @crew.try(:email), subject: "Crew Data Sheet", from: current_user_email)
   end
 
-  def send_email_for_permit(draftsman, permit_information, ccs, notes, contents, file_urls=nil)
+  def send_email_for_permit(draftsman, permit_information, ccs, notes, contents, current_user_email, file_urls=nil)
     @draftsman = draftsman
     @permit_information = permit_information
     @project = @permit_information.project
@@ -49,6 +49,6 @@ class UserMailer < ActionMailer::Base
         attachments[file_url] = File.read(file_url) if File.exist?(file_url)
       end
     end
-    mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet")
+    mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet", from: current_user_email)
   end
 end

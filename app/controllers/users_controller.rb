@@ -28,10 +28,12 @@ class UsersController < ApplicationController
 
   def change_status
    status = params[:status]
-    if status.present?
+    if status.present? and !['Approved', 'Rejected'].include?(status)
       @user.update(status: status)
-      AdminMailer.account_approval_email(@user).deliver
+      AdminMailer.account_approval_email(@user, current_user.email).deliver
       redirect_to new_user_session_url
+    else
+      redirect_to(root_url, alert: "User's status is already updated" )
     end
   end
 
@@ -44,6 +46,11 @@ class UsersController < ApplicationController
     @pending_users = User.pending
     @approved_users = User.approved
     @rejected_users = User.rejected
+    unless current_user.try(:role).try(:name) == 'super_admin'
+      @pending_users = @pending_users.except_admin_role
+      @approved_users = @approved_users.except_admin_role
+      @rejected_users = @rejected_users.except_admin_role
+    end
   end
 
   def user_params

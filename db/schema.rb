@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229154242) do
+ActiveRecord::Schema.define(version: 20160302070754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(version: 20160229154242) do
     t.integer  "appointment_id"
     t.string   "fCondition"
     t.boolean  "businessCards"
-    t.integer  "nOD"
+    t.float    "nOD"
     t.integer  "nOG"
     t.boolean  "paid"
     t.string   "footprintURL"

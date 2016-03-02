@@ -51,4 +51,10 @@ class UserMailer < ActionMailer::Base
     end
     mail(to: @draftsman.try(:email), cc: ccs, subject: "Permit Information Sheet", from: current_user_email)
   end
+
+  def password_changed(user, current_user_email, password)
+    @user = user
+    @password = password
+    mail to: @user.email, subject: "Your password has changed", from: current_user_email
+  end
 end

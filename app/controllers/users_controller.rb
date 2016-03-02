@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update, :change_status]
+  before_action :set_user, only: [:update, :change_status, :edit]
   before_action :all_users
   def index
   end
@@ -17,8 +17,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def update
-    @user = User.find_by_id(params[:id])
     @user.update(user_params)
     all_users
     respond_to do |format|
@@ -28,10 +33,10 @@ class UsersController < ApplicationController
 
   def change_status
    status = params[:status]
-    if status.present? and !['Approved', 'Rejected'].include?(status)
+    if status.present? and !['Approved', 'Rejected'].include?(@user.status)
       @user.update(status: status)
       AdminMailer.account_approval_email(@user, current_user.email).deliver
-      redirect_to new_user_session_url
+      redirect_to(root_url, notice: 'User is updated successfully.')
     else
       redirect_to(root_url, alert: "User's status is already updated" )
     end
@@ -54,13 +59,13 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params[:user][:status] = params["user_#{params[:id]}"][:status] if params[:id].present?
-    unless params[:id].present?
+    params[:user][:status] = params["user_#{params[:id]}"][:status] if params[:id].present? and !params[:user][:password]
+    unless params[:id].present? and !params[:user][:password].present?
       params[:user][:skip_password_validation] = true
       params[:user][:status] = "Approved"
-      params[:user][:current_user_mail] = current_user.email
       params[:user][:is_active] = false
     end
-    params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation, :is_active)
+    params[:user][:current_user_mail] = current_user.email
+    params.require(:user).permit(:role_id, :status, :first_name, :last_name, :email, :current_user_mail, :skip_password_validation, :is_active, :reset_password_token, :password, :password_confirmation)
   end
 end

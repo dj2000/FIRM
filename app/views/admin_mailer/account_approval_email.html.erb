@@ -2,7 +2,7 @@
   <% if @user.status == 'Approved' %>
     Hello <b> <%= @user.name %> </b>, <br>
     Thanks for registering! <br>
-    Your Account has been successfully actiated now you can login into application
+    Your Account has been successfully activated now you can login into application
     <%= link_to "Click here ", new_user_session_url %> <br><br><br>
   <% elsif @user.status == "Rejected" %>
     <b> Hello <%= @user.name %></b>, <br>

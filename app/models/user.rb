@@ -6,9 +6,10 @@ class User < ActiveRecord::Base
 				 :recoverable, :rememberable, :trackable, :validatable
 
 	validates :first_name, :last_name, presence: true
-	after_create :send_admin_mail
+	after_create :send_admin_mail, unless: "skip_password_validation.present?"
 	after_initialize :generate_random_password, if: "skip_password_validation.present?"
-	after_save :send_credentials, on: :create, if: "skip_password_validation.present?"
+	after_create :send_credentials
+	after_update :send_password_change_email, if: :needs_password_change_email?
 
 	attr_accessor :skip_password_validation, :current_user_mail
 
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
 	end
 
 	def send_credentials
-		AdminMailer.send_credentials(current_user_mail, self).deliver
+		AdminMailer.send_credentials(current_user_mail, self).deliver if self.skip_password_validation == true
 	end
 
 	def generate_random_password
@@ -47,4 +48,12 @@ class User < ActiveRecord::Base
 			super # Use whatever other message
 		end
 	end
+
+	def needs_password_change_email?
+    encrypted_password_changed? && persisted?
+  end
+
+  def send_password_change_email
+    UserMailer.password_changed(self, current_user_mail, password).deliver if current_user_mail
+  end
 end

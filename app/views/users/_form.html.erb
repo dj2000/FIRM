@@ -2,5 +2,8 @@
   <%= f.association :role, collection: Role.all.map{|r| [r.name.humanize, r.id]}.uniq, prompt: " Select Role ",
     label: "Select Role", input_html: { selected: f.object.role_id } %>
   <%= f.input :status, as: :radio_buttons, collection: User::USER_STATUS, checked: f.object.status, label: false, input_html: {name: "user_#{f.object.id}[status]"}  %>
-  <%= f.button :submit, class: 'btn btn-info pull-right' %>
+  <div class='pull-right'>
+	<%= f.button :submit, class: 'btn btn-info' %>
+	<%= link_to "Change Password", edit_user_path(user), remote: true, class: 'btn btn-primary' %>
+  </div>
 <% end %>

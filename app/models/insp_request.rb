@@ -1,5 +1,5 @@
 class InspRequest < ActiveRecord::Base
-  has_one :appointment, class_name: 'Appointment', foreign_key: 'inspRequest_id'
+  has_one :appointment, class_name: 'Appointment', foreign_key: 'inspRequest_id', dependent: :destroy
   belongs_to :client
   belongs_to :agent
   belongs_to :property
@@ -24,6 +24,11 @@ class InspRequest < ActiveRecord::Base
 
   def disable_agent?
     self.try(:agent) ? false : true
+  end
+
+  #default title for project and contract
+  def default_title
+    "#{self.try(:client).try(:name)} - #{self.try(:property).try(:street)}"
   end
 
   def check_conditions_for_appointment

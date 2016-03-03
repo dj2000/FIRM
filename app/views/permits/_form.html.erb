@@ -1,14 +1,14 @@
-<%= simple_form_for(@permit) do |f| %>
+<%= simple_form_for(@permit, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
   <div class="row">
     <div class="col-md-6">
       <%= f.input :reference, label: "Permit Reference No." %>
     </div>
     <div class="col-md-6">
-      <%= f.association :project, as: :select, collection: @projects, label_method: :title %>
+      <%= f.association :permit_information, as: :select, collection: PermitInformation.all, label_method: :select_value %>
     </div>
   </div>
-  <% if (action_name == "edit" and f.object.status == "Approved") || action_name == "new" %>
+  <% if (action_name == "edit" and f.object.status == "Issued") || action_name == "new" %>
     <div class="row">
       <div class="col-md-6">
         <%= label_tag "Issue Date" %>
@@ -31,8 +31,18 @@
     <div class="col-md-6">
       <%= f.input :status, collection: Permit::STATUS.map{|v| [v, v]}, as: :select %>
     </div>
+    <!-- <div class="col-md-6">
+      <%#= f.input :valuation %>
+    </div> -->
+  </div>
+  <div class='row'>
     <div class="col-md-6">
-      <%= f.input :valuation %>
+      <%= f.input :attachment, as: :file, input_html: { accept: ".jpeg, .png, .gif"} %>
+    </div>
+    <div class="col-md-6 margin-top-25 blue-link">
+      <% if f.object.try(:attachment) %>
+        <%= f.object.attachment_file_name %>
+      <% end %>
     </div>
   </div>
   <div class="actions pull-right">

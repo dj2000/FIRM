@@ -4,20 +4,33 @@ class Project < ActiveRecord::Base
 	## Non Model Attributes
   attr_accessor :crew_schedule
 
+  validates_associated :project_payment_schedules
+
+  scope :unclosed_projects, -> { where( ready_to_process: true, status: "Open" ) } # which are ready to process and not closed projects
+
 	## Associations
   belongs_to :contract
   belongs_to :crew
-  has_many :permits
-  has_many :invoices
-  has_many :proj_scheds
-  has_many :proj_insps
+  # has_many :permits, dependent: :destroy
+  has_many :invoices, dependent: :destroy
+  has_many :proj_scheds, dependent: :destroy
+  has_many :proj_insps, dependent: :destroy
+  belongs_to :primary_crew, class_name: "Crew", foreign_key: :primary_crew_id
+  has_many :documents, as: :attachable, dependent: :destroy
+  has_many :project_payment_schedules, -> { order 'project_payment_schedules.created_at' } , dependent: :destroy
+
+  accepts_nested_attributes_for :project_payment_schedules, reject_if: proc { |attributes| attributes['payment_schedule'].blank? }, allow_destroy: true
 
 	## Validations
-  validates_presence_of :contract_id, :jobCost, :scheduleBy, :estDuration, :authorizedBy, :authorizedOn, :title, :schedule_pref_start, :schedule_pref_end, :scheduleStart, :scheduleEnd
+  validates_presence_of :contract_id, :jobCost, :estDuration, :authorizedBy, :authorizedOn, :title, :scheduleStart, :scheduleEnd
 
   validates_presence_of :crew_id, :scheduleStart, :scheduleEnd, if: "crew_schedule.present?"
 
-  validate :check_preferred_schedule_end_datetime, :check_schedule_end_date
+  validate :check_schedule_end_date
+
+  has_one :permit_information, dependent: :destroy
+
+  accepts_nested_attributes_for :permit_information
 
   def humanize(attribute)
     self.send("#{attribute}") ? "Yes" : "No"
@@ -27,24 +40,21 @@ class Project < ActiveRecord::Base
     self.where(permit: true)
   end
 
-  def preferred_by
-    "#{self.try(:schedule_pref_start).try(:strftime, '%d %b %Y')} to #{self.try(:schedule_pref_end).try(:strftime, '%d %b %Y') }"
+  def total_amount
+    self.try(:project_payment_schedules).map(&:amount).inject(:+) || 0
   end
 
   def scheduled
-    "#{self.try(:sheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:sheduleEnd).try(:strftime, '%d %b %Y') }"
+    "#{self.try(:scheduleStart).try(:strftime, '%d %b %Y')} to #{self.try(:scheduleEnd).try(:strftime, '%d %b %Y') }"
   end
 
   def self.as_csv
     CSV.generate do |csv|
-      csv << ["Contract", "Job Cost", "Schedule By", "Preferred Schedule Start", "Preferred Schedule End", "Est. Duration(d)", "Schedule Start", "Schedule End", "Schedule Authorize By", "Date", "Crew", "Interior Access Verified", "Electricity and Water Verified", "Notes"]
+      csv << ["Contract", "Job Cost", "Est. Duration(d)", "Schedule Start", "Schedule End", "Schedule Authorize By", "Date", "Crew", "Interior Access Verified", "Electricity and Water Verified", "Notes"]
       all.each do |project|
         row = [
                 project.try(:contract).try(:title),
                 project.jobCost,
-                project.try(:scheduleBy).try(:strftime, "%d %b %Y"),
-                project.try(:schedule_pref_start).try(:strftime, "%d %b %Y"),
-                project.try(:schedule_pref_end).try(:strftime, "%d %b %Y"),
                 project.estDuration,
                 project.try(:scheduleStart).try(:strftime, "%d %b %Y"),
                 project.try(:scheduleEnd).try(:strftime, "%d %b %Y"),
@@ -60,13 +70,33 @@ class Project < ActiveRecord::Base
     end
   end
 
-  private
-
-  def check_preferred_schedule_end_datetime
-    if self.schedule_pref_start.present? and self.schedule_pref_end.present?
-      self.errors.add(:schedule_pref_end, "Preferred Schedule End Date should be greater than Preferred Schedule Start Date.") if self.schedule_pref_end < self.schedule_pref_start
-    end
+  def ready_to_process_status
+    self.ready_to_process? ? "Ready" : "Pending"
   end
+
+  def is_closed?
+    return unless self.status == "Closed"
+    is_paid = self.project_payment_schedules.where(payment_type: ["Completion Payment", "Final Sign Off"], paid: true )
+    return is_paid.present?
+  end
+
+  def completed?
+    return true if self.project_payment_schedules.where(payment_type: "Completion Payment", paid: true ).present?
+  end
+
+  def permit_sign_off?
+    return true if self.project_payment_schedules.where(payment_type: "Final Sign Off", paid: true ).present?
+  end
+
+  def permit_issued?
+    return true if self.try(:permit_information)
+  end
+
+  def down_payment?
+    return true if self.project_payment_schedules.where(payment_type: "Deposit", paid: true ).present?
+  end
+  
+  private
 
   def check_schedule_end_date
     if self.scheduleStart.present? and self.scheduleEnd.present?

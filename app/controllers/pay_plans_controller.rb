@@ -1,10 +1,10 @@
 class PayPlansController < ApplicationController
   before_action :set_pay_plan, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /pay_plans
   # GET /pay_plans.json
   def index
-    @pay_plans = PayPlan.all
+    @pay_plans = PayPlan.all.paginate(page: params[:page])
     respond_to do |format|
       format.js
       format.csv { send_data PayPlan.as_csv }

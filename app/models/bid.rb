@@ -3,16 +3,21 @@ class Bid < ActiveRecord::Base
 
   belongs_to :inspection
   belongs_to :payPlan
-  has_many :comm_histories
-  has_one :contract
-  has_one :verbal_close_comm_history, -> { where(callOutcome: "Verbal Close") }, class_name: 'CommHistory', foreign_key: 'bid_id'
-  has_many :callback_comm_histories, -> { where(callOutcome: "Follow-up") }, class_name: 'CommHistory', foreign_key: 'bid_id'
+  has_many :comm_histories, dependent: :destroy
+  has_one :contract, dependent: :destroy
+  has_one :verbal_close_comm_history, -> { where(callOutcome: "Verbal Close") }, class_name: 'CommHistory', foreign_key: 'bid_id', dependent: :destroy
+  has_many :callback_comm_histories, -> { where(callOutcome: "Follow-up") }, class_name: 'CommHistory', foreign_key: 'bid_id', dependent: :destroy
 
   validates :costRepair, :feeSeismicUpg, :feeAdmin, :inspection_id, :title, :payPlan_id, presence: true
 
   before_create :default_status
 
-  # where(appointments: { schedStart: start_date })}
+  before_save :save_balance, if: "payPlan_id.present?"
+
+  def save_balance
+    pay_plan = self.try(:payPlan)
+    self.balance = pay_plan.deposit_limit_value(self)
+  end
 
   # Set default status as pending
   def default_status

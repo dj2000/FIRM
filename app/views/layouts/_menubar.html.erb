@@ -11,6 +11,14 @@
       <li><%= link_to "Service Area", svc_areas_path %></li>
       <li><%= link_to "Inspectors", inspectors_path %></li>
       <li><%= link_to "Crew", crews_path %></li>
+      <li><%= link_to "Engineer", engineers_path %></li>
+      <li><%= link_to "Draftsman", draftsmen_path %></li>
+      <% if ["admin", "super_admin"].include?(current_user.try(:role).try(:name))  %>
+        <li><%= link_to "Manage Users", users_path %></li>
+      <% end %>
+      <% if current_user.try(:role).try(:name) == "super_admin" %>
+        <li> <%= link_to "Super Admin", "/admin/roles" %></li>
+      <% end %>
     </ul>
   </li>
   <li class="dropdown">
@@ -21,7 +29,7 @@
       <li><%= link_to "Inspection Request", insp_requests_path, class: 'active' %></li>
       <li><%= link_to "Property", properties_path %></li>
       <li><%= link_to "Customer", clients_path %></li>
-      <li><%= link_to "Agent", agents_path %></li>
+      <li><%= link_to "Representative", agents_path %></li>
       <li><%= link_to "Inspection Schedule", appointments_path %></li>
       <li><%= link_to "Block Out Periods", block_out_periods_path %></li>
       <li><%= link_to "Process Commissions", process_commissions_commissions_path %></li>
@@ -34,11 +42,13 @@
     <ul class="dropdown-menu">
       <li><%= link_to "Inspection Entry", inspections_path, class: 'active' %></li>
       <li><%= link_to "Payment Plan", pay_plans_path %></li>
-      <li><%= link_to "Invoice", invoices_path %></li>
-      <li><%= link_to "Receipt", receipts_path %></li>
-      <li><%= link_to "Credit Note", credit_notes_path %></li>
+      <li><%#= link_to "Invoice", invoices_path %></li>
+      <li><%#= link_to "Receipt", receipts_path %></li>
+      <li><%#= link_to "Credit Note", credit_notes_path %></li>
+      <% if current_user.has_role?(:bids, :index) %>
       <li><%= link_to "BID", bids_path %></li>
-      <li><%= link_to "Upload Files", "/" %></li>
+      <% end %>
+      <li><%#= link_to "Upload Files", "/" %></li>
       <li><%= link_to "Permits", permits_path %></li>
       <li><%= link_to "Project Inspection", proj_insps_path %></li>
     </ul>
@@ -49,9 +59,10 @@
     <% end %>
     <ul class="dropdown-menu">
       <li><%= link_to "Bids Follow-Up", comm_histories_path, class: 'active' %></li>
-      <li><%= link_to "Create Contract", contracts_path %></li>
-      <li><%= link_to "Create Project", projects_path %></li>
+      <li><%= link_to "Contracts", contracts_path %></li>
+      <li><%= link_to "Projects", projects_path %></li>
       <li><%= link_to "Project/Crew Schedule", proj_scheds_path %></li>
+      <li><%= link_to "Project Payment Schedules", project_payment_schedules_path %></li>
     </ul>
   </li>
   <li class="dropdown">
@@ -64,10 +75,10 @@
       <li><%= link_to "Contracts", report_contracts_path  %></li>
       <li><%= link_to "Project Schedules", report_proj_scheds_path %></li>
       <li><%= link_to "Inspections", report_inspections_path %></li>
-      <li><%= link_to "Receipts", report_receipts_path %></li>
+      <!-- <li><%#= link_to "Receipts", report_receipts_path %></li> -->
       <li><%= link_to "Crew Job Schedule", report_crews_path %></li>
-      <li><%= link_to "Inspection Invoices", report_invoices_path(invoice_type: "inspection") %></li>
-      <li><%= link_to "Project Invoices", report_invoices_path(invoice_type: "project") %></li>
+      <!-- <li><%#= link_to "Inspection Invoices", report_invoices_path(invoice_type: "inspection") %></li> -->
+      <!-- <li><%#= link_to "Project Invoices", report_invoices_path(invoice_type: "project") %></li> -->
       <li><%= link_to "Operating Statistics Report", operating_statistics_report_path %></li>
     </ul>
   </li>

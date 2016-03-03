@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :print, :send_email]
   before_action :inspectors, only: [:create, :update, :schedule_inspection, :edit, :index ]
+  before_action :role_required, except: [:report]
   # GET /appointments
   # GET /appointments.json
   def index
@@ -12,7 +13,7 @@ class AppointmentsController < ApplicationController
       @editable = true
     end
     if (params[:start_date] and params[:end_date])
-      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date])
+      @appointments = Appointment.where('("schedStart" BETWEEN ? AND ?) OR ("schedEnd" BETWEEN ? AND ?)', params[:start_date], params[:end_date], params[:start_date], params[:end_date]).paginate(page: params[:page])
     else
       @appointments = Appointment.where.not(schedStart: nil, schedEnd: nil)
     end
@@ -104,7 +105,7 @@ class AppointmentsController < ApplicationController
   def send_email
     @client_property = ClientProperty.where(property_id: @appointment.try(:insp_request).property_id, client_id: @appointment.try(:insp_request).client_id).first
     @agent_client = AgentClient.where(agent_id: @appointment.try(:insp_request).agent_id, client_id: @appointment.try(:insp_request).client_id).first
-    UserMailer.send_appointment(@appointment, @client_property, @agent_client).deliver
+    UserMailer.send_appointment(@appointment, @client_property, @agent_client, current_user.email).deliver
     respond_to do |format|
       format.js
     end

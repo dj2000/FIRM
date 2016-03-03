@@ -1,10 +1,10 @@
 class CrewsController < ApplicationController
   before_action :set_crew, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required, except: [:report]
   # GET /crews
   # GET /crews.json
   def index
-    @crews = Crew.all
+    @crews = Crew.all.paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js
@@ -91,17 +91,18 @@ class CrewsController < ApplicationController
     start_date = params[:start_date].to_date
     end_date = params[:end_date].to_date
     @proj_scheds = ProjSched.joins(:project => [:contract => [:bid => [ :inspection => [:appointment => [:insp_request => [:property]]]]]]).
-                              where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date)
+                              where('"scheduleStart" BETWEEN ? AND ? ', start_date, end_date).paginate(page: params[:page])
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_crew
       @crew = Crew.find(params[:id])
+      for_ownership_check(@crew)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def crew_params
-      params.require(:crew).permit(:foreman, :size, :double_book, :notes)
+      params.require(:crew).permit(:foreman, :size, :double_book, :notes, :email)
     end
 end

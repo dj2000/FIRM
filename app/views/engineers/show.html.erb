@@ -1,0 +1,36 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">Engineer</h1>
+  </div>
+  <div class="panel-body">
+    <table class='table table-bordered table-striped table-responsive table-hover'>
+      <thead>
+        <tr>
+          <th>Engineer Attributes</th>
+          <th>Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>First Name</td>
+          <td><%= @engineer.first_name %></td>
+        </tr>
+        <tr>
+          <td>Middle Initial</td>
+          <td><%= @engineer.middle_initial %></td>
+        </tr>
+        <tr>
+          <td>Last Name</td>
+          <td><%= @engineer.last_name %></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><%= @engineer.email %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_engineer_path(@engineer), class: 'btn btn-info' %>
+<%= link_to 'Back', engineers_path, class: 'btn btn-info' %>

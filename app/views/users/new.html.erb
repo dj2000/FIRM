@@ -1,0 +1,5 @@
+<h1>New User</h1>
+<%= simple_form_for @user, url: users_create_user_path do |f| %>
+	<%= render partial: 'users/user_form', locals: {f: f} %>
+	<%= f.submit "Create User", class: "btn btn-success" %>
+<% end %>

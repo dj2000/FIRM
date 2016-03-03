@@ -1,14 +1,27 @@
 Rails.application.routes.draw do
 
+  match "/users/create_user" => "users#create", via: :post
+
+  resources :draftsmen
+  resources :project_payment_schedules do
+    get :load_project_payment_schedules, on: :collection
+  end
+  TheRoleManagementPanel::Routes.mixin(self)
+
   resources :credit_notes
+  resources :engineers
+  resources :permit_informations do
+    get :send_email, on: :collection
+    get :load_email_template, on: :member
+  end
 
   resources :commissions do
     get :process_commissions, on: :collection
     get :print, on: :collection
     get :calculation_of_inspector_commissions, on: :collection
   end
-
   devise_for :users, :controllers => {:registrations => "registrations"}
+
   resources :insp_comm_scales
 
   resources :proj_insps do
@@ -40,6 +53,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     get :print, on: :collection
+    get :send_email_to_crew, on: :member
   end
 
   resources :pmt_schedules do
@@ -52,7 +66,10 @@ Rails.application.routes.draw do
     get :print, on: :collection
   end
 
-  resources :comm_histories
+  resources :comm_histories do
+    get :bid_info, on: :member
+    post :mark_complete, on: :collection
+  end
 
   resources :pay_plans do
     get :print, on: :collection
@@ -71,6 +88,8 @@ Rails.application.routes.draw do
     get :print, on: :collection
     get :report, on: :collection
     get :report_result, on: :collection
+    get :send_email, on: :member
+    delete :delete_attached_file, on: :member
   end
 
   resources :receipts do
@@ -144,6 +163,10 @@ Rails.application.routes.draw do
     get :report, on: :collection
     get :print, on: :collection
   end
+  
+  resources :users do
+    get :change_status, on: :member
+  end
 
   match "/page/operating_statistics_report" => "page#operating_statistics_report", as: "operating_statistics_report", via: :get
 
@@ -157,5 +180,7 @@ Rails.application.routes.draw do
   root  to: 'page#index'
 
   get '/cities' => 'application#cities'
+
+  resources :documents, only: [:destroy]
 
 end

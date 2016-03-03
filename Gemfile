@@ -5,13 +5,13 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.8'
 
 #Use Bootstrap for stylesheets
+gem 'bootstrap-sass', '>= 3.3.1'
 gem 'autoprefixer-rails'
 
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 # Use SCSS for stylesheets, '~> 4.0.3'
-gem 'bootstrap-sass', '~> 3.3.5'
-gem 'sass-rails', '>= 3.2'
+gem 'sass-rails'
 gem 'validates_email_format_of'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -31,7 +31,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'devise'
 gem 'city-state'
 gem 'simple_form'
-gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem "populator"
 gem "faker"
 #gem 'mysql2'
@@ -50,11 +50,15 @@ gem 'wkhtmltopdf-binary-edge'
 gem "paperclip"
 gem "nested_form"
 gem 'geocoder'
+gem "letter_opener", :group => :development
+gem 'the_role', '~> 3.0.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+group :production do
+  gem 'unicorn'
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -67,6 +71,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
-group :production do
-  gem 'rails_12factor'
-end

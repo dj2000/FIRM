@@ -6,7 +6,7 @@ class Property < ActiveRecord::Base
 
   OCCUPIED_BY = %w(Rented Owner Vacant Other)
 
-  LOT_TYPE = %w(Hill Flat Slope)
+  LOT_TYPE = %w(Hillside Flat Slope)
 
   FOUNDATION = %w(Raised Slab)
 
@@ -31,6 +31,10 @@ class Property < ActiveRecord::Base
   #To populate select dropdown
   def property_select_value
     "#{number} #{street}, #{city}, #{state_name} #{zip}"
+  end
+
+  def city_state
+    "#{city}, #{state}"
   end
 
   #For getting full name of state

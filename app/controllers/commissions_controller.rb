@@ -1,11 +1,11 @@
 class CommissionsController < ApplicationController
   before_action :set_commission, only: [:show, :edit, :update, :destroy]
   before_action :inspectors_and_commission_rates
-
+  before_action :role_required
   respond_to :html
 
   def index
-    @commissions = Commission.all
+    @commissions = Commission.all.paginate(page: params[:page])
     respond_with(@commissions)
   end
 

@@ -26,7 +26,8 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-
+  config.serve_static_assets = true
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
   # Adds additional error checking when serving assets at runtime.
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
@@ -36,17 +37,9 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Devise config
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-     :address => "smtp.gmail.com",
-     :port => 587,
-     :domain => "gmail.com",
-     :authentication => 'plain',
-     :user_name => "rorailsdev",
-     :password => "rorailsdev123",
-     :enable_starttls_auto => true
-  }
+  ActionMailer::Base.delivery_method = :letter_opener
 end

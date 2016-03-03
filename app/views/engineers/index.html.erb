@@ -1,0 +1,32 @@
+<h1>Engineers</h1>
+<table class='table table-bordered table-striped table-hover table-responsive'>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Middle Initial</th>
+      <th>Email</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @engineers.each do |engineer| %>
+      <tr>
+        <td><%= engineer.first_name %></td>
+        <td><%= engineer.last_name %></td>
+        <td><%= engineer.middle_initial %></td>
+        <td><%= engineer.email %></td>
+        <td><%= link_to raw("<i class='fa fa-eye'></i> Show"), engineer, class: 'btn btn-primary' %></td>
+        <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_engineer_path(engineer), class: 'btn btn-info' %></td>
+        <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), engineer, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @engineers, renderer: BootstrapPagination::Rails %>
+
+<br>
+
+<%= link_to 'New Engineer', new_engineer_path, :class => "btn btn-info" %>

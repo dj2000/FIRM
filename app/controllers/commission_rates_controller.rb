@@ -1,10 +1,10 @@
 class CommissionRatesController < ApplicationController
   before_action :set_commission_rate, only: [:show, :edit, :update, :destroy]
-
+  before_action :role_required
   # GET /commission_rates
   # GET /commission_rates.json
   def index
-    @commission_rates = CommissionRate.all.order(:created_at)
+    @commission_rates = CommissionRate.all.order(:created_at).paginate(page: params[:page])
     respond_to do |format|
       format.html
       format.js

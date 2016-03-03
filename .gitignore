@@ -9,6 +9,7 @@
 
 # Ignore the default SQLite database.
 /config/database.yml
+/config/secrets.yml
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
@@ -18,3 +19,4 @@
 
 # Ignore all public files.
 /public/system
+/public/assets

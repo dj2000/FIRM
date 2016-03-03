@@ -40,6 +40,8 @@
   </tbody>
 </table>
 
+<%= will_paginate @credit_notes, renderer: BootstrapPagination::Rails %>
+
 <br>
 
 <%= link_to raw("<i class='fa fa-plus-square-o'></i> New Credit note"), new_credit_note_path, :class => "btn btn-info" %>

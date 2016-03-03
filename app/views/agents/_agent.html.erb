@@ -1,7 +1,7 @@
 <table class='table table-bordered table-striped table-responsive table-hover'>
   <thead>
     <tr>
-      <th>Agent Attributes</th>
+      <th>Representative Attributes</th>
       <th>Values</th>
     </tr>
   </thead>
@@ -19,19 +19,23 @@
       <td><%= @agent.middleInit %></td>
     </tr>
     <tr>
+      <td>Type</td>
+      <td><%= @agent.agent_type %></td>
+    </tr>
+    <tr>
       <td>Company</td>
       <td><%= @agent.company %></td>
     </tr>
     <tr>
-      <td>Home Number</td>
+      <td>Primary Number</td>
       <td><%= number_to_phone(@agent.phoneH) %></td>
     </tr>
     <tr>
-      <td>Office Number</td>
+      <td>Telphone Number</td>
       <td><%= number_to_phone(@agent.phoneW) %></td>
     </tr>
     <tr>
-      <td>Cell Number</td>
+      <td>Fax Number</td>
       <td><%= number_to_phone(@agent.phoneC) %></td>
     </tr>
     <tr>
@@ -41,6 +45,10 @@
     <tr>
       <td>Mail Address</td>
       <td><%= @agent.mailAddress %></td>
+    </tr>
+    <tr>
+      <td>Notes</td>
+      <td><%= @agent.notes %></td>
     </tr>
   </tbody>
 </table>

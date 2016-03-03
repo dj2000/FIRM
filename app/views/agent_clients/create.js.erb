@@ -4,7 +4,7 @@
 <% else %>
 	$('.add-agent').hide();
 	$('.add-client').hide();
-	$(".agent_select").append("<option value='<%= @agent.id %>' selected> <%= @agent.name %></option>");
+	$(".agent_select").append("<option value='<%= @agent_client.agent_id || @agent.id %>' selected> <%= @agent_client.agent.name || @agent.name %></option>");
 	$(".agent_select").attr('disabled', false)
 	$(".agent_select").trigger("chosen:updated");
 	$(".modal").modal('hide');

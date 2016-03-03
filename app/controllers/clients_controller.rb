@@ -1,9 +1,15 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
   before_action :properties
+  before_action :role_required
 
   def index
-    @clients = Client.all
+    if params[:client_id].present?
+      @clients = Client.where(id: params[:client_id]).paginate(page: params[:page])
+    else
+      @clients = Client.all.paginate(page: params[:page])
+    end
+    @search_clients = Client.all.map{|c| [c.name, c.id]}
     respond_to do |format|
       format.js
       format.html
@@ -33,6 +39,7 @@ class ClientsController < ApplicationController
     @remote = request.format.symbol == :html ? false : true
     @client = Client.new(client_params)
     @client_property = ClientProperty.new
+    @clients = @property.try(:clients)  if params[:property_id].present?
     respond_to do |format|
       if @client.save
         @property.clients << @client if params[:property_id].present?

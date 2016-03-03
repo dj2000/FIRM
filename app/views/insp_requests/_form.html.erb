@@ -6,7 +6,7 @@
         <div class='col-sm-6'>
           <div class="form-group">
             <%= f.label 'Call Date & Time' %>
-            <div class='input-group date datetimepicker'>
+            <div class='input-group datetimepicker'>
               <%= f.text_field :callTime, class: 'form-control' %>
               <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
@@ -29,7 +29,7 @@
           <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_client_path, remote: true, class: "add-client" %>
         </span>
         <div class="col-md-3">
-          <%= f.association :agent, :collection => @agents, :label_method => :name, label: 'Select Agent', input_html:{ class: 'agent_select', disabled: f.object.disable_agent? }, :prompt => "Select Agent" %>
+          <%= f.association :agent, :collection => @agents, :label_method => :name, label: 'Select Representative', input_html:{ class: 'agent_select', disabled: f.object.disable_agent? }, :prompt => "Select Representative" %>
         </div>
         <span class="col-md-1">
           <%= link_to raw("<i class='fa fa-plus plus-sign'></i> Add"), new_agent_path, remote: true, class: "add-agent"  %>
@@ -61,7 +61,7 @@
     </div>
   </div>
 <% end %>
-<div class="modal" tabindex="-1" role="dialog" data-keyboard="false">
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">

@@ -3,7 +3,8 @@ class PayPlan < ActiveRecord::Base
 
   belongs_to :bid
 
-  has_many :payments, -> { order 'payments.created_at' }, dependent: :destroy
+  has_many :payments, -> { where(payment_type: nil).order('payments.created_at')}, dependent: :destroy
+  has_many :deposit_payments, -> { where(payment_type: [nil, "Deposit"]).order('payments.created_at')}, class_name: 'Payment', foreign_key: 'pay_plan_id', dependent: :destroy
 
   accepts_nested_attributes_for :payments, reject_if: proc { |attributes| attributes['title'].blank? || attributes['value'].to_i <= 0 }, allow_destroy: true
 
@@ -12,7 +13,6 @@ class PayPlan < ActiveRecord::Base
   validates :jobMaxAmt,
 							presence: true,
 							numericality: {
-								less_than_or_equal_to: 10000,
 								allow_blank: true,
 								only_integer: false
 								}

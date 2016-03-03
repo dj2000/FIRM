@@ -1,6 +1,6 @@
 <% if @client.errors.present? %>
-	$(".modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
-	$(".modal-body").append("<%= escape_javascript(render partial: 'form') %>");
+	$(".modal-details .modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
+	$(".modal-details .modal-body").append("<%= escape_javascript(render partial: 'form') %>");
 <% else %>
 	$('.add-agent').show()
 	$('.add-client').hide()
@@ -12,5 +12,6 @@
 	$(".agent_select").trigger("chosen:updated");
 	$(".insp_request_agent").removeClass("has-error");
 	$(".insp_request_agent").find("span.help-block").html("");
-	$(".modal").modal('hide');
+	$(".modal-details").modal('hide');
+	$(".client_info").html("<%= escape_javascript(render partial: 'insp_requests/client_info') %>")
 <% end %>

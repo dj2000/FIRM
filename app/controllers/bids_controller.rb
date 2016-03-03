@@ -2,6 +2,7 @@ class BidsController < ApplicationController
 	before_action :payment_plans
   before_action :set_bid, only: [:show, :edit, :update, :destroy]
   before_action :format_amount, only: [:create, :update]
+  before_action :role_required, except: [:report]
 
   # GET /bids
   # GET /bids.json
@@ -9,9 +10,9 @@ class BidsController < ApplicationController
     if params[:start_date].present? and params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
-      @bids = Bid.created_between(start_date, end_date)
+      @bids = Bid.created_between(start_date, end_date).paginate(page: params[:page])
     else
-      @bids = Bid.all
+      @bids = Bid.all.paginate(page: params[:page])
     end
     respond_to do |format|
       format.js

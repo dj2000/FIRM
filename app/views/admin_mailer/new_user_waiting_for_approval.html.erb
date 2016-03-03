@@ -1,0 +1,23 @@
+<h1> Welcome to FIRM Development </h1>
+Hello Admin, <br>
+
+You have new user registered with you. These are the details of user
+
+<p>
+  <strong>Name : </strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email : </strong>
+  <%= @user.email %>
+</p>
+
+Click confirm to Approve User registration.
+
+<%= link_to "Confirm", change_status_user_url(@user, status: "Approved")%>
+<%= link_to "Reject", change_status_user_url(@user, status: "Rejected") %>
+
+<br> <br> <br>
+Thanks and regards, <br>
+FIRM Team.

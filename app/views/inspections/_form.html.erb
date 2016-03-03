@@ -1,3 +1,4 @@
+<%= javascript_include_tag "common" %>
 <%= simple_form_for(@inspection, multipart: true, html: {id: "file-dropzone"}) do |f| %>
   <%= f.error_notification %>
   <% if f.object.errors["documents"].present? %>
@@ -8,20 +9,28 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :name %>
+      <% @appointment = @appointment || @inspection.try(:appointment) %>
+      <%= f.input :name, input_html: { value: "#{@appointment.try(:insp_request).try(:property).try(:property_select_value)}" " - #{(@appointment.try(:schedStart)).try(:to_time).try(:strftime, '%d %b %Y')}" } %>
     </div>
     <div class="col-md-4">
-      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment" %>
+      <%= f.association :appointment, :collection => @appointments, :label_method => :appointment_select, label: 'Select Appointment', :prompt => "Select Appointment", selected: params[:appointment_id] || (params[:inspection] and params[:inspection][:appointment_id]) || f.object.appointment_id %>
     </div>
-    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id %>">
+    <div class="col-md-4 appointment <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %>">
       <%= label_tag "Inspector" %>
-      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
+      <%= text_field_tag "inspector_name", f.object.try(:appointment).try(:inspector).try(:name) || @appointment.try(:inspector).try(:name), class: "appointment inspector form-control", disabled: true %>
     </div>
   </div>
-  <div class="appointment_info <%= 'hide' unless f.object.appointment_id %> ">
-    <% if f.object.appointment_id %>
-      <% @insp_request = f.object.try(:appointment).try(:insp_request) %>
+  <div class="appointment_info <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %> ">
+    <% if f.object.appointment_id || params[:appointment_id].present? %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) || @appointment.try(:insp_request) %>
       <%= render 'insp_requests/insp_request_info', object: { insp_request: @insp_request } %>
+    <% end %>
+  </div>
+  <fieldset><legend></legend></fieldset>
+  <div class="client_info <%= 'hide' unless f.object.appointment_id || params[:appointment_id].present? %> ">
+    <% if f.object.appointment_id || params[:appointment_id].present? %>
+      <% @insp_request = f.object.try(:appointment).try(:insp_request) || @appointment.try(:insp_request) %>
+      <%= render 'insp_requests/client_info', object: { insp_request: @insp_request } %>
     <% end %>
   </div>
   <fieldset><legend></legend></fieldset>
@@ -44,16 +53,18 @@
       <%= f.input :completed_appointment_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
     <div class="col-md-3 margin-top-25 blue-link">
-      <% if f.object.try(:completed_appointment_sheet) %>
+      <% if f.object.try(:completed_appointment_sheet_file_name) %>
         <%= f.object.completed_appointment_sheet_file_name %>
+        <%= link_to '', delete_attached_file_inspection_path(f.object, doc_type: 'completed_appointment_sheet'), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
       <% end %>
     </div>
     <div class="col-md-3">
       <%= f.input :client_information_sheet, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
     <div class="col-md-3 margin-top-25 blue-link">
-      <% if f.object.try(:completed_appointment_sheet) %>
+      <% if f.object.try(:client_information_sheet_file_name) %>
         <%= f.object.client_information_sheet_file_name %>
+        <%= link_to '', delete_attached_file_inspection_path(f.object, doc_type: 'client_information_sheet'), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
       <% end %>
     </div>
   </div>
@@ -62,16 +73,18 @@
       <%= f.input :footprint_diagram, as: :file, input_html: { accept: ".pdf, .jpg, .png"} %>
     </div>
     <div class="col-md-3 margin-top-25 blue-link">
-      <% if f.object.try(:completed_appointment_sheet) %>
+      <% if f.object.try(:footprint_diagram_file_name) %>
         <%= f.object.footprint_diagram_file_name %>
+        <%= link_to '', delete_attached_file_inspection_path(f.object, doc_type: 'footprint_diagram'), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
       <% end %>
     </div>
     <div class="col-md-3">
       <%= f.input :report, as: :file, input_html: { accept: ".pdf, .doc, .docx"}  %>
     </div>
     <div class="col-md-3 margin-top-25 blue-link">
-      <% if f.object.try(:completed_appointment_sheet) %>
+      <% if f.object.try(:report_file_name) %>
         <%= f.object.report_file_name %>
+        <%= link_to '', delete_attached_file_inspection_path(f.object, doc_type: 'report'), data: {:confirm => 'Are you sure?'}, :method => :delete, class: "glyphicon glyphicon-trash" %>
       <% end %>
     </div>
   </div>
@@ -89,7 +102,7 @@
       <%= f.input :repairs, label: "Repairs Needed" %>
     </div>
     <div class="col-md-6">
-      <%= f.input :interiorAccess, label: "Interior Access Required" %>
+      <%= f.input :interiorAccess, label: "Interior Access Required", as: :select, collection: ([['Yes', true], ['No', false]]), prompt: "Select Interior Access Required " %>
     </div>
     <div class="col-md-6">
       <%= f.input :notes %>
@@ -97,6 +110,7 @@
   </div>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <%= label_tag "Miscellaneous documents" %>
     <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
     <div class="col-md-6 document_preview preview">
       <div class="text-center">No Preview Available.</div>
@@ -105,16 +119,16 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Miscellaneous Documents" %>
         <br/>
-        <% f.object.documents.other_documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
+        <div class="miscellaneous_documents_div">
+          <%= render partial: 'shared/document_listing', locals: { parent: f.object, doc_type: "other_documents" } %>
+        </div>
       </div>
     <% end %>
     </div>
   <br/>
   <fieldset><legend></legend></fieldset>
   <div class="row">
+    <%= label_tag "Email documents" %>
     <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "emailDocumentFile",  accept: ".pdf"%>
     <div class="col-md-6 email_preview preview">
       <div class="text-center">No Preview Available.</div>
@@ -123,10 +137,9 @@
       <div class="col-md-6">
         <%= label_tag "Uploaded Email Documents" %>
         <br/>
-        <% f.object.documents.email_documents.each do |document| %>
-          <%= link_to document.attachment_file_name, document.attachment.url, class: 'blue-link' %>
-          <br/>
-        <% end %>
+        <div class="email_documents_div">
+          <%= render partial: 'shared/document_listing', locals: { parent: f.object, doc_type: "email_documents" } %>
+        </div>
       </div>
     <% end %>
     </div>
@@ -168,43 +181,4 @@
 
   loadPreview("documentFile", "document_preview");
   loadPreview("emailDocumentFile", "email_preview");
-
-  function getDocumentImages(type, target){
-    var imgName;
-    if (type == 'docx' || type == 'doc' || type == 'pdf'){
-      imgName = '/assets/' + type + '_icon.png'
-    }
-    else{
-      imgName =  target;
-    }
-    return imgName;
-  }
-
-  function loadPreview(divId, previewClass){
-    $("#" + divId).change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var divPreview = $("." + previewClass);
-        divPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var file_name = file[0].name;
-          var file_ext = file_name.toLowerCase().split(".").slice(-1)[0];
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var documentImage = getDocumentImages(file_ext, e.target.result)
-            var img = $("<img />");
-            img.attr("style", "height:100px;width:100px;border-radius: 8px;").attr('title', file_name);
-            if (documentImage){
-              img.attr('src', documentImage)
-            }
-            divPreview.append(img);
-          }
-          reader.readAsDataURL(file[0]);
-        });
-      }
-      else {
-        alert("This browser does not support HTML5 FileReader.");
-      }
-    });
-  }
 </script>

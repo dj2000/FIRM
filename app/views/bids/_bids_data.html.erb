@@ -7,6 +7,7 @@
       <th>Administration Fee</th>
       <th>Bid Total</th>
       <th>Payment Plan</th>
+      <th>Status</th>
       <% if (request.format == "js" || request.path != "/bids") %>
         <th colspan="2" class="text-center">Actions</th>
       <% end %>
@@ -15,17 +16,26 @@
   <tbody>
     <% @bids.each do |bid| %>
       <tr>
-        <td><%= bid.title %></td>
+        <td><%= link_to_if ['Pending', 'Follow-up'].include?(bid.status), bid.title, new_comm_history_path(bid_id: bid.id), class: 'link' %></td>
         <td><%= number_to_currency(bid.costRepair) %></td>
         <td><%= number_to_currency(bid.feeSeismicUpg) %></td>
         <td><%= number_to_currency(bid.feeAdmin) %></td>
         <td><%= number_to_currency(bid.total_cost) %></td>
         <td><%= bid.try(:payPlan).try(:payment_plan_select) %></td>
-        <% if (request.format == "js" || request.path != "/bids") %>
-          <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>
-          <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), bid, method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-danger' %></td>
+        <td><%= bid.status == "Accepted" ? "Verbal Close" : bid.status %></td>
+        <% if !bid.contract %>
+          <% if (request.format == "js" || request.path != "/bids") %>
+            <td><%= link_to raw("<i class='fa fa-pencil-square-o'></i> Edit"), edit_bid_path(bid), remote: true, class: 'btn btn-info' %></td>
+            <td><%= link_to raw("<i class='fa fa-trash-o'></i> Destroy"), bid, method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'btn btn-danger' %></td>
+          <% end %>
+        <% else %>
+          <td colspan="2"></td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<% if request.format == :html && current_page?(bids_url) %>
+  <%= will_paginate @bids, renderer: BootstrapPagination::Rails %>
+<% end %>

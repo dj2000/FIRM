@@ -1,17 +1,17 @@
-<div class="right">
+<div>
+  <span class="date">
+    <span class="fa fa-calendar datepicker-icon"></span>
+    <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select calendar_select", prompt: "Select Inspector" %>
+  </span>
+  <div class="full-calendar border col-lg-9.5" style="<%= 'width:100% !important' if controller_name == 'appointments' %>"></div>
+  <div class="right">
   <span>
     <% if @appointment %>
       <%= link_to "Back", insp_request_path(@appointment.insp_request), class: "btn btn-primary right" %>
     <% end %>
   </span>
 </div>
- <div class="left" id= "left-align">
-    <div class="col-lg-2.5">
-      <%= select_tag "inspector", options_for_select(@inspectors), class: "form-control inspector_select calendar_select", prompt: "Select Inspector" %>
-      <div class="datepicker datepicker-left"></div>
-    </div>
-    <div class="full-calendar border col-lg-9.5"></div>
-  </div>
+</div>
 <div class="modal" tabindex="-1" role="dialog" data-keyboard="false"></div>
 <script>
   var date = "<%= @appointment.try(:schedStart) || Time.now %>";
@@ -21,11 +21,11 @@
   var month = dateValue[1] - 1;
   var day = dateValue[2];
   $(document).ready(function(){
-    $('.datepicker').datepicker({
+    $('.date .datepicker-icon').datepicker({
       daysOfWeekDisabled: [0]
     });
-    $(".datepicker").datepicker("update", new Date(year, month, day));
-    $('.datepicker').on('changeDate', function (dateText) {
+    $(".date .datepicker-icon").datepicker("update", new Date(year, month, day));
+    $('.date .datepicker-icon').on('changeDate', function (dateText) {
       $('.full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText.date)));
       var defaultView = $('.full-calendar').fullCalendar('getView').name;
       $('.full-calendar').fullCalendar("changeView", defaultView);

@@ -1,10 +1,12 @@
 class Crew < ActiveRecord::Base
   extend AsCSV
 
-  has_many :projects
-  has_many :crew_skills
+  has_many :projects, dependent: :destroy
+  has_many :crew_skills, dependent: :destroy
 
   validates :foreman, :size, presence: true
+
+  validates :email, email_format: { message: "Invalid Email Address" }
 
   def is_double_book
 		self.double_book? ? "Yes" : "No"

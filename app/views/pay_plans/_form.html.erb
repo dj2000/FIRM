@@ -16,13 +16,13 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <%= f.input :deposit_label, label: false, input_html: { value: "Deposit (%)" } %>
+      <%= f.input :deposit_label, label: "Deposit (%)", input_html: { value: "Deposit (%)" } %>
     </div>
     <div class="col-md-4">
-      <%= f.input :deposit, label: false, placeholder: "Deposit Value" %>
+      <%= f.input :deposit, label: "Deposit Value" %>
     </div>
     <div class="col-md-4">
-      <%= f.input :deposit_limit, label: false, placeholder: "Deposit Limit", as: :string,  input_html: { value: f.object.deposit_limit.to_i || 1000 }  %>
+      <%= f.input :deposit_limit, label: "Deposit Limit", as: :string,  input_html: { value: f.object.deposit_limit.present? ? f.object.deposit_limit.to_i : 1000 }  %>
     </div>
   </div>
   <div class="row payments">
@@ -39,7 +39,7 @@
 <script>
   update();
   $("#pay_plan_jobMinAmt").mask("$99999", { autoclear: false, placeholder: "" });
-  $("#pay_plan_jobMaxAmt").mask("$99999", { autoclear: false, placeholder: "" });
+  $("#pay_plan_jobMaxAmt").mask("$9999999", { autoclear: false, placeholder: "" });
   $("#pay_plan_deposit_limit").mask("$99999", { autoclear: false, placeholder: "" });
   $(document).on('nested:fieldAdded', function(event){
     update();

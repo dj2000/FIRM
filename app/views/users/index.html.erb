@@ -1,0 +1,36 @@
+<div class="userlist">
+ <h1> Users List </h1>
+  <ul class="nav nav-tabs" id="user_tabs">
+    <li class="active pending"><a data-toggle="tab" href="#pending">Pending</a></li>
+    <li class="approved"><a data-toggle="tab" href="#approved">Approved</a></li>
+    <li class="rejected"><a data-toggle="tab" href="#rejected">Rejected</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="pending" class="tab-pane fade in active">
+      <%= render partial: 'users', locals: {type: "pending"} %>
+    </div>
+    <div id="approved" class="tab-pane fade">
+      <%= render partial: 'users', locals: {type: "approved"} %>
+    </div>
+    <div id="rejected" class="tab-pane fade">
+      <%= render partial: 'users', locals: {type: "rejected"} %>
+    </div>
+  </div>
+  <%= link_to "Create User", new_user_path, class: 'pull-right btn btn-success' %>
+</div>
+<div class="modal modal-details" tabindex="-1" role="dialog" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:110%">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Change Password</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@
 <% end %>
 <%= simple_nested_form_for @client, html: { remote: @remote } do |f| %>
   <%= f.error_notification %>
-  <%= hidden_field_tag :property_id, "", class: 'property_id' %>
+  <%= hidden_field_tag(:property_id, params[:property_id], class: "property_id") %>
   <div class="row">
     <div class='col-sm-6 of_type'>
       <div class="form-group">
@@ -99,7 +99,9 @@
   $(document).ready(function(){
     ofTypeSelection();
     var property_id = $(".property_select").val();
-    $(".property_id").val(property_id);
+    if(property_id != undefined ){
+      $(".property_id").val(property_id);
+    }
     var property_text = $(".property_select option:selected").text();
     $("#client_mailAddress").val(property_text);
     $("input[name=client_of_type]").change(function () {

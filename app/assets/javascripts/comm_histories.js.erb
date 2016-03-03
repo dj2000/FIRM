@@ -1,0 +1,37 @@
+$(document).ready(function(){
+	$(".comm_histories_search_filter").change(function(){
+	  var filter = $(this).val();
+	  if(filter == "Property"){
+	    $("select.property").removeClass("hide");
+	    $("select.client").addClass("hide");
+	    $(".property").chosen();
+	    $(".client").chosen();
+	    $('.client').chosen('destroy');
+	    $('select.client').val('').trigger('chosen:updated');
+	  }
+	  else if (filter == "Client"){
+	    $("select.client").removeClass("hide");
+	    $("select.property").addClass("hide");
+	    $(".client").chosen();
+	    $('.property').chosen();
+	    $('.property').chosen('destroy');
+	    $('select.property').val('').trigger('chosen:updated');
+	  }
+	  else if(filter == ""){
+		$("select.property").addClass("hide");
+		$("select.client").addClass("hide");
+		$(".client").chosen();
+	    $('.property').chosen();
+	    $('.client').chosen('destroy');
+	    $('.property').chosen('destroy');
+	    alert("Please select search criteria.")
+	  }
+	});
+
+	$(".searchCommHistories").on('click', function(){
+	  $.ajax({
+	    url: '/comm_histories',
+	    data: $("#search-comm-histories").serialize()
+	  })
+	});
+});

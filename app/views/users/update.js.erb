@@ -1,0 +1,4 @@
+var type = "<%= @user.status.downcase %>";
+$(".modal-details").modal('hide');
+$('.userlist').html("<%= escape_javascript(render template: 'users/index') %>");
+$( "#user_tabs" ).tabs( "refresh" );

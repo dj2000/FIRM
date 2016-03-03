@@ -37,16 +37,13 @@ class ProjSched < ActiveRecord::Base
   private
 
   def availability_of_crew
+    invalid_record = false
 		double_book = (self.crew_id and self.try(:crew).try(:double_book?))
 		start_time = self.startTime.strftime("%H:%M:%S")
 		end_time = self.endTime.strftime("%H:%M:%S")
-    if double_book
-      crews_availability = ProjSched.where('project_id != ? AND crew_id = ? AND (((schedule_start_date BETWEEN ? AND ?) AND ("startTime" BETWEEN ? AND ?)) OR ((schedule_end_date BETWEEN ? AND ?) AND ("endTime" BETWEEN ? AND ?)))', self.project_id, self.crew_id, self.schedule_start_date, self.schedule_end_date, start_time, end_time, self.schedule_start_date, self.schedule_end_date, start_time, end_time)
-      invalid_record = crews_availability.present? ? true : false
-    else
-      is_scheduled = ProjSched.where(crew_id: self.crew_id).where.not(id: self.id).first
-      invalid_record = is_scheduled ? true : false
-    end
+    crews_availability = ProjSched.where('crew_id = ? AND (((schedule_start_date BETWEEN ? AND ?) AND ("startTime" BETWEEN ? AND ?)) OR ((schedule_end_date BETWEEN ? AND ?) AND ("endTime" BETWEEN ? AND ?)))', self.crew_id, self.schedule_start_date, self.schedule_end_date, start_time, end_time, self.schedule_start_date, self.schedule_end_date, start_time, end_time)
+    crews_availability = crews_availability.where.not(id: self.id) unless self.new_record?
+    invalid_record = double_book ? false : true  if crews_availability.present?
 		self.errors.add(:crew_id, "Crew is not available for this time slot.") if invalid_record
   end
 

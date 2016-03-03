@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped table-hover table-responsive">
+  <thead>
+    <tr>
+      <th> Name </th>
+      <th> Email</th>
+      <th class="text-center"> Update User </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% type = type ? type : @user.status.downcase %>
+    <% instance_variable_get("@#{type}_users").each do |user| %>
+      <tr>
+        <td><%= user.name.try(:titleize) %></td>
+        <td><%= user.email %></td>
+        <td><%= render partial: 'form', :locals => { user: user} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

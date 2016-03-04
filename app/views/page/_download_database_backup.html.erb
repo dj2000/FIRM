@@ -1,0 +1,15 @@
+<%= form_tag('/download_database_backup', method: :get) do %>
+<div class='row'>
+	<div class="col-md-2">
+		<%= label_tag "File Name" %>
+	</div>
+	<div class='col-md-6'>
+		<%= text_field_tag :file_name, nil, class: 'form-control text-field' %>
+	</div>
+	<div class="col-md-4">
+		<%= button_tag(type: "submit", class: "btn btn-success") do %>
+    	<i class="fa fa-download"> Download</i>
+		<% end %>
+	</div>
+</div>
+<% end %>

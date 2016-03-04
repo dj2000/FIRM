@@ -6,7 +6,7 @@
 #
 # $ backup perform -t db_backup [-c <path_to_configuration_file>]
 #
-db_config = YAML.load_file('/home/rails/FIRM/config/database.yml')['production']
+db_config = YAML.load_file(Rails.root.join('config/database.yml'))['production']
 
 Backup::Model.new(:db_backup, 'Description for db_backup') do
   ##

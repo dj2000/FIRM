@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     get :load_project_payment_schedules, on: :collection
   end
   TheRoleManagementPanel::Routes.mixin(self)
-
+  get '/download_database_backup' => "page#download_database_backup"
   resources :credit_notes
   resources :engineers
   resources :permit_informations do

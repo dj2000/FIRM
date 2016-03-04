@@ -11,7 +11,8 @@ gem 'autoprefixer-rails'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 # Use SCSS for stylesheets, '~> 4.0.3'
-gem 'sass-rails'
+gem 'bootstrap-sass', '~> 3.3.5'
+gem 'sass-rails', '>= 3.2'
 gem 'validates_email_format_of'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -34,7 +35,8 @@ gem 'simple_form'
 gem 'will_paginate-bootstrap'
 gem "populator"
 gem "faker"
-gem 'mysql2'
+#gem 'mysql2'
+gem 'pg'
 gem 'pry'
 gem 'random_data'
 gem "selectize-rails"
@@ -70,4 +72,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Added to correct runtime error in Windows-64
 gem 'coffee-script-source', '1.8.0'
-gem 'pg'
+group :production do
+  gem 'rails_12factor'
+end

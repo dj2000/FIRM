@@ -33,7 +33,6 @@ Rails.application.configure do
   config.assets.digest = true
   config.action_mailer.default_url_options = { :host => "firmprod.herokuapp.com" }
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
-
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
@@ -66,7 +65,6 @@ Rails.application.configure do
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
-
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
 

@@ -58,6 +58,7 @@ gem 'the_role', '~> 3.0.0'
 # Use unicorn as the app server
 group :production do
   gem 'unicorn'
+  gem 'rails_12factor'
 end
 
 # Use Capistrano for deployment

@@ -10,7 +10,8 @@ class Inspection < ActiveRecord::Base
   accepts_nested_attributes_for :bids, allow_destroy: true, reject_if: proc { |attributes| attributes['costRepair'].blank? || attributes['feeSeismicUpg'].blank? || attributes['feeAdmin'].blank? }
 
   validates :fCondition, :appointment_id, :name, presence: true
-  validates :interiorAccess, :inclusion => {:in => [true, false]}
+
+  INTERIOR_ACCESS_REQUIRED = [['Unspecified', nil], ['Yes', true], ['No', false]]
 
   has_attached_file :report
   has_attached_file :completed_appointment_sheet

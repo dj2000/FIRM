@@ -3,7 +3,7 @@ class Appointment < ActiveRecord::Base
   belongs_to :svc_criterium
   belongs_to :insp_request, class_name: 'InspRequest', foreign_key: 'inspRequest_id'
   belongs_to :inspector
-  has_one :inspection
+  has_one :inspection, dependent: :destroy
 
   attr_accessor :scheduled_inspection
 

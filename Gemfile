@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 # Devise adds user authentication
 gem 'devise'
-gem 'city-state'
+gem 'city-state', git: 'https://github.com/himeshpixelcrayons/city-state.git'
 gem 'simple_form'
 gem 'will_paginate-bootstrap'
 gem "populator"

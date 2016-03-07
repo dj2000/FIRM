@@ -63,6 +63,8 @@
 
 ##
 # Load all models from the models directory.
+DIRECTORY = File.expand_path('../../../', __FILE__)
+BACKUP_DIRECTORY = File.expand_path('../../../../backups/automated_backups', __FILE__)
 Dir[File.join(File.dirname(Config.config_file), "models", "*.rb")].each do |model|
   instance_eval(File.read(model))
 end

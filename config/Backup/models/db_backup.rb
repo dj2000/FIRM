@@ -6,7 +6,7 @@
 #
 # $ backup perform -t db_backup [-c <path_to_configuration_file>]
 #
-db_config = YAML.load_file(Rails.root.join('config/database.yml'))['production']
+db_config = YAML.load_file("#{DIRECTORY}/config/database.yml")['production']
 
 Backup::Model.new(:db_backup, 'Description for db_backup') do
   ##
@@ -32,11 +32,11 @@ Backup::Model.new(:db_backup, 'Description for db_backup') do
   # SCP (Secure Copy) [Storage]
   #
   store_with SCP do |server|
-    server.username   = root
-    server.password   = firmprod
-    server.ip         = 162.243.49.199
+    server.username   = 'root'
+    server.password   = 'firmprod'
+    server.ip         = '162.243.49.199'
     server.port       = 22
-    server.path       = "../backups/automated_backups"
+    server.path       = BACKUP_DIRECTORY
     server.keep       = 5
   end
 

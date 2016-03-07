@@ -7,7 +7,6 @@ gem 'rails', '4.1.8'
 #Use Bootstrap for stylesheets
 gem 'bootstrap-sass', '>= 3.3.1'
 gem 'autoprefixer-rails'
-
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 # Use SCSS for stylesheets, '~> 4.0.3'
@@ -59,6 +58,11 @@ gem 'the_role', '~> 3.0.0'
 group :production do
   gem 'unicorn'
   gem 'rails_12factor'
+  gem 'backup'
+  gem 'net-ssh', '<= 2.5.2'
+	gem 'net-scp', '<= 1.0.4'
+	gem 'mail', '~> 2.5.0'
+	gem 'whenever'
 end
 
 # Use Capistrano for deployment

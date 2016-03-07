@@ -15,6 +15,7 @@
       <li><%= link_to "Draftsman", draftsmen_path %></li>
       <% if ["admin", "super_admin"].include?(current_user.try(:role).try(:name))  %>
         <li><%= link_to "Manage Users", users_path %></li>
+        <li><%= link_to "Download Database Backup", download_database_backup_path, remote: true %></li>
       <% end %>
       <% if current_user.try(:role).try(:name) == "super_admin" %>
         <li> <%= link_to "Super Admin", "/admin/roles" %></li>

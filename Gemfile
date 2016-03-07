@@ -8,7 +8,6 @@ gem 'rails', '4.1.8'
 gem 'bootstrap-sass', '>= 3.3.1'
 gem 'autoprefixer-rails'
 # Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
 # Use SCSS for stylesheets, '~> 4.0.3'
 gem 'sass-rails'
 gem 'validates_email_format_of'
@@ -33,7 +32,6 @@ gem 'simple_form'
 gem 'will_paginate-bootstrap'
 gem "populator"
 gem "faker"
-#gem 'mysql2'
 gem 'pg'
 gem 'pry'
 gem 'random_data'

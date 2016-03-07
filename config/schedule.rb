@@ -5,7 +5,7 @@
 
 # Example:
 #
-set :output, "/var/log/cron_log.log"
+set :output, "log/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -18,7 +18,8 @@ set :output, "/var/log/cron_log.log"
 # end
 
 # Learn more: http://github.com/javan/whenever
-set :environment, "RAILS_ENV=#{RAILS_ENV}"
+#set :environment, "ENV['RAILS_ENV']"
 every 1.day, :at => '10:00 pm' do
-  command "backup perform -t db_backup"
+	dir = File.expand_path('../../', __FILE__)
+	command "cd #{dir} && bundle exec backup perform --trigger db_backup --config-file #{dir}/config/Backup/config.rb"
 end

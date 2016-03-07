@@ -69,10 +69,10 @@ class PageController < ApplicationController
 		respond_to do |format|
 			format.js
 			format.html do
-				db_config = YAML.load_file((Rails.root.join('config/database.yml'))['production']
-				directory = '../backups/downloaded_backups'
+				db_config = YAML.load_file((Rails.root.join('config/database.yml')))['production']
+				directory = "../backups/downloaded_backups"
 				Dir.mkdir(directory) unless File.directory?(directory)
-				system("pg_dump -U #{db_config['username']} -d #{db_config['database']} > #{directory}/#{file_name}.sql")
+				system("pg_dump -U #{db_config['username']} -d #{db_config['database']} > ../backups/downloaded_backups/#{file_name}.sql")
 				file = File.open("#{directory}/#{file_name}.sql", "r")
 				send_file file, filename: "#{params[:file_name]}.sql"
 			end

@@ -102,7 +102,7 @@
       <%= f.input :repairs, label: "Repairs Needed" %>
     </div>
     <div class="col-md-6">
-      <%= f.input :interiorAccess, label: "Interior Access Required", as: :select, collection: Inspection::INTERIOR_ACCESS_REQUIRED, selected: f.object.interiorAccess || nil %>
+      <%= f.input :interiorAccess, label: "Interior Access Required", as: :select, collection: Inspection::INTERIOR_ACCESS_REQUIRED.to_a, selected: f.object.new_record? ? nil : f.object.interiorAccess %>
     </div>
     <div class="col-md-6">
       <%= f.input :notes %>

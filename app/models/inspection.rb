@@ -11,7 +11,7 @@ class Inspection < ActiveRecord::Base
 
   validates :fCondition, :appointment_id, :name, presence: true
 
-  INTERIOR_ACCESS_REQUIRED = [['Unspecified', nil], ['Yes', true], ['No', false]]
+  INTERIOR_ACCESS_REQUIRED = {'Unspecified' => nil, 'Yes' => true, 'No' => false}
 
   has_attached_file :report
   has_attached_file :completed_appointment_sheet
@@ -36,6 +36,10 @@ class Inspection < ActiveRecord::Base
 
   def check_document_type(doc_type)
     self.send("#{doc_type}=",nil)
+  end
+
+  def interior_access_required
+    Inspection::INTERIOR_ACCESS_REQUIRED.key(self.interiorAccess)
   end
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302070754) do
+ActiveRecord::Schema.define(version: 20160309065223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,8 +277,8 @@ ActiveRecord::Schema.define(version: 20160302070754) do
     t.integer  "appointment_id"
     t.string   "fCondition"
     t.boolean  "businessCards"
-    t.float    "nOD"
-    t.integer  "nOG"
+    t.float    "nOD",                                      default: 0.0
+    t.float    "nOG",                                      default: 0.0
     t.boolean  "paid"
     t.string   "footprintURL"
     t.boolean  "repairs"
@@ -526,15 +526,15 @@ ActiveRecord::Schema.define(version: 20160302070754) do
   create_table "svc_criteria", force: true do |t|
     t.boolean  "propRes"
     t.boolean  "propComm"
-    t.string   "prevInsp"
-    t.string   "hpoz"
-    t.string   "cdo"
-    t.boolean  "ownerOcc"
     t.string   "foundation"
     t.integer  "yearBuilt"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "prevInsp"
+    t.integer  "hpoz"
+    t.integer  "cdo"
+    t.integer  "ownerOcc"
   end
 
   create_table "users", force: true do |t|

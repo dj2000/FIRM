@@ -111,7 +111,7 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <%= label_tag "Miscellaneous documents" %>
-    <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx"%>
+    <%= file_field_tag 'document_attributes[]', multiple: true, id: "documentFile",  accept: ".pdf, .doc, .docx, .jpeg, .png, .jpg, .gif"%>
     <div class="col-md-6 document_preview preview">
       <div class="text-center">No Preview Available.</div>
     </div>
@@ -129,7 +129,7 @@
   <fieldset><legend></legend></fieldset>
   <div class="row">
     <%= label_tag "Email documents" %>
-    <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "emailDocumentFile",  accept: ".pdf"%>
+    <%= file_field_tag 'email_document_attributes[]', multiple: true, id: "emailDocumentFile",  accept: ".pdf, .jpeg, .png, .jpg, .gif"%>
     <div class="col-md-6 email_preview preview">
       <div class="text-center">No Preview Available.</div>
     </div>

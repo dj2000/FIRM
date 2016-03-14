@@ -5,7 +5,7 @@ class Document < ActiveRecord::Base
 	scope :email_documents, -> { where( document_type: 'email' ) }
 	scope :other_documents, -> { where( document_type: nil ) }
 
-	validates_attachment_content_type :attachment, content_type: %w( application/msword application/pdf application/vnd.openxmlformats-officedocument.wordprocessingml.document )
+	validates_attachment_content_type :attachment, content_type: %w( application/msword application/pdf application/vnd.openxmlformats-officedocument.wordprocessingml.document image/jpg image/png image/jpeg image/gif )
 
 	def file_url
 		public_path = Rails.root.join("public", "pdfs", "#{self.attachable_id}", "#{self.attachment_file_name}.pdf")

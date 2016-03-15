@@ -21,7 +21,7 @@
         <td><%= insp_request.call_time %></td>
         <td><%= insp_request.callerType %></td>
         <td><%= insp_request.referalSource %></td>
-        <td><%= insp_request.client.try(:firstName) + " " + insp_request.client.try(:lastName) %></td>
+        <td><%= insp_request.client.try(:name) %></td>
         <td><%= insp_request.agent.try(:firstName) %></td>
         <td><%= insp_request.property.try(:property_select_value) %></td>
         <td><%= insp_request.selectInsp %></td>

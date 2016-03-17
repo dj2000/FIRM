@@ -3,6 +3,8 @@ class Client < ActiveRecord::Base
 
   default_scope { order('created_at asc') }
 
+  attr_accessor :client_type_other
+
   has_many :client_properties, dependent: :destroy
   has_many :properties, through: :client_properties, dependent: :destroy
   has_many :agent_clients, dependent: :destroy

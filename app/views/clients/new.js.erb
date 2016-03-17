@@ -1,4 +1,9 @@
-$(".modal-details .modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
-$(".modal-details .modal-body").append("<%= escape_javascript(render partial: 'form') %>");
-$(".modal-details .modal-title").html("")
-$(".modal-details").modal('show');
+if($(".property_select option:selected").val() == ""){
+	alert("Please Select Property.");
+}
+else{
+	$(".modal-details .modal-body").html("<%= escape_javascript(render partial: '/client_properties/form') %>");
+	$(".modal-details .modal-body").append("<%= escape_javascript(render partial: 'form') %>");
+	$(".modal-details .modal-title").html("")
+	$(".modal-details").modal('show');
+}

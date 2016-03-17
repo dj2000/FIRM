@@ -72,7 +72,7 @@
     </div>
     <div class='col-sm-3 '>
       <div class="form-group <%= f.object.clienttype == "Other" ? '' : 'hide' %> client_type_other ">
-        <%= f.input :client_type, label: '&nbsp;'.html_safe %>
+        <%= f.input :client_type_other, label: '&nbsp;'.html_safe, input_html: { value: f.object.client_type } %>
       </div>
     </div>
     <div class='col-sm-6'>

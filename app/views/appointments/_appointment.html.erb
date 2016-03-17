@@ -58,10 +58,7 @@
                   <div class='col-xs-offset-2 col-xs-6'>
                     <% if @appointment.try(:insp_request).try(:property).try(:clients) %>
                       <% @appointment.try(:insp_request).try(:property).try(:clients).each do |client| %>
-                        <%= client.name %>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <%= link_to client_path(@appointment.try(:insp_request).client), remote: true, class: 'link' do %>
-                          <i class='fa fa-eye'></i> Details
-                        <% end %>
+                        <%= client.name %>
                         <br/>
                       <% end %>
                     <% end %>

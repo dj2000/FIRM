@@ -50,6 +50,22 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class='col-xs-12'>
+              <div class="form-group">
+                <strong>Associated Clients:</strong>
+                  <br/>
+                  <div class='col-xs-offset-2 col-xs-6'>
+                    <% if @appointment.try(:insp_request).try(:property).try(:clients) %>
+                      <% @appointment.try(:insp_request).try(:property).try(:clients).each do |client| %>
+                        <%= client.name %>
+                        <br/>
+                      <% end %>
+                    <% end %>
+                  </div>
+              </div>
+            </div>
+          </div>
           <table class='table table-bordered table-striped table-responsive table-hover'>
             <thead>
               <tr>

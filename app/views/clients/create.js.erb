@@ -3,7 +3,6 @@
 	$(".modal-details .modal-body").append("<%= escape_javascript(render partial: 'form') %>");
 <% else %>
 	$('.add-agent').show()
-	$('.add-client').hide()
 	$(".client_select").append("<option value='<%= @client.id %>' selected> <%= @client.name %></option>");
 	$(".client_select").attr('disabled', false)
 	$(".client_select").trigger("chosen:updated");

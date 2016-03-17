@@ -1,10 +1,9 @@
 <% if @client_property.errors.present? %>
-	$("modal-details .modal-body").html("<%= escape_javascript(render partial: 'form') %>")
-	$("modal-details .modal-body").append("<%= escape_javascript(render partial: '/clients/form') %>")
+	$(".modal-details .modal-body").html("<%= escape_javascript(render partial: 'form') %>")
+	$(".modal-details .modal-body").append("<%= escape_javascript(render partial: '/clients/form') %>")
 	$(".modal-details .modal-title").html("Client");
 <% else %>
 	$('.add-agent').show()
-	$('.add-client').hide()
 	$(".client_select").append("<option value='<%= @client_property.client_id || @client.id %>' selected> <%= @client_property.client.name || @client.name %></option>");
 	$(".client_select").attr('disabled', false)
 	$(".client_select").trigger("chosen:updated");

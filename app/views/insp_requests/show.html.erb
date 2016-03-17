@@ -35,6 +35,18 @@
           </td>
         </tr>
         <tr>
+          <td>Associated Clients</td>
+          <td>
+            <% @insp_request.try(:property).try(:clients).each do |client| %>
+              <%= client.name %>&nbsp;&nbsp;&nbsp;&nbsp;
+              <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
+                <i class='fa fa-eye'></i> Details
+              <% end %>
+              <br/>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
           <td>Representative</td>
           <td>
             <%= @insp_request.agent.try(:name) %>

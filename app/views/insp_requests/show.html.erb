@@ -38,8 +38,16 @@
           <td>Associated Clients</td>
           <td>
             <% @insp_request.try(:property).try(:clients).each do |client| %>
-              <%= client.name %>&nbsp;&nbsp;&nbsp;&nbsp;
-              <%= link_to client_path(@insp_request.client), remote: true, class: 'link' do %>
+              <span>
+                <strong>Name:&nbsp;&nbsp;</strong><%= client.name %>
+              </span>
+              <span>
+                <strong>Phone:&nbsp;&nbsp;</strong><%= client.phoneC %>
+              </span>
+              <span>
+                <strong>Email:&nbsp;&nbsp;</strong><%= client.email %>
+              </span>
+              <%= link_to client_path(client), remote: true, class: 'link' do %>
                 <i class='fa fa-eye'></i> Details
               <% end %>
               <br/>

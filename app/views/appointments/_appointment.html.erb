@@ -55,10 +55,18 @@
               <div class="form-group">
                 <strong>Associated Clients:</strong>
                   <br/>
-                  <div class='col-xs-offset-2 col-xs-6'>
+                  <div class='col-xs-offset-2 col-xs-8'>
                     <% if @appointment.try(:insp_request).try(:property).try(:clients) %>
                       <% @appointment.try(:insp_request).try(:property).try(:clients).each do |client| %>
-                        <%= client.name %>
+                        <span>
+                          <strong>Name:&nbsp;&nbsp;</strong><%= client.name %>
+                        </span>
+                        <span>
+                          <strong>Phone:&nbsp;&nbsp;</strong><%= client.phoneC %>
+                        </span>
+                        <span>
+                          <strong>Email:&nbsp;&nbsp;</strong><%= client.email %>
+                        </span>
                         <br/>
                       <% end %>
                     <% end %>
